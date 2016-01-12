@@ -1,0 +1,34 @@
+@import 
+	"ionic/ionic.scss";
+
+.md-tab {
+	padding: 10px 12px;
+}
+md-tabs-canvas, md-pagination-wrapper {
+    height: $bar-subheader-height;
+}
+.spinner svg {
+	stroke: $assertive;
+	fill: $assertive;
+}
+.icon.icon-mini {
+	font-size: 14px;
+}
+
+.list .item.item-accordion {
+  line-height: 38px;
+  padding-top: 0;
+  padding-bottom: 0;
+  transition: 0.09s all linear;
+}
+.list .item.item-accordion.ng-hide {
+  line-height: 0px;
+}
+.list .item.item-accordion.ng-hide-add,
+.list .item.item-accordion.ng-hide-remove {
+  display: block !important;
+}
+.item h3, .item-content h3,
+.item p, .item-content p {
+  white-space: normal;
+}

@@ -1,0 +1,8 @@
+<ion-view view-title="{{ vm.category.title }}" view-cache="false">
+	<ion-content on-swipe-right="vm.prev()" on-swipe-left="vm.next()">
+    	<section ng-show="!vm.loading" class="padding">
+			<h3>{{vm.article.title}}</h3>
+			<div ng-bind-html="vm.article.html"></div>
+        </section>
+	</ion-content>
+</ion-view>

@@ -1,0 +1,63 @@
+<ion-view view-title="{{ vm.category.title }}">
+	
+
+	<ion-nav-buttons side="right">
+      <button class="button button-icon ion-android-search" 
+                ng-click="vm.showSearchbar()"></button>
+    </ion-nav-buttons>
+	<ion-nav-buttons side="secondary">
+      <!-- <button class="button button-icon button-clear ion-android-more-vertical" ng-click="vm.menu()" style="width: 30px">
+      </button> -->
+      <md-menu style="padding: 0">
+	      <button md-menu-origin class="button button-icon button-clear ion-android-more-vertical" ng-click="vm.openMenu($mdOpenMenu, $event)" style="width: 30px">
+	      </button>
+	      <md-menu-content width="3">
+	        <md-menu-item>
+	          <md-button>
+	            Option 1
+	          </md-button>
+	        </md-menu-item>
+	        <md-menu-item>
+	          <md-button disabled="disabled">
+	            Option 2
+	          </md-button>
+	        </md-menu-item>
+	        <md-menu-divider></md-menu-divider>
+	        <md-menu-item>
+	          <md-button>
+	            Another option
+	          </md-button>
+	        </md-menu-item>
+	      </md-menu-content>
+	    </md-menu>
+    </ion-nav-buttons>
+    <ion-content class="has-subheader padding" on-swipe-right="vm.prev()" on-swipe-left="vm.next()">
+    	<ion-list>
+            <div ng-repeat="group in vm.groups">
+                <ion-item class="item-stable item-icon-right"
+                          ng-click="vm.toggleGroup(group)"
+                          ng-class="{active: vm.isGroupShown(group)}">
+                    
+                     
+                    {{ vm.category.title }} {{ group.name }}
+
+                    <i class="icon icon-mini" ng-class="vm.isGroupShown(group) ? 'ion-chevron-up' : 'ion-chevron-down'"></i>
+                </ion-item>
+                <ion-item class="item-accordion"
+                          ng-repeat="item in group.items"
+                          ng-show="vm.isGroupShown(group)">
+                    {{ vm.category.title }} : {{ item }}
+                </ion-item>
+            </div>
+        </ion-list>
+
+		<!-- <h1 ng-repeat="item in vm.items track by $index">{{ item }}. {{ vm.category.title }}</h1> -->
+
+		<ion-infinite-scroll
+		  immediate-check="false"
+		  ng-if="true"
+		  distance="1%"
+		  on-infinite="vm.loadItems(2000)">
+		</ion-infinite-scroll>
+	</ion-content>
+</ion-view>
