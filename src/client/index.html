@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="app">
+<html ng-app="app" ng-controller="AppController as vm">
 <head>
     <style>
         /* This helps the ng-show/ng-hide animations start at the right place. */
@@ -10,7 +10,10 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
-    <base href="./">
+    <meta name="description" content="{{ vm.meta.description() }}" />
+    <meta name="keywords" content="{{ vm.meta.keywords() }}" />
+    <meta name="canonical" content="{{ vm.meta.canonical() }}" />
+    <base href="/">
 
     <!-- build:css styles/lib.css -->
     <!-- bower:css -->
@@ -42,6 +45,7 @@
     <script src="/bower_components/angular-material/angular-material.js"></script>
     <script src="/bower_components/lodash/lodash.js"></script>
     <script src="/bower_components/ionic-filter-bar/dist/ionic.filter.bar.js"></script>
+    <script src="/bower_components/angular-moment/angular-moment.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -52,17 +56,19 @@
     <script src="/src/client/app/app.module.js"></script>
     <script src="/src/client/app/core/core.module.js"></script>
     <script src="/src/client/app/news/news.module.js"></script>
+    <script src="/src/client/app/app.controller.js"></script>
     <script src="/src/client/app/core/core.config.js"></script>
     <script src="/src/client/app/core/core.constants.js"></script>
     <script src="/src/client/app/core/core.controller.js"></script>
     <script src="/src/client/app/core/core.run.js"></script>
     <script src="/src/client/app/core/core.state.js"></script>
+    <script src="/src/client/app/core/factory/api.js"></script>
     <script src="/src/client/app/core/factory/categories.js"></script>
     <script src="/src/client/app/core/factory/config.js"></script>
+    <script src="/src/client/app/core/factory/meta.js"></script>
     <script src="/src/client/app/core/factory/rss.js"></script>
     <script src="/src/client/app/news/article/article.controller.js"></script>
     <script src="/src/client/app/news/category/category.controller.js"></script>
-    <script src="/src/client/app/news/category/tabs.controller.js"></script>
     <script src="/src/client/app/news/frontpage/frontpage.controller.js"></script>
     <script src="/src/client/app/news/news.controller.js"></script>
     <script src="/src/client/app/news/news.state.js"></script>

@@ -37,10 +37,7 @@
                 }
             })
             .state('app.article', {
-                params: {
-                    article: {}
-                },
-                url: '/article',
+                url: '/article/:id',
                 templateUrl: 'app/news/article/article.html',
                 controller: 'ArticleController as vm'
 

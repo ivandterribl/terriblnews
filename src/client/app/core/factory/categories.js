@@ -14,41 +14,29 @@
 
         function get() {
             return [{
-                title: 'Top news',
-                id: '1'
+                title: 'Latest news',
+                id: 'latestnews'
             }, {
-                title: 'Business',
-                id: '69'
+                title: 'Editors pick',
+                id: 'topnews'
             }, {
-                title: 'Channel',
-                id: '77'
+                title: 'Readers\' choice',
+                id: 'readerschoice'
             }, {
-                title: 'Computing',
-                id: '86'
+                title: 'Columnists',
+                id: 'columnists'
             }, {
-                title: 'Enterprise',
-                id: '107'
+                title: 'Features',
+                id: 'features'
             }, {
-                title: 'Financial',
-                id: '118'
+                title: 'Industry insight',
+                id: 'industryinsight'
             }, {
-                title: 'Hardware',
-                id: '133'
+                title: 'Reuters',
+                id: 'reutres'
             }, {
-                title: 'Internet',
-                id: '147'
-            }, {
-                title: 'Networking',
-                id: '198'
-            }, {
-                title: 'Security',
-                id: '234'
-            }, {
-                title: 'Software',
-                id: '250'
-            }, {
-                title: 'Telecoms',
-                id: '260'
+                title: 'Company news',
+                id: 'vpo'
             }];
         }
     }

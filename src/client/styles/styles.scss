@@ -32,3 +32,15 @@ md-tabs-canvas, md-pagination-wrapper {
 .item p, .item-content p {
   white-space: normal;
 }
+.item-complex .item-content, .item-radio .item-content {
+  padding: 16px;
+}
+
+.pic img {
+  width: 100%;
+}
+.pic-caption {
+  font-size: 11px;
+  color: #444;    
+  text-align: center;
+}

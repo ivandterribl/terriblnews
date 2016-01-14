@@ -31,33 +31,25 @@
 	      </md-menu-content>
 	    </md-menu>
     </ion-nav-buttons>
-    <ion-content class="has-subheader padding" on-swipe-right="vm.prev()" on-swipe-left="vm.next()">
-    	<ion-list>
-            <div ng-repeat="group in vm.groups">
-                <ion-item class="item-stable item-icon-right"
-                          ng-click="vm.toggleGroup(group)"
-                          ng-class="{active: vm.isGroupShown(group)}">
-                    
-                     
-                    {{ vm.category.title }} {{ group.name }}
-
-                    <i class="icon icon-mini" ng-class="vm.isGroupShown(group) ? 'ion-chevron-up' : 'ion-chevron-down'"></i>
-                </ion-item>
-                <ion-item class="item-accordion"
-                          ng-repeat="item in group.items"
-                          ng-show="vm.isGroupShown(group)">
-                    {{ vm.category.title }} : {{ item }}
-                </ion-item>
-            </div>
-        </ion-list>
-
-		<!-- <h1 ng-repeat="item in vm.items track by $index">{{ item }}. {{ vm.category.title }}</h1> -->
-
-		<ion-infinite-scroll
-		  immediate-check="false"
-		  ng-if="true"
-		  distance="1%"
-		  on-infinite="vm.loadItems(2000)">
-		</ion-infinite-scroll>
+    <ion-content class="has-subheader" on-swipe-right="vm.prev()" on-swipe-left="vm.next()">
+    	<section ng-show="vm.loading" class="text-center padding">
+    		<ion-spinner></ion-spinner>
+    	</section>
+    	<section ng-show="!vm.loading && !vm.items.length">
+    		<h3 class="ng-hide text-center assertive" ng-cloak>Oops, something went wrong</h3>
+    	</section>
+    	<section ng-show="!vm.loading">
+	    	<ion-list ng-show="vm.items.length">
+	            <ion-item class="item-light" ng-repeat="item in vm.items" ui-sref="app.article({ id: item.itemid })">
+	                <h2>{{ item.title }}</h2>
+	                <img ng-src="{{ item.introtextData.img }}" ng-if="item.introtextData.img" style="float:right; margin: 4px 0 4px 4px; width: 108px"/>
+	                <p>{{ item.blurb }}</p>
+	                <div class="assertive">
+	                	<i class="icon ion-ios-clock-outline" style="font-size: 16px; position: relative; top: 1px"></i> 
+	                	<span style="font-size: 12px; line-height: 14px" am-time-ago="item.created"></span>
+	                </div>
+	            </ion-item>
+	        </ion-list>
+        </section>
 	</ion-content>
 </ion-view>

@@ -1,0 +1,48 @@
+(function() {
+    'use strict';
+
+    angular
+        .module('app.core')
+        .factory('api', API);
+
+    API.$inject = ['$http', 'config', '_', '$q'];
+
+    function API($http, config, _, $q) {
+        var queue = [];
+
+        return function(url, options) {
+            var opts = _.assign({}, options),
+                def = $q.defer();
+
+            def.promise.success = function(fn) {
+                def.promise.then(fn, null);
+                return def.promise;
+            };
+            def.promise.error = function(fn) {
+                def.promise.then(null, fn);
+                return def.promise;
+            };
+
+            $http({
+                method: 'GET',
+                //url: config.url + url,
+                url: 'http://www.itweb.co.za/mobilesite/feed/ivan/json.php?' + url,
+                timeout: opts.timeout || config.timeout
+            }).success(function(response) {
+                console.log('api', response);
+                def.resolve(response);
+            }).error(function(response) {
+                console.error('api', response);
+                def.reject(response);
+
+            }).finally(function() {
+                queue = _.reject(queue, function(d) {
+                    return d === def;
+                });
+            });
+            queue.push(def);
+
+            return def.promise;
+        };
+    }
+})();

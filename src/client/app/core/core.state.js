@@ -5,12 +5,12 @@
         .module('app.core')
         .config(Config);
 
-    Config.$inject = ['$stateProvider', '$urlRouterProvider'];
+    Config.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 
-    function Config($stateProvider, $urlRouterProvider) {
+    function Config($stateProvider, $urlRouterProvider, $locationProvider) {
         $stateProvider
             .state('app', {
-                url: '/app',
+                url: '',
                 abstract: true,
                 templateUrl: 'app/core/core.html',
                 controller: 'CoreController as vm'
@@ -21,6 +21,7 @@
             });
 
         // if none of the above states are matched, use this as the fallback
-        $urlRouterProvider.otherwise('/app/news/frontpage');
+        $urlRouterProvider.otherwise('/news/category/latestnews');
+        $locationProvider.html5Mode(true).hashPrefix('!');
     }
 })();

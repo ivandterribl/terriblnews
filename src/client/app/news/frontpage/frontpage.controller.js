@@ -5,9 +5,9 @@
         .module('app.news')
         .controller('FrontpageController', Controller);
 
-    Controller.$inject = ['rss', 'categories', '_', '$scope', '$state', '$ionicFilterBar'];
+    Controller.$inject = ['api', 'categories', '_', '$scope', '$state', '$ionicFilterBar'];
     /* @ngInject */
-    function Controller(rss, categories, _, $scope, $state, $ionicFilterBar) {
+    function Controller(api, categories, _, $scope, $state, $ionicFilterBar) {
         var vm = this,
             categoryId = $state.params.categoryId;
 
@@ -36,23 +36,19 @@
         }
 
         function loadItems() {
-            var url = 'http://www.itweb.co.za/index.php?option=com_rd_rss&id=1';
-            setTimeout(function() {
-
-                rss(url)
-                    .then(function(response) {
-                        if (!angular.equals(vm.items, response)) {
-                            vm.items = response;
-                        }
-                    })
-                    .catch(function(response) {
-                        vm.items = [];
-                    })
-                    .finally(function() {
-                        vm.loading = 0;
-                        $scope.$broadcast('scroll.refreshComplete');
-                    });
-            }, 500);
+            api()
+                .then(function(response) {
+                    if (!angular.equals(vm.items, response)) {
+                        vm.items = response;
+                    }
+                })
+                .catch(function(response) {
+                    vm.items = [];
+                })
+                .finally(function() {
+                    vm.loading = 0;
+                    $scope.$broadcast('scroll.refreshComplete');
+                });
         }
 
         function prev() {

@@ -41,9 +41,10 @@
     	</section>
     	<section ng-show="!vm.loading">
 	    	<ion-list ng-show="vm.items.length">
-	            <ion-item class="item-stable" ng-repeat="item in vm.items" ui-sref="app.article({ article: item })">
+	            <ion-item class="item-stable" ng-repeat="item in vm.items" ui-sref="app.article({ id: item.itemid })">
 	                <h3 class="positive">{{ item.title }}</h3>
-	                <p>{{ item.contentSnippet }}</p>
+	                <img ng-src="{{ item.introtextData.img }}" ng-if="item.introtextData.img" style="float:right; margin: 5px 0 5px 5px;"/>
+	                <p>{{ item.itext }}</p>
 	                <div class="assertive">
 	                	<i class="icon ion-ios-clock-outline" style="font-size: 16px; margin-top: 6px"></i> 
 	                	<span style="font-size: 12px; line-height: 14px">{{ item.publishedDate | date:'medium' }}</span>

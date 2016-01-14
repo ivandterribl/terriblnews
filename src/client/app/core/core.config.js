@@ -6,9 +6,11 @@
 		.module('app.core')
 		.config(Config);
 
-	Config.$inject = ['$mdThemingProvider'];
+	Config.$inject = ['$mdThemingProvider', '$ionicConfigProvider'];
 
-	function Config($mdThemingProvider) {
+	function Config($mdThemingProvider, $ionicConfigProvider) {
+		$ionicConfigProvider.views.maxCache(1);
+
 		$mdThemingProvider.definePalette('iRed', {
 			'50': '#fdeae6',
 			'100': '#f8ad9e',

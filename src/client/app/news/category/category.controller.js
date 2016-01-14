@@ -5,9 +5,9 @@
         .module('app.news')
         .controller('CategoryController', Controller);
 
-    Controller.$inject = ['categories', '_', '$scope', '$state', '$ionicHistory', '$ionicFilterBar', '$timeout'];
+    Controller.$inject = ['categories', 'api', '_', 'moment', '$scope', '$state', '$ionicFilterBar'];
     /* @ngInject */
-    function Controller(categories, _, $scope, $state, $ionicHistory, $ionicFilterBar, $timeout) {
+    function Controller(categories, api, _, moment, $scope, $state, $ionicFilterBar) {
         var vm = this,
             categoryId = $state.params.categoryId;
 
@@ -18,17 +18,6 @@
         vm.openMenu = openMenu;
         vm.loadItems = loadItems;
 
-        vm.toggleGroup = function(group) {
-            if (vm.isGroupShown(group)) {
-                vm.shownGroup = null;
-            } else {
-                vm.shownGroup = group;
-            }
-        };
-        vm.isGroupShown = function(group) {
-            return vm.shownGroup === group;
-        };
-
         activate();
 
         function activate() {
@@ -38,6 +27,7 @@
                 id: categoryId
             }) || vm.categories[0];
 
+            vm.loading = 1;
             loadItems();
 
             // cached view
@@ -46,22 +36,24 @@
             });
         }
 
-        function loadItems(delay) {
-            $timeout(function() {
-                for (var i = 0; i < 10; i++) {
-                    vm.groups[vm.i] = {
-                        name: vm.i,
-                        items: []
-                    };
-                    for (var j = 0; j < 3; j++) {
-                        vm.groups[vm.i].items.push(vm.i + '-' + j);
+        function loadItems() {
+            api('tag=' + categoryId)
+                .then(function(response) {
+                    if (!angular.equals(vm.items, response)) {
+                        vm.items = _.map(response, function(row) {
+                            return _.assign(row, {
+                                time: moment().subtract(_.random(24 * 60), 'minute').format()
+                            });
+                        });
                     }
-                    vm.i++;
-                }
-
-                $scope.$broadcast('scroll.infiniteScrollComplete');
-            }, delay || 0);
-
+                })
+                .catch(function(response) {
+                    vm.items = [];
+                })
+                .finally(function() {
+                    vm.loading = 0;
+                    $scope.$broadcast('scroll.refreshComplete');
+                });
         }
 
         function prev() {
