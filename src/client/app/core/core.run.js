@@ -7,10 +7,11 @@
 
     Runnable.$inject = [
         '$injector',
-        '$ionicPlatform'
+        '$ionicPlatform',
+        'Analytics'
     ];
 
-    function Runnable($injector, $ionicPlatform) {
+    function Runnable($injector, $ionicPlatform, Analytics) {
 
         $ionicPlatform.ready(function() {
             var cordova = window.cordova,

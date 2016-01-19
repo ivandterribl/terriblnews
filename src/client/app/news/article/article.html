@@ -6,14 +6,12 @@
     </ion-nav-buttons>
 	<ion-content on-swipe-right="vm.prev()" on-swipe-left="vm.next()">
     	<section ng-show="!vm.loading" class="padding" itemscope itemtype="http://schema.org/NewsArticle">
-    		<!-- adsrv what="triggeronedefault" width="120" height="250"></adsrv -->
-
-    		<h1 class="assertive" itemprop="headline">{{vm.article.title}}</h1>
+    		<h1 class="assertive" itemprop="headline">{{::vm.article.title}}</h1>
 			<h5>
-				<span ng-if="vm.article.created_by_alias">By <span itemprop="author">{{ vm.article.created_by_alias }}</span>, </span> 
-				<time datetime="{{ vm.article.created }}">{{ vm.article.created | date:'d MMM yyyy'}}</time> 
+				<span ng-if="vm.article.created_by_alias">By <span itemprop="author">{{ ::vm.article.created_by_alias }}</span>, </span> 
+				<time datetime="{{ ::vm.article.created }}">{{ ::vm.article.created | date:'d MMM yyyy'}}</time> 
 			</h5>
-			<article ng-bind-html="vm.article.html" itemprop="articleBody"></article>
+			<article bind-html-compile="::vm.article.html" itemprop="articleBody"></article>
 
 			<meta itemprop="mainEntityOfPage" content="http://www.itweb.co.za/index.php?option=com_content&view=article&id={{ vm.article.itemid }}" />
 			<span itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
@@ -24,12 +22,13 @@
 			    </span>
 			    <meta itemprop="name" content="ITWeb Limited"/>
 			</span>
-			<meta itemprop="datePublished" content="{{ vm.article.created }}"/>
-			<meta itemprop="keywords" content="{{ vm.article.metakey }}"/>
+			<meta itemprop="datePublished" content="{{ ::vm.article.created }}"/>
+			<meta itemprop="keywords" content="{{ ::vm.article.metakey }}"/>
 
 			<disqus disqus-shortname="itweb-za"
-		         disqus-identifier="{{ vm.disqus.id }}"
-		         disqus-url="{{ vm.disqus.url }}"
+		         disqus-identifier="{{ ::vm.disqus.id }}"
+		         disqus-url="{{ ::vm.disqus.url }}"
+		         disqus-on-ready="vm.onDisqus()"
 		         ready-to-bind="{{ !vm.loading }}">
 			</disqus>
         </section>

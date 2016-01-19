@@ -5,6 +5,8 @@
 		'ionic',
 		'jett.ionic.filter.bar',
 		'ngMaterial',
-		'angularMoment'
+		'angularMoment',
+		'angular-bind-html-compile',
+		'angular-google-analytics'
 	]);
 })();

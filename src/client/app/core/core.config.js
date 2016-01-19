@@ -6,9 +6,15 @@
 		.module('app.core')
 		.config(Config);
 
-	Config.$inject = ['$mdThemingProvider', '$ionicConfigProvider'];
+	Config.$inject = ['$mdThemingProvider', '$ionicConfigProvider', 'AnalyticsProvider'];
 
-	function Config($mdThemingProvider, $ionicConfigProvider) {
+	function Config($mdThemingProvider, $ionicConfigProvider, AnalyticsProvider) {
+		AnalyticsProvider.useAnalytics(false)
+			.setAccount('UA-72578455-1')
+			.setDomainName('itrends.co.za')
+			.trackPages(true)
+			.setPageEvent('$stateChangeSuccess');
+
 		$ionicConfigProvider.views.maxCache(0);
 
 		$mdThemingProvider.definePalette('iRed', {
