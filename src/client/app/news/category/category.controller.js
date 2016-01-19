@@ -5,9 +5,9 @@
         .module('app.news')
         .controller('CategoryController', Controller);
 
-    Controller.$inject = ['categories', 'api', '_', 'moment', '$scope', '$state', '$ionicFilterBar'];
+    Controller.$inject = ['categories', 'api', '_', 'meta', 'moment', '$scope', '$state', '$ionicFilterBar'];
     /* @ngInject */
-    function Controller(categories, api, _, moment, $scope, $state, $ionicFilterBar) {
+    function Controller(categories, api, _, meta, moment, $scope, $state, $ionicFilterBar) {
         var vm = this,
             categoryId = $state.params.categoryId;
 
@@ -21,13 +21,14 @@
         activate();
 
         function activate() {
-            vm.groups = [];
+
             vm.categories = categories.get();
             vm.category = _.findWhere(vm.categories, {
                 id: categoryId
             }) || vm.categories[0];
 
             vm.loading = 1;
+            vm.items = [];
             loadItems();
 
             // cached view
@@ -40,11 +41,7 @@
             api('tag=' + categoryId)
                 .then(function(response) {
                     if (!angular.equals(vm.items, response)) {
-                        vm.items = _.map(response, function(row) {
-                            return _.assign(row, {
-                                time: moment().subtract(_.random(24 * 60), 'minute').format()
-                            });
-                        });
+                        vm.items = response;
                     }
                 })
                 .catch(function(response) {

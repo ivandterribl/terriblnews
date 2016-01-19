@@ -36,11 +36,13 @@ md-tabs-canvas, md-pagination-wrapper {
   padding: 16px;
 }
 
-.pic img {
-  width: 100%;
-}
-.pic-caption {
-  font-size: 11px;
-  color: #444;    
+.pic {
   text-align: center;
+  .img {
+    margin: 0 auto;
+  }
+  .pic-caption {
+    font-size: 11px;
+    color: #444;    
+  }
 }

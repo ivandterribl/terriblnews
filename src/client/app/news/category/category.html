@@ -42,7 +42,7 @@
 	    	<ion-list ng-show="vm.items.length">
 	            <ion-item class="item-light" ng-repeat="item in vm.items" ui-sref="app.article({ id: item.itemid })">
 	                <h2>{{ item.title }}</h2>
-	                <img ng-src="{{ item.introtextData.img }}" ng-if="item.introtextData.img" style="float:right; margin: 4px 0 4px 4px; width: 108px"/>
+	                <img ng-src="{{ item.introtextData.img }}" ng-if="item.introtextData.img" style="float:right; margin: 4px 0 4px 4px; "/>
 	                <p>{{ item.blurb }}</p>
 	                <div class="assertive">
 	                	<i class="icon ion-ios-clock-outline" style="font-size: 16px; position: relative; top: 1px"></i> 

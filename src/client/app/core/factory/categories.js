@@ -33,7 +33,7 @@
                 id: 'industryinsight'
             }, {
                 title: 'Reuters',
-                id: 'reutres'
+                id: 'wires'
             }, {
                 title: 'Company news',
                 id: 'vpo'

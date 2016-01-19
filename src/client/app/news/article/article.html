@@ -1,4 +1,4 @@
-<ion-view view-cache="false" view-title="">
+<ion-view view-cache="false" view-title="{{ vm.article.title }}">
 	<ion-nav-buttons side="right">
       <button class="button button-icon ion-android-star-outline" ng-click="vm.showSearchbar()"></button>
 	  <button class="button button-icon ion-android-share-alt" ng-click="vm.showSearchbar()"></button>
@@ -6,22 +6,32 @@
     </ion-nav-buttons>
 	<ion-content on-swipe-right="vm.prev()" on-swipe-left="vm.next()">
     	<section ng-show="!vm.loading" class="padding" itemscope itemtype="http://schema.org/NewsArticle">
-    		<h1 class="assertive">{{vm.article.title}}</h1>
-			<h5>By <span itemprop="author">{{ vm.article.created_by_alias }}</span>, <time datetime="2016-01-14SAST11:58:00+0200">14 Jan 2016</time> </h5>
+    		<!-- adsrv what="triggeronedefault" width="120" height="250"></adsrv -->
+
+    		<h1 class="assertive" itemprop="headline">{{vm.article.title}}</h1>
+			<h5>
+				<span ng-if="vm.article.created_by_alias">By <span itemprop="author">{{ vm.article.created_by_alias }}</span>, </span> 
+				<time datetime="{{ vm.article.created }}">{{ vm.article.created | date:'d MMM yyyy'}}</time> 
+			</h5>
 			<article ng-bind-html="vm.article.html" itemprop="articleBody"></article>
 
 			<meta itemprop="mainEntityOfPage" content="http://www.itweb.co.za/index.php?option=com_content&view=article&id={{ vm.article.itemid }}" />
 			<span itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
 				<span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">      
 			      <meta itemprop="url" content="http://www.itweb.co.za/templates/ja_itweb/images/itweb_logo_sml.png"/>
-			      <meta itemprop="width" content="116px"/>
-			      <meta itemprop="height" content="49px"/>
+			      <meta itemprop="width" content="116"/>
+			      <meta itemprop="height" content="49"/>
 			    </span>
 			    <meta itemprop="name" content="ITWeb Limited"/>
 			</span>
-			<meta itemprop="datePublished" content="2016-01-14SAST11:58:00+0200"/>
-			<meta itemprop="dateModified" content="2016-01-14SAST12:06:34+0200"/>
-			<meta itemprop="keywords" content="MTN, Vodacom, Facebook, WhatsApp, OTTs, regulation"/>
+			<meta itemprop="datePublished" content="{{ vm.article.created }}"/>
+			<meta itemprop="keywords" content="{{ vm.article.metakey }}"/>
+
+			<disqus disqus-shortname="itweb-za"
+		         disqus-identifier="{{ vm.disqus.id }}"
+		         disqus-url="{{ vm.disqus.url }}"
+		         ready-to-bind="{{ !vm.loading }}">
+			</disqus>
         </section>
 	</ion-content>
 </ion-view>
