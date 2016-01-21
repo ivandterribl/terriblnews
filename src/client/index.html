@@ -15,11 +15,18 @@
     <meta name="canonical" content="{{ vm.meta.canonical() }}" />
     <base href="/">
 
-    <!-- build:css styles/lib.css -->
+    <!-- build:css styles/lib1.css -->
     <!-- bower:css -->
-    <link rel="stylesheet" href="/bower_components/angular-material/angular-material.css" />
-    <link rel="stylesheet" href="/bower_components/ionic-filter-bar/dist/ionic.filter.bar.css" />
     <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:css styles/lib.css -->
+    <link rel="stylesheet" href="/src/client/app/ui/material/backdrop/backdrop.css">
+    <link rel="stylesheet" href="/src/client/app/ui/material/core/core.css">
+    <link rel="stylesheet" href="/src/client/app/ui/material/icon/icon.css">
+    <link rel="stylesheet" href="/src/client/app/ui/material/menu/menu.css">
+    <link rel="stylesheet" href="/src/client/app/ui/material/tabs/tabs.css">
+    <link rel="stylesheet" href="/src/client/app/ui/material/whiteframe/whiteframe.css">
     <!-- endbuild -->
 
     <!-- build:css styles/app.css -->
@@ -40,11 +47,7 @@
     <script src="/bower_components/angular-animate/angular-animate.js"></script>
     <script src="/bower_components/ionic/release/js/ionic.js"></script>
     <script src="/bower_components/ionic/release/js/ionic-angular.js"></script>
-    <script src="/bower_components/angular-aria/angular-aria.js"></script>
-    <script src="/bower_components/angular-messages/angular-messages.js"></script>
-    <script src="/bower_components/angular-material/angular-material.js"></script>
     <script src="/bower_components/lodash/lodash.js"></script>
-    <script src="/bower_components/ionic-filter-bar/dist/ionic.filter.bar.js"></script>
     <script src="/bower_components/angular-moment/angular-moment.js"></script>
     <script src="/bower_components/angular-bind-html-compile/angular-bind-html-compile.js"></script>
     <script src="/bower_components/angular-google-analytics/dist/angular-google-analytics.min.js"></script>
@@ -58,6 +61,7 @@
     <script src="/src/client/app/app.module.js"></script>
     <script src="/src/client/app/core/core.module.js"></script>
     <script src="/src/client/app/news/news.module.js"></script>
+    <script src="/src/client/app/ui/ui.module.js"></script>
     <script src="/src/client/app/app.controller.js"></script>
     <script src="/src/client/app/core/core.config.js"></script>
     <script src="/src/client/app/core/core.constants.js"></script>
@@ -68,13 +72,22 @@
     <script src="/src/client/app/core/factory/categories.js"></script>
     <script src="/src/client/app/core/factory/config.js"></script>
     <script src="/src/client/app/core/factory/meta.js"></script>
-    <script src="/src/client/app/directives/adsrv.js"></script>
-    <script src="/src/client/app/directives/disqus.js"></script>
     <script src="/src/client/app/news/article/article.controller.js"></script>
     <script src="/src/client/app/news/category/category.controller.js"></script>
     <script src="/src/client/app/news/frontpage/frontpage.controller.js"></script>
     <script src="/src/client/app/news/news.controller.js"></script>
     <script src="/src/client/app/news/news.state.js"></script>
+    <script src="/src/client/app/ui/adsrv/adsrv.directive.js"></script>
+    <script src="/src/client/app/ui/disqus/disqus.directive.js"></script>
+    <script src="/src/client/app/ui/material/backdrop/backdrop.js"></script>
+    <script src="/src/client/app/ui/material/core/core.js"></script>
+    <script src="/src/client/app/ui/material/icon/icon.js"></script>
+    <script src="/src/client/app/ui/material/menu/menu.js"></script>
+    <script src="/src/client/app/ui/material/tabs/tabs.js"></script>
+    <script src="/src/client/app/ui/material/whiteframe/whiteframe.js"></script>
+    <script src="/src/client/app/ui/searchbar/searchbar.config.js"></script>
+    <script src="/src/client/app/ui/searchbar/searchbar.directive.js"></script>
+    <script src="/src/client/app/ui/searchbar/searchbar.js"></script>
     <!-- endinject -->
 
     <!-- inject:templates:js -->

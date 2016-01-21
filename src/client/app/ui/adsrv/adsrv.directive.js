@@ -15,7 +15,7 @@
                 width: '@',
                 height: '@'
             },
-            templateUrl: 'app/directives/adsrv.html',
+            templateUrl: 'app/ui/adsrv/adsrv.html',
             link: function(scope) {
                 scope.loading = 1;
                 console.log('adsrv', scope);

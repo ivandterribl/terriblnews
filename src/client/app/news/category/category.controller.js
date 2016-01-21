@@ -5,9 +5,9 @@
         .module('app.news')
         .controller('CategoryController', Controller);
 
-    Controller.$inject = ['categories', 'api', '_', 'meta', 'moment', '$scope', '$state', '$ionicFilterBar'];
+    Controller.$inject = ['categories', 'api', '_', 'meta', 'moment', '$scope', '$state', 'searchBar'];
     /* @ngInject */
-    function Controller(categories, api, _, meta, moment, $scope, $state, $ionicFilterBar) {
+    function Controller(categories, api, _, meta, moment, $scope, $state, searchBar) {
         var vm = this,
             categoryId = $state.params.categoryId;
 
@@ -63,7 +63,7 @@
         }
 
         function showSearchbar() {
-            $ionicFilterBar.show({
+            searchBar.show({
                 items: [],
                 update: function(filteredItems) {
                     console.log(filteredItems);

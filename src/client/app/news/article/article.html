@@ -4,6 +4,7 @@
 	  <button class="button button-icon ion-android-share-alt" ng-click="vm.showSearchbar()"></button>
 	  <button class="button button-icon ion-chatbubble" ng-click="vm.showSearchbar()"></button>
     </ion-nav-buttons>
+
 	<ion-content on-swipe-right="vm.prev()" on-swipe-left="vm.next()">
     	<section ng-show="!vm.loading" class="padding" itemscope itemtype="http://schema.org/NewsArticle">
     		<h1 class="assertive" itemprop="headline">{{::vm.article.title}}</h1>

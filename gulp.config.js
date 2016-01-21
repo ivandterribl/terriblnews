@@ -24,7 +24,9 @@ module.exports = function() {
         // all javascript that we want to vet
         alljs: [
             './src/**/*.js',
-            './*.js'
+            './*.js',
+            '!' + clientApp + 'ui/material/**/*.js',
+            '!' + clientApp + 'ui/searchbar/**/*.js'
         ],
         build: './build/',
         cordova: './cordova/www/',
@@ -46,7 +48,7 @@ module.exports = function() {
             '**/*.module.js',
             '**/*.js'
         ],
-        less: client + 'styles/**/*.scss',
+        less: client + 'styles/**/styles.scss',
         report: report,
         root: root,
         server: server,
