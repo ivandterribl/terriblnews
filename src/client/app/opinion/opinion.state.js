@@ -2,20 +2,20 @@
     'use strict';
 
     angular
-        .module('app.news')
+        .module('app.opinion')
         .config(Config);
 
     Config.$inject = ['$stateProvider'];
 
     function Config($stateProvider) {
         $stateProvider
-            .state('app.news', {
-                url: '/news',
+            .state('app.opinion', {
+                url: '/opinion',
                 abstract: true,
-                templateUrl: 'app/news/news-tabs.html',
-                controller: 'NewsTabsController as vm'
+                templateUrl: 'app/opinion/opinion-tabs.html',
+                controller: 'OpinionTabsController as vm'
             })
-            .state('app.news.category', {
+            .state('app.opinion.category', {
                 params: {
                     id: null
                 },

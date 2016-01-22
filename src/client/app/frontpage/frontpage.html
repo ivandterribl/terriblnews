@@ -1,35 +1,9 @@
-<ion-view view-title="{{ vm.category.title }}">
-	
-
+<ion-view view-title="Latest news">
 	<ion-nav-buttons side="right">
       <button class="button button-icon ion-android-search" 
                 ng-click="vm.showSearchbar()"></button>
     </ion-nav-buttons>
-	<ion-nav-buttons side="secondary">
-      <md-menu style="padding: 0">
-	      <button md-menu-origin class="button button-icon button-clear ion-android-more-vertical" ng-click="vm.openMenu($mdOpenMenu, $event)" style="width: 30px">
-	      </button>
-	      <md-menu-content width="3">
-	        <md-menu-item>
-	          <md-button>
-	            Option 1
-	          </md-button>
-	        </md-menu-item>
-	        <md-menu-item>
-	          <md-button disabled="disabled">
-	            Option 2
-	          </md-button>
-	        </md-menu-item>
-	        <md-menu-divider></md-menu-divider>
-	        <md-menu-item>
-	          <md-button>
-	            Another option
-	          </md-button>
-	        </md-menu-item>
-	      </md-menu-content>
-	    </md-menu>
-    </ion-nav-buttons>
-    <ion-content class="has-subheader" on-swipe-right="vm.prev()" on-swipe-left="vm.next()">
+	<ion-content>
     	<section ng-show="vm.loading" class="text-center padding">
     		<ion-spinner></ion-spinner>
     	</section>

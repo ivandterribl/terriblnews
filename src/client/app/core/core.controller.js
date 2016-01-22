@@ -5,13 +5,25 @@
         .module('app.core')
         .controller('CoreController', Controller);
 
-    Controller.$inject = ['categories'];
+    Controller.$inject = ['nav'];
     /* @ngInject */
-    function Controller(categories) {
+    function Controller(nav) {
         var vm = this;
-        vm.categories = categories.get();
-        vm.meta = function() {
-            return 'Hello';
-        };
+        vm.nav = nav.get();
+
+        vm.toggleGroup = toggleGroup;
+        vm.isGroupShown = isGroupShown;
+
+        function toggleGroup(group) {
+            if (vm.isGroupShown(group)) {
+                vm.shownGroup = null;
+            } else if (group.items && group.items.length) {
+                vm.shownGroup = group;
+            }
+        }
+
+        function isGroupShown(group) {
+            return vm.shownGroup === group;
+        }
     }
 })();

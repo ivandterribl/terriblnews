@@ -166,11 +166,6 @@
           // How items are filtered depends on the supplied filter object, and expression
           // Filtered items will be sent to update
           scope.filterItems = function filterItems(filterText) {
-            var filterExp, filteredItems;
-
-            console.log(filterText);
-            debugger;
-
             $timeout(function() {
               scope.update(filterText);
             });

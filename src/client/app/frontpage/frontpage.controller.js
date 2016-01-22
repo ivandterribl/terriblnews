@@ -5,11 +5,11 @@
         .module('app.news')
         .controller('FrontpageController', Controller);
 
-    Controller.$inject = ['api', 'categories', '_', '$scope', '$state', '$ionicFilterBar'];
+    Controller.$inject = ['categories', 'api', '_', 'meta', 'moment', '$scope', '$state', 'searchBar'];
     /* @ngInject */
-    function Controller(api, categories, _, $scope, $state, $ionicFilterBar) {
+    function Controller(categories, api, _, meta, moment, $scope, $state, searchBar) {
         var vm = this,
-            categoryId = $state.params.categoryId;
+            id = $state.params.id;
 
         vm.i = 0;
         vm.prev = prev;
@@ -21,12 +21,14 @@
         activate();
 
         function activate() {
+
             vm.categories = categories.get();
             vm.category = _.findWhere(vm.categories, {
-                id: categoryId
+                id: id
             }) || vm.categories[0];
 
             vm.loading = 1;
+            vm.items = [];
             loadItems();
 
             // cached view
@@ -36,7 +38,7 @@
         }
 
         function loadItems() {
-            api()
+            api('tag=latestnews')
                 .then(function(response) {
                     if (!angular.equals(vm.items, response)) {
                         vm.items = response;
@@ -61,7 +63,7 @@
         }
 
         function showSearchbar() {
-            $ionicFilterBar.show({
+            searchBar.show({
                 items: [],
                 update: function(filteredItems) {
                     console.log(filteredItems);

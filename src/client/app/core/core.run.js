@@ -7,11 +7,15 @@
 
     Runnable.$inject = [
         '$injector',
+        '$rootScope',
         '$ionicPlatform',
+        '$ionicSideMenuDelegate',
+        //https://github.com/revolunet/angular-google-analytics
+        //If you are relying on automatic page tracking, you need to inject Analytics at least once in your application.
         'Analytics'
     ];
 
-    function Runnable($injector, $ionicPlatform, Analytics) {
+    function Runnable($injector, $rootScope, $ionicPlatform, $ionicSideMenuDelegate, Analytics) {
 
         $ionicPlatform.ready(function() {
             var cordova = window.cordova,
@@ -29,6 +33,23 @@
             }
             // DEV: Expose $injector for console
             window.$i = $injector;
+        });
+
+        $rootScope.$on('$stateChangeStart', function stateChangeStart(event, toState, toParams, fromState, fromParams) {
+            console.log('$stateChangeStart:' + toState.name);
+            //$ionicSideMenuDelegate.toggleLeft(false);
+        });
+
+        $rootScope.$on('$stateChangeSuccess', function stateChangeStart(event, toState, toParams, fromState, fromParams) {
+            console.log('$stateChangeSuccess:' + toState.name);
+        });
+
+        $rootScope.$on('$stateChangeError', function stateChangeStart(event, toState, toParams, fromState, fromParams) {
+            console.log('$stateChangeError:' + toState.name);
+        });
+
+        $rootScope.$on('$stateNotFound', function stateChangeStart(event, toState, toParams, fromState, fromParams) {
+            console.log('$stateNotFound:' + toState.name);
         });
     }
 })();

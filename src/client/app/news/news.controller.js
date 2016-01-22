@@ -5,54 +5,89 @@
         .module('app.news')
         .controller('NewsController', Controller);
 
-    Controller.$inject = ['categories', '_', '$scope', '$state', '$ionicHistory', '$ionicViewSwitcher'];
+    Controller.$inject = ['nav', 'categories', 'api', '_', 'meta', 'moment', '$scope', '$state', 'searchBar'];
     /* @ngInject */
-    function Controller(categories, _, $scope, $state, $ionicHistory, $ionicViewSwitcher) {
-        var vm = this;
+    function Controller(nav, categories, api, _, meta, moment, $scope, $state, searchBar) {
+        var vm = this,
+            id = $state.params.id;
 
-        vm.onCategory = showCategory;
+        vm.i = 0;
+        vm.prev = prev;
+        vm.next = next;
+        vm.showSearchbar = showSearchbar;
+        vm.openMenu = openMenu;
+        vm.loadItems = loadItems;
 
-        $scope.$on('category.prev', prev);
-        $scope.$on('category.next', next);
-        $scope.$on('category', activate);
-
-        vm.categories = categories.get();
-
-        //activate();
+        activate();
 
         function activate() {
-            vm.category = _.findWhere(vm.categories, {
-                id: $state.params.categoryId
-            }) || vm.categories[0];
-            vm.selectedIndex = vm.categories.indexOf(vm.category);
+            var match = {
+                    items: []
+                },
+                category;
+
+            _.each(nav.get(), function(group) {
+                var items = _.get(group, 'items', []),
+                    cat = _.findWhere(items, {
+                        id: id
+                    });
+
+                if (cat) {
+                    category = cat;
+                    match = group;
+                    return;
+                }
+            });
+
+            vm.categories = match.items;
+            vm.category = category;
+
+            vm.loading = 1;
+            vm.items = [];
+            loadItems();
+
+            // cached view
+            $scope.$on('$ionicView.enter', function() {
+                $scope.$emit('category', vm.category, vm.categories);
+            });
+        }
+
+        function loadItems() {
+            api('tag=' + id)
+                .then(function(response) {
+                    if (!angular.equals(vm.items, response)) {
+                        vm.items = response;
+                    }
+                })
+                .catch(function(response) {
+                    vm.items = [];
+                })
+                .finally(function() {
+                    vm.loading = 0;
+                    $scope.$broadcast('scroll.refreshComplete');
+                });
         }
 
         function prev() {
-            vm.selectedIndex = !vm.selectedIndex ? vm.categories.length - 1 : vm.selectedIndex - 1;
-            showCategory(vm.categories[vm.selectedIndex]);
+            // $emit event up | $broadcast event down
+            $scope.$emit('category.prev');
         }
 
         function next() {
-            vm.selectedIndex = vm.selectedIndex === vm.categories.length - 1 ? 0 : vm.selectedIndex + 1;
-            showCategory(vm.categories[vm.selectedIndex]);
+            $scope.$emit('category.next');
         }
 
-        function showCategory(category) {
-            var dir = vm.categories.indexOf(vm.category) > vm.categories.indexOf(category) ? 'back' : 'forward';
-            $ionicViewSwitcher.nextDirection(dir);
-            vm.category = category;
-
-            $ionicHistory.nextViewOptions({
-                disableBack: true
+        function showSearchbar() {
+            searchBar.show({
+                items: [],
+                update: function(filteredItems) {
+                    console.log(filteredItems);
+                }
             });
+        }
 
-            if (category.id === '1') {
-                $state.transitionTo('app.news.frontpage');
-            } else {
-                $state.transitionTo('app.news.category', {
-                    categoryId: category.id
-                });
-            }
+        function openMenu($mdOpenMenu, ev) {
+            $mdOpenMenu(ev);
         }
     }
 })();

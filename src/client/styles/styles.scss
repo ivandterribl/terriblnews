@@ -2,6 +2,7 @@
 	"ionic/ionic.scss",
   "ionic-filter-bar/ionic.filter.bar.scss";
 
+
 .md-tab {
 	padding: 10px 12px;
 }
@@ -17,9 +18,7 @@ md-tabs-canvas, md-pagination-wrapper {
 }
 
 .list .item.item-accordion {
-  line-height: 38px;
-  padding-top: 0;
-  padding-bottom: 0;
+  padding-left: 28px;
   transition: 0.09s all linear;
 }
 .list .item.item-accordion.ng-hide {
@@ -34,7 +33,7 @@ md-tabs-canvas, md-pagination-wrapper {
   white-space: normal;
 }
 .item-complex .item-content, .item-radio .item-content {
-  padding: 16px;
+  padding: 12px;
 }
 
 .pic {
@@ -50,4 +49,9 @@ md-tabs-canvas, md-pagination-wrapper {
 .adsrv-embedded {
   float: left;
   margin: 5px 5px 5px 0;
+}
+
+ion-side-menu .item {
+  margin: 0;
+  border-width: 0px;
 }

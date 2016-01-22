@@ -1,12 +1,27 @@
-<ion-view>
-	<div class="bar bar-subheader" style="padding: 0">
-		<md-tabs md-border-bottom md-selected="vm.selectedIndex">
-	      <md-tab ng-repeat="tab in vm.categories"
-	              ng-disabled="tab.disabled"
-	              label="{{tab.title}}"
-	              ng-click="vm.onCategory(tab)"></md-tab>
-		</md-tabs>
-	</div>
-
-	<ion-nav-view name="tabContent"></ion-nav-view>
+<ion-view view-title="{{ vm.category.title }}">
+	<ion-nav-buttons side="right">
+      <button class="button button-icon ion-android-search" 
+                ng-click="vm.showSearchbar()"></button>
+    </ion-nav-buttons>
+	<ion-content class="has-subheader" on-swipe-right="vm.prev()" on-swipe-left="vm.next()">
+    	<section ng-show="vm.loading" class="text-center padding">
+    		<ion-spinner></ion-spinner>
+    	</section>
+    	<section ng-show="!vm.loading && !vm.items.length" class="padding">
+    		<h3 class="text-center assertive" ng-cloak>Oops, something went wrong</h3>
+    	</section>
+    	<section ng-show="!vm.loading">
+	    	<ion-list ng-show="vm.items.length">
+	            <ion-item class="item-light" ng-repeat="item in vm.items" ui-sref="app.article({ id: item.itemid })">
+	                <h2>{{ item.title }}</h2>
+	                <img ng-src="{{ item.introtextData.img }}" ng-if="item.introtextData.img" style="float:right; margin: 4px 0 4px 4px; "/>
+	                <p>{{ item.blurb }}</p>
+	                <div class="assertive">
+	                	<i class="icon ion-ios-clock-outline" style="font-size: 16px; position: relative; top: 1px"></i> 
+	                	<span style="font-size: 12px; line-height: 14px" am-time-ago="item.created"></span>
+	                </div>
+	            </ion-item>
+	        </ion-list>
+        </section>
+	</ion-content>
 </ion-view>

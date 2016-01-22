@@ -17,8 +17,46 @@
       <ion-header-bar class="bar bar-header bar-dark"></ion-header-bar>
       <ion-content has-header="true">
         <ion-list>
-          <ion-item ng-if="category.id === '1'" ui-sref="app.news.frontpage" menu-close nav-clear ng-repeat="category in vm.categories">{{ category.title }}</ion-item>
-          <ion-item ng-if="category.id !== '1'" ui-sref="app.news.category({ categoryId: category.id })" menu-close nav-clear ng-repeat="category in vm.categories">{{ category.title }}</ion-item>
+          <div ng-repeat="group in vm.nav">
+              <ion-item class="item-icon-left"
+                        ng-click="vm.toggleGroup(group)"
+                        ng-class="{active: vm.isGroupShown(group), 'item-icon-right': group.items.length }"  
+                        ng-if="group.sref"
+                        menu-close
+                        nav-clear
+                        ui-sref="{{ group.sref }}">
+                  
+                  <i class="icon icon-mini" ng-class="group.icon"></i> 
+                  {{ group.title }}
+
+                  <i class="icon icon-mini" 
+                    ng-if="group.items.length"
+                    ng-class="vm.isGroupShown(group) ? 'ion-chevron-up' : 'ion-chevron-down'"></i>
+              </ion-item>
+              <ion-item class="item-icon-left"
+                        ng-click="vm.toggleGroup(group)"
+                        ng-class="{active: vm.isGroupShown(group), 'item-icon-right': group.items.length }"  
+                        ng-if="!group.sref">
+                  
+                  <i class="icon icon-mini" ng-class="group.icon"></i> 
+                  {{ group.title }}
+
+                  <i class="icon icon-mini" 
+                    ng-if="group.items.length"
+                    ng-class="vm.isGroupShown(group) ? 'ion-chevron-up' : 'ion-chevron-down'"></i>
+              </ion-item>
+
+
+
+              <ion-item class="item-accordion"
+                        ng-repeat="item in group.items"
+                        ng-show="vm.isGroupShown(group)" 
+                        menu-close
+                        nav-clear 
+                        ui-sref="{{ item.sref }}">
+                  {{ item.title }}
+              </ion-item>
+          </div>
         </ion-list>
       </ion-content>
     </ion-side-menu>
