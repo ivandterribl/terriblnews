@@ -15,11 +15,6 @@
                 templateUrl: 'app/core/core.html',
                 controller: 'CoreController as vm'
             })
-            .state('app.frontpage', {
-                url: '/frontpage',
-                templateUrl: 'app/frontpage/frontpage.html',
-                controller: 'FrontpageController as vm'
-            })
             .state('app.article', {
                 url: '/article/:id',
                 templateUrl: 'app/article/article.html',

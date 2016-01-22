@@ -40,7 +40,13 @@
             });
 
             vm.categories = match.items;
-            vm.category = category;
+            if (!category) {
+                vm.category = _.findWhere(nav.get(), {
+                    id: id
+                });
+            } else {
+                vm.category = category;
+            }
 
             vm.loading = 1;
             vm.items = [];

@@ -26,7 +26,7 @@
             $http({
                 method: 'GET',
                 //url: config.url + url,
-                url: 'http://www.itweb.co.za/mobilesite/feed/ivan/json.php?' + url,
+                url: 'http://www.itweb.co.za/mobilesite/feed/ivan/?' + url,
                 timeout: opts.timeout || config.timeout
             }).success(function(response) {
                 console.log('api', response);

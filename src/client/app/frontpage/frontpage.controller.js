@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('app.news')
+        .module('app.frontpage')
         .controller('FrontpageController', Controller);
 
     Controller.$inject = ['categories', 'api', '_', 'meta', 'moment', '$scope', '$state', 'searchBar'];
@@ -38,7 +38,7 @@
         }
 
         function loadItems() {
-            api('tag=latestnews')
+            api('tag=latest-news')
                 .then(function(response) {
                     if (!angular.equals(vm.items, response)) {
                         vm.items = response;

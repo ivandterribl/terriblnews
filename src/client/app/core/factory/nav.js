@@ -22,8 +22,8 @@
                 icon: 'ion-document',
                 items: [{
                     title: 'Top news',
-                    id: 'topnews',
-                    sref: 'app.news.category({ id: \'topnews\' })',
+                    id: 'top-news',
+                    sref: 'app.news.category({ id: \'top-news\' })',
                     items: [{
                         title: 'Business'
                     }, {
@@ -67,7 +67,7 @@
 
             }, {
                 title: 'Opinion',
-                icon: 'ion-quote',
+                icon: 'ion-chatbubble',
                 items: [{
                     title: 'Columnists',
                     id: 'columnists',
@@ -79,24 +79,27 @@
                 }, {
                     title: 'Industry insight',
                     id: 'industryinsight',
-                    sref: 'app.opinion.category({ id: \'industryinsight\' })'
+                    sref: 'app.opinion.category({ id: \'industry-insight\' })'
                 }]
             }, {
                 title: 'Features',
-                icon: 'ion-pie-graph',
-                sref: 'app.404'
+                icon: 'ion-bookmark',
+                id: 'features',
+                sref: 'app.features'
             }, {
                 title: 'CIO zone',
                 icon: 'ion-trophy',
-                sref: 'app.404'
+                id: 'cio-zone',
+                sref: 'app.cioZone'
             }, {
                 title: 'Surveys',
-                icon: 'ion-chatboxes',
+                icon: 'ion-stats-bars',
                 sref: 'app.404'
             }, {
                 title: 'Reviews',
                 icon: 'ion-iphone',
-                sref: 'app.404'
+                id: 'reviews',
+                sref: 'app.reviews'
             }, {
                 title: 'Jobs',
                 icon: 'ion-briefcase',
