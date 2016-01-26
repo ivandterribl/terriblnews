@@ -3,7 +3,7 @@
 
     angular
         .module('app.news')
-        .controller('NewsController', Controller);
+        .controller('AfricaController', Controller);
 
     Controller.$inject = ['nav', 'categories', 'api', '_', 'meta', 'moment', '$scope', '$state', 'searchBar'];
     /* @ngInject */
@@ -41,7 +41,7 @@
 
             vm.categories = match.items;
             if (!category) {
-                vm.category = category = _.findWhere(nav.get(), {
+                vm.category = _.findWhere(nav.get(), {
                     id: id
                 });
             } else {

@@ -1,0 +1,17 @@
+<ion-view view-title="{{ vm.category.title }}">
+	<ion-content ng-class="{ 'has-subheader': vm.categories.length }" on-swipe-right="vm.prev()" on-swipe-left="vm.next()">
+    	<section ng-show="vm.loading" class="text-center padding">
+    		<ion-spinner></ion-spinner>
+    	</section>
+    	<section ng-show="!vm.loading && !vm.items.length" class="padding">
+    		<h3 class="text-center assertive" ng-cloak>Oops, something went wrong</h3>
+    	</section>
+    	<section ng-show="!vm.loading">
+	    	<ion-list ng-show="vm.items.length">
+	            <ion-item class="item-light" collection-repeat="item in vm.items" item-width="100%" item-height="50">
+	                <h2>{{ item.CompanyName }}</h2>
+	            </ion-item>
+	        </ion-list>
+        </section>
+	</ion-content>
+</ion-view>

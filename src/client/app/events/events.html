@@ -1,0 +1,24 @@
+<ion-view view-title="Past events">
+    
+    <ion-content>
+        <ion-list ng-show="vm.items.length">
+        	
+        		<ion-item class="item-light" ng-repeat="group in vm.groups">
+	        		<h2>{{ group[0].title }}</h2>
+	        		<p ng-bind-html="group[0].summary"></p>
+        		<div class="row" ng-repeat="item in group" style="margin-top: 10px">
+        			<div class="col">
+		                <h2>{{ item.artist }}</h2><br /><br /><br />
+		                <audio controls preload="none" style="width: 240px">
+						  <source ng-src="{{ item.src }}" type="audio/mpeg">
+						</audio>
+					</div>
+					<img ng-src="http://www.itweb.co.za/media/jukebox/{{ item.cover }}"/>
+	                
+	                
+	            </div>
+	            </ion-item>
+	        </ion-list>
+        
+    </ion-content>
+</ion-view>

@@ -38,7 +38,7 @@
         }
 
         function loadItems() {
-            api('tag=latest-news')
+            api('tag=frontpage')
                 .then(function(response) {
                     if (!angular.equals(vm.items, response)) {
                         vm.items = response;

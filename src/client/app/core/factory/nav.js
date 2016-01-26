@@ -78,7 +78,7 @@
                     sref: 'app.opinion.category({ id: \'tech-forum\' })'
                 }, {
                     title: 'Industry insight',
-                    id: 'industryinsight',
+                    id: 'industry-insight',
                     sref: 'app.opinion.category({ id: \'industry-insight\' })'
                 }]
             }, {
@@ -94,7 +94,8 @@
             }, {
                 title: 'Surveys',
                 icon: 'ion-stats-bars',
-                sref: 'app.404'
+                id: 'surveys',
+                sref: 'app.surveys'
             }, {
                 title: 'Reviews',
                 icon: 'ion-iphone',
@@ -103,55 +104,59 @@
             }, {
                 title: 'Jobs',
                 icon: 'ion-briefcase',
-                sref: 'app.404'
+                sref: 'app.jobs'
             }, {
                 title: 'Companies',
                 icon: 'ion-cube',
                 items: [{
                     title: 'Company news',
-                    sref: 'app.404'
+                    id: 'company-news',
+                    sref: 'app.office.news'
                 }, {
                     title: 'Virtual press offices',
-                    sref: 'app.404'
+                    id: 'virtual-press-office',
+                    sref: 'app.office.vpo'
                 }, {
                     title: 'Company zones',
-                    sref: 'app.404'
+                    id: 'company-zones',
+                    sref: 'app.office.zones'
                 }, {
                     title: 'Microsites',
-                    sref: 'app.404'
+                    id: 'microsites',
+                    sref: 'app.office.microsites'
                 }]
             }, {
                 title: 'Video',
                 icon: 'ion-videocamera',
-                sref: 'app.404'
+                sref: 'app.video'
             }, {
                 title: 'Events',
                 icon: 'ion-person-stalker',
-                sref: 'app.404'
+                sref: 'app.events'
             }, {
                 title: 'About',
                 icon: 'ion-information',
                 items: [{
                     title: 'About us',
-                    sref: 'app.404'
+                    sref: 'app.article({ id: 13913 })'
                 }, {
                     title: 'Contact us',
-                    sref: 'app.404'
+                    sref: 'app.article({ id: 27608 })'
                 }, {
                     title: 'Advertise',
-                    sref: 'app.404'
+                    sref: 'app.article({ id: 33679 })'
                 }, {
                     title: 'Terms of use',
-                    sref: 'app.404'
+                    sref: 'app.article({ id: 13913 })'
                 }, {
                     title: 'Privacy policy',
-                    sref: 'app.404'
+                    sref: 'app.article({ id: 38060 })'
                 }, {
                     title: 'Competition policy',
-                    sref: 'app.404'
+                    sref: 'app.article({ id: 48786 })'
                 }, {
                     title: 'BEE certificate',
-                    sref: 'app.404'
+                    sref: 'app.article({ id: 140719 })'
                 }]
             }];
         }

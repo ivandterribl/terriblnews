@@ -36,20 +36,20 @@
         });
 
         $rootScope.$on('$stateChangeStart', function stateChangeStart(event, toState, toParams, fromState, fromParams) {
-            console.log('$stateChangeStart:' + toState.name);
+            //console.log('$stateChangeStart:' + toState.name);
             //$ionicSideMenuDelegate.toggleLeft(false);
         });
 
         $rootScope.$on('$stateChangeSuccess', function stateChangeStart(event, toState, toParams, fromState, fromParams) {
-            console.log('$stateChangeSuccess:' + toState.name);
+            //console.log('$stateChangeSuccess:' + toState.name);
         });
 
         $rootScope.$on('$stateChangeError', function stateChangeStart(event, toState, toParams, fromState, fromParams) {
-            console.log('$stateChangeError:' + toState.name);
+            //console.log('$stateChangeError:' + toState.name);
         });
 
         $rootScope.$on('$stateNotFound', function stateChangeStart(event, toState, toParams, fromState, fromParams) {
-            console.log('$stateNotFound:' + toState.name);
+            //console.log('$stateNotFound:' + toState.name);
         });
     }
 })();

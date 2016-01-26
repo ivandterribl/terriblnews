@@ -2,8 +2,8 @@
     'use strict';
 
     angular
-        .module('app.news')
-        .controller('NewsTabsController', Controller);
+        .module('app.office')
+        .controller('OfficeTabsController', Controller);
 
     Controller.$inject = ['nav', 'categories', '_', '$scope', '$state', '$ionicHistory', '$ionicViewSwitcher'];
     /* @ngInject */
@@ -17,7 +17,7 @@
         $scope.$on('category', activate);
 
         vm.categories = _.findWhere(nav.get(), {
-            title: 'News'
+            title: $state.params.nav
         }).items;
 
         //activate();
@@ -48,13 +48,7 @@
                 disableBack: true
             });
 
-            if (category.id === 'africa') {
-                $state.transitionTo('app.news.africa');
-            } else {
-                $state.transitionTo('app.news.category', {
-                    id: category.id
-                });
-            }
+            $state.transitionTo(category.sref);
         }
     }
 })();

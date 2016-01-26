@@ -29,12 +29,11 @@
                 url: 'http://www.itweb.co.za/mobilesite/feed/ivan/?' + url,
                 timeout: opts.timeout || config.timeout
             }).success(function(response) {
-                console.log('api', response);
+                //console.log('%c' + url, 'background-color: yellow');
+                //console.log('%c' + JSON.stringify(response), 'background-color: #aFa');
                 def.resolve(response);
             }).error(function(response) {
-                console.error('api', response);
                 def.reject(response);
-
             }).finally(function() {
                 queue = _.reject(queue, function(d) {
                     return d === def;

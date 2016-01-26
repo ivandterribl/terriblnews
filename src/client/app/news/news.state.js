@@ -15,6 +15,18 @@
                 templateUrl: 'app/news/news-tabs.html',
                 controller: 'NewsTabsController as vm'
             })
+            .state('app.news.africa', {
+                params: {
+                    id: 'africa'
+                },
+                url: '/africa',
+                views: {
+                    tabContent: {
+                        templateUrl: 'app/news/africa.html',
+                        controller: 'AfricaController as vm'
+                    }
+                }
+            })
             .state('app.news.category', {
                 params: {
                     id: null
