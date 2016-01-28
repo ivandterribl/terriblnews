@@ -13,20 +13,15 @@
     <meta name="description" content="{{ vm.meta.description() }}" />
     <meta name="keywords" content="{{ vm.meta.keywords() }}" />
     <meta name="canonical" content="{{ vm.meta.canonical() }}" />
+    <meta name="fragment" content="!">
     <base href="/">
 
-    <!-- build:css styles/lib1.css -->
-    <!-- bower:css -->
-    <!-- endbower -->
-    <!-- endbuild -->
+    <!--link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"-->
 
     <!-- build:css styles/lib.css -->
-    <link rel="stylesheet" href="/src/client/app/ui/material/backdrop/backdrop.css">
-    <link rel="stylesheet" href="/src/client/app/ui/material/core/core.css">
-    <link rel="stylesheet" href="/src/client/app/ui/material/icon/icon.css">
-    <link rel="stylesheet" href="/src/client/app/ui/material/menu/menu.css">
-    <link rel="stylesheet" href="/src/client/app/ui/material/tabs/tabs.css">
-    <link rel="stylesheet" href="/src/client/app/ui/material/whiteframe/whiteframe.css">
+    <!-- bower:css -->
+    <link rel="stylesheet" href="/bower_components/angular-material/angular-material.css" />
+    <!-- endbower -->
     <!-- endbuild -->
 
     <!-- build:css styles/app.css -->
@@ -51,11 +46,15 @@
     <script src="/bower_components/angular-moment/angular-moment.js"></script>
     <script src="/bower_components/angular-bind-html-compile/angular-bind-html-compile.js"></script>
     <script src="/bower_components/angular-google-analytics/dist/angular-google-analytics.min.js"></script>
+    <script src="/bower_components/angular-soundmanager2/dist/angular-soundmanager2.js"></script>
+    <script src="/bower_components/angular-aria/angular-aria.js"></script>
+    <script src="/bower_components/angular-messages/angular-messages.js"></script>
+    <script src="/bower_components/angular-material/angular-material.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
     <!--script src="cordova.js"></script-->
-    
+
     <!-- build:js js/app.js -->
     <!-- inject:js -->
     <script src="/src/client/app/app.module.js"></script>
@@ -85,6 +84,8 @@
     <script src="/src/client/app/core/factory/config.js"></script>
     <script src="/src/client/app/core/factory/meta.js"></script>
     <script src="/src/client/app/core/factory/nav.js"></script>
+    <script src="/src/client/app/events/audio.player.js"></script>
+    <script src="/src/client/app/events/event.controller.js"></script>
     <script src="/src/client/app/events/events.controller.js"></script>
     <script src="/src/client/app/events/events.state.js"></script>
     <script src="/src/client/app/features/features.state.js"></script>
@@ -103,12 +104,6 @@
     <script src="/src/client/app/surveys/surveys.state.js"></script>
     <script src="/src/client/app/ui/adsrv/adsrv.directive.js"></script>
     <script src="/src/client/app/ui/disqus/disqus.directive.js"></script>
-    <script src="/src/client/app/ui/material/backdrop/backdrop.js"></script>
-    <script src="/src/client/app/ui/material/core/core.js"></script>
-    <script src="/src/client/app/ui/material/icon/icon.js"></script>
-    <script src="/src/client/app/ui/material/menu/menu.js"></script>
-    <script src="/src/client/app/ui/material/tabs/tabs.js"></script>
-    <script src="/src/client/app/ui/material/whiteframe/whiteframe.js"></script>
     <script src="/src/client/app/ui/searchbar/searchbar.config.js"></script>
     <script src="/src/client/app/ui/searchbar/searchbar.directive.js"></script>
     <script src="/src/client/app/ui/searchbar/searchbar.js"></script>

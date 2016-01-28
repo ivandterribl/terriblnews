@@ -3,12 +3,11 @@
 
 	angular.module('app.core', [
 		'ionic',
-		//'jett.ionic.filter.bar',
+		'ngMaterial',
 		'itw.ui',
-		'material.components.tabs',
-		'material.components.menu',
 		'angularMoment',
 		'angular-bind-html-compile',
-		'angular-google-analytics'
+		'angular-google-analytics',
+		'angularSoundManager'
 	]);
 })();

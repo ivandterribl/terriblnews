@@ -16,6 +16,11 @@
                 url: '/events',
                 templateUrl: 'app/events/events.html',
                 controller: 'EventsController as vm'
+            })
+            .state('app.event', {
+                url: '/events/:id',
+                templateUrl: 'app/events/event.html',
+                controller: 'EventController as vm'
             });
     }
 })();

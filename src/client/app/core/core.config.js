@@ -9,6 +9,7 @@
 	Config.$inject = ['$mdThemingProvider', '$mdGestureProvider', '$ionicConfigProvider', 'AnalyticsProvider'];
 
 	function Config($mdThemingProvider, $mdGestureProvider, $ionicConfigProvider, AnalyticsProvider) {
+		//Pre-render token:X5ntL9ZoXJn6ToZteZip
 		AnalyticsProvider.useAnalytics(false)
 			.setAccount('UA-72578455-1')
 			.setDomainName('itrends.co.za')
@@ -66,7 +67,7 @@
 			.accentPalette('iRed', {
 				'default': '500'
 			})
-			.warnPalette('orange');
+			.warnPalette('teal');
 
 	}
 })();

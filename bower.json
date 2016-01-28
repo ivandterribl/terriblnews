@@ -26,7 +26,9 @@
     "lodash": "~3.10.1",
     "angular-moment": "~0.10.3",
     "angular-bind-html-compile": "~1.1.0",
-    "angular-google-analytics": "~1.1.5"
+    "angular-google-analytics": "~1.1.5",
+    "angular-soundmanager2": "~0.5.6",
+    "angular-material": "~1.0.3"
   },
   "resolutions": {
     "angular": "^1.4.8",

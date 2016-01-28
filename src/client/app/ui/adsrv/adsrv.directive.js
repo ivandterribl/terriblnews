@@ -9,7 +9,7 @@
 
     function Adsrv($window, _, $http) {
         return {
-            restrict: 'E',
+            restrict: 'EA',
             scope: {
                 what: '@',
                 width: '@',

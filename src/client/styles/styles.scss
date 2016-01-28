@@ -35,6 +35,11 @@ md-tabs-canvas, md-pagination-wrapper {
 .item-complex .item-content, .item-radio .item-content {
   padding: 12px;
 }
+.item-thumbnail-left.item-complex .item-content {
+    padding-top: 6px;
+    padding-left: 102px;
+    min-height: 100px;
+}
 
 .pic {
   text-align: center;
@@ -61,4 +66,11 @@ article img {
 }
 article table {
   max-width: 100%;
+}
+
+.item.item-light.current {
+  background-color: #ffc;
+}
+ion-header-bar.bar.bar-stable {
+  border-bottom: 1px solid #ddd;
 }

@@ -2,23 +2,15 @@
     
     <ion-content>
         <ion-list ng-show="vm.items.length">
-        	
-        		<ion-item class="item-light" ng-repeat="group in vm.groups">
-	        		<h2>{{ group[0].title }}</h2>
-	        		<p ng-bind-html="group[0].summary"></p>
-        		<div class="row" ng-repeat="item in group" style="margin-top: 10px">
-        			<div class="col">
-		                <h2>{{ item.artist }}</h2><br /><br /><br />
-		                <audio controls preload="none" style="width: 240px">
-						  <source ng-src="{{ item.src }}" type="audio/mpeg">
-						</audio>
-					</div>
-					<img ng-src="http://www.itweb.co.za/media/jukebox/{{ item.cover }}"/>
-	                
-	                
-	            </div>
-	            </ion-item>
-	        </ion-list>
-        
+    		<ion-item class="item-light item-thumbnail-left" ng-repeat="item in vm.items" ui-sref="app.event({ id: item.id })">
+	                <img ng-src="{{item.img}}" ng-if="item.img" />
+	                <h2>{{ item.title }}</h2>
+	                <p ng-bind-html="item.summary"></p>
+	                <div class="assertive">
+	                	<i class="icon ion-music-note" style="font-size: 16px; position: relative; top: 1px"></i> 
+	                	<span style="font-size: 12px; line-height: 14px">{{ item.n }} audio files</span>
+	                </div>
+            </ion-item>
+        </ion-list>
     </ion-content>
 </ion-view>

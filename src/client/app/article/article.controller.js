@@ -20,10 +20,11 @@
         activate();
 
         function activate() {
+            window.prerenderReady = false;
             vm.loading = 1;
             api('tag=article&id=' + $state.params.id)
                 .then(function(response) {
-                    var embedded = '<adsrv what="triggeronedefault" width="120" height="250" class="adsrv-embedded"></adsrv>',
+                    var embedded = '<div adsrv what="triggeronedefault" width="120" height="250" class="adsrv-embedded"></div>',
                         article = _.assign(response[0], {
                             created: moment(response[0].created).format()
                         }),
@@ -43,11 +44,15 @@
                         'id=' + $state.params.id
                     ].join('&'));
 
-                    vm.disqus = {
-                        shortname: 'itweb-za',
-                        id: '8f3edde904_id' + $state.params.id,
-                        url: 'http://www.itweb.co.za/index.php?option=com_content&view=article&id=' + $state.params.id
-                    };
+                    setTimeout(function() {
+                        window.prerenderReady = true;
+                    }, 100);
+
+                    // vm.disqus = {
+                    //     shortname: 'itweb-za',
+                    //     id: '8f3edde904_id' + $state.params.id,
+                    //     url: 'http://www.itweb.co.za/index.php?option=com_content&view=article&id=' + $state.params.id
+                    // };
                 })
                 .catch(function(response) {
                     vm.article = {
