@@ -17,10 +17,7 @@
                     <h2>{{ item.title }}</h2>
                     <img ng-src="http://www.itweb.co.za/jMediaDirect/videos/pics/small/{{ item.vid }}.jpg" ng-if="item.vid" style="float:right; margin: 4px 0 4px 4px; "/>
                     <p>{{ item.description }}</p>
-                    <div class="assertive">
-                        <i class="icon ion-ios-clock-outline" style="font-size: 16px; position: relative; top: 1px"></i> 
-                        <span style="font-size: 12px; line-height: 14px" am-time-ago="item.dateadded"></span>
-                    </div>
+                    <itw-timestamp timestamp="'{{ ::item.dateadded }}'" class="assertive"></itw-timestamp>
                 </ion-item>
             </ion-list>
         </section>

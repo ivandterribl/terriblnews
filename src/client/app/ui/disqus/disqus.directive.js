@@ -11,7 +11,7 @@
     /**
      * Config
      */
-    var moduleName = 'app.core' || 'angularUtils.directives.dirDisqus';
+    var moduleName = 'itw.ui' || 'angularUtils.directives.dirDisqus';
 
     /**
      * Module

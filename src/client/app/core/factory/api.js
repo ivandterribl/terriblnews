@@ -26,7 +26,7 @@
             $http({
                 method: 'GET',
                 //url: config.url + url,
-                url: 'http://www.itweb.co.za/mobilesite/feed/ivan/?' + url,
+                url: 'http://www.itweb.co.za/mobilesite/feed/ivan/new.php?' + url,
                 timeout: opts.timeout || config.timeout
             }).success(function(response) {
                 //console.log('%c' + url, 'background-color: yellow');

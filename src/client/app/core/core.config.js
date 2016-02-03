@@ -16,7 +16,7 @@
 			.trackPages(true)
 			.setPageEvent('$stateChangeSuccess');
 
-		$ionicConfigProvider.views.maxCache(0);
+		$ionicConfigProvider.views.maxCache(1);
 
 		$mdGestureProvider.skipClickHijack();
 

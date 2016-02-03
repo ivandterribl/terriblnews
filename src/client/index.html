@@ -10,13 +10,16 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
     <meta name="description" content="{{ vm.meta.description() }}" />
     <meta name="keywords" content="{{ vm.meta.keywords() }}" />
-    <meta name="canonical" content="{{ vm.meta.canonical() }}" />
-    <meta name="fragment" content="!">
-    <base href="/">
+    <meta name="canonical" content="{{ vm.meta.canonical() }}" ng-if="vm.meta.canonical()"/>
 
-    <!--link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"-->
+    <script type="application/ld+json" id="json-ld"></script>
+
+    <base href="/">
 
     <!-- build:css styles/lib.css -->
     <!-- bower:css -->
@@ -37,23 +40,20 @@
     <!-- bower:js -->
     <script src="/bower_components/angular/angular.js"></script>
     <script src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="/bower_components/moment/moment.js"></script>
     <script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="/bower_components/angular-animate/angular-animate.js"></script>
     <script src="/bower_components/ionic/release/js/ionic.js"></script>
     <script src="/bower_components/ionic/release/js/ionic-angular.js"></script>
     <script src="/bower_components/lodash/lodash.js"></script>
-    <script src="/bower_components/angular-moment/angular-moment.js"></script>
     <script src="/bower_components/angular-bind-html-compile/angular-bind-html-compile.js"></script>
     <script src="/bower_components/angular-google-analytics/dist/angular-google-analytics.min.js"></script>
-    <script src="/bower_components/angular-soundmanager2/dist/angular-soundmanager2.js"></script>
     <script src="/bower_components/angular-aria/angular-aria.js"></script>
     <script src="/bower_components/angular-messages/angular-messages.js"></script>
     <script src="/bower_components/angular-material/angular-material.js"></script>
+    <script src="/bower_components/moment/moment.js"></script>
+    <script src="/bower_components/ion-affix/ion-affix.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
-
-    <!--script src="cordova.js"></script-->
 
     <!-- build:js js/app.js -->
     <!-- inject:js -->
@@ -96,7 +96,9 @@
     <script src="/src/client/app/news/news-tabs.controller.js"></script>
     <script src="/src/client/app/news/news.controller.js"></script>
     <script src="/src/client/app/news/news.state.js"></script>
+    <script src="/src/client/app/news/section/section.controller.js"></script>
     <script src="/src/client/app/office/office-tabs.controller.js"></script>
+    <script src="/src/client/app/office/office.controller.js"></script>
     <script src="/src/client/app/office/office.state.js"></script>
     <script src="/src/client/app/opinion/opinion-tabs.controller.js"></script>
     <script src="/src/client/app/opinion/opinion.state.js"></script>
@@ -107,6 +109,7 @@
     <script src="/src/client/app/ui/searchbar/searchbar.config.js"></script>
     <script src="/src/client/app/ui/searchbar/searchbar.directive.js"></script>
     <script src="/src/client/app/ui/searchbar/searchbar.js"></script>
+    <script src="/src/client/app/ui/timestamp/timestamp.directive.js"></script>
     <script src="/src/client/app/video/play.controller.js"></script>
     <script src="/src/client/app/video/video.state.js"></script>
     <!-- endinject -->

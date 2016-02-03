@@ -3,15 +3,20 @@
     	<section ng-show="vm.loading" class="text-center padding">
     		<ion-spinner></ion-spinner>
     	</section>
-    	<section ng-show="!vm.loading && !vm.items.length" class="padding">
-    		<h3 class="text-center assertive" ng-cloak>Oops, something went wrong</h3>
-    	</section>
     	<section ng-show="!vm.loading">
-	    	<ion-list ng-show="vm.items.length">
-	            <ion-item class="item-light" collection-repeat="item in vm.items" item-width="100%" item-height="50">
-	                <h2>{{ item.CompanyName }}</h2>
-	            </ion-item>
-	        </ion-list>
+    	    <div class="item-light itw-logos" ng-repeat="(group, items) in vm.groups">
+                <span class="itw-oblique" 
+                ion-affix data-affix-within-parent-with-class="itw-logos"
+                style="position: absolute; top: 4px; left: 0">
+                    {{ group }}
+                </span>
+                <div style="padding: 0 0 32px 0; text-align: center" ng-repeat="item in items">
+                    <a ng-href="{{ item.url }}">
+                        <img ng-src="{{ item.image }}" style="margin: auto" />
+                    </a>
+                </div>
+            </div>
+            <div style="height: 100px"></div>
         </section>
 	</ion-content>
 </ion-view>

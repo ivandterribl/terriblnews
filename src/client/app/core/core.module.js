@@ -5,9 +5,8 @@
 		'ionic',
 		'ngMaterial',
 		'itw.ui',
-		'angularMoment',
 		'angular-bind-html-compile',
 		'angular-google-analytics',
-		'angularSoundManager'
+		'ion-affix'
 	]);
 })();

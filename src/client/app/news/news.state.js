@@ -38,6 +38,14 @@
                         controller: 'NewsController as vm'
                     }
                 }
+            })
+            .state('app.section', {
+                params: {
+                    id: null
+                },
+                url: '/news/section/:id',
+                templateUrl: 'app/news/news.html',
+                controller: 'SectionController as vm'
             });
     }
 })();

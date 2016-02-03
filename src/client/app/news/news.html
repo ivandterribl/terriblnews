@@ -1,4 +1,5 @@
-<ion-view view-title="{{ vm.category.title }}">
+<ion-view>
+	<ion-nav-title>{{ ::vm.category.title }}</ion-nav-title>
 	<ion-nav-buttons side="right">
       <button class="button button-icon ion-android-search" 
                 ng-click="vm.showSearchbar()"></button>
@@ -12,14 +13,32 @@
     	</section>
     	<section ng-show="!vm.loading">
 	    	<ion-list ng-show="vm.items.length">
-	            <ion-item class="item-light" ng-repeat="item in vm.items" ui-sref="app.article({ id: item.itemid })">
-	                <h2>{{ item.title }}</h2>
-	                <img ng-src="{{ item.introtextData.img }}" ng-if="item.introtextData.img" style="float:right; margin: 4px 0 4px 4px; "/>
-	                <p>{{ item.blurb }}</p>
-	                <div class="assertive">
-	                	<i class="icon ion-ios-clock-outline" style="font-size: 16px; position: relative; top: 1px"></i> 
-	                	<span style="font-size: 12px; line-height: 14px" am-time-ago="item.created"></span>
-	                </div>
+    		    <ion-item ng-repeat="item in vm.items" class="item-light" >
+		            <a ui-sref="app.section({ id: item.section.id })" class="item-content" ng-if="item.section.id">
+			            <h3 class="itw-section assertive">
+	                		{{ item.section.title }}
+	                		<i class="icon ion-chevron-right"></i> 
+		                </h3>
+	                </a>
+	                <a ng-href="http://www.itweb.co.za/office/{{ item.copyPath }}" class="item-content" ng-if="item.copyPath">
+			            <h3 class="itw-section assertive">
+	                		{{ item.company }}
+	                		<i class="icon ion-chevron-right"></i> 
+		                </h3>
+	                </a>
+	                <a class="item-content" ui-sref="app.article({ id: item.itemid })">
+		                <h2>{{ item.title }}</h2>
+		                <img ng-src="{{ item.introtextData.img }}" ng-if="item.introtextData.img" style="float:right; margin: 4px 0 4px 4px; "/>
+		                
+		                <p>{{ item.blurb }}</p>
+		                <p style="font-size: 12px; line-height: 14px">
+		                	<itw-timestamp timestamp="'{{ item.created }}'"></itw-timestamp>
+
+		                	<i class="icon ion-edit assertive" style="" ng-if="item.created_by_alias || item.issuedby"></i> 
+		                	<span class="itw-author assertive" ng-if="item.created_by_alias">{{ item.created_by_alias }}</span>
+		                	<span class="itw-author assertive" ng-if="item.issuedby && !item.created_by_alias">{{ item.issuedby }}</span>
+		                </p>
+	                </a>
 	            </ion-item>
 	        </ion-list>
         </section>

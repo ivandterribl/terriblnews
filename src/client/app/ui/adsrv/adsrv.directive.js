@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('app.core')
+        .module('itw.ui')
         .directive('adsrv', Adsrv);
 
     Adsrv.$inject = ['$window', '_', '$http'];

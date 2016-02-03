@@ -21,7 +21,7 @@
                 title: 'News',
                 icon: 'ion-document',
                 items: [{
-                    title: 'Top news',
+                    title: 'Top stories',
                     id: 'top-news',
                     sref: 'app.news.category({ id: \'top-news\' })',
                     items: [{
@@ -48,23 +48,22 @@
                         title: 'Channel'
                     }]
                 }, {
-                    title: 'Analysis',
-                    id: 'analysis',
-                    sref: 'app.news.category({ id: \'analysis\' })'
-                }, {
                     title: 'Industry news',
                     id: 'industry-news',
                     sref: 'app.news.category({ id: \'industry-news\' })'
+                }, {
+                    title: 'Company news',
+                    id: 'company-news',
+                    sref: 'app.news.category({ id: \'company-news\' })'
                 }, {
                     title: 'Africa',
                     id: 'africa',
                     sref: 'app.news.category({ id: \'africa\' })'
                 }, {
-                    title: 'Company news',
-                    id: 'vpo',
-                    sref: 'app.news.category({ id: \'vpo\' })'
+                    title: 'World',
+                    id: 'world',
+                    sref: 'app.news.category({ id: \'world\' })'
                 }]
-
             }, {
                 title: 'Opinion',
                 icon: 'ion-chatbubble',
@@ -91,20 +90,20 @@
                 icon: 'ion-trophy',
                 id: 'cio-zone',
                 sref: 'app.cioZone'
-            }, {
-                title: 'Surveys',
-                icon: 'ion-stats-bars',
-                id: 'surveys',
-                sref: 'app.surveys'
+                    // }, {
+                    //     title: 'Surveys',
+                    //     icon: 'ion-stats-bars',
+                    //     id: 'surveys',
+                    //     sref: 'app.surveys'
             }, {
                 title: 'Reviews',
                 icon: 'ion-iphone',
                 id: 'reviews',
                 sref: 'app.reviews'
-            }, {
-                title: 'Jobs',
-                icon: 'ion-briefcase',
-                sref: 'app.jobs'
+                    // }, {
+                    //     title: 'Jobs',
+                    //     icon: 'ion-briefcase',
+                    //     sref: 'app.jobs'
             }, {
                 title: 'Companies',
                 icon: 'ion-cube',

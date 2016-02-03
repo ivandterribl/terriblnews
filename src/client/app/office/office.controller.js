@@ -3,7 +3,7 @@
 
     angular
         .module('app.news')
-        .controller('NewsController', Controller);
+        .controller('OfficeController', Controller);
 
     Controller.$inject = ['nav', 'categories', 'api', '_', 'meta', 'moment', '$scope', '$state', 'searchBar'];
     /* @ngInject */
@@ -15,7 +15,6 @@
         vm.prev = prev;
         vm.next = next;
         vm.showSearchbar = showSearchbar;
-        vm.openMenu = openMenu;
         vm.loadItems = loadItems;
 
         activate();
@@ -61,23 +60,25 @@
         function loadItems() {
             api('tag=' + id)
                 .then(function(response) {
-                    switch (id) {
-                        case 'top-news':
-                        case 'industry-news':
-                            vm.items = _.map(response, function(row) {
-                                var slug = row.section.split(':');
-                                return _.assign(row, {
-                                    section: {
-                                        id: slug[0],
-                                        title: slug[1]
-                                    }
-                                });
-                            });
-                            break;
-                        default:
-                            vm.items = response;
+                    var items = _.map(response, function(row) {
+                        var group = row
+                            .title
+                            .substr(0, 1)
+                            .toUpperCase();
+
+                        return {
+                            group: group.charCodeAt(0) >= 65 && group.charCodeAt(0) <= 90 ? group : '#',
+                            title: row.title,
+                            url: row.url,
+                            image: row.image
+                        };
+                    });
+                    if (id === 'microsites') {
+                        vm.items = _.sortBy(items, 'title');
+                    } else {
+                        vm.groups = _.groupBy(items, 'group');
                     }
-                    console.log(vm.items);
+
                 })
                 .catch(function(response) {
                     vm.items = [];
@@ -104,10 +105,6 @@
                     console.log(filteredItems);
                 }
             });
-        }
-
-        function openMenu($mdOpenMenu, ev) {
-            $mdOpenMenu(ev);
         }
     }
 })();

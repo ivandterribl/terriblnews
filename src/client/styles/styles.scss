@@ -1,8 +1,11 @@
 @import 
 	"ionic/ionic.scss",
-  "ionic-filter-bar/ionic.filter.bar.scss";
+  "ionic-filter-bar/ionic.filter.bar.scss",
+  "itw.scss";
 
-
+a {
+  text-decoration: none;
+}
 .md-tab {
 	padding: 10px 12px;
 }
@@ -73,4 +76,17 @@ article table {
 }
 ion-header-bar.bar.bar-stable {
   border-bottom: 1px solid #ddd;
+}
+.item-logo-left .item-content > img:first-child {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    max-width: 80px;
+    width: 100%;
+}
+.item-logo-left.item-complex .item-content {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 102px;
+    min-height: 73px;
 }

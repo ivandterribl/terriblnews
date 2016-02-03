@@ -12,7 +12,8 @@
 			paused = false,
 			current = {
 				album: 0,
-				track: 0
+				track: 0,
+				progress: 0
 			};
 
 		player = {
@@ -36,6 +37,7 @@
 
 				if (!paused) {
 					audio.src = playlist[current.album].tracks[current.track].url;
+					current.progress = 0;
 				}
 				audio.play();
 				player.playing = true;
@@ -54,6 +56,7 @@
 				player.pause();
 				current.album = 0;
 				current.track = 0;
+				current.progress = 0;
 			},
 
 			next: function() {
@@ -103,6 +106,10 @@
 			}
 			playlist.splice(index, 1);
 		};
+
+		audio.addEventListener('timeupdate', function() {
+			current.progress = this.currentTime / this.duration;
+		});
 
 		audio.addEventListener('ended', function() {
 			$rootScope.$apply(player.next);

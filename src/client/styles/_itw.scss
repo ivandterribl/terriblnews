@@ -1,0 +1,35 @@
+.itw-section {
+	padding: 8px 0;
+    margin-bottom: 0;
+	font-size: 14px;
+	text-transform: uppercase;
+	text-decoration: none;
+}
+.itw-logos {
+	position: relative;
+	padding-top: 10px;
+}
+.itw-oblique {
+  position: relative;
+  margin: 10px 0 0 10px;
+  display: inline-block;
+  z-index: 20;
+  line-height: 32px;
+  min-width: 0;
+  width: 32px;
+  height: 32px;
+  vertical-align: middle;
+  text-align: center;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: $assertive;
+  color: $light;
+  font-family: $headings-font-family;
+  font-weight: $headings-font-weight;
+  font-size: 18px;
+  padding: 0;
+}
+itw-timestamp {
+	font-size: 12px;
+	padding-right: 4px;
+}

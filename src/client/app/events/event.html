@@ -1,48 +1,50 @@
-<ion-view view-title="{{ vm.items[0].category }}">
-        <ion-nav-bar class="bar-stable">
-            <ion-nav-back-button>
-            </ion-nav-back-button>
+<ion-view>
 
-            <ion-nav-buttons side="left">
-                <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
-                </button>
-            </ion-nav-buttons>
-            
-            <md-button class="md-fab md-hue-2" aria-label="Play audio" 
-            	ng-click="vm.player.play()"
-            	ng-if="vm.player.playlist.length && !vm.player.playing"
-            	style="position: absolute; top: 9px; right: 0">
-            	<i class="icon ion-play" style="font-size: 24px;color:#fff"></i>
-    		</md-button>
+    <ion-nav-bar class="bar-stable">
+        <ion-nav-title>{{ vm.title }}</ion-nav-title>
 
-    		<md-button class="md-fab md-hue-2" aria-label="Play audio" 
-            	ng-click="vm.player.pause()"
-            	ng-if="vm.player.playlist.length && vm.player.playing"
-            	style="position: absolute; top: 9px; right: 0">
-            	<i class="icon ion-pause" style="font-size: 24px;color:#fff"></i>
-    		</md-button>
-        </ion-nav-bar>
+        <ion-nav-back-button>
+        </ion-nav-back-button>
+
+        <ion-nav-buttons side="left">
+            <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+            </button>
+        </ion-nav-buttons>
+
+        <md-button class="md-fab md-hue-2" aria-label="Play audio"
+        	ng-click="vm.player.play()"
+        	ng-if="vm.player.playlist.length && !vm.player.playing"
+        	style="position: absolute; top: 9px; right: 0">
+        	<i class="icon ion-play" style="font-size: 24px;color:#fff"></i>
+		</md-button>
+
+		<md-button class="md-fab md-hue-2" aria-label="Play audio"
+        	ng-click="vm.player.pause()"
+        	ng-if="vm.player.playlist.length && vm.player.playing"
+        	style="position: absolute; top: 9px; right: 0">
+        	<i class="icon ion-pause" style="font-size: 24px;color:#fff"></i>
+		</md-button>
+    </ion-nav-bar>
 
     <ion-content>
-    	<img ng-src="{{ vm.items[0].banner }}" style="width:100%"/> 
-    	
-        <!-- div class="padding">
-	    	<h2 class="assertive" style="margin-bottom: 0; padding-bottom: 0">{{ vm.items[0].category }}</h2>
-	        <p ng-bind-html="vm.items[0].summary"></p>
-        </div> -->
-        <div  style="margin-top: 0;">
-        <ion-list ng-show="vm.items.length">
-    		<ion-item class="item-light" ng-repeat="(i, item) in vm.items" 
-    		ng-class="{ current: vm.player.playing && vm.player.playlist[vm.player.current.album].tracks[vm.player.current.track].url === item.mp3 }"
-    		ng-click="vm.player.play(i, 0)">
-    			<img ng-src="{{ item.cover }}" ng-if="item.cover" align="left" style="margin-right: 10px;"/>
-        	        <!-- <h4>{{ item.artist }}</h4>
-        	        <h3>{{ item.title }}</h3> -->
-        	        <p ng-bind-html="item.description"></p>
-			</ion-item>
-        </ion-list>
+        <div style="width: 100%; text-align: center">
+    	   <img ng-src="{{ vm.items[0].banner }}" style="max-width:100%; margin: auto"/>
         </div>
-        
+       
+        <div  style="margin-top: 0;">
+            <ion-list ng-show="vm.items.length">
+        		<ion-item class="item-light" ng-repeat="(i, item) in vm.items"
+        		ng-class="{ current: vm.player.playing && vm.player.playlist[vm.player.current.album].tracks[vm.player.current.track].url === item.mp3 }"
+        		ng-click="vm.player.play(i, 0)">
+        			<img ng-src="{{ item.cover }}" ng-if="item.cover" align="left" style="margin-right: 10px;"/>
+                    <p ng-bind-html="item.description"></p>
+                    <div class="assertive">
+                        <i class="icon ion-mic-a" style="font-size: 16px; position: relative; top: 1px"></i>
+                        <span style="font-size: 12px; line-height: 14px">{{ item.duration }}</span>
+                    </div>
+    			</ion-item>
+            </ion-list>
+        </div>
     </ion-content>
 
     <ion-footer-bar style="border-top: 1px solid #ccc;">
@@ -52,6 +54,8 @@
     		{{ vm.player.playlist[vm.player.current.album].tracks[vm.player.current.track].title }}<br />
     		{{ vm.player.playlist[vm.player.current.album].tracks[vm.player.current.track].artist }}<br />
     	</span>
+
+
     	<i class="icon ion-skip-forward" style="font-size: 24px; margin-right: 10px;" ng-click="vm.player.next()"></i>
     	<i class="icon ion-play" style="font-size: 24px" ng-if="vm.player.playlist.length && !vm.player.playing" ng-click="vm.player.play()"></i>
     	<i class="icon ion-pause" style="font-size: 24px" ng-if="vm.player.playlist.length && vm.player.playing" ng-click="vm.player.pause()"></i>

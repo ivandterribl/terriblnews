@@ -17,8 +17,7 @@
 	                <img ng-src="{{ item.introtextData.img }}" ng-if="item.introtextData.img" style="float:right; margin: 4px 0 4px 4px; "/>
 	                <p>{{ item.blurb }}</p>
 	                <div class="assertive">
-	                	<i class="icon ion-ios-clock-outline" style="font-size: 16px; position: relative; top: 1px"></i> 
-	                	<span style="font-size: 12px; line-height: 14px" am-time-ago="item.created"></span>
+	                	<itw-timestamp timestamp="'{{ ::item.created }}'"></itw-timestamp>
 	                </div>
 	            </ion-item>
 	        </ion-list>

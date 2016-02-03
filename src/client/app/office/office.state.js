@@ -38,7 +38,7 @@
                 views: {
                     tabContent: {
                         templateUrl: 'app/office/office.html',
-                        controller: 'NewsController as vm'
+                        controller: 'OfficeController as vm'
                     }
                 }
             })
@@ -50,7 +50,7 @@
                 views: {
                     tabContent: {
                         templateUrl: 'app/office/office.html',
-                        controller: 'NewsController as vm'
+                        controller: 'OfficeController as vm'
                     }
                 }
             })
@@ -61,8 +61,8 @@
                 },
                 views: {
                     tabContent: {
-                        templateUrl: 'app/office/office.html',
-                        controller: 'NewsController as vm'
+                        templateUrl: 'app/office/microsites.html',
+                        controller: 'OfficeController as vm'
                     }
                 }
             });

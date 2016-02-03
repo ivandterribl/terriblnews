@@ -16,8 +16,7 @@
 	                <h2>{{ item.title }}</h2>
 	                <p>{{ item.summary }}</p>
 	                <div class="assertive">
-	                	<i class="icon ion-ios-clock-outline" style="font-size: 16px; position: relative; top: 1px"></i> 
-	                	<span style="font-size: 12px; line-height: 14px" am-time-ago="item.published"></span>
+	                	<itw-timestamp timestamp="'{{ ::item.published }}'"></itw-timestamp>
 	                </div>
 	            </ion-item>
 	        </ion-list>
