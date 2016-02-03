@@ -5,13 +5,13 @@
         .module('app.news')
         .controller('SectionController', Controller);
 
-    Controller.$inject = ['nav', 'categories', 'api', '_', 'meta', 'moment', '$scope', '$state', 'searchBar'];
+    Controller.$inject = ['nav', 'categories', 'api', '_', 'meta', 'moment', '$scope', '$state'];
     /* @ngInject */
     function Controller(nav, categories, api, _, meta, moment, $scope, $state, searchBar) {
         var vm = this,
             id = $state.params.id;
 
-        vm.showSearchbar = showSearchbar;
+        vm.portalIcon = 1;
         vm.loadItems = loadItems;
 
         activate();

@@ -13,7 +13,9 @@
         <section ng-show="!vm.loading">
             <ion-list ng-show="vm.items.length">
                 <ion-item class="item-light" ng-repeat="item in vm.items" ui-sref="app.play({ id: item.v, title: item.title })">
-                    <h3 style="text-transform: uppercase">{{ item.category }}</h3>
+                    <h3 class="itw-section stable">
+                        {{ item.category }}
+                    </h3>
                     <h2>{{ item.title }}</h2>
                     <img ng-src="http://www.itweb.co.za/jMediaDirect/videos/pics/small/{{ item.vid }}.jpg" ng-if="item.vid" style="float:right; margin: 4px 0 4px 4px; "/>
                     <p>{{ item.description }}</p>

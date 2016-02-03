@@ -48,6 +48,15 @@
                 vm.category = category;
             }
 
+            switch (id) {
+                case 'industry-news':
+                    vm.portalIcon = 1;
+                    break;
+                case 'company-news':
+                    vm.companyIcon = 1;
+                    break;
+            }
+
             vm.loading = 1;
             vm.items = [];
             loadItems();

@@ -46,6 +46,14 @@
                 url: '/news/section/:id',
                 templateUrl: 'app/news/news.html',
                 controller: 'SectionController as vm'
+            })
+            .state('app.portals', {
+                params: {
+                    id: 'portals'
+                },
+                url: '/portals',
+                templateUrl: 'app/news/section/portals.html',
+                controller: 'NewsController as vm'
             });
     }
 })();

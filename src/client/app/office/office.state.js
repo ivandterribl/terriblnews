@@ -21,12 +21,12 @@
             .state('app.office.news', {
                 url: '/news',
                 params: {
-                    id: 'company-news'
+                    id: 'in-the-news'
                 },
                 views: {
                     tabContent: {
-                        templateUrl: 'app/news/news.html',
-                        controller: 'NewsController as vm'
+                        templateUrl: 'app/office/office.html',
+                        controller: 'OfficeController as vm'
                     }
                 }
             })

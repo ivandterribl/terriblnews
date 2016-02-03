@@ -5,9 +5,10 @@
     	</section>
     	<section ng-show="!vm.loading">
             <ion-list ng-show="vm.items.length">
-            <ion-item class="item-light item-logo-left" ng-repeat="item in vm.items" ng-href="{{ item.url }}" style="">
+            <ion-item class="item-light item-logo-left item-icon-right" ng-repeat="item in vm.items" ng-href="{{ item.url }}" style="">
                 <img ng-src="{{ item.image }}" />
-                <h3 style="height: 60px; overflow: hidden; font-size: 24px; display: table-cell; vertical-align: middle ">{{ item.title }}</h3>
+                <h3 class="itw-section stable" style="height: 60px; overflow: hidden; display: table-cell; vertical-align: middle ">{{ item.title }}</h3>
+                <i class="icon ion-chevron-right" style="font-size: 18px;"></i> 
             </ion-item>
             </ion-list>
         </section>

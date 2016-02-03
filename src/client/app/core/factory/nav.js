@@ -108,8 +108,8 @@
                 title: 'Companies',
                 icon: 'ion-cube',
                 items: [{
-                    title: 'Company news',
-                    id: 'company-news',
+                    title: 'In the news',
+                    id: 'in-the-news',
                     sref: 'app.office.news'
                 }, {
                     title: 'Virtual press offices',
