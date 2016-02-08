@@ -1,8 +1,45 @@
 <ion-view view-cache="false" view-title="{{ vm.article.title }}">
-	<ion-nav-buttons side="right">
-      <!-- <button class="button button-icon ion-android-star-outline" ng-click="vm.showSearchbar()"></button> -->
-	  <button class="button button-icon ion-android-share-alt" ng-click="vm.showSearchbar()"></button>
-	  <!-- <button class="button button-icon ion-chatbubble" ng-click="vm.showSearchbar()"></button> -->
+
+
+    <ion-nav-buttons side="right">
+      <md-menu style="padding: 0">
+	      <button md-menu-origin class="button button-icon ion-android-share-alt" ng-click="$mdOpenMenu($event)">
+	      </button>
+	      <md-menu-content width="3">
+	        <md-menu-item>
+		        <md-button class="row" socialshare socialshare-provider="facebook" socialshare-url="{{ vm.canonical }}">
+		          	<span class="md-menu-icon" >
+		          		<i class="icon ion-social-facebook"></i>
+		          	</span>
+		          	Facebook
+		        </md-button>
+	        </md-menu-item>
+	        <md-menu-item>
+		        <md-button class="row" socialshare socialshare-provider="twitter" socialshare-url="{{ vm.canonical }}">
+		          	<span class="md-menu-icon">
+		          		<i class="icon ion-social-twitter"></i>
+		          	</span>
+		          	<span>Twitter</span>
+		        </md-button>
+	        </md-menu-item>
+	        <md-menu-item>
+		        <md-button class="row" socialshare socialshare-provider="linkedin" socialshare-url="{{ vm.canonical }}">
+		          	<span class="md-menu-icon">
+		          		<i class="icon ion-social-linkedin"></i>
+		          	</span>
+		          	<span>LinkedIn</span>
+		        </md-button>
+	        </md-menu-item>
+	        <md-menu-item>
+		        <md-button class="row" socialshare socialshare-provider="google+" socialshare-url="{{ vm.canonical }}">
+		          	<span class="md-menu-icon">
+		          		<i class="icon ion-social-googleplus"></i>
+		          	</span>
+		          	<span>Google+</span>
+		        </md-button>
+	        </md-menu-item>
+	      </md-menu-content>
+	    </md-menu>
     </ion-nav-buttons>
 
 	<ion-content on-swipe-right="vm.prev()" on-swipe-left="vm.next()">

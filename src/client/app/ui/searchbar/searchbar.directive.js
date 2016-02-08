@@ -3,10 +3,12 @@
 
   angular.module('itw.ui')
     .directive('itwSearchBar', [
+      '$state',
       '$timeout',
       '$ionicGesture',
       '$ionicPlatform',
-      function($timeout, $ionicGesture, $ionicPlatform) {
+      '$ionicHistory',
+      function($state, $timeout, $ionicGesture, $ionicPlatform, $ionicHistory) {
         var filterBarTemplate;
 
         //create platform specific filterBar template using filterConfig items
@@ -52,7 +54,18 @@
             // Action when filter bar is cancelled via backdrop click/swipe or cancel/back buton click.
             // Invokes cancel function defined in filterBar service
             var cancelFilterBar = function() {
-              $scope.cancelFilterBar();
+              if ($state.current.name === 'app.search') {
+                var view;
+                while ($ionicHistory.backView() && $ionicHistory.backView().stateName == 'app.search') {
+                  view = $ionicHistory.backView().stateName;
+                }
+                $ionicHistory.nextViewOptions({
+                  disableBack: true
+                });
+                $state.go(view || 'app.frontpage');
+              } else {
+                $scope.cancelFilterBar();
+              }
             };
 
             // If backdrop is enabled, create and append it to filter, then add click/swipe listeners to cancel filter
@@ -103,9 +116,23 @@
               $scope.focusInput();
             };
 
+            var searchFor = function(text) {
+              if (text && text.length) {
+                $ionicHistory.nextViewOptions({
+                  disableAnimate: true
+                });
+                //$ionicHistory.currentView($ionicHistory.backView());
+                $state.go('app.search', {
+                  q: text
+                });
+              }
+            }
+
             // When a non escape key is pressed, show/hide backdrop/clear button based on filterText length
             var keyUp = function(e) {
-              if (e.which == 27) {
+              if (e.which === 13) {
+                searchFor($scope.data.filterText);
+              } else if (e.which === 27) {
                 cancelFilterBar();
               } else if ($scope.data.filterText && $scope.data.filterText.length) {
                 $scope.hideBackdrop();

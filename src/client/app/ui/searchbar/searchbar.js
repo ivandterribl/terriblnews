@@ -31,7 +31,7 @@
             clear: searchBarConfig.clear(),
             favorite: searchBarConfig.favorite(),
             search: searchBarConfig.search(),
-            backdrop: searchBarConfig.backdrop(),
+            backdrop: false, //searchBarConfig.backdrop(),
             placeholder: searchBarConfig.placeholder(),
             close: searchBarConfig.close(),
             done: searchBarConfig.done(),
@@ -121,8 +121,10 @@
           var $scrollContainer = canScroll ? scrollView.__container : null;
 
           var stateChangeListenDone = scope.cancelOnStateChange ?
-            $rootScope.$on('$stateChangeSuccess', function() {
-              scope.cancelFilterBar();
+            $rootScope.$on('$stateChangeSuccess', function($event, toState) {
+              if (toState.name !== 'app.search') {
+                scope.cancelFilterBar();
+              }
             }) :
             angular.noop;
 
@@ -200,7 +202,7 @@
                 scope.cancelFilterBar.$scope = scope.modal = $scrollContainer = scrollView = filterWrapperEl = backdropEl = input = null;
                 isShown = false;
                 (done || angular.noop)();
-              }, 350);
+              }, 0);
             });
 
             $timeout(function() {

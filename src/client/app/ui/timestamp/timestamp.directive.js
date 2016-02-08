@@ -20,6 +20,8 @@
                         if (created.isValid()) {
                             if (now.diff(created, 'hours') < 24) {
                                 scope.timestamp = created.fromNow();
+                            } else if (now.diff(created, 'days') < 7) {
+                                scope.timestamp = created.format('ddd [at] H:mm A');
                             } else if (now.diff(created, 'months') < 3) {
                                 scope.timestamp = created.format('D MMM');
                             } else {

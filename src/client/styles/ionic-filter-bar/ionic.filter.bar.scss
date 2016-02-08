@@ -136,17 +136,17 @@ $z-index-filter-bar: 11;
   }
 }
 
-.filter-bar-transition-horizontal {
+.filter-bar-transition-horizontal1 {
   @include transition-transform(cubic-bezier(.25, .45, .05, 1) 300ms);
   @include translate3d(100%, 0, 0);
 }
 
-.filter-bar-transition-vertical {
+.filter-bar-transition-vertical1 {
   @include transition-transform(cubic-bezier(.25, .45, .05, 1) 350ms);
   @include translate3d(0, -100%, 0);
 }
 
-.filter-bar-transition-fade {
+.filter-bar-transition-fade1 {
   @include transition(opacity 250ms ease-in-out) ;
   opacity: 0;
 }

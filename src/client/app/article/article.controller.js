@@ -12,6 +12,12 @@
 
         console.log($state.params);
         vm.articleId = $state.params.id;
+        vm.canonical = 'http://www.itweb.co.za/index.php?' + [
+            'option=com_content',
+            'view=article',
+            'id=' + $state.params.id
+        ].join('&');
+        meta.canonical(vm.canonical);
 
         vm.onDisqus = function() {
             $ionicScrollDelegate.resize();
@@ -22,6 +28,7 @@
         function activate() {
             window.prerenderReady = false;
             vm.loading = 1;
+
             api('tag=article&id=' + $state.params.id)
                 .then(function(response) {
                     var embedded = '<div adsrv what="triggeronedefault" width="120" height="250" class="adsrv-embedded"></div>',

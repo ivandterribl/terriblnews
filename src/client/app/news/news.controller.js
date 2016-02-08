@@ -73,6 +73,7 @@
                     switch (id) {
                         case 'top-news':
                         case 'industry-news':
+                        case 'world':
                             vm.items = _.map(response, function(row) {
                                 var slug = row.section.split(':');
                                 return _.assign(row, {
@@ -107,12 +108,7 @@
         }
 
         function showSearchbar() {
-            searchBar.show({
-                items: [],
-                update: function(filteredItems) {
-                    console.log(filteredItems);
-                }
-            });
+            searchBar.show();
         }
 
         function openMenu($mdOpenMenu, ev) {

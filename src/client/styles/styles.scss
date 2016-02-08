@@ -16,6 +16,7 @@ md-tabs-canvas, md-pagination-wrapper {
 	stroke: $assertive;
 	fill: $assertive;
 }
+
 .icon.icon-mini {
 	font-size: 14px;
 }
@@ -31,6 +32,7 @@ md-tabs-canvas, md-pagination-wrapper {
 .list .item.item-accordion.ng-hide-remove {
   display: block !important;
 }
+.item h1, .item-content h1,
 .item h3, .item-content h3,
 .item p, .item-content p {
   white-space: normal;
@@ -90,4 +92,33 @@ ion-header-bar.bar.bar-stable {
     padding-bottom: 10px;
     padding-left: 102px;
     min-height: 73px;
+}
+.list {
+    max-width: 420px;
+    margin: auto;
+}
+.item {
+  h2, p {
+    margin: 0 0 4px 0;
+  }
+}
+.highlight {
+    background-color: #FFFFCC;
+    font-weight: bold;
+    padding: 1px 4px;
+}
+.md-menu-icon {
+      display: inline-block;
+    width: 24px;
+    text-align: center;
+    vertical-align: middle;
+}
+md-menu-item i {
+  font-size: 24px;
+}
+md-menu-item span {
+  line-height: 34px;
+}
+.item-divider .itw-section {
+  padding: 16px 0 4px;
 }

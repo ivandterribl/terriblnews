@@ -12,6 +12,7 @@
 		'app.events',
 		'app.jobs',
 		'app.office',
-		'app.video'
+		'app.video',
+		'app.search'
 	]);
 })();
