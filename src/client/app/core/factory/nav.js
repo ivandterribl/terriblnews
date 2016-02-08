@@ -137,7 +137,7 @@
                 icon: 'ion-information',
                 items: [{
                     title: 'About us',
-                    sref: 'app.article({ id: 13913 })'
+                    sref: 'app.about-us'
                 }, {
                     title: 'Contact us',
                     sref: 'app.article({ id: 27608 })'

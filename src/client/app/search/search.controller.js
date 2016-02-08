@@ -5,9 +5,9 @@
         .module('app.search')
         .controller('SearchController', Controller);
 
-    Controller.$inject = ['api', '_', 'meta', 'moment', '$scope', '$state', 'searchBar', 'searchBarConfig', '$ionicConfig', '$ionicHistory'];
+    Controller.$inject = ['api', '_', '$state', 'searchBar', 'searchBarConfig', '$ionicConfig', '$ionicHistory'];
     /* @ngInject */
-    function Controller(api, _, meta, moment, $scope, $state, searchBar, searchBarConfig, $ionicConfig, $ionicHistory) {
+    function Controller(api, _, $state, searchBar, searchBarConfig, $ionicConfig, $ionicHistory) {
         var vm = this;
 
         $ionicHistory.clearHistory();
@@ -25,7 +25,7 @@
                     });
                 }
             }
-        })
+        });
 
         vm.q = $state.params.q;
         vm.config = {

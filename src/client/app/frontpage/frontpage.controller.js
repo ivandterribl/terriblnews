@@ -30,12 +30,21 @@
 
             vm.loading = 1;
             vm.items = [];
-            loadItems();
+            loadLead();
 
             // cached view
             $scope.$on('$ionicView.enter', function() {
                 $scope.$emit('category', vm.category);
             });
+        }
+
+        function loadLead() {
+            api('tag=lead-picture')
+                .then(function(response) {
+                    vm.lead = response[0];
+                    vm.loading = 0;
+                })
+                .finally(loadItems);
         }
 
         function loadItems() {
@@ -77,10 +86,10 @@
                         };
 
                     vm.items = items;
-                    vm.lead = _.sortBy(groups.lead, 'created').pop();
+                    //vm.lead = _.sortBy(groups.lead, 'created').pop();
                     vm.groups = groups;
                     _.each(vm.items, function(row) {
-                        console.log(row.importance + "\t" + row.title);
+                        console.log(row.importance + '\t' + row.title);
                     });
                 })
                 .catch(function(response) {

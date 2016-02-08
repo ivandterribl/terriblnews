@@ -13,6 +13,8 @@
 		'app.jobs',
 		'app.office',
 		'app.video',
+		'app.about',
 		'app.search'
+
 	]);
 })();
