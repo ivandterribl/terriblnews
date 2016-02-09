@@ -137,25 +137,25 @@
                 icon: 'ion-information',
                 items: [{
                     title: 'About us',
-                    sref: 'app.about-us'
+                    sref: 'app.about.us'
                 }, {
                     title: 'Contact us',
-                    sref: 'app.article({ id: 27608 })'
-                }, {
-                    title: 'Advertise',
-                    sref: 'app.article({ id: 33679 })'
-                }, {
-                    title: 'Terms of use',
-                    sref: 'app.article({ id: 13913 })'
+                    sref: 'app.about.contact'
+                        // }, {
+                        //     title: 'Advertise',
+                        //     sref: 'app.about.advertise'
+                        // }, {
+                        //     title: 'Terms of use',
+                        //     sref: 'app.about.terms'
                 }, {
                     title: 'Privacy policy',
-                    sref: 'app.article({ id: 38060 })'
+                    sref: 'app.about.privacy'
                 }, {
                     title: 'Competition policy',
-                    sref: 'app.article({ id: 48786 })'
+                    sref: 'app.about.competition'
                 }, {
                     title: 'BEE certificate',
-                    sref: 'app.article({ id: 140719 })'
+                    sref: 'app.about.bee'
                 }]
             }];
         }

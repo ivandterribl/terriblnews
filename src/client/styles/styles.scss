@@ -48,8 +48,9 @@ md-tabs-canvas, md-pagination-wrapper {
 
 .pic {
   text-align: center;
-  .img {
+  img {
     margin: 0 auto;
+    max-width: 100%;
   }
   .pic-caption {
     font-size: 11px;
@@ -95,11 +96,15 @@ ion-header-bar.bar.bar-stable {
 }
 .list {
     max-width: 420px;
-    margin: auto;
 }
 .item {
   h2, p {
     margin: 0 0 4px 0;
+  }
+  table {
+    white-space: normal;
+    color: #666;
+    margin: 10px 0;
   }
 }
 .highlight {
@@ -122,27 +127,5 @@ md-menu-item span {
 .item-divider .itw-section {
   padding: 16px 0 4px;
 }
-.abouttable {
-  p { 
-    color: #666;
-  }
-  .about-list {
-    color: #666;
-    tr td:first-child {
-      padding-left: 10px;
-      width: 20px;
-    }
-    tr td:last-child {
-      padding-right: 10px;
-    }
-  }
-  .places {
-    padding: 10px 0 0 20px;
-  }
-  .padded {
-    padding: 0 10px;
-  }
-  img {
-    max-width: 100%;
-  }
-}
+p { color: #666; }
+
