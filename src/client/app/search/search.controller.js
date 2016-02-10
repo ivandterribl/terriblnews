@@ -51,7 +51,7 @@
 
         function loadItems() {
             vm.loading = 1;
-            api('tag=search&q=' + vm.q)
+            api('tag=searchtag&q=' + vm.q)
                 .then(function(response) {
                     vm.items = response;
                     console.log(vm.items);

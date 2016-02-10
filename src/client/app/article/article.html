@@ -51,6 +51,16 @@
 			</h5>
 			<article bind-html-compile="::vm.article.html" itemprop="articleBody"></article>
 
+
+			<ion-list>
+				<ion-item class="item-divider">
+				See also
+				</ion-item>
+				<ion-item ng-repeat="related in vm.related" ui-sref="app.article({ id: related.id })">
+				<h3>{{ related.title }}</h3>
+				</ion-item>
+			</ion-list>
+
 			<meta itemprop="mainEntityOfPage" content="http://www.itweb.co.za/index.php?option=com_content&view=article&id={{ vm.article.itemid }}" />
 			<span itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
 				<span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">      

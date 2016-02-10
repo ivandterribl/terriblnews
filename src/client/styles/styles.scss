@@ -17,8 +17,13 @@ md-tabs-canvas, md-pagination-wrapper {
 	fill: $assertive;
 }
 
-.icon.icon-mini {
-	font-size: 14px;
+.icon {
+  &.icon-mini {
+  	font-size: 14px;
+  }
+  &.icon-midi {
+    font-size: 18px;
+  }
 }
 
 .list .item.item-accordion {
@@ -106,6 +111,9 @@ ion-header-bar.bar.bar-stable {
     color: #666;
     margin: 10px 0;
   }
+  img {
+    max-width: 100%;
+  }
 }
 .highlight {
     background-color: #FFFFCC;
@@ -128,4 +136,52 @@ md-menu-item span {
   padding: 16px 0 4px;
 }
 p { color: #666; }
+
+article span {
+  color: #666;
+}
+
+.articleContentTableHead,
+.articleContentTable
+{
+  width:640px !important;
+  margin-bottom: 10px;
+}
+
+.articleContentTableHead,
+.articleContentTable,
+.articleContentTableHead tr,
+.articleContentTable tr,
+.articleContentTableHead td,
+.articleContentTable td
+{
+  border:0px;
+  padding:5px;
+}
+
+.articleContentTableHead  p,
+.articleContentTable p,
+.articleContentTableHead  td p,
+.articleContentTable td p
+{
+  margin:0px !important;
+  padding:0px !important;
+}
+
+.articleContentTableHead tr:first-child,
+.articleContentTableHead tr:first-child td,
+.articleContentTableHead tr:first-child p,
+.articleContentTableHead tr:first-child td p
+{
+  color:#ffffff !important;
+  background:#aaaaaa;
+}
+
+.articleContentTableHead tr:nth-child(odd),
+.articleContentTable tr:nth-child(odd)
+{
+  color:#000000;
+  background:#eeeeee !important;
+}
+
 

@@ -37,11 +37,26 @@
                         }),
                         fulltext = article.fulltext.replace('<embedded />', embedded); //embedded);
 
-                    //fulltext = $compile(fulltext)($scope);
+                    var $el = angular.element('<div />').html(fulltext);
+                    // table horizontal scroll
+                    $el.find('table').wrap('<ion-scroll direction="x" scroll-outside="true" scrollbar-x="true"></ion-scroll>');
                     vm.article = _.assign(article, {
-                        //html: $sce.trustAsHtml(fulltext)
-                        html: fulltext
+                        html: $el.html()
                     });
+                    var related = [];
+                    if (_.isString(article.related)) {
+                        _.each(article.related.split('\n'), function(row) {
+                            var parts = row.split(';'),
+                                slug = parts[0],
+                                title = parts[1];
+
+                            related.push({
+                                id: parts[0].split(':')[0],
+                                title: parts[1]
+                            });
+                        });
+                    }
+                    vm.related = related;
 
                     meta.description(vm.article.blurb);
                     meta.keywords(vm.article.metakey);

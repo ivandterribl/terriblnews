@@ -73,24 +73,35 @@
                             }),
                             columnists: _.filter(items, function(row) {
                                 return row.importance >= 50 && row.importance < 60;
-                            }).slice(0, 4),
+                            }),
                             insights: _.filter(items, function(row) {
                                 return row.importance >= 60 && row.importance < 70;
-                            }).slice(0, 4),
+                            }),
                             features: _.filter(items, function(row) {
                                 return row.importance >= 70 && row.importance < 80;
                             }),
                             international: _.filter(items, function(row) {
                                 return row.importance >= 150 && row.importance < 200;
                             })
-                        };
+                        },
+                        minDate = _.pluck(groups.top, 'created').sort().shift(),
+                        startOfDay = moment(minDate).startOf('day').format();
 
                     vm.items = items;
-                    //vm.lead = _.sortBy(groups.lead, 'created').pop();
-                    vm.groups = groups;
-                    _.each(vm.items, function(row) {
-                        console.log(row.importance + '\t' + row.title);
+
+                    groups.columnists = _.reject(groups.columnists, function(row) {
+                        return row.created < startOfDay;
                     });
+                    groups.insights = _.reject(groups.insights, function(row) {
+                        return row.created < startOfDay;
+                    });
+                    groups.features = _.reject(groups.features, function(row) {
+                        return row.created < startOfDay;
+                    });
+                    vm.groups = groups;
+                    // _.each(vm.items, function(row) {
+                    //     //console.log(row.importance + '\t' + row.title);
+                    // });
                 })
                 .catch(function(response) {
                     vm.items = [];

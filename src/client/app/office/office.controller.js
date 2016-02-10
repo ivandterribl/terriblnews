@@ -77,6 +77,7 @@
                         vm.items = _.sortBy(items, 'title');
                     } else {
                         vm.groups = _.groupBy(items, 'group');
+                        vm.items = items;
                     }
 
                 })

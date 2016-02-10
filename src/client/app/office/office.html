@@ -4,18 +4,24 @@
     		<ion-spinner></ion-spinner>
     	</section>
     	<section ng-show="!vm.loading">
-    	    <div class="item-light itw-logos" ng-repeat="(group, items) in vm.groups">
-                <span class="itw-oblique" 
-                ion-affix data-affix-within-parent-with-class="itw-logos"
-                style="position: absolute; top: 4px; left: 0">
+            <ion-list ng-show="vm.items.length">
+                <div ng-repeat="(group, items) in vm.groups">
+                    <ion-item class="item-divider">
                     {{ group }}
-                </span>
-                <div style="padding: 0 0 32px 0; text-align: center" ng-repeat="item in items">
-                    <a ng-href="{{ item.url }}">
-                        <img ng-src="{{ item.image }}" style="margin: auto" />
-                    </a>
+                    </ion-item>
+                    <ion-item class="item-light item-icon-right" ng-repeat="item in items" ng-href="{{ item.url }}" style="">
+                        <div class="row">
+                            <div class="col col-33 col-center text-center">
+                                <img ng-src="{{ item.image }}" />
+                            </div>
+                            <div class="col col-center col-offset-10">
+                                <h3 class="itw-section stable">{{ item.title }}</h3>
+                            </div>
+                        <i class="icon icon-midi ion-chevron-right"></i> 
+                        </div>
+                    </ion-item>
                 </div>
-            </div>
+            </ion-list>
         </section>
 	</ion-content>
 </ion-view>

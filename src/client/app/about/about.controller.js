@@ -5,9 +5,9 @@
         .module('app.news')
         .controller('AboutController', Controller);
 
-    Controller.$inject = ['api'];
+    Controller.$inject = ['api', '$ionicPlatform'];
     /* @ngInject */
-    function Controller(api) {
+    function Controller(api, $ionicPlatform) {
         var vm = this;
 
         activate();
