@@ -43,36 +43,89 @@
     </ion-nav-buttons>
 
 	<ion-content on-swipe-right="vm.prev()" on-swipe-left="vm.next()">
-    	<section ng-show="!vm.loading" class="padding" itemscope itemtype="http://schema.org/NewsArticle">
-    		<h1 class="assertive" itemprop="headline">{{::vm.article.title}}</h1>
-			<h5>
-				<span ng-if="vm.article.created_by_alias">By <span itemprop="author">{{ ::vm.article.created_by_alias }}</span>, </span> 
-				<time datetime="{{ ::vm.article.created }}">{{ ::vm.article.created | date:'d MMM yyyy'}}</time> 
-			</h5>
-			<article bind-html-compile="::vm.article.html" itemprop="articleBody"></article>
+    	<section ng-show="!vm.loading" itemscope itemtype="http://schema.org/NewsArticle">
+    		<div class="padding">
+	    		<h1 class="assertive" itemprop="headline">{{::vm.article.title}}</h1>
+	    		<h4 ng-if="vm.article.summary" ng-bind-html="::vm.article.summary"></h4>
+				<h5 ng-if="vm.article.storytype !== 'P'">
+					<span ng-if="vm.article.created_by_alias">
+						<i class="icon ion-edit"></i> 
+						<span itemprop="author">{{ ::vm.article.created_by_alias }}</span>,
+					</span><br />
+					<span>{{ ::vm.article.issueplace }}, </span> 
+					<time datetime="{{ ::vm.article.created }}">{{ ::vm.article.created | date:'d MMM yyyy'}}</time> 
+				</h5>
+				<h5 ng-if="vm.article.storytype === 'P'">
+					<span ng-if="vm.article.issuedby_alias">
+						<span itemprop="author">Press release issued by {{ ::vm.article.issuedby_alias }}</span>
+					</span><br />
+					<span>{{ ::vm.article.issueplace }}, </span> 
+					<time datetime="{{ ::vm.article.created }}">{{ ::vm.article.created | date:'d MMM yyyy'}}</time> 
+				</h5>
+				<a ng-if="vm.article.storytype === 'P' && vm.article.copyPath" class="row"
+					ng-href="http://www.itweb.co.za/office/{{ vm.article.copyPath }}"	
+					style="border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; margin-bottom: 10px;padding: 5px 0">
+					
+					<h5 class="col col-center" style="padding: 5px 0 0; text-transform: uppercase; margin: 0;">
+						<span style="color: #3A72AB; font-size:12px"> Visit our press office</span>
+					</h3>
+					<img ng-src="http://www.itweb.co.za/logos/{{ vm.article.logoPath }}" align="right" />
+				</a>
 
+				<article bind-html-compile="::vm.article.html" itemprop="articleBody"></article>
 
-			<ion-list>
+			</div>
+			<div class="boilerplate" ng-if="vm.article.storytype === 'P' && vm.article.editornote">
+				<div class="card padding" ng-bind-html="::vm.article.editornote">
+				</div>
+
+				<div class="card padding"  ng-if="vm.article.storytype === 'P' && vm.article.meta">
+					<p><strong>Editorial contacts</strong></p>
+					<p>
+						{{ ::vm.article.meta.Company }}<br />
+						{{ ::vm.article.meta.CompanyContactName }}<br />
+						{{ ::vm.article.meta.CompanyContactPhone }}<br />
+						{{ ::vm.article.meta.CompanyContactEmail }}
+					</p>
+				</div>
+			</div>
+
+			<ion-list ng-show="vm.related.length">
 				<ion-item class="item-divider">
-				See also
+					<h3 class="itw-section stable">See also</h3>
 				</ion-item>
-				<ion-item ng-repeat="related in vm.related" ui-sref="app.article({ id: related.id })">
-				<h3>{{ related.title }}</h3>
+				<ion-item class="item-icon-left item-icon-right"
+					ng-repeat="related in vm.related" ui-sref="app.article({ id: related.id })">
+					<i class="icon icon-mini ion-document"></i>
+					<h3>{{ ::related.title }}</h3>
+					<i class="icon icon-mini ion-chevron-right"></i>
+				</ion-item>
+				<ion-item class="item-icon-left item-icon-right" 
+					ng-repeat="recommended in vm.recommended" ui-sref="app.article({ id: recommended.id })">
+					<i class="icon icon-mini ion-star"></i>
+					<h3>{{ ::recommended.title }}</h3>
+					<i class="icon icon-mini ion-chevron-right"></i>
+				</ion-item>
+				<ion-item class="item-icon-left item-icon-right" 
+					ng-repeat="topic in vm.topics" ui-sref="app.topic({ q: topic })">
+					<i class="icon icon-mini ion-bookmark"></i>
+					<h3>{{ ::topic }}</h3>
+					<i class="icon icon-mini ion-chevron-right"></i>
 				</ion-item>
 			</ion-list>
 
-			<meta itemprop="mainEntityOfPage" content="http://www.itweb.co.za/index.php?option=com_content&view=article&id={{ vm.article.itemid }}" />
-			<span itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
-				<span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">      
-			      <meta itemprop="url" content="http://www.itweb.co.za/templates/ja_itweb/images/itweb_logo_sml.png"/>
-			      <meta itemprop="width" content="116"/>
-			      <meta itemprop="height" content="49"/>
-			    </span>
-			    <meta itemprop="name" content="ITWeb Limited"/>
-			</span>
-			<meta itemprop="datePublished" content="{{ ::vm.article.created }}"/>
-			<meta itemprop="keywords" content="{{ ::vm.article.metakey }}"/>
-
+			<ion-list ng-show="vm.appearance.length">
+				<ion-item class="item-divider">
+					<h3 class="itw-section stable">Related sectors</h3>
+				</ion-item>
+				<ion-item class="item-icon-left item-icon-right"
+					ng-repeat="section in vm.appearance" ui-sref="app.section({ id: section.catid })">
+					<i class="icon icon-mini ion-grid"></i>
+					<h3>{{ ::section.title }}</h3>
+					<i class="icon icon-mini ion-chevron-right"></i>
+				</ion-item>
+			</ion-list>
+			
 			<!-- <disqus disqus-shortname="itweb-za"
 		         disqus-identifier="{{ ::vm.disqus.id }}"
 		         disqus-url="{{ ::vm.disqus.url }}"

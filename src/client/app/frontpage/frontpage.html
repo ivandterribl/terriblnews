@@ -197,7 +197,7 @@
 
 	            <!-- international -->
 				<ion-item class="item-divider" ng-if="vm.groups.international.length" style="margin-bottom: 1px;">
-	            	<a ui-sref="app.news.category({ id: 'world' })" class="item-content">
+	            	<a ui-sref="app.section({ id: 74 })" class="item-content">
 			            <h3 class="itw-section assertive">
 	                		International
 	                		<i class="icon ion-chevron-right"></i> 
@@ -208,6 +208,9 @@
 	            style="border-width: 0">
 		            <a ui-sref="app.article({ id: item.itemid })" class="item-content">
 		                <h3>{{ item.title }}</h3>
+		                <p>
+	                		<itw-timestamp timestamp="'{{ ::item.created }}'"></itw-timestamp>
+	                	</p>
 	                </a>
 	            </ion-item>
 	        </ion-list>

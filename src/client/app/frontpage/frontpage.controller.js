@@ -98,6 +98,12 @@
                     groups.features = _.reject(groups.features, function(row) {
                         return row.created < startOfDay;
                     });
+                    groups.company = _.reject(groups.company, function(row) {
+                        return row.created < startOfDay;
+                    });
+                    groups.international = _.reject(groups.international, function(row) {
+                        return row.created < startOfDay;
+                    });
                     vm.groups = groups;
                     // _.each(vm.items, function(row) {
                     //     //console.log(row.importance + '\t' + row.title);

@@ -13,6 +13,11 @@
                 url: '/search?q',
                 templateUrl: 'app/search/search.html',
                 controller: 'SearchController as vm'
+            })
+            .state('app.topic', {
+                url: '/topic?q',
+                templateUrl: 'app/search/searchtag.html',
+                controller: 'SearchTagController as vm'
             });
     }
 })();
