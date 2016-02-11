@@ -5,13 +5,15 @@
         .module('app.news')
         .controller('ArticleController', Controller);
 
-    Controller.$inject = ['api', 'meta', 'moment', '_', '$state', '$sce', '$compile', '$scope', '$ionicScrollDelegate'];
+    Controller.$inject = [
+        'api', 'articles', 'meta', 'moment', '_',
+        '$state', '$ionicScrollDelegate', '$ionicViewSwitcher', '$ionicHistory'
+    ];
     /* @ngInject */
-    function Controller(api, meta, moment, _, $state, $sce, $compile, $scope, $ionicScrollDelegate) {
+    function Controller(api, articles, meta, moment, _, $state, $ionicScrollDelegate, $ionicViewSwitcher, $ionicHistory) {
         var vm = this,
             articleId = $state.params.id;
 
-        console.log($state.params);
         vm.articleId = articleId;
         vm.canonical = 'http://www.itweb.co.za/index.php?' + [
             'option=com_content',
@@ -19,9 +21,33 @@
             'id=' + articleId
         ].join('&');
         meta.canonical(vm.canonical);
+        vm.prev = prev;
+        vm.next = next;
 
-        vm.onDisqus = function() {
-            $ionicScrollDelegate.resize();
+        vm.back = function() {
+            var view,
+                params,
+                stack = _.sortBy(_.toArray($ionicHistory.viewHistory().views), 'index').reverse();
+
+            if ($ionicHistory.currentView() && $ionicHistory.currentView().stateName === 'app.article') {
+                _.each(stack, function(history) {
+                    if (history.stateName !== 'app.article') {
+                        view = history.stateName;
+                        params = history.stateParams;
+                        return false;
+                    }
+                });
+                // while ($ionicHistory.backView() && $ionicHistory.backView().stateName == 'app.article') {
+                //     view = $ionicHistory.backView().stateName;
+                // }
+                $ionicHistory.nextViewOptions({
+                    disableBack: true
+                });
+                $ionicHistory.clearHistory();
+                $state.go(view || 'app.frontpage', params);
+            } else {
+                $ionicHistory.goBack();
+            }
         };
 
         activate();
@@ -51,8 +77,8 @@
                 }),
                 fulltext = article.fulltext.replace('<embedded />', embedded); //embedded);
 
-            var $el = angular.element('<div />').html(fulltext);
             // table horizontal scroll
+            var $el = angular.element('<div />').html(fulltext);
             $el.find('table').wrap('<ion-scroll direction="x" scroll-outside="true" scrollbar-x="true"></ion-scroll>');
             vm.article = _.assign(article, {
                 html: $el.html()
@@ -61,25 +87,39 @@
             if (_.isString(article.related) && article.related.length) {
                 _.each(article.related.split('\n'), function(row) {
                     // <format>id:slug;title\nid:slug;title</format>
-                    var parts = row.split(';'),
-                        slug = parts[0],
-                        title = parts[1];
+                    var parts = row.split(';');
 
                     related.push({
-                        id: parts[0].split(':')[0],
+                        id: (parts[0] || '').split(':')[0],
                         title: parts[1]
                     });
                 });
             }
             vm.related = related;
             var topics = [];
-            if (related.length && _.isString(article.metakey) && article.metakey.length) {
+            if (_.isString(article.metakey) && article.metakey.length) {
                 topics = _.map(article.metakey.split(', '), function(row) {
                     return _.trim(row);
+                });
+                topics = _.reject(topics, function(row) {
+                    return row.length > 20;
                 });
                 topics = _.slice(topics, 0, 4 - related.length);
             }
             vm.topics = topics;
+
+            vm.pagination = {
+                total: articles.len(),
+                index: articles.indexOf({
+                    itemid: articleId
+                }),
+                prev: articles.prev({
+                    itemid: articleId
+                }),
+                next: articles.next({
+                    itemid: articleId
+                })
+            };
 
             meta.description(vm.article.blurb);
             meta.keywords(vm.article.metakey);
@@ -93,7 +133,7 @@
                 window.prerenderReady = true;
             }, 100);
 
-            if (related.length && topics.length) {
+            if (topics.length) {
                 api('tag=recommended&id=' + articleId + '&q=' + topics[0])
                     .then(function(response) {
                         vm.recommended = response;
@@ -124,5 +164,28 @@
             }
             return result;
         }
+
+        function prev() {
+            if (vm.pagination.prev && vm.pagination.prev.itemid) {
+                $ionicViewSwitcher.nextDirection('back');
+                $state.go('app.article', {
+                    id: vm.pagination.prev.itemid
+                }, {
+                    replace: true
+                });
+            }
+        }
+
+        function next() {
+            if (vm.pagination.next && vm.pagination.next.itemid) {
+                $ionicViewSwitcher.nextDirection('forward');
+                $state.go('app.article', {
+                    id: vm.pagination.next.itemid
+                }, {
+                    replace: true
+                });
+            }
+        }
+
     }
 })();

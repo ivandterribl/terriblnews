@@ -1,51 +1,62 @@
-<ion-view view-cache="false" view-title="{{ vm.article.title }}">
+<ion-view cache-view="false">
+<!--     <ion-nav-bar class="bar-assertive">
+        <ion-nav-back-button ng-click="vm.back()">
+        </ion-nav-back-button>
 
+        <ion-nav-buttons side="left">
+            <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+            </button>
+        </ion-nav-buttons> -->
 
-    <ion-nav-buttons side="right">
-      <md-menu style="padding: 0">
-	      <button md-menu-origin class="button button-icon ion-android-share-alt" ng-click="$mdOpenMenu($event)">
-	      </button>
-	      <md-menu-content width="3">
-	        <md-menu-item>
-		        <md-button class="row" socialshare socialshare-provider="facebook" socialshare-url="{{ vm.canonical }}">
-		          	<span class="md-menu-icon" >
-		          		<i class="icon ion-social-facebook"></i>
-		          	</span>
-		          	Facebook
-		        </md-button>
-	        </md-menu-item>
-	        <md-menu-item>
-		        <md-button class="row" socialshare socialshare-provider="twitter" socialshare-url="{{ vm.canonical }}">
-		          	<span class="md-menu-icon">
-		          		<i class="icon ion-social-twitter"></i>
-		          	</span>
-		          	<span>Twitter</span>
-		        </md-button>
-	        </md-menu-item>
-	        <md-menu-item>
-		        <md-button class="row" socialshare socialshare-provider="linkedin" socialshare-url="{{ vm.canonical }}">
-		          	<span class="md-menu-icon">
-		          		<i class="icon ion-social-linkedin"></i>
-		          	</span>
-		          	<span>LinkedIn</span>
-		        </md-button>
-	        </md-menu-item>
-	        <md-menu-item>
-		        <md-button class="row" socialshare socialshare-provider="google+" socialshare-url="{{ vm.canonical }}">
-		          	<span class="md-menu-icon">
-		          		<i class="icon ion-social-googleplus"></i>
-		          	</span>
-		          	<span>Google+</span>
-		        </md-button>
-	        </md-menu-item>
-	      </md-menu-content>
-	    </md-menu>
-    </ion-nav-buttons>
+        <ion-nav-title>{{ vm.article.title }}</ion-nav-title>
+
+        <ion-nav-buttons side="right">
+	      <md-menu style="padding: 0">
+		      <button md-menu-origin class="button button-icon ion-android-share-alt" ng-click="$mdOpenMenu($event)">
+		      </button>
+		      <md-menu-content width="3">
+		        <md-menu-item>
+			        <md-button class="row" socialshare socialshare-provider="facebook" socialshare-url="{{ vm.canonical }}">
+			          	<span class="md-menu-icon" >
+			          		<i class="icon ion-social-facebook"></i>
+			          	</span>
+			          	Facebook
+			        </md-button>
+		        </md-menu-item>
+		        <md-menu-item>
+			        <md-button class="row" socialshare socialshare-provider="twitter" socialshare-url="{{ vm.canonical }}">
+			          	<span class="md-menu-icon">
+			          		<i class="icon ion-social-twitter"></i>
+			          	</span>
+			          	<span>Twitter</span>
+			        </md-button>
+		        </md-menu-item>
+		        <md-menu-item>
+			        <md-button class="row" socialshare socialshare-provider="linkedin" socialshare-url="{{ vm.canonical }}">
+			          	<span class="md-menu-icon">
+			          		<i class="icon ion-social-linkedin"></i>
+			          	</span>
+			          	<span>LinkedIn</span>
+			        </md-button>
+		        </md-menu-item>
+		        <md-menu-item>
+			        <md-button class="row" socialshare socialshare-provider="google+" socialshare-url="{{ vm.canonical }}">
+			          	<span class="md-menu-icon">
+			          		<i class="icon ion-social-googleplus"></i>
+			          	</span>
+			          	<span>Google+</span>
+			        </md-button>
+		        </md-menu-item>
+		      </md-menu-content>
+		    </md-menu>
+	    </ion-nav-buttons>
+    <!-- </ion-nav-bar> -->
 
 	<ion-content on-swipe-right="vm.prev()" on-swipe-left="vm.next()">
     	<section ng-show="!vm.loading" itemscope itemtype="http://schema.org/NewsArticle">
     		<div class="padding">
-	    		<h1 class="assertive" itemprop="headline">{{::vm.article.title}}</h1>
+	    		<h1 class="assertive" itemprop="headline" ng-if="vm.article.title.length < 64">{{::vm.article.title}}</h1>
+	    		<h2 class="assertive" itemprop="headline" ng-if="!(vm.article.title.length < 64)">{{::vm.article.title}}</h2>
 	    		<h4 ng-if="vm.article.summary" ng-bind-html="::vm.article.summary"></h4>
 				<h5 ng-if="vm.article.storytype !== 'P'">
 					<span ng-if="vm.article.created_by_alias">
@@ -73,24 +84,44 @@
 				</a>
 
 				<article bind-html-compile="::vm.article.html" itemprop="articleBody"></article>
-
 			</div>
+
 			<div class="boilerplate" ng-if="vm.article.storytype === 'P' && vm.article.editornote">
 				<div class="card padding" ng-bind-html="::vm.article.editornote">
 				</div>
 
-				<div class="card padding"  ng-if="vm.article.storytype === 'P' && vm.article.meta">
+				<div class="card padding"  ng-if="vm.article.storytype === 'P' && (vm.article.contactname || vm.article.prcontactname)">
 					<p><strong>Editorial contacts</strong></p>
-					<p>
+					<p ng-if="vm.article.contactname">
 						{{ ::vm.article.meta.Company }}<br />
 						{{ ::vm.article.meta.CompanyContactName }}<br />
 						{{ ::vm.article.meta.CompanyContactPhone }}<br />
 						{{ ::vm.article.meta.CompanyContactEmail }}
 					</p>
+					<p ng-if="vm.article.prcontactname">
+						{{ ::vm.article.meta.IssuedBy }}<br />
+						{{ ::vm.article.meta.PRContactName }}<br />
+						{{ ::vm.article.meta.PRContactPhone }}<br />
+						{{ ::vm.article.meta.PRContactEmail }}
+					</p>
 				</div>
 			</div>
 
-			<ion-list ng-show="vm.related.length">
+			<div ng-if="vm.pagination.prev || vm.pagination.next" class="row">
+				<a class="button button-clear button-assertive icon-left ion-chevron-left" 
+					ng-click="vm.prev()"
+					ng-if="vm.pagination.prev">
+					Prev
+				</a>
+				<span class="col"></span>
+				<a class="button button-clear button-assertive icon-right ion-chevron-right" 
+					ng-click="vm.next()"
+					ng-if="vm.pagination.next">
+					Next
+				</a>
+			</div>
+
+			<ion-list ng-show="vm.related.length || vm.recommended.length">
 				<ion-item class="item-divider">
 					<h3 class="itw-section stable">See also</h3>
 				</ion-item>
@@ -107,7 +138,7 @@
 					<i class="icon icon-mini ion-chevron-right"></i>
 				</ion-item>
 				<ion-item class="item-icon-left item-icon-right" 
-					ng-repeat="topic in vm.topics" ui-sref="app.topic({ q: topic })">
+					ng-repeat="topic in vm.topics" ui-sref="app.topic({ q: topic })" ng-if="vm.related.length">
 					<i class="icon icon-mini ion-bookmark"></i>
 					<h3>{{ ::topic }}</h3>
 					<i class="icon icon-mini ion-chevron-right"></i>
@@ -134,4 +165,5 @@
 			</disqus> -->
         </section>
 	</ion-content>
+
 </ion-view>

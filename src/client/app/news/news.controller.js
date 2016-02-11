@@ -5,9 +5,9 @@
         .module('app.news')
         .controller('NewsController', Controller);
 
-    Controller.$inject = ['nav', 'categories', 'api', '_', 'meta', 'moment', '$scope', '$state', 'searchBar'];
+    Controller.$inject = ['nav', 'articles', 'categories', 'api', '_', 'meta', 'moment', '$scope', '$state', 'searchBar'];
     /* @ngInject */
-    function Controller(nav, categories, api, _, meta, moment, $scope, $state, searchBar) {
+    function Controller(nav, articles, categories, api, _, meta, moment, $scope, $state, searchBar) {
         var vm = this,
             id = $state.params.id;
 
@@ -87,7 +87,7 @@
                         default:
                             vm.items = response;
                     }
-                    console.log(vm.items);
+                    articles.set(vm.items);
                 })
                 .catch(function(response) {
                     vm.items = [];
@@ -107,12 +107,12 @@
             $scope.$emit('category.next');
         }
 
-        function showSearchbar() {
-            searchBar.show();
-        }
-
         function openMenu($mdOpenMenu, ev) {
             $mdOpenMenu(ev);
+        }
+
+        function showSearchbar() {
+            searchBar.show();
         }
     }
 })();

@@ -124,6 +124,8 @@
             $rootScope.$on('$stateChangeSuccess', function($event, toState) {
               if (toState.name !== 'app.search') {
                 scope.cancelFilterBar();
+              } else {
+                hideKeyboard();
               }
             }) :
             angular.noop;

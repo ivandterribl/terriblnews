@@ -10,7 +10,6 @@
     function Controller(api, _, $state, searchBar, searchBarConfig, $ionicConfig, $ionicHistory) {
         var vm = this;
 
-        $ionicHistory.clearHistory();
         searchBar.show({
             items: [],
             update: angular.noop,

@@ -14,7 +14,6 @@
         vm.i = 0;
         vm.prev = prev;
         vm.next = next;
-        vm.showSearchbar = showSearchbar;
         vm.loadItems = loadItems;
 
         activate();
@@ -99,13 +98,5 @@
             $scope.$emit('category.next');
         }
 
-        function showSearchbar() {
-            searchBar.show({
-                items: [],
-                update: function(filteredItems) {
-                    console.log(filteredItems);
-                }
-            });
-        }
     }
 })();

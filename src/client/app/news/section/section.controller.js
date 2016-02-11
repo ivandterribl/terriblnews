@@ -5,9 +5,9 @@
         .module('app.news')
         .controller('SectionController', Controller);
 
-    Controller.$inject = ['nav', 'categories', 'api', '_', 'meta', 'moment', '$scope', '$state'];
+    Controller.$inject = ['nav', 'articles', 'categories', 'api', '_', 'meta', 'moment', '$scope', '$state'];
     /* @ngInject */
-    function Controller(nav, categories, api, _, meta, moment, $scope, $state, searchBar) {
+    function Controller(nav, articles, categories, api, _, meta, moment, $scope, $state, searchBar) {
         var vm = this,
             id = $state.params.id;
 
@@ -42,6 +42,7 @@
                         title: vm.items[0].section,
                         id: id
                     };
+                    articles.set(vm.items);
                     console.log(vm.items);
                 })
                 .catch(function(response) {
@@ -52,13 +53,5 @@
                 });
         }
 
-        function showSearchbar() {
-            searchBar.show({
-                items: [],
-                update: function(filteredItems) {
-                    console.log(filteredItems);
-                }
-            });
-        }
     }
 })();

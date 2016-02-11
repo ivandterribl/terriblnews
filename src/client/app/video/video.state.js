@@ -20,7 +20,6 @@
             .state('app.play', {
                 url: '/video/:id',
                 params: {
-                    id: null,
                     title: null
                 },
                 templateUrl: 'app/video/play.html',

@@ -31,7 +31,11 @@
             }).success(function(response) {
                 //console.log('%c' + url, 'background-color: yellow');
                 //console.log('%c' + JSON.stringify(response), 'background-color: #aFa');
-                def.resolve(response);
+                if (response.length) {
+                    def.resolve(response);
+                } else {
+                    def.reject(response);
+                }
             }).error(function(response) {
                 def.reject(response);
             }).finally(function() {

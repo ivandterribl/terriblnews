@@ -5,9 +5,12 @@
         .module('app.frontpage')
         .controller('FrontpageController', Controller);
 
-    Controller.$inject = ['categories', 'api', '_', 'meta', 'moment', '$scope', '$state', 'searchBar', '$ionicHistory'];
+    Controller.$inject = [
+        'categories', 'articles', 'api', '_', 'meta', 'moment',
+        '$scope', '$state', 'searchBar', '$ionicHistory'
+    ];
     /* @ngInject */
-    function Controller(categories, api, _, meta, moment, $scope, $state, searchBar, $ionicHistory) {
+    function Controller(categories, articles, api, _, meta, moment, $scope, $state, searchBar, $ionicHistory) {
         var vm = this,
             id = $state.params.id;
 
@@ -45,6 +48,17 @@
                     vm.loading = 0;
                 })
                 .finally(loadItems);
+
+            api('tag=imod&q=quoteoftheday')
+                .then(function(response) {
+                    vm.quote = response[0];
+                });
+
+            api('tag=imod&q=picoftheday')
+                .then(function(response) {
+                    vm.pic = response[0];
+                });
+
         }
 
         function loadItems() {
@@ -105,9 +119,11 @@
                         return row.created < startOfDay;
                     });
                     vm.groups = groups;
-                    // _.each(vm.items, function(row) {
-                    //     //console.log(row.importance + '\t' + row.title);
-                    // });
+                    var displayed = [];
+                    _.each(vm.groups, function(group) {
+                        displayed = displayed.concat(group);
+                    });
+                    articles.set(displayed);
                 })
                 .catch(function(response) {
                     vm.items = [];

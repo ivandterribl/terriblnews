@@ -28,6 +28,7 @@
 	                	<span class="itw-author assertive" ng-if="item.issuedby && !item.created_by_alias">{{ item.issuedby }}</span>
 	                </p>
 	            </ion-item>
+
 	            <ion-item class="item-light" ng-repeat="item in vm.groups.top" ui-sref="app.article({ id: item.itemid })">
 	                <h2>{{ item.title }}</h2>
 	                <img ng-src="{{ item.introtextData.img }}" ng-if="item.introtextData.img" style="float:right; margin: 4px 0 4px 4px; "/>
@@ -79,8 +80,8 @@
 	                	</p>
 	                </a>
 	            </ion-item>
-	            
-	            <!-- company news -->
+
+				<!-- company news -->
 	            <ion-item class="item-divider" ng-if="vm.groups.company.length">
 	            	<a ui-sref="app.news.category({ id: 'company-news' })" class="item-content">
 			            <h3 class="itw-section assertive">
@@ -111,6 +112,17 @@
 	                </a>
 	            </ion-item>
 
+	            <ion-item ng-show="vm.quote && vm.items.length" class="item-divider">
+	            	<h3 class="itw-section stable">
+                		Quote of the day
+	                </h3>
+	                <blockquote>
+	                <h2>{{ vm.quote.module.title }}</h2>
+	                <p>{{ vm.quote.module.body }}</p>
+	                <p class="caption"> &ndash; {{ vm.quote.module.caption }}</p>
+	                </blockquote>
+	            </ion-item>	            
+	            
 	            <!-- columnists -->
 	            <ion-item class="item-divider" ng-if="vm.groups.columnists.length">
 	            	<a ui-sref="app.opinion.category({ id: 'columnists' })" class="item-content">
@@ -193,6 +205,18 @@
 		                	<span class="itw-author assertive" ng-if="item.issuedby && !item.created_by_alias">{{ item.issuedby }}</span>
 		                </p>
 	                </a>
+	            </ion-item>
+
+	            <ion-item ng-show="vm.pic && vm.items.length" class="item-divider">
+	            	<h3 class="itw-section stable">
+                		Pic of the day
+	                </h3>
+	                <div class="pic">
+	                	<img ng-src="{{ vm.pic.module.img }}" style="min-width: 100%; " />
+	                </div>
+	                <h2>{{ vm.pic.module.title }}</h2>
+	                <p class="caption" style="font-style: normal; font-weight: 300">{{ vm.pic.module.body }}</p>
+	                <p class="caption" style="font-weight: 300"> &ndash; <span ng-bind-html="vm.pic.module.caption"></span></p>
 	            </ion-item>
 
 	            <!-- international -->

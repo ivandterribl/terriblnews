@@ -55,10 +55,10 @@
             // Invokes cancel function defined in filterBar service
             var cancelFilterBar = function() {
               if ($state.current.name === 'app.search') {
-                var view;
-                while ($ionicHistory.backView() && $ionicHistory.backView().stateName == 'app.search') {
-                  view = $ionicHistory.backView().stateName;
-                }
+                var view = $ionicHistory.backView();
+                // while ($ionicHistory.backView() && $ionicHistory.backView().stateName == 'app.search') {
+                //   view = $ionicHistory.backView().stateName;
+                // }
                 $ionicHistory.nextViewOptions({
                   disableBack: true
                 });
