@@ -10,7 +10,7 @@
 	    	<ion-list ng-show="vm.items.length">
 	            <ion-item class="item-light" ng-repeat="item in vm.items" href="{{ item.id }}">
 	                <h2>{{ item.title }}</h2>
-	                <p>{{ item.summary }}</p>
+	                <!-- <p>{{ item.summary }}</p> -->
 	                <div class="assertive">
 	                	<itw-timestamp timestamp="'{{ ::item.published }}'"></itw-timestamp>
 	                </div>

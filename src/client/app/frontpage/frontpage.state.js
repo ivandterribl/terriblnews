@@ -11,7 +11,7 @@
         $stateProvider
             .state('app.frontpage', {
                 url: '/frontpage',
-                templateUrl: 'app/frontpage/frontpage.html',
+                templateUrl: 'app/frontpage/frontpage2.html',
                 controller: 'FrontpageController as vm'
             });
     }

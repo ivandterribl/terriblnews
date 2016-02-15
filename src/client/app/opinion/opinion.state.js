@@ -22,7 +22,7 @@
                 url: '/:id',
                 views: {
                     tabContent: {
-                        templateUrl: 'app/news/news.html',
+                        templateUrl: 'app/news/news2.html',
                         controller: 'NewsController as vm'
                     }
                 }

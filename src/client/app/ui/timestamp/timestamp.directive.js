@@ -18,14 +18,16 @@
                         var now = moment(),
                             created = moment(newValue);
                         if (created.isValid()) {
-                            if (now.diff(created, 'hours') < 24) {
-                                scope.timestamp = created.fromNow();
+                            if (now.diff(created, 'minutes') < 60) {
+                                scope.timestamp = now.diff(created, 'minutes') + 'm';
+                            } else if (now.diff(created, 'hours') < 24) {
+                                scope.timestamp = now.diff(created, 'hours') + 'h';
                             } else if (now.diff(created, 'days') < 7) {
-                                scope.timestamp = created.format('ddd [at] H:mm A');
-                            } else if (now.diff(created, 'months') < 3) {
+                                scope.timestamp = created.format('ddd');
+                            } else if (now.diff(created, 'months') < 6) {
                                 scope.timestamp = created.format('D MMM');
                             } else {
-                                scope.timestamp = created.format('D MMM YYYY');
+                                scope.timestamp = created.format('D MMM YY');
                             }
                         }
 

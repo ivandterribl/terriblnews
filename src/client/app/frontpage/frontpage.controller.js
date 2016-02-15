@@ -21,6 +21,10 @@
         vm.showSearchbar = showSearchbar;
         vm.openMenu = openMenu;
         vm.loadItems = loadItems;
+        vm.go = function($event, stateName, stateParams) {
+            $event.preventDefault();
+            $state.go(stateName, stateParams);
+        };
 
         activate();
 
@@ -65,8 +69,14 @@
             api('tag=frontpage')
                 .then(function(response) {
                     var items = _.map(response, function(row) {
+
+                            var slug = row.section.split(':');
                             return _.assign(row, {
-                                importance: parseInt(row.importance)
+                                importance: parseInt(row.importance),
+                                section: {
+                                    id: slug[0],
+                                    title: slug[1]
+                                }
                             });
                         }),
                         groups = {

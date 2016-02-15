@@ -22,7 +22,7 @@
                 url: '/africa',
                 views: {
                     tabContent: {
-                        templateUrl: 'app/news/africa.html',
+                        templateUrl: 'app/news/africa2.html',
                         controller: 'AfricaController as vm'
                     }
                 }
@@ -34,7 +34,7 @@
                 url: '/:id',
                 views: {
                     tabContent: {
-                        templateUrl: 'app/news/news.html',
+                        templateUrl: 'app/news/news2.html',
                         controller: 'NewsController as vm'
                     }
                 }
@@ -44,7 +44,7 @@
                     id: null
                 },
                 url: '/news/section/:id',
-                templateUrl: 'app/news/news.html',
+                templateUrl: 'app/news/news2.html',
                 controller: 'SectionController as vm'
             })
             .state('app.portals', {
