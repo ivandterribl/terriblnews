@@ -67,22 +67,51 @@
                     vm.loading = 0;
                     //$scope.$broadcast('scroll.refreshComplete');
                 });
+
+            api('tag=appearance&id=' + articleId)
+                .then(function(response) {
+                    vm.appearance = response;
+                });
         }
 
         function onReady(response) {
-            var embedded = '<div adsrv what="triggeronedefault" width="120" height="250" class="adsrv-embedded"></div>',
-                article = _.assign(response[0], {
+            var article = _.assign(response[0], {
                     created: moment(response[0].created).format(),
                     meta: jparam(response[0].meta)
                 }),
-                fulltext = article.fulltext.replace('<embedded />', embedded); //embedded);
+                adtag = article.category.toLowerCase().replace(' '),
+                banners = [
+                    '<div adsrv what="tileone' + adtag + '" width="100%" height="250px" class="rect"></div>',
+                    '<div adsrv what="triggeronedefault" width="120px" height="250px" class="embedded"></div>',
+                    '<div adsrv what="bot' + adtag + '" width="100%" height="' + Math.floor((window.innerWidth - 20) / 728 * 90) + 'px" class="rect2"></div>'
+                ],
+                fulltext = article.fulltext,
+                elem = document.createElement('div'),
+                paragraphs;
 
-            // table horizontal scroll
-            var $el = angular.element('<div />').html(fulltext);
-            $el.find('table').wrap('<ion-scroll direction="x" scroll-outside="true" scrollbar-x="true"></ion-scroll>');
+            vm.adtag = adtag;
+            elem.innerHTML = fulltext;
+            paragraphs = elem.querySelectorAll('p:not(.pic-caption)');
+            console.log(paragraphs);
+
+            if (paragraphs.length > 3) {
+                paragraphs[2].insertAdjacentHTML('afterend', banners.shift());
+            }
+            if (paragraphs.length > 6) {
+                paragraphs[5].insertAdjacentHTML('afterend', banners.shift());
+            }
+            if (paragraphs.length > 12) {
+                paragraphs[11].insertAdjacentHTML('afterend', banners.shift());
+            }
+
+            vm.banners = banners;
+
+            var $el = angular.element(elem)
+                .find('table').wrap('<ion-scroll direction="x" scroll-outside="true" scrollbar-x="true"></ion-scroll>');
             vm.article = _.assign(article, {
-                html: $el.html()
+                html: elem.innerHTML
             });
+
             var related = [];
             if (_.isString(article.related) && article.related.length) {
                 _.each(article.related.split('\n'), function(row) {
@@ -139,11 +168,6 @@
                         vm.recommended = response;
                     });
             }
-
-            api('tag=appearance&id=' + articleId)
-                .then(function(response) {
-                    vm.appearance = response;
-                });
 
             // vm.disqus = {
             //     shortname: 'itweb-za',

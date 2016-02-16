@@ -13,10 +13,10 @@
 	    	<ion-list ng-if="vm.lead || vm.items.length">
 	    		<ion-item class="item-light" ui-sref="app.article({ id: item.itemid })" ng-init="item = vm.lead" ng-if="vm.lead">
 	                <div class="pic">
-    				<img ng-src="{{ item.module.img }}" style="min-width: 100%; max-height: 281px;">
-    				<p class="pic-caption" style="background: #626262;color:#eee;font-weight: 500;padding: 0 4px;margin-top: -5px">
-    					{{ item.module.caption }}
-    				</p>
+	    				<img ng-src="{{ item.module.img }}" style="min-width: 100%; max-height: 281px;">
+	    				<div class="lead-caption" style="">
+	    					{{ item.module.caption }}
+	    				</div>
     				</div>
 	                <h1 class="assertive" style="margin: 10px 0 4px 0">{{ item.title }}</h1>
 	            </ion-item>
@@ -100,14 +100,16 @@
 	                </div>    
 	            </ion-item>
 
-	            <ion-item ng-show="vm.quote && vm.items.length" class="item-divider">
+	            <ion-item class="item-divider" ng-show="vm.quote && vm.items.length">
 	            	<h3 class="itw-section stable">
                 		Quote of the day
 	                </h3>
-	                <blockquote>
-	                <h2>{{ vm.quote.module.title }}</h2>
-	                <p>{{ vm.quote.module.body }}</p>
-	                <p class="caption"> &ndash; {{ vm.quote.module.caption }}</p>
+	            </ion-item>
+	            <ion-item ng-show="vm.quote && vm.items.length">
+	                <blockquote class="quote-of-the-day">
+		                <h2>{{ vm.quote.module.title }}</h2>
+		                <p class="body">{{ vm.quote.module.body }}</p>
+		                <p class="caption"> &ndash; {{ vm.quote.module.caption }}</p>
 	                </blockquote>
 	            </ion-item>	            
 	            
@@ -201,16 +203,18 @@
 	                </div> 
 	            </ion-item>
 
-	            <ion-item ng-show="vm.pic && vm.items.length" class="item-divider">
+	            <ion-item class="item-divider" ng-show="vm.pic && vm.items.length">
 	            	<h3 class="itw-section stable">
                 		Pic of the day
 	                </h3>
-	                <div class="pic">
+	            </ion-item>
+	            <ion-item ng-show="vm.pic && vm.items.length">
+	            	<div class="pic">
 	                	<img ng-src="{{ vm.pic.module.img }}" style="min-width: 100%; " />
 	                </div>
 	                <h2>{{ vm.pic.module.title }}</h2>
-	                <p class="caption" style="font-style: normal; font-weight: 300">{{ vm.pic.module.body }}</p>
-	                <p class="caption" style="font-weight: 300"> &ndash; <span ng-bind-html="vm.pic.module.caption"></span></p>
+	                <p>{{ vm.pic.module.body }}</p>
+	                <p class="caption"> &ndash; <span ng-bind-html="vm.pic.module.caption"></span></p>
 	            </ion-item>
 
 	            <!-- international -->

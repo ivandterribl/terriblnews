@@ -37,7 +37,7 @@
                     }, {
                         title: 'Enterprise'
                     }, {
-                        title: 'Smart computing'
+                        title: 'Computing'
                     }, {
                         title: 'Networking'
                     }, {
@@ -108,10 +108,6 @@
                 title: 'Companies',
                 icon: 'ion-cube',
                 items: [{
-                    title: 'In the news',
-                    id: 'in-the-news',
-                    sref: 'app.office.news'
-                }, {
                     title: 'Virtual press offices',
                     id: 'virtual-press-office',
                     sref: 'app.office.vpo'

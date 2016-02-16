@@ -13,6 +13,10 @@
 
         vm.portalIcon = 1;
         vm.loadItems = loadItems;
+        vm.go = function($event, stateName, stateParams) {
+            $event.preventDefault();
+            $state.go(stateName, stateParams);
+        };
 
         activate();
 

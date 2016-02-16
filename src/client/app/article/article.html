@@ -1,62 +1,60 @@
 <ion-view cache-view="false">
-<!--     <ion-nav-bar class="bar-assertive">
-        <ion-nav-back-button ng-click="vm.back()">
-        </ion-nav-back-button>
+    <ion-nav-title>
+	{{ vm.article.category }}
+    </ion-nav-title>
 
-        <ion-nav-buttons side="left">
-            <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
-            </button>
-        </ion-nav-buttons> -->
+    <ion-nav-buttons side="right">
+      <md-menu style="padding: 0">
+	      <button md-menu-origin class="button button-icon ion-android-share-alt" ng-click="$mdOpenMenu($event)">
+	      </button>
+	      <md-menu-content width="3">
+	        <md-menu-item>
+		        <md-button class="row" socialshare socialshare-provider="facebook" socialshare-url="{{ vm.canonical }}">
+		          	<span class="md-menu-icon" >
+		          		<i class="icon ion-social-facebook"></i>
+		          	</span>
+		          	Facebook
+		        </md-button>
+	        </md-menu-item>
+	        <md-menu-item>
+		        <md-button class="row" socialshare socialshare-provider="twitter" socialshare-url="{{ vm.canonical }}">
+		          	<span class="md-menu-icon">
+		          		<i class="icon ion-social-twitter"></i>
+		          	</span>
+		          	<span>Twitter</span>
+		        </md-button>
+	        </md-menu-item>
+	        <md-menu-item>
+		        <md-button class="row" socialshare socialshare-provider="linkedin" socialshare-url="{{ vm.canonical }}">
+		          	<span class="md-menu-icon">
+		          		<i class="icon ion-social-linkedin"></i>
+		          	</span>
+		          	<span>LinkedIn</span>
+		        </md-button>
+	        </md-menu-item>
+	        <md-menu-item>
+		        <md-button class="row" socialshare socialshare-provider="google+" socialshare-url="{{ vm.canonical }}">
+		          	<span class="md-menu-icon">
+		          		<i class="icon ion-social-googleplus"></i>
+		          	</span>
+		          	<span>Google+</span>
+		        </md-button>
+	        </md-menu-item>
+	      </md-menu-content>
+	    </md-menu>
+    </ion-nav-buttons>
 
-        <ion-nav-title>{{ vm.article.title }}</ion-nav-title>
-
-        <ion-nav-buttons side="right">
-	      <md-menu style="padding: 0">
-		      <button md-menu-origin class="button button-icon ion-android-share-alt" ng-click="$mdOpenMenu($event)">
-		      </button>
-		      <md-menu-content width="3">
-		        <md-menu-item>
-			        <md-button class="row" socialshare socialshare-provider="facebook" socialshare-url="{{ vm.canonical }}">
-			          	<span class="md-menu-icon" >
-			          		<i class="icon ion-social-facebook"></i>
-			          	</span>
-			          	Facebook
-			        </md-button>
-		        </md-menu-item>
-		        <md-menu-item>
-			        <md-button class="row" socialshare socialshare-provider="twitter" socialshare-url="{{ vm.canonical }}">
-			          	<span class="md-menu-icon">
-			          		<i class="icon ion-social-twitter"></i>
-			          	</span>
-			          	<span>Twitter</span>
-			        </md-button>
-		        </md-menu-item>
-		        <md-menu-item>
-			        <md-button class="row" socialshare socialshare-provider="linkedin" socialshare-url="{{ vm.canonical }}">
-			          	<span class="md-menu-icon">
-			          		<i class="icon ion-social-linkedin"></i>
-			          	</span>
-			          	<span>LinkedIn</span>
-			        </md-button>
-		        </md-menu-item>
-		        <md-menu-item>
-			        <md-button class="row" socialshare socialshare-provider="google+" socialshare-url="{{ vm.canonical }}">
-			          	<span class="md-menu-icon">
-			          		<i class="icon ion-social-googleplus"></i>
-			          	</span>
-			          	<span>Google+</span>
-			        </md-button>
-		        </md-menu-item>
-		      </md-menu-content>
-		    </md-menu>
-	    </ion-nav-buttons>
-    <!-- </ion-nav-bar> -->
 
 	<ion-content on-swipe-right="vm.prev()" on-swipe-left="vm.next()">
     	<section ng-show="!vm.loading" itemscope itemtype="http://schema.org/NewsArticle">
+    		<div class="padding" style="border-bottom: 1px solid #ddd; background: #eee">
+    			<div adsrv what="top{{ vm.adtag.replace(' ', '') }}" width="100%" height="45px" 
+    				class="top" ng-if="vm.adtag"></div>
+    		</div>
+
     		<div class="padding">
-	    		<h1 class="assertive" itemprop="headline" ng-if="vm.article.title.length < 64">{{::vm.article.title}}</h1>
-	    		<h2 class="assertive" itemprop="headline" ng-if="!(vm.article.title.length < 64)">{{::vm.article.title}}</h2>
+	    		<h1 class="assertive" itemprop="headline">{{::vm.article.title}}</h1>
+	    		
 	    		<h4 ng-if="vm.article.summary" ng-bind-html="::vm.article.summary"></h4>
 				<h5 ng-if="vm.article.storytype !== 'P'">
 					<span ng-if="vm.article.created_by_alias">
@@ -90,7 +88,7 @@
 				<div class="card padding" ng-bind-html="::vm.article.editornote">
 				</div>
 
-				<div class="card padding"  ng-if="vm.article.storytype === 'P' && (vm.article.contactname || vm.article.prcontactname)">
+				<div class="card padding" ng-if="vm.article.storytype === 'P' && (vm.article.contactname || vm.article.prcontactname)">
 					<p><strong>Editorial contacts</strong></p>
 					<p ng-if="vm.article.contactname">
 						{{ ::vm.article.meta.Company }}<br />
@@ -138,12 +136,17 @@
 					<i class="icon icon-mini ion-chevron-right"></i>
 				</ion-item>
 				<ion-item class="item-icon-left item-icon-right" 
-					ng-repeat="topic in vm.topics" ui-sref="app.topic({ q: topic })" ng-if="vm.related.length">
+					ng-repeat="topic in vm.topics track by $index" ui-sref="app.topic({ q: topic })" ng-if="vm.related.length">
 					<i class="icon icon-mini ion-bookmark"></i>
 					<h3>{{ ::topic }}</h3>
 					<i class="icon icon-mini ion-chevron-right"></i>
 				</ion-item>
 			</ion-list>
+
+			<div class="padding" style="border-bottom: 1px solid #ddd; background: #eee" ng-if="vm.adtag && vm.banners.length">
+    			<div adsrv what="bot{{ vm.adtag.replace(' ', '') }}" width="100%" height="45px" 
+    				class="top"></div>
+    		</div>
 
 			<ion-list ng-show="vm.appearance.length">
 				<ion-item class="item-divider">

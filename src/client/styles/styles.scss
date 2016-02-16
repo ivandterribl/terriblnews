@@ -64,10 +64,6 @@ md-tabs-canvas, md-pagination-wrapper {
   }
 }
 
-.adsrv-embedded {
-  float: left;
-  margin: 5px 5px 5px 0;
-}
 
 ion-side-menu .item {
   margin: 0;
@@ -218,6 +214,56 @@ article span {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+}
+.lead-caption {
+  background: #626262;
+  color:#eee;
+  font-weight: 500;
+  padding: 0 4px;
+  margin-top: -5px;
+  white-space: normal;
+}
+blockquote {
+  border-left: 5px solid $assertive;
+}
+.quote-of-the-day {
+  margin: 0;
+  .body {
+    font-size: 16px !important;
+  }
+}
+.adhead {
+  font-size: 12px;
+  color: #666;
+}
+[adsrv].embedded {
+  float: left;
+  margin: 5px 5px 5px 0;
+}
+[adsrv].top img, [adsrv].rect2 img {
+  max-width: 100%;
+  height: auto;
+}
+[adsrv].rect {
+  background: #eee;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  margin: 10px -10px;
+  text-align: center;
+  overflow: hidden;
+  padding: 10px 0;
+}
+[adsrv].rect .adsrv {
+  overflow: hidden;
+}
+[adsrv].rect2 {
+  background: #eee;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  margin: 10px -10px;
+  text-align: center;
+  overflow: hidden;
+  padding: 10px;
 }
 
 

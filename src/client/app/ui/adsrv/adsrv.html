@@ -1,9 +1,4 @@
-<div class="adsrv text-center" style="width: {{ width }}px; height: {{ height }}px; background: #ccc; ">
-	<div class="row" ng-show="loading" style="height:100%">	
-		<div class="col col-center">
-  			<ion-spinner></ion-spinner>
-  		</div>
-  	</div>
+<div class="adsrv text-center" ng-style="{ width: width, height: height }">
 	<div ng-show="!loading" ng-bind-html="result">
 	</div>
 </div>
