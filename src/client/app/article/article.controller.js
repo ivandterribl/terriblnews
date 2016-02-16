@@ -80,10 +80,11 @@
                     meta: jparam(response[0].meta)
                 }),
                 adtag = article.category.toLowerCase().replace(' '),
+                h = Math.floor((window.innerWidth - 20) / 728 * 90),
                 banners = [
                     '<div adsrv what="tileone' + adtag + '" width="100%" height="250px" class="rect"></div>',
                     '<div adsrv what="triggeronedefault" width="120px" height="250px" class="embedded"></div>',
-                    '<div adsrv what="bot' + adtag + '" width="100%" height="' + Math.floor((window.innerWidth - 20) / 728 * 90) + 'px" class="rect2"></div>'
+                    '<div adsrv what="bot' + adtag + '" width="100%" height="' + h + 'px" class="rect2"></div>'
                 ],
                 fulltext = article.fulltext,
                 elem = document.createElement('div'),
