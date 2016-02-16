@@ -1,233 +1,243 @@
 <ion-view>
-	<ion-nav-title>
-		<span ng-include="'images/itweb_logo_onred.svg'"></span>
-	</ion-nav-title>
-	<ion-content>
-    	<section ng-show="vm.loading" class="text-center padding">
-    		<ion-spinner></ion-spinner>
-    	</section>
-    	<section ng-show="!vm.loading && !vm.lead && !vm.items.length" class="padding">
-    		<h3 class="text-center assertive" ng-cloak>Oops, something went wrong</h3>
-    	</section>
-    	<section ng-show="!vm.loading">
-	    	<ion-list ng-if="vm.lead || vm.items.length">
-	    		<ion-item class="item-light" ui-sref="app.article({ id: item.itemid })" ng-init="item = vm.lead" ng-if="vm.lead">
-	                <div class="pic">
-    				<img ng-src="{{ item.module.img }}" style="min-width: 100%; max-height: 281px;">
-    				<p class="pic-caption" style="background: #626262;color:#eee;font-weight: 500;padding: 0 4px;margin-top: -5px">
-    					{{ item.module.caption }}
-    				</p>
-    				</div>
-	                <h1 class="assertive" style="margin: 10px 0 4px 0">{{ item.title }}</h1>
-	            </ion-item>
-
-	            <ion-item class="item-light" ng-repeat="item in vm.groups.top">
-	                <div class="item-content">
-		                <a ng-click="vm.go($event, 'app.article', { id: item.itemid })">
-			                <img ng-src="{{ item.introtextImg }}" ng-if="item.introtextImg" style="float:right; margin: 0 0 4px 4px; "/>
-			                <h3 class="itw-section stable" ng-if="item.topic">
-		                		{{ item.topic }}
-			                </h3>
-			                <h2>{{ item.title }}</h2>
-			            </a>
-		            
-		                <p>
-		                	<itw-timestamp timestamp="'{{ item.created }}'"></itw-timestamp>
-		                	
-		                	<a ng-if="item.section.id" class="assertive" ui-sref="app.section({ id: item.section.id })">
-					        	<span class="stable">|</span> {{ item.section.title }}
-			                </a>
-		                </p>
-	                </div>    
-	            </ion-item>
-
-	            <!-- more news -->
-	            <ion-item class="item-divider" ng-if="vm.groups.industry.length" nav-clear>
-	            	<a ui-sref="app.news.category({ id: 'industry-news' })" class="item-content">
-			            <h3 class="itw-section assertive">
-	                		Industry news
-	                		<i class="icon ion-chevron-right"></i> 
-		                </h3>
-	                </a>
-	            </ion-item>
-	            <ion-item class="item-light" ng-repeat="(i, item) in vm.groups.industry">
-		            <a ui-sref="app.article({ id: item.itemid })" class="item-content">
-		                <h3>{{ item.title }}</h3>
-	                </a>
-	            </ion-item>
-
-	            <!-- reuters -->
-	            <ion-item class="item-divider" ng-if="vm.groups.reuters.length">
-	            	<a ui-sref="app.news.category({ id: 'world' })" class="item-content">
-			            <h3 class="itw-section assertive">
-	                		Reuters
-	                		<i class="icon ion-chevron-right"></i> 
-		                </h3>
-	                </a>
-	            </ion-item>
-	            <ion-item class="item-light" ng-repeat="(i, item) in vm.groups.reuters">
-		            <a ui-sref="app.article({ id: item.itemid })" class="item-content">
-		                <h3>{{ item.title }}</h3>
-	                </a>
-	            </ion-item>
-
-				<!-- company news -->
-	            <ion-item class="item-divider" ng-if="vm.groups.company.length">
-	            	<a ui-sref="app.news.category({ id: 'company-news' })" class="item-content">
-			            <h3 class="itw-section assertive">
-	                		Company news
-	                		<i class="icon ion-chevron-right"></i> 
-		                </h3>
-	                </a>
-	            </ion-item>
-	            <ion-item class="item-light" ng-repeat="(i, item) in vm.groups.company">
-	                <div class="item-content">
-		                <a ng-click="vm.go($event, 'app.article', { id: item.itemid })">
-			                <img ng-src="{{ item.introtextImg }}" ng-if="item.introtextImg" style="float:right; margin: 0 0 4px 4px; "/>
-			                <h3 class="itw-section stable" ng-if="item.topic">
-		                		{{ item.topic }}
-			                </h3>
-			                <h2>{{ item.title }}</h2>
-			            </a>
-		            
-		                <p>
-		                	<itw-timestamp timestamp="'{{ item.created }}'"></itw-timestamp>
-		                	
-		                	<a ng-if="item.copyPath" class="assertive" ng-href="http://www.itweb.co.za/office/{{ item.copyPath }}">
-					        	<span class="stable">|</span> {{ item.company }}
-			                </a>
-		                </p>
-	                </div>    
-	            </ion-item>
-
-	            <ion-item ng-show="vm.quote && vm.items.length" class="item-divider">
-	            	<h3 class="itw-section stable">
-                		Quote of the day
-	                </h3>
-	                <blockquote>
-	                <h2>{{ vm.quote.module.title }}</h2>
-	                <p>{{ vm.quote.module.body }}</p>
-	                <p class="caption"> &ndash; {{ vm.quote.module.caption }}</p>
-	                </blockquote>
-	            </ion-item>	            
-	            
-	            <!-- columnists -->
-	            <ion-item class="item-divider" ng-if="vm.groups.columnists.length">
-	            	<a ui-sref="app.opinion.category({ id: 'columnists' })" class="item-content">
-			            <h3 class="itw-section assertive">
-	                		Columnists
-	                		<i class="icon ion-chevron-right"></i> 
-		                </h3>
-	                </a>
-	            </ion-item>
-	            <ion-item ng-repeat="(i, item) in vm.groups.columnists" class="item-light">
-		            <div class="item-content">
-		                <a ng-click="vm.go($event, 'app.article', { id: item.itemid })">
-			                <img ng-src="{{ item.introtextImg }}" ng-if="item.introtextImg" style="float:right; margin: 0 0 4px 4px; "/>
-			                <h3 class="itw-section stable" ng-if="item.topic">
-		                		{{ item.topic }}
-			                </h3>
-			                <h2>{{ item.title }}</h2>
-			            </a>
-		            
-		                <p>
-		                	<itw-timestamp timestamp="'{{ item.created }}'"></itw-timestamp>
-		                	
-		                	<span class="assertive" ng-if="item.topic">
-		                		<i class="icon ion-edit" style="" ng-if="item.topic"></i> 
-		                		{{ item.created_by_alias }}
-			                </span>
-		                </p>
-	                </div>    
-	            </ion-item>
-
-	            <!-- industry-insight -->
-	            <ion-item class="item-divider" ng-if="vm.groups.insights.length">
-	            	<a ui-sref="app.opinion.category({ id: 'industry-insight' })" class="item-content">
-			            <h3 class="itw-section assertive">
-	                		Industry insight
-	                		<i class="icon ion-chevron-right"></i> 
-		                </h3>
-	                </a>
-	            </ion-item>
-	            <ion-item ng-repeat="(i, item) in vm.groups.insights" class="item-light">
-		            <div class="item-content">
-		                <a ng-click="vm.go($event, 'app.article', { id: item.itemid })">
-			                <img ng-src="{{ item.introtextImg }}" ng-if="item.introtextImg" style="float:right; margin: 0 0 4px 4px; "/>
-			                <h3 class="itw-section stable" ng-if="item.topic">
-		                		{{ item.topic }}
-			                </h3>
-			                <h2>{{ item.title }}</h2>
-			            </a>
-		            
-		                <p>
-		                	<itw-timestamp timestamp="'{{ item.created }}'"></itw-timestamp>
-		                	
-		                	<span class="assertive" ng-if="item.topic">
-		                		<i class="icon ion-edit" style="" ng-if="item.topic"></i> 
-		                		{{ item.created_by_alias }}
-			                </span>
-		                </p>
-	                </div> 
-	            </ion-item>
-
-	            <!-- features -->
-	            <ion-item class="item-divider" ng-if="vm.groups.features.length">
-	            	<a ui-sref="app.features" class="item-content">
-			            <h3 class="itw-section assertive">
-	                		Features
-	                		<i class="icon ion-chevron-right"></i> 
-		                </h3>
-	                </a>
-	            </ion-item>
-	            <ion-item ng-repeat="(i, item) in vm.groups.features" class="item-light">
-		            <div class="item-content">
-		                <a ng-click="vm.go($event, 'app.article', { id: item.itemid })">
-			                <img ng-src="{{ item.introtextImg }}" ng-if="item.introtextImg" style="float:right; margin: 0 0 4px 4px; "/>
-			                <h3 class="itw-section stable" ng-if="item.topic">
-		                		{{ item.topic }}
-			                </h3>
-			                <h2>{{ item.title }}</h2>
-			            </a>
-		            
-		                <p>
-		                	<itw-timestamp timestamp="'{{ item.created }}'"></itw-timestamp>
-		                	
-		                	<span class="assertive" ng-if="item.topic">
-		                		<i class="icon ion-edit" style="" ng-if="item.topic"></i> 
-		                		{{ item.created_by_alias }}
-			                </span>
-		                </p>
-	                </div> 
-	            </ion-item>
-
-	            <ion-item ng-show="vm.pic && vm.items.length" class="item-divider">
-	            	<h3 class="itw-section stable">
-                		Pic of the day
-	                </h3>
-	                <div class="pic">
-	                	<img ng-src="{{ vm.pic.module.img }}" style="min-width: 100%; " />
-	                </div>
-	                <h2>{{ vm.pic.module.title }}</h2>
-	                <p class="caption" style="font-style: normal; font-weight: 300">{{ vm.pic.module.body }}</p>
-	                <p class="caption" style="font-weight: 300"> &ndash; <span ng-bind-html="vm.pic.module.caption"></span></p>
-	            </ion-item>
-
-	            <!-- international -->
-				<ion-item class="item-divider" ng-if="vm.groups.international.length">
-	            	<a ui-sref="app.section({ id: 74 })" class="item-content">
-			            <h3 class="itw-section assertive">
-	                		International
-	                		<i class="icon ion-chevron-right"></i> 
-		                </h3>
-	                </a>
-	            </ion-item>
-	            <ion-item class="item-light" ng-repeat="(i, item) in vm.groups.international">
-		            <a ui-sref="app.article({ id: item.itemid })" class="item-content">
-		                <h2>{{ item.title }}</h2>
-	                </a>
-	            </ion-item>
-	        </ion-list>
+    <ion-nav-title>
+        <span ng-include="'images/itweb_logo_onred.svg'"></span>
+    </ion-nav-title>
+    <ion-content style="background-color: #eee;">
+        <section ng-show="vm.loading" class="text-center padding">
+            <ion-spinner></ion-spinner>
         </section>
-	</ion-content>
+        <section ng-show="!vm.loading && !vm.lead && !vm.items.length" class="padding">
+            <h3 class="text-center assertive" ng-cloak>Oops, something went wrong</h3>
+        </section>
+        <section ng-show="!vm.loading">
+            <div ng-if="vm.lead || vm.items.length">
+                <div class="card" ui-sref="app.article({ id: item.itemid })" ng-init="item = vm.lead" ng-if="vm.lead">
+                    <div class="pic">
+                        <img ng-src="{{ item.module.img }}" style="min-width: 100%; max-height: 281px;">
+                        <p class="pic-caption" style="background: #626262;color:#eee;font-weight: 500;padding: 0 4px;margin-top: -5px; margin-left: 0">
+                            {{ item.module.caption }}
+                        </p>
+                    </div>
+                    <h1 class="assertive" style="margin: 10px 12px 4px 12px">{{ item.title }}</h1>
+                </div>
+
+                <div ng-repeat="item in vm.groups.top" class="card" layout="row" layout-align="start center" style="min-height: 70px; padding-left: 12px">
+                    <div flex>
+
+                        <a ng-click="vm.go($event, 'app.article', { id: item.itemid })">
+                            <h3 class="itw-section stable" ng-if="item.topic">
+                                {{ item.topic }}
+                            </h3>
+                            <h2>{{ item.title }}</h2>
+                        </a>
+
+                        <p class="ellipsis">
+                            <itw-timestamp timestamp="'{{ item.created }}'"></itw-timestamp>
+
+		                	<span ng-if="item.section.id" class="assertive" ng-click="vm.go($event, 'app.section', { id: item.section.id })" stop-event="click">
+					        	<span class="stable">|</span> {{ item.section.title }}
+			                </span>
+                        </p>
+                    </div>
+                    <a ng-click="vm.go($event, 'app.article', { id: item.itemid })">
+                        <img ng-src="{{ item.introtextImg }}" ng-if="item.introtextImg" style="float:right; margin: 0 0 0 4px; "/>
+                    </a>
+                </div>
+
+                <div ng-if="vm.groups.industry.length" class="list card">
+                    <div class="item item-divider">
+                        <a ui-sref="app.news.category({ id: 'industry-news' })" class="item-content">
+                            <h3 class="itw-section assertive">
+                                Industry news
+                                <i class="icon ion-chevron-right"></i>
+                            </h3>
+                        </a>
+                    </div>
+
+                    <a ng-click="vm.go($event, 'app.article', { id: item.itemid })" ng-repeat="(i, item) in vm.groups.industry" class="item">
+                        <h2>{{ item.title }}</h2>
+                    </a>
+                </div>
+
+                <div ng-if="vm.groups.reuters.length" class="list card">
+                    <div class="item item-divider">
+                        <a ui-sref="app.news.category({ id: 'world' })" class="item-content">
+                            <h3 class="itw-section assertive">
+                                Reuters
+                                <i class="icon ion-chevron-right"></i>
+                            </h3>
+                        </a>
+                    </div>
+
+                    <a ng-click="vm.go($event, 'app.article', { id: item.itemid })" ng-repeat="(i, item) in vm.groups.reuters" class="item">
+                        <h2>{{ item.title }}</h2>
+                    </a>
+                </div>
+
+                <div ng-if="vm.groups.company.length" class="list card">
+                    <div class="item item-divider">
+                        <a ui-sref="app.news.category({ id: 'company-news' })" class="item-content">
+                            <h3 class="itw-section assertive">
+                                Company news
+                                <i class="icon ion-chevron-right"></i>
+                            </h3>
+                        </a>
+                    </div>
+
+                    <div ng-repeat="item in vm.groups.company" class="item item-light" >
+                        <div class="item-content">
+                            <a ng-click="vm.go($event, 'app.article', { id: item.itemid })">
+                                <img ng-src="{{ item.introtextImg }}" ng-if="item.introtextImg" style="float:right; margin: 0 0 4px 4px; "/>
+                                <h2>{{ item.title }}</h2>
+                            </a>
+                            <p>
+                                <itw-timestamp timestamp="'{{ item.created }}'"></itw-timestamp>
+
+                                <a ng-if="item.copyPath" class="assertive" ng-href="http://www.itweb.co.za/office/{{ item.copyPath }}">
+                                    <span class="stable">|</span> {{ item.company }}
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div ng-show="vm.quote && vm.items.length" class="card">
+                    <div class="item item-divider">
+                        <h3 class="itw-section assertive">
+                            Quote of the day
+                        </h3>
+                    </div>
+
+                    <blockquote style="margin: 0">
+                        <h2>{{ vm.quote.module.title }}</h2>
+                        <p>{{ vm.quote.module.body }}</p>
+                        <p class="caption" style="font-size: 12px;"> &ndash; {{ vm.quote.module.caption }}</p>
+                    </blockquote>
+                </div>
+
+                <!-- columnists -->
+                <div ng-if="vm.groups.columnists.length" class="list card">
+                    <div class="item item-divider">
+                        <a ui-sref="app.opinion.category({ id: 'columnists' })" class="item-content">
+                            <h3 class="itw-section assertive">
+                                Columnists
+                                <i class="icon ion-chevron-right"></i>
+                            </h3>
+                        </a>
+                    </div>
+
+                    <div ng-repeat="item in vm.groups.columnists" class="item item-light" >
+                        <div class="item-content">
+                            <a ng-click="vm.go($event, 'app.article', { id: item.itemid })">
+                                <img ng-src="{{ item.introtextImg }}" ng-if="item.introtextImg" style="float:right; margin: 0 0 4px 4px; "/>
+                                <h2>{{ item.title }}</h2>
+                            </a>
+                            <p>
+                                <itw-timestamp timestamp="'{{ item.created }}'"></itw-timestamp>
+
+				                <span class="assertive" ng-if="item.topic">
+			                		<i class="icon ion-edit" style="" ng-if="item.topic"></i>
+			                		{{ item.created_by_alias }}
+				                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- industry-insight -->
+                <div ng-if="vm.groups.insights.length" class="list card">
+                    <div class="item item-divider">
+                        <a ui-sref="app.opinion.category({ id: 'industry-insight' })" class="item-content">
+                            <h3 class="itw-section assertive">
+                                Industry insight
+                                <i class="icon ion-chevron-right"></i>
+                            </h3>
+                        </a>
+                    </div>
+
+                    <div ng-repeat="item in vm.groups.insights" class="item item-light" >
+                        <div class="item-content">
+                            <a ng-click="vm.go($event, 'app.article', { id: item.itemid })">
+                                <img ng-src="{{ item.introtextImg }}" ng-if="item.introtextImg" style="float:right; margin: 0 0 4px 4px; "/>
+                                <h2>{{ item.title }}</h2>
+                            </a>
+                            <p>
+                                <itw-timestamp timestamp="'{{ item.created }}'"></itw-timestamp>
+
+				                <span class="assertive" ng-if="item.topic">
+			                		<i class="icon ion-edit" style="" ng-if="item.topic"></i>
+			                		{{ item.created_by_alias }}
+				                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- features -->
+                <div ng-if="vm.groups.features.length" class="list card">
+                    <div class="item item-divider">
+                        <a ui-sref="app.opinion.category({ id: 'features' })" class="item-content">
+                            <h3 class="itw-section assertive">
+                                Features
+                                <i class="icon ion-chevron-right"></i>
+                            </h3>
+                        </a>
+                    </div>
+
+                    <div ng-repeat="item in vm.groups.features" class="item item-light" >
+                        <div class="item-content">
+                            <a ng-click="vm.go($event, 'app.article', { id: item.itemid })">
+                                <img ng-src="{{ item.introtextImg }}" ng-if="item.introtextImg" style="float:right; margin: 0 0 4px 4px; "/>
+                                <h2>{{ item.title }}</h2>
+                            </a>
+                            <p>
+                                <itw-timestamp timestamp="'{{ item.created }}'"></itw-timestamp>
+
+				                <span class="assertive" ng-if="item.topic">
+			                		<i class="icon ion-edit" style="" ng-if="item.topic"></i>
+			                		{{ item.created_by_alias }}
+				                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-show="vm.pic && vm.items.length" class="card">
+                    <div class="item item-divider">
+                        <h3 class="itw-section assertive">
+                            Pic of the day
+                        </h3>
+
+                    </div>
+                    <div class="pic">
+                        <img ng-src="{{ vm.pic.module.img }}" style="min-width: 100%; " />
+                    </div>
+                    <div style="padding: 0 12px 6px 12px">
+
+                        <h2>{{ vm.pic.module.title }}</h2>
+                        <p class="caption" style="font-style: normal; font-weight: 300">{{ vm.pic.module.body }}</p>
+                        <p class="caption" style="font-weight: 300; font-size: 12px"> &ndash; <span ng-bind-html="vm.pic.module.caption"></span></p>
+                    </div>
+                </div>
+
+                <!-- international -->
+                <div ng-if="vm.groups.international.length" class="list card">
+                    <div class="item item-divider">
+                        <a ui-sref="app.section({ id: 74 })" class="item-content">
+                            <h3 class="itw-section assertive">
+                                International
+                                <i class="icon ion-chevron-right"></i>
+                            </h3>
+                        </a>
+                    </div>
+
+                    <a ng-click="vm.go($event, 'app.article', { id: item.itemid })" ng-repeat="(i, item) in vm.groups.international" class="item">
+                        <h2>{{ item.title }}</h2>
+                    </a>
+                </div>
+                <p>&nbsp;</p>
+            </div>
+        </section>
+    </ion-content>
 </ion-view>
