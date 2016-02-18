@@ -31,7 +31,9 @@
 	    		    <ion-item  class="item-light" >
 	    		    	<div class="item-content">
 			                <a ui-sref="app.article({ id: item.itemid, catid: item.section.id })">
-				                <img ng-src="{{ item.introtextImg }}" ng-if="item.introtextImg" style="float:right; margin: 0 0 4px 4px; "/>
+				                <div class="news-img" ng-if="item.introtextImg">
+				                	<img ng-src="{{ item.introtextImg }}"  />
+				                </div>
 				                <h3 class="itw-section stable" ng-if="item.topic">
 			                		{{ item.topic }}
 				                </h3>

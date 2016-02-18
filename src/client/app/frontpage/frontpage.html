@@ -28,7 +28,9 @@
 	            <ion-item class="item-light" ng-repeat="item in vm.groups.top">
 	                <div class="item-content">
 		                <a ui-sref="app.article({ id: item.itemid, catid: item.section.id })">
-			                <img ng-src="{{ item.introtextImg }}" ng-if="item.introtextImg" style="float:right; margin: 0 0 4px 4px; "/>
+			                <div class="news-img" ng-if="item.introtextImg">
+			                	<img ng-src="{{ ::item.introtextImg }}"  />
+			                </div>
 			                <h3 class="itw-section stable" ng-if="item.topic">
 		                		{{ ::item.topic }}
 			                </h3>
@@ -90,7 +92,9 @@
 	            <ion-item class="item-light" ng-repeat="(i, item) in vm.groups.company">
 	                <div class="item-content">
 		                <a ng-click="vm.go($event, 'app.article', { id: item.itemid })">
-			                <img ng-src="{{ item.introtextImg }}" ng-if="item.introtextImg" style="float:right; margin: 0 0 4px 4px; "/>
+			                <div class="news-img" ng-if="item.introtextImg">
+			                	<img ng-src="{{ ::item.introtextImg }}"  />
+			                </div>
 			                <h3 class="itw-section stable" ng-if="item.topic">
 		                		{{ ::item.topic }}
 			                </h3>
@@ -135,7 +139,9 @@
 	            <ion-item ng-repeat="(i, item) in vm.groups.columnists" class="item-light">
 		            <div class="item-content">
 		                <a ui-sref="app.article({ id: item.itemid, catid: item.section.id })">
-			                <img ng-src="{{ item.introtextImg }}" ng-if="item.introtextImg" style="float:right; margin: 0 0 4px 4px; "/>
+			                <div class="news-img" ng-if="item.introtextImg">
+			                	<img ng-src="{{ ::item.introtextImg }}"  />
+			                </div>
 			                <h3 class="itw-section stable" ng-if="item.topic">
 		                		{{ item.topic }}
 			                </h3>
@@ -165,7 +171,9 @@
 	            <ion-item ng-repeat="(i, item) in vm.groups.insights" class="item-light">
 		            <div class="item-content">
 		                <a ui-sref="app.article({ id: item.itemid, catid: item.section.id })">
-			                <img ng-src="{{ item.introtextImg }}" ng-if="item.introtextImg" style="float:right; margin: 0 0 4px 4px; "/>
+			                <div class="news-img" ng-if="item.introtextImg">
+			                	<img ng-src="{{ ::item.introtextImg }}"  />
+			                </div>
 			                <h3 class="itw-section stable" ng-if="item.topic">
 		                		{{ item.topic }}
 			                </h3>
@@ -195,7 +203,9 @@
 	            <ion-item ng-repeat="(i, item) in vm.groups.features" class="item-light">
 		            <div class="item-content">
 		                <a ui-sref="app.article({ id: item.itemid, catid: item.section.id })">
-			                <img ng-src="{{ item.introtextImg }}" ng-if="item.introtextImg" style="float:right; margin: 0 0 4px 4px; "/>
+			                <div class="news-img" ng-if="item.introtextImg">
+			                	<img ng-src="{{ ::item.introtextImg }}"  />
+			                </div>
 			                <h3 class="itw-section stable" ng-if="item.topic">
 		                		{{ item.topic }}
 			                </h3>

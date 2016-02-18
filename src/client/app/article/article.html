@@ -1,6 +1,8 @@
 <ion-view cache-view="false">
     <ion-nav-title>
+    <a ui-sref="app.section({ id: vm.section.catid })">
 	{{ vm.section.title }}
+	</a>
     </ion-nav-title>
 
     <ion-nav-buttons side="secondary">
@@ -104,20 +106,6 @@
 				</div>
 			</div>
 
-			<div ng-if="vm.pagination.prev || vm.pagination.next" class="row">
-				<a class="button button-clear button-assertive icon-left ion-chevron-left" 
-					ng-click="vm.prev()"
-					ng-if="vm.pagination.prev">
-					Prev
-				</a>
-				<span class="col"></span>
-				<a class="button button-clear button-assertive icon-right ion-chevron-right" 
-					ng-click="vm.next()"
-					ng-if="vm.pagination.next">
-					Next
-				</a>
-			</div>
-
 			<ion-list ng-show="vm.related.length || vm.recommended.length">
 				<ion-item class="item-divider">
 					<h3 class="itw-section stable">See also</h3>
@@ -157,6 +145,22 @@
 					<i class="icon icon-mini ion-chevron-right"></i>
 				</ion-item>
 			</ion-list>
+
+			<div ng-if="vm.pagination.prev || vm.pagination.next" class="row">
+				<a class="button button-clear button-assertive icon-left ion-chevron-left" 
+					ng-click="vm.prev()"
+					ng-if="vm.pagination.prev">
+					Prev
+				</a>
+				<span class="col"><span style="color: #666;
+    font-size: 12px;
+    line-height: 36px;">Swipe across articles</span></span>
+				<a class="button button-clear button-assertive icon-right ion-chevron-right" 
+					ng-click="vm.next()"
+					ng-if="vm.pagination.next">
+					Next
+				</a>
+			</div>
 			
 			<!-- <disqus disqus-shortname="itweb-za"
 		         disqus-identifier="{{ ::vm.disqus.id }}"
