@@ -32,18 +32,13 @@
             meta.canonical(vm.canonical);
 
             window.prerenderReady = false;
-            vm.loading = 1;
 
+            vm.loading = 1;
             $q.all({
                     article: api('tag=articlen&id=' + articleId),
                     appearance: api('tag=appearance&id=' + articleId)
                 })
                 .then(onReady)
-                .catch(function(response) {
-                    vm.article = {
-                        title: 'Oops, something went wrong'
-                    };
-                })
                 .finally(function() {
                     vm.loading = 0;
                 });
@@ -71,10 +66,10 @@
                 }
             });
 
-            var rand;
+            var rand,
+                categories = vm.appearance.length ? vm.appearance : response.appearance;
             if (!vm.section) {
-                rand = response.appearance[_.random(response.appearance.length - 1)];
-                console.log('random section');
+                rand = categories[_.random(categories.length - 1)];
                 vm.section = _.assign(rand, {
                     normalized: rand.title.toLowerCase().replace(/\s/g, '')
                 });

@@ -96,9 +96,6 @@ ion-header-bar.bar.bar-stable {
     padding-left: 102px;
     min-height: 73px;
 }
-.list {
-    max-width: 420px;
-}
 .item {
   h2 {
     font-size: 18px;
@@ -225,8 +222,11 @@ article span {
   white-space: normal;
 }
 blockquote {
-  border-left: 5px solid $assertive;
-  clear: left;
+    border-left: 5px solid #CC2C0E;
+    clear: left;
+    font-size: 16px;
+    color: #666;
+    font-weight: bold;
 }
 .quote-of-the-day {
   margin: 0;
@@ -273,4 +273,10 @@ md-tabs .md-tab {
   font-family: $headings-font-family;
   */
 }
+@media only screen and (max-device-width: 480px) {
+  .item .pic.responsive-pic img {
+    min-width: 100%;  
+  }
+}
+
 

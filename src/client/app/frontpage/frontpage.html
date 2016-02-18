@@ -12,8 +12,8 @@
     	<section ng-show="!vm.loading">
 	    	<ion-list ng-if="vm.lead || vm.items.length">
 	    		<ion-item class="item-light" ui-sref="app.article({ id: item.itemid, catid: item.section.id })" ng-init="item = vm.lead" ng-if="vm.lead">
-	                <div class="pic">
-	    				<img ng-src="{{ item.module.img }}" style="min-width: 100%; max-height: 281px;">
+	                <div class="pic responsive-pic">
+	    				<img ng-src="{{ item.module.img }}">
 	    				<div class="lead-caption" style="">
 	    					{{ ::item.module.caption }}
 	    				</div>
@@ -229,8 +229,8 @@
 	                </h3>
 	            </ion-item>
 	            <ion-item ng-show="vm.pic && vm.items.length">
-	            	<div class="pic">
-	                	<img ng-src="{{ vm.pic.module.img }}" style="min-width: 100%; " />
+	            	<div class="pic responsive-pic">
+	                	<img ng-src="{{ vm.pic.module.img }}" />
 	                </div>
 	                <h2>{{ vm.pic.module.title }}</h2>
 	                <p>{{ vm.pic.module.body }}</p>

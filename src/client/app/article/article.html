@@ -48,6 +48,12 @@
 
 
 	<ion-content on-swipe-right="vm.prev()" on-swipe-left="vm.next()">
+		<section ng-show="vm.loading" class="text-center padding">
+    		<ion-spinner></ion-spinner>
+    	</section>
+    	<section ng-show="!vm.loading && !vm.article" class="padding">
+    		<h3 class="text-center assertive" ng-cloak>Oops, something went wrong</h3>
+    	</section>
     	<section ng-show="!vm.loading" itemscope itemtype="http://schema.org/NewsArticle">
     		<div class="item item-divider" ng-if="vm.section">
     			<div adsrv what="top{{ vm.section.normalized }}" class="top"></div>
@@ -78,13 +84,13 @@
 					
 					<h5 class="col col-center" style="padding: 5px 0 0; text-transform: uppercase; margin: 0;">
 						<span style="color: #3A72AB; font-size:12px"> Visit our press office</span>
-					</h3>
+					</h5>
 					<img ng-src="http://www.itweb.co.za/logos/{{ vm.article.logoPath }}" align="right" />
 				</a>
 
 				<article bind-html-compile="::vm.article.html" itemprop="articleBody"></article>
 			</main>
-
+			<div style="width: 100%; height: 1px; clear: both"></div>
 			<div class="boilerplate" ng-if="vm.article.storytype === 'P' && vm.article.editornote">
 				<div class="card padding" ng-bind-html="::vm.article.editornote">
 				</div>
@@ -152,9 +158,7 @@
 					ng-if="vm.pagination.prev">
 					Prev
 				</a>
-				<span class="col"><span style="color: #666;
-    font-size: 12px;
-    line-height: 36px;">Swipe across articles</span></span>
+				<span class="col text-center"><span style="color: #666;font-size: 12px;line-height: 36px;">Swipe across articles</span></span>
 				<a class="button button-clear button-assertive icon-right ion-chevron-right" 
 					ng-click="vm.next()"
 					ng-if="vm.pagination.next">

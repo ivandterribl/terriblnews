@@ -14,8 +14,8 @@
                     id: 'features'
                 },
                 url: '/features',
-                templateUrl: 'app/news/news.html',
-                controller: 'NewsController as vm'
+                templateUrl: 'app/news/section/section.html',
+                controller: 'SectionController as vm'
             });
     }
 })();

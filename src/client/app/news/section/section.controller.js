@@ -38,10 +38,7 @@
                     vm.hasSubheader = 1;
                     endpoint = 'tag=' + catId;
                     break;
-                case 'columnists':
                 case 'features':
-                case 'tech-forum':
-                case 'industry-insight':
                 case 'cio-zone':
                 case 'reviews':
                     endpoint = 'tag=' + catId;
@@ -49,12 +46,13 @@
                 default:
                     endpoint = 'tag=section&id=' + catId;
             }
+
             api(endpoint)
                 .then(function(response) {
                     var section = response[0].section || '';
                     vm.category = {
                         title: section,
-                        id: catId,
+                        id: response[0].catid,
                         normalized: section.toLowerCase().replace(/\s/g, '')
                     };
                     vm.items = _.map(response, function(row) {
@@ -62,7 +60,7 @@
                         return _.assign(row, {
                             copyPath: row.copyPath === 'n' || row.copyPath === 'itweb' ? null : row.copyPath,
                             section: {
-                                id: catId,
+                                id: row.catid,
                                 title: row.section
                             }
                         });

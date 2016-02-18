@@ -1,0 +1,58 @@
+<ion-view>
+	<ion-nav-title>{{ ::vm.category.title }}</ion-nav-title>
+	
+	<ion-nav-buttons side="right">
+      <button class="button button-icon ion-grid" 
+                ui-sref="app.portals"></button>
+    </ion-nav-buttons>
+
+	<ion-content ng-class="{ 'has-subheader': vm.hasSubheader }" on-swipe-right="vm.prev()" on-swipe-left="vm.next()">
+    	<section ng-show="vm.loading" class="text-center padding">
+    		<ion-spinner></ion-spinner>
+    	</section>
+    	<section ng-show="!vm.loading && !vm.items.length" class="padding">
+    		<h3 class="text-center assertive" ng-cloak>Oops, something went wrong</h3>
+    	</section>
+
+    	<section ng-show="!vm.loading">
+	    	<ion-list ng-show="vm.items.length">
+	    		<div ng-repeat="(i, item) in vm.items"> 
+	    			<ion-item class="item-divider" ng-if="i === 3">
+		            	<div adsrv what="top{{ ::vm.category.normalized }}" width="100%" height="{{ ::vm.metrics.top.height }}px" class="top"></div>
+		            </ion-item>
+		            <ion-item class="item-divider" ng-if="i === 10">
+		            	<div adsrv what="tileone{{ ::vm.category.normalized }}" width="100%" height="250px" class="top"></div>
+		            </ion-item>
+		            <ion-item class="item-divider" ng-if="i === 20">
+		            	<div adsrv what="bot{{ ::vm.category.normalized }}" width="100%" height="{{ ::vm.metrics.top.height }}px" class="top"></div>
+		            </ion-item>
+	    		    <ion-item class="item-light" >
+	    		    	<div class="item-content">
+			                <a ui-sref="app.article({ id: item.itemid, catid: item.section.id })">
+			                	<div class="news-img" ng-if="item.introtextImg">
+				                	<img ng-src="{{ item.introtextImg }}"  />
+				                </div>
+				                <h3 class="itw-section stable" ng-if="item.topic">
+			                		{{ item.topic }}
+				                </h3>
+				                <h2>{{ item.title }}</h2>
+				            </a>
+			            
+			                <p>
+			                	<itw-timestamp timestamp="'{{ item.created }}'"></itw-timestamp>
+			                	
+			                	<span class="assertive" ng-if="!item.copyPath && item.topic">
+			                		<i class="icon ion-edit"></i> 
+			                		{{ item.created_by_alias }}
+				                </span>
+					            <a ng-if="item.copyPath" class="assertive" ng-href="http://www.itweb.co.za/office/{{ item.copyPath }}">
+						        	<span class="stable">|</span> {{ item.company }}
+				                </a>
+			                </p>
+		                </div>    
+		            </ion-item>
+		        </div>
+	        </ion-list>
+        </section>
+	</ion-content>
+</ion-view>
