@@ -9,14 +9,9 @@
     /* @ngInject */
     function Controller(nav, articles, categories, api, _, meta, moment, $scope, $state, searchBar) {
         var vm = this,
-            id = $state.params.id;
+            catId = $state.params.id;
 
-        vm.portalIcon = 1;
         vm.loadItems = loadItems;
-        vm.go = function($event, stateName, stateParams) {
-            $event.preventDefault();
-            $state.go(stateName, stateParams);
-        };
 
         activate();
 
@@ -34,20 +29,47 @@
         }
 
         function loadItems() {
-            api('tag=section&id=' + id)
+            var endpoint;
+
+            switch (catId) {
+                case 'columnists':
+                case 'tech-forum':
+                case 'industry-insight':
+                    vm.hasSubheader = 1;
+                    endpoint = 'tag=' + catId;
+                    break;
+                case 'columnists':
+                case 'features':
+                case 'tech-forum':
+                case 'industry-insight':
+                case 'cio-zone':
+                case 'reviews':
+                    endpoint = 'tag=' + catId;
+                    break;
+                default:
+                    endpoint = 'tag=section&id=' + catId;
+            }
+            api(endpoint)
                 .then(function(response) {
-                    vm.items = _.map(response, function(row) {
-                        if (row.copyPath === 'n' || row.copyPath === 'itweb') {
-                            row.copyPath = null;
-                        }
-                        return row;
-                    });
+                    var section = response[0].section || '';
                     vm.category = {
-                        title: vm.items[0].section,
-                        id: id
+                        title: section,
+                        id: catId,
+                        normalized: section.toLowerCase().replace(/\s/g, '')
                     };
+                    vm.items = _.map(response, function(row) {
+                        var slug = row.section.split(':');
+                        return _.assign(row, {
+                            copyPath: row.copyPath === 'n' || row.copyPath === 'itweb' ? null : row.copyPath,
+                            section: {
+                                id: catId,
+                                title: row.section
+                            }
+                        });
+                    });
                     articles.set(vm.items);
-                    console.log(vm.items);
+
+                    seo();
                 })
                 .catch(function(response) {
                     vm.items = [];
@@ -55,6 +77,16 @@
                 .finally(function() {
                     vm.loading = 0;
                 });
+
+            // api('tag=sponsor&q=sponsor&id=' + catId);
+            // api('tag=sponsor&q=co-sponsor&id=' + catId);
+        }
+
+        function seo() {
+            meta.title(vm.category.title);
+            meta.keywords(vm.category.title);
+            meta.canonical(false);
+            meta.ld(false);
         }
 
     }

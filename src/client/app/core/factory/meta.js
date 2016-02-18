@@ -5,9 +5,9 @@
         .module('app.core')
         .factory('meta', Meta);
 
-    Meta.$inject = [];
+    Meta.$inject = ['_'];
 
-    function Meta() {
+    function Meta(_) {
         var description = 'Business Technology News',
             keywords = 'IT, Technology, Business, News',
             canonical = 'http://www.itweb.co.za/',
@@ -33,13 +33,17 @@
                 return canonical;
             },
             ld: function(value) {
-                if (value || value === false) {
-                    ld = value;
-                }
                 if (value) {
                     document.getElementById('json-ld').innerText = JSON.stringify(value);
+                } else if (value === false) {
+                    document.getElementById('json-ld').innerText = '';
                 }
                 return ld;
+            },
+            title: function(value) {
+                if (_.isString(value)) {
+                    document.getElementsByTagName('title')[0].innerText = value;
+                }
             }
         };
     }

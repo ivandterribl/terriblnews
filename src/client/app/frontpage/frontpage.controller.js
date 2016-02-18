@@ -48,7 +48,16 @@
         function loadLead() {
             api('tag=lead-picture')
                 .then(function(response) {
-                    vm.lead = response[0];
+                    var row = response[0],
+                        slug = row.section.split(':');
+
+                    vm.lead = _.assign(row, {
+                        importance: parseInt(row.importance),
+                        section: {
+                            id: slug[0],
+                            title: slug[1]
+                        }
+                    });
                     vm.loading = 0;
                 })
                 .finally(loadItems);
@@ -69,7 +78,6 @@
             api('tag=frontpage')
                 .then(function(response) {
                     var items = _.map(response, function(row) {
-
                             var slug = row.section.split(':');
                             return _.assign(row, {
                                 importance: parseInt(row.importance),

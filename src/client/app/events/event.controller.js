@@ -63,17 +63,16 @@
                             });
                         });
 
-                        var jsonLd = {
+                        meta.description(_.get(response, '[0].summary'));
+                        meta.keywords(_.pluck(response, 'artist').join(', '));
+                        meta.canonical(false);
+                        meta.ld({
                             '@context': 'http://schema.org',
                             '@type': 'MusicPlaylist',
                             'name': _.get(response, '[0].category'),
                             'numTracks': response.length,
                             'track': tracks
-                        };
-                        meta.description(_.get(response, '[0].summary'));
-                        meta.keywords(_.pluck(response, 'artist').join(', '));
-                        meta.canonical(false);
-                        meta.ld(jsonLd);
+                        });
                         vm.title = response[0].category;
                         document.getElementsByTagName('title')[0].innerText = vm.title + ' audio tracks';
                         window.prerenderReady = true;

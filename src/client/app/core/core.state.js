@@ -17,6 +17,9 @@
             })
             .state('app.article', {
                 url: '/article/:id',
+                params: {
+                    catid: null
+                },
                 templateUrl: 'app/article/article.html',
                 controller: 'ArticleController as vm'
 

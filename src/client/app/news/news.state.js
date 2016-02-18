@@ -44,7 +44,7 @@
                     id: null
                 },
                 url: '/news/section/:id',
-                templateUrl: 'app/news/news.html',
+                templateUrl: 'app/news/section/section.html',
                 controller: 'SectionController as vm'
             })
             .state('app.portals', {

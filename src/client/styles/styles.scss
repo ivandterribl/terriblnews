@@ -59,8 +59,8 @@ md-tabs-canvas, md-pagination-wrapper {
     max-width: 100%;
   }
   .pic-caption {
-    font-size: 11px;
-    color: #444;    
+    font-size: 12px;
+    font-weight: bold;   
   }
 }
 
@@ -189,6 +189,7 @@ article span {
   padding: 10px 10px 20px;
   .card {
     margin: 0 0 10px;
+    padding: 10px;
     background-color: #f8f4ef;
   }
 }
@@ -225,6 +226,7 @@ article span {
 }
 blockquote {
   border-left: 5px solid $assertive;
+  clear: left;
 }
 .quote-of-the-day {
   margin: 0;
@@ -244,26 +246,31 @@ blockquote {
   max-width: 100%;
   height: auto;
 }
-[adsrv].rect {
-  background: #eee;
-  border-top: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
-  margin: 10px -10px;
-  text-align: center;
-  overflow: hidden;
-  padding: 10px 0;
+[adsrv].top iframe, [adsrv].rect2 iframe {
+  max-width: 100%;
+  height: 45px;
 }
-[adsrv].rect .adsrv {
+[adsrv] {
+  text-align: center;
+}
+[adsrv] > div:first-child {
   overflow: hidden;
 }
-[adsrv].rect2 {
-  background: #eee;
-  border-top: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
+.item.item-divider.item-strech {
   margin: 10px -10px;
-  text-align: center;
+}
+.news-img {
+  float:right; 
+  margin: 0 0 4px 4px; 
+  width: 100px;
+  height: 70px;
   overflow: hidden;
-  padding: 10px;
 }
 
+md-tabs .md-tab {
+  /**
+  font-weight: bold;
+  font-family: $headings-font-family;
+  */
+}
 

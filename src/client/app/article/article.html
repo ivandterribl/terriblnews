@@ -1,9 +1,9 @@
 <ion-view cache-view="false">
     <ion-nav-title>
-	{{ vm.article.category }}
+	{{ vm.section.title }}
     </ion-nav-title>
 
-    <ion-nav-buttons side="right">
+    <ion-nav-buttons side="secondary">
       <md-menu style="padding: 0">
 	      <button md-menu-origin class="button button-icon ion-android-share-alt" ng-click="$mdOpenMenu($event)">
 	      </button>
@@ -47,19 +47,18 @@
 
 	<ion-content on-swipe-right="vm.prev()" on-swipe-left="vm.next()">
     	<section ng-show="!vm.loading" itemscope itemtype="http://schema.org/NewsArticle">
-    		<div class="padding" style="border-bottom: 1px solid #ddd; background: #eee">
-    			<div adsrv what="top{{ vm.adtag.replace(' ', '') }}" width="100%" height="45px" 
-    				class="top" ng-if="vm.adtag"></div>
+    		<div class="item item-divider" ng-if="vm.section">
+    			<div adsrv what="top{{ vm.section.normalized }}" class="top"></div>
     		</div>
 
-    		<div class="padding">
+    		<main class="padding">
 	    		<h1 class="assertive" itemprop="headline">{{::vm.article.title}}</h1>
 	    		
 	    		<h4 ng-if="vm.article.summary" ng-bind-html="::vm.article.summary"></h4>
 				<h5 ng-if="vm.article.storytype !== 'P'">
 					<span ng-if="vm.article.created_by_alias">
 						<i class="icon ion-edit"></i> 
-						<span itemprop="author">{{ ::vm.article.created_by_alias }}</span>,
+						<span itemprop="author">{{ ::vm.article.created_by_alias }}</span>
 					</span><br />
 					<span>{{ ::vm.article.issueplace }}, </span> 
 					<time datetime="{{ ::vm.article.created }}">{{ ::vm.article.created | date:'d MMM yyyy'}}</time> 
@@ -82,7 +81,7 @@
 				</a>
 
 				<article bind-html-compile="::vm.article.html" itemprop="articleBody"></article>
-			</div>
+			</main>
 
 			<div class="boilerplate" ng-if="vm.article.storytype === 'P' && vm.article.editornote">
 				<div class="card padding" ng-bind-html="::vm.article.editornote">
@@ -143,9 +142,8 @@
 				</ion-item>
 			</ion-list>
 
-			<div class="padding" style="border-bottom: 1px solid #ddd; background: #eee" ng-if="vm.adtag && vm.banners.length">
-    			<div adsrv what="bot{{ vm.adtag.replace(' ', '') }}" width="100%" height="45px" 
-    				class="top"></div>
+			<div class="item item-divider" ng-if="vm.section">
+    			<div adsrv what="bot{{ vm.section.normalized }}" class="top"></div>
     		</div>
 
 			<ion-list ng-show="vm.appearance.length">
