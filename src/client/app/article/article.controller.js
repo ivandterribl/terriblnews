@@ -16,7 +16,6 @@
             catId = $state.params.catid,
             primaryCat = [69, 77, 86, 107, 118, 133, 147, 198, 234, 250, 260];
 
-        console.log('catId: ' + catId);
         vm.articleId = articleId;
         vm.canonical = 'http://www.itweb.co.za/index.php?' + [
             'option=com_content',
@@ -75,11 +74,11 @@
                 });
             }
 
-            vm.banners = banners(vm.section.normalized);
+            vm.banners = banners(vm.section);
 
             elem.innerHTML = article.fulltext;
             paragraphs = elem.querySelectorAll('p:not(.pic-caption)');
-
+            console.log('%c' + paragraphs.length + 'p', 'color: red');
             if (paragraphs.length > 3) {
                 paragraphs[3].insertAdjacentHTML('afterend', vm.banners.shift());
             }
@@ -149,13 +148,13 @@
             }, 100);
         }
 
-        function banners(keyword) {
+        function banners(section) {
             var innerWidth = _.min([window.innerWidth - 20, 728]),
                 estimatedHeight = vm.h = Math.floor(innerWidth / 728 * 90);
 
-            return keyword ? [
-                '<div class="item item-divider item-strech"><div adsrv what="tileone' + keyword + '"></div></div>',
-                '<div adsrv what="triggeronedefault" class="embedded"></div>'
+            return section.normalized ? [
+                '<div imod position="sponsor" catid="' + section.catid + '" rel="article"></div>',
+                '<div imod position="co-sponsor" catid="' + section.catid + '" rel="article"></div>'
             ] : [];
         }
 

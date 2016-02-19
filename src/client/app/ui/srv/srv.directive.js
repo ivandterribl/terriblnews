@@ -5,9 +5,9 @@
         .module('itw.ui')
         .directive('adsrv', Adsrv);
 
-    Adsrv.$inject = ['$window', '_', '$http', '$sce'];
+    Adsrv.$inject = ['$window', '_', '$http', '$sce', '$timeout'];
 
-    function Adsrv($window, _, $http, $sce) {
+    function Adsrv($window, _, $http, $sce, $timeout) {
         return {
             restrict: 'EA',
             scope: {
@@ -42,9 +42,10 @@
 
                 scope.width = width + 'px';
                 scope.height = height + 'px';
-                $element.css('max-height', scope.height);
+                //$element.css('min-height', scope.height + 20);
+                $element.css('max-height', (height + 20) + 'px');
 
-                setTimeout(function() {
+                $timeout(function() {
                     $http({
                         method: 'GET',
                         url: 'http://adsrv.itweb.co.za/adjson.php?' +

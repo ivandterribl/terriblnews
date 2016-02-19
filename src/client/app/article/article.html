@@ -112,7 +112,7 @@
 				</div>
 			</div>
 
-			<ion-list ng-show="vm.related.length || vm.recommended.length">
+			<ion-list ng-show="vm.related.length || vm.recommended.length" class="h3-list">
 				<ion-item class="item-divider">
 					<h3 class="itw-section stable">See also</h3>
 				</ion-item>
@@ -136,11 +136,13 @@
 				</ion-item>
 			</ion-list>
 
-			<div class="item item-divider" ng-if="vm.section">
+			<div class="item item-divider" ng-if="vm.section && !vm.banners.length">
     			<div adsrv what="bot{{ vm.section.normalized }}" class="top"></div>
     		</div>
 
-			<ion-list ng-show="vm.appearance.length">
+    		<div imod position="co-sponsor" catid="{{ vm.section.catid }}" rel="list" ng-if="vm.section && vm.banners.length"></div>
+
+			<ion-list ng-show="vm.appearance.length" class="h3-list">
 				<ion-item class="item-divider">
 					<h3 class="itw-section stable">Related sectors</h3>
 				</ion-item>
@@ -151,6 +153,10 @@
 					<i class="icon icon-mini ion-chevron-right"></i>
 				</ion-item>
 			</ion-list>
+
+			<div class="item item-divider" ng-if="vm.section && vm.banners.length">
+    			<div adsrv what="bot{{ vm.section.normalized }}" class="top"></div>
+    		</div>
 
 			<div ng-if="vm.pagination.prev || vm.pagination.next" class="row">
 				<a class="button button-clear button-assertive icon-left ion-chevron-left" 

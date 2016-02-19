@@ -278,5 +278,11 @@ md-tabs .md-tab {
     min-width: 100%;  
   }
 }
+.item .row, .item .col {
+  padding: 0;
+}
+.h3-list .item h3 {
+  margin: 0;
+}  
 
 
