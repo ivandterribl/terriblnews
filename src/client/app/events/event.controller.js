@@ -36,8 +36,7 @@
                             var duration = moment.unix(Math.round(item.duration)).utc().format('mm:ss');
 
                             item.summary = _.trim(item.summary);
-                            item.duration = duration;
-                            //item.src = $sce.trustAsResourceUrl(item.mp3);
+                            item.mmss = duration;
                             return item;
                         });
                         vm.player.playlist.add({

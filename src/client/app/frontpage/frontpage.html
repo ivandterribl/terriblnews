@@ -14,11 +14,8 @@
 	    		<ion-item class="item-light" ui-sref="app.article({ id: item.itemid, catid: item.section.id })" ng-init="item = vm.lead" ng-if="vm.lead">
 	                <div class="pic responsive-pic">
 	    				<img ng-src="{{ item.module.img }}">
-	    				<div class="lead-caption" style="">
-	    					{{ ::item.module.caption }}
-	    				</div>
     				</div>
-	                <h1 class="assertive" style="margin: 10px 0 0 0; font-size: 30px;">{{ item.title }}</h1>
+	                <h1 style="margin: 10px 0 0 0; font-size: 30px;">{{ item.title }}</h1>
 	            </ion-item>
 	            
 	            <ion-item class="item-divider" ng-show="vm.items.length">
@@ -248,7 +245,7 @@
 	            </ion-item>
 	            <ion-item class="item-light" ng-repeat="(i, item) in vm.groups.international">
 		            <a ui-sref="app.article({ id: item.itemid })" class="item-content">
-		                <h2>{{ item.title }}</h2>
+		                <h3>{{ item.title }}</h3>
 	                </a>
 	            </ion-item>
 	        </ion-list>

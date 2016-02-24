@@ -221,12 +221,14 @@ article span {
   margin-top: -5px;
   white-space: normal;
 }
-blockquote {
+blockquote, .pullquote {
     border-left: 5px solid #CC2C0E;
     clear: left;
     font-size: 16px;
     color: #666;
     font-weight: bold;
+    margin: 0 0 20px;
+    padding: 10px 20px;
 }
 .quote-of-the-day {
   margin: 0;
@@ -284,5 +286,30 @@ md-tabs .md-tab {
 .h3-list .item h3 {
   margin: 0;
 }  
+.pullquote p {
+  margin: 0 0 5px;
+}
+.pullquoteauthor {
+  font-size: 14px;
+  font-style: italic;
+}
+.sidebar { 
+    float: right;
+    width: 50%;
+    font-size: 12px;
+    margin: 0 0 5px 5px;
+    background: #333;
+    padding: 5px;
+    .sidebar-headline {
+      font-size: 16px;
+      color: #fff;
+    }
+    p {
+      color: #fff; 
+    }
+    &::after {
+      clear: both;
+    }
+}
 
 

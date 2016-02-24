@@ -1,11 +1,14 @@
 <ion-view cache-view="false">
     <ion-nav-title>
-    <a ui-sref="app.section({ id: vm.section.catid })">
-	{{ vm.section.title }}
-	</a>
+	    <a ui-sref="app.section({ id: vm.section.catid })" ng-show="vm.section">
+			{{ vm.section.title }}
+			<i class="icon ion-chevron-right"></i>
+		</a>
     </ion-nav-title>
 
     <ion-nav-buttons side="secondary">
+	    <!-- <a class="button button-icon button-clear ion-arrow-up-b" ui-sref="app.section({ id: vm.section.catid })">
+		</a> -->
       <md-menu style="padding: 0">
 	      <button md-menu-origin class="button button-icon ion-android-share-alt" ng-click="$mdOpenMenu($event)">
 	      </button>
@@ -54,16 +57,33 @@
     	<section ng-show="!vm.loading && !vm.article" class="padding">
     		<h3 class="text-center assertive" ng-cloak>Oops, something went wrong</h3>
     	</section>
-    	<section ng-show="!vm.loading" itemscope itemtype="http://schema.org/NewsArticle">
+    	<section ng-show="!vm.loading">
     		<div class="item item-divider" ng-if="vm.section">
     			<div adsrv what="top{{ vm.section.normalized }}" class="top"></div>
     		</div>
 
-    		<main class="padding">
+    		<main class="padding" itemscope itemtype="http://schema.org/NewsArticle">
+    			<!-- <a ui-sref="app.section({ id: vm.section.catid })">
+    			<h3 class="itw-section assertive">
+    				{{ vm.section.title }}
+    				<i class="icon ion-chevron-right"></i>
+    			</h3>
+    			</a> -->
 	    		<h1 class="assertive" itemprop="headline">{{::vm.article.title}}</h1>
 	    		
 	    		<h4 ng-if="vm.article.summary" ng-bind-html="::vm.article.summary"></h4>
-				<h5 ng-if="vm.article.storytype !== 'P'">
+				<div ng-if="vm.article.storytype !== 'P' && vm.article.authorImg" 
+					style="border-width: 0; position: relative; padding: 0 0 0 48px">
+					<img ng-src="{{ vm.article.authorImg }}" style="position: absolute; top: 0; left: 0; max-width: 40px; max-height: 40px; border-radius: 50%" />
+					<h5 style="line-height: 20px">
+						<span ng-if="vm.article.created_by_alias" itemprop="author">
+							{{ ::vm.article.created_by_alias }}
+						</span><br />
+						<span>{{ ::vm.article.issueplace }}, </span> 
+						<time datetime="{{ ::vm.article.created }}">{{ ::vm.article.created | date:'d MMM yyyy'}}</time> 
+					</h5>
+				</div>
+				<h5 ng-if="vm.article.storytype !== 'P' && !vm.article.authorImg">
 					<span ng-if="vm.article.created_by_alias">
 						<i class="icon ion-edit"></i> 
 						<span itemprop="author">{{ ::vm.article.created_by_alias }}</span>
@@ -89,6 +109,19 @@
 				</a>
 
 				<article bind-html-compile="::vm.article.html" itemprop="articleBody"></article>
+
+				<meta itemprop="mainEntityOfPage" content="{{ vm.canonical }}" />
+				<span itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+					<span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">      
+				      <meta itemprop="url" content="http://www.itweb.co.za/templates/ja_itweb/images/itweb_logo_sml.png"/>
+				      <meta itemprop="width" content="116"/>
+				      <meta itemprop="height" content="49"/>
+				    </span>
+				    <meta itemprop="name" content="ITWeb Limited"/>
+				</span>
+				<meta itemprop="datePublished" content="{{ ::vm.article.created }}"/>
+				<meta itemprop="dateModified" content="{{ ::vm.article.modified }}"/>
+				<meta itemprop="keywords" content="{{ ::vm.article.metakey }}"/>
 			</main>
 			<div style="width: 100%; height: 1px; clear: both"></div>
 			<div class="boilerplate" ng-if="vm.article.storytype === 'P' && vm.article.editornote">
@@ -146,10 +179,18 @@
 				<ion-item class="item-divider">
 					<h3 class="itw-section stable">Related sectors</h3>
 				</ion-item>
-				<ion-item class="item-icon-left item-icon-right"
+				<ion-item class="item-icon-right"
 					ng-repeat="section in vm.appearance" ui-sref="app.section({ id: section.catid })">
-					<i class="icon icon-mini ion-grid"></i>
-					<h3>{{ ::section.title }}</h3>
+					<!-- <i class="icon icon-mini ion-grid"></i> -->
+
+					<div class="row" ng-style="{ 'min-height': section.attribs.img ? '24px' : '24px' }">
+						<h3 class="col col-center">
+							{{ ::section.title }}
+						</h3>
+						<div class="col col-25 col-center text-right" ng-if="section.attribs.img">
+							<img ng-src="{{ section.attribs.img }}" style="max-height: 24px" align="right" />
+						</div>
+					</div>
 					<i class="icon icon-mini ion-chevron-right"></i>
 				</ion-item>
 			</ion-list>

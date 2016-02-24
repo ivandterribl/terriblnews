@@ -41,7 +41,7 @@
 
             // cached view
             $scope.$on('$ionicView.enter', function() {
-                $scope.$emit('category', vm.category);
+                seo();
             });
         }
 
@@ -172,6 +172,20 @@
 
         function openMenu($mdOpenMenu, ev) {
             $mdOpenMenu(ev);
+        }
+
+        function seo() {
+            var desc = [
+                'A vital resource for South African ICT decision-makers, ',
+                'ITWeb delivers news, views and information through diverse content platforms, ',
+                'including online, e-newsletters, social media, print and events. ',
+                'ITWeb is recognised as South Africa\'s technology news and information leader.'
+            ];
+            meta.title('ITWeb');
+            meta.description(desc.join(''));
+            meta.keywords('IT, Technology, Business, News');
+            meta.canonical(false);
+            meta.ld(false);
         }
     }
 })();

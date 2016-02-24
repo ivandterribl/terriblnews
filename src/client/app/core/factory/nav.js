@@ -108,22 +108,22 @@
                 title: 'Companies',
                 icon: 'ion-cube',
                 items: [{
-                    title: 'Virtual press offices',
-                    id: 'virtual-press-office',
-                    sref: 'app.office.vpo'
-                }, {
-                    title: 'Company zones',
-                    id: 'company-zones',
-                    sref: 'app.office.zones'
-                }, {
-                    title: 'Microsites',
-                    id: 'microsites',
-                    sref: 'app.office.microsites'
-                }]
-            }, {
-                title: 'Video',
-                icon: 'ion-videocamera',
-                sref: 'app.video'
+                        title: 'Virtual press offices',
+                        id: 'virtual-press-office',
+                        sref: 'app.office.vpo'
+                    }, {
+                        title: 'Company zones',
+                        id: 'company-zones',
+                        sref: 'app.office.zones'
+                    }, {
+                        title: 'Microsites',
+                        id: 'microsites',
+                        sref: 'app.office.microsites'
+                    }]
+                    // }, {
+                    //     title: 'Video',
+                    //     icon: 'ion-videocamera',
+                    //     sref: 'app.video'
             }, {
                 title: 'Events',
                 icon: 'ion-person-stalker',

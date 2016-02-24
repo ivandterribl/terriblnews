@@ -18,10 +18,9 @@
 	    	<ion-list ng-show="vm.items.length">
 	    		<div ng-repeat="(i, item) in vm.items"> 
 	    			<div imod position="sponsor" catid="{{ vm.category.id }}" rel="list" ng-if="i === 3"></div>
+
+	    			<div imod position="co-sponsor" catid="{{ vm.category.id }}" rel="list" ng-if="i === 10"></div>
 		            
-		            <ion-item class="item-divider" ng-if="i === 10">
-		            	<div adsrv what="tileone{{ ::vm.category.normalized }}" width="100%" height="250px" class="top"></div>
-		            </ion-item>
 		            <ion-item class="item-divider" ng-if="i === 20">
 		            	<div adsrv what="bot{{ ::vm.category.normalized }}" width="100%" height="{{ ::vm.metrics.top.height }}px" class="top"></div>
 		            </ion-item>

@@ -10,9 +10,16 @@
     	</section>
     	<section ng-show="!vm.loading">
 	    	<ion-list ng-show="vm.items.length">
-    		    <ion-item ng-repeat="item in vm.items" class="item-light item-icon-right" ui-sref="app.section({ id: item.id })">
-    		    	<h3 class="itw-section">{{ item.title }}</h3>
-    		    	<i class="icon ion-chevron-right" style="font-size: 18px;"></i> 
+    		    <ion-item ng-repeat="item in vm.items" class="item-light item-icon-right" ui-sref="app.section({ id: item.catid })">
+    		    	<div class="row" ng-style="{ 'min-height': item.attribs.img ? '24px' : '24px' }">
+                        <h3 class="col col-center" style="margin: 0">
+                            {{ ::item.title }}
+                        </h3>
+                        <div class="col col-25 col-center text-right" ng-if="item.attribs.img">
+                            <img ng-src="{{ item.attribs.img }}" style="max-height: 24px" align="right" />
+                        </div>
+                    </div>
+                    <i class="icon icon-mini ion-chevron-right"></i>
     		    </ion-item>
     		</ion-list>
         </section>

@@ -82,10 +82,10 @@
 
         function seo() {
             meta.title(vm.category.title);
-            meta.keywords(vm.category.title);
+            meta.description('View the latest ' + vm.category.title + ' headlines on ITWeb');
+            meta.keywords(vm.category.title + ', IT, News');
             meta.canonical(false);
             meta.ld(false);
         }
-
     }
 })();

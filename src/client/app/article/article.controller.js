@@ -77,14 +77,27 @@
             vm.banners = banners(vm.section);
 
             elem.innerHTML = article.fulltext;
-            paragraphs = elem.querySelectorAll('p:not(.pic-caption)');
-            console.log('%c' + paragraphs.length + 'p', 'color: red');
-            if (paragraphs.length > 3) {
-                paragraphs[3].insertAdjacentHTML('afterend', vm.banners.shift());
+            if (_.isArray(article.xhead) && article.xhead[2] && article.xhead[2].length >= 2) {
+                paragraphs = elem.querySelectorAll('h3');
+                paragraphs[0].insertAdjacentHTML('beforebegin', vm.banners.shift());
+                paragraphs[1].insertAdjacentHTML('beforebegin', vm.banners.shift());
+
+            } else {
+                paragraphs = elem.querySelectorAll('p:not(.pic-caption)');
+                console.log('%c' + paragraphs.length + 'p', 'color: red');
+                if (paragraphs.length > 3) {
+                    paragraphs[3].insertAdjacentHTML('afterend', vm.banners.shift());
+                }
+                if (paragraphs.length > 8) {
+                    paragraphs[7].insertAdjacentHTML('afterend', vm.banners.shift());
+                }
             }
-            if (paragraphs.length > 8) {
-                paragraphs[7].insertAdjacentHTML('afterend', vm.banners.shift());
-            }
+
+            angular.forEach(elem.querySelectorAll('.pullquoteauthor'), function(span) {
+                if (_.trim(span.innerText) === '-') {
+                    span.style.display = 'none';
+                }
+            });
 
             var $el = angular.element('<div />')
                 .html(elem.innerHTML);
@@ -138,7 +151,12 @@
             if (topics.length) {
                 api('tag=recommended&id=' + articleId + '&q=' + topics[0])
                     .then(function(response) {
-                        vm.recommended = response;
+                        var match = _.findWhere(related, {
+                            id: response[0].id
+                        });
+                        if (!match) {
+                            vm.recommended = response;
+                        }
                     });
             }
             seo();
@@ -153,8 +171,8 @@
                 estimatedHeight = vm.h = Math.floor(innerWidth / 728 * 90);
 
             return section.normalized ? [
-                '<div imod position="sponsor" catid="' + section.catid + '" rel="article"></div>',
-                '<div imod position="co-sponsor" catid="' + section.catid + '" rel="article"></div>'
+                '<div imod position="sponsor" catid="' + section.catid + '" rel="section"></div>',
+                '<div imod position="co-sponsor" catid="' + section.catid + '" rel="section"></div>'
             ] : [];
         }
 
@@ -162,6 +180,7 @@
             meta.title(vm.article.title);
             meta.description(vm.article.blurb);
             meta.keywords(vm.article.metakey);
+            meta.ld(false);
             meta.canonical('http://www.itweb.co.za/index.php?' + [
                 'option=com_content',
                 'view=article',

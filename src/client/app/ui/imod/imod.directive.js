@@ -40,7 +40,7 @@
                 $scope.activate = function(item) {
                     angular.forEach($scope.result || [], function(row) {
                         if (angular.equals(row, item)) {
-                            row.active = 1;
+                            row.active = !row.active;
                         } else {
                             row.active = 0;
                         }
