@@ -61,7 +61,7 @@
 	            </ion-item>
 
 	            <ion-item class="item-divider" ng-show="vm.items.length">
-	            	<div adsrv what="noophome" width="300" height="100" class="top"></div>
+	            	<div adsrv what="noophome" class="top"></div>
 	            </ion-item>
 
 				<!-- company news -->
@@ -73,9 +73,8 @@
 		                </h3>
 	                </a>
 	            </ion-item>
-	            <ion-item class="item-light" ng-repeat="(i, item) in vm.groups.company" ng-include="'app/news/news.item.html'">
-	                
-	            </ion-item>
+	            <ion-item class="item-light" ng-repeat="(i, item) in vm.groups.company" ng-include="'app/news/news.item.html'"></ion-item>
+
 	            <ion-item class="item-divider" ng-show="vm.items.length">
 	            	<div adsrv what="trigg3home" width="100%" class="top"></div>
 	            </ion-item>
@@ -186,6 +185,10 @@
 			                </span>
 		                </p>
 	                </div> 
+	            </ion-item>
+
+	            <ion-item class="item-divider" ng-show="vm.items.length">
+	            	<div adsrv what="trigg3noop" class="top"></div>
 	            </ion-item>
 
 	            <ion-item class="item-divider" ng-show="vm.pic && vm.items.length">

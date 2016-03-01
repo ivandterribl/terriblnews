@@ -12,7 +12,7 @@
     <p>
     	<itw-timestamp timestamp="'{{ item.created }}'"></itw-timestamp>
     	
-    	<span class="assertive" ng-if="item.topic && !item.copyPath">
+    	<span class="assertive" ng-if="item.topic && !item.copyPath && item.created_by_alias">
     		<span class="stable">|</span> {{ item.created_by_alias }}
         </span>
 

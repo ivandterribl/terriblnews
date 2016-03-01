@@ -63,12 +63,7 @@
     		</div>
 
     		<main class="padding" itemscope itemtype="http://schema.org/NewsArticle">
-    			<!-- <a ui-sref="app.section({ id: vm.section.catid })">
-    			<h3 class="itw-section assertive">
-    				{{ vm.section.title }}
-    				<i class="icon ion-chevron-right"></i>
-    			</h3>
-    			</a> -->
+    			
 	    		<h1 itemprop="headline">{{::vm.article.title}}</h1>
 	    		
 	    		<h4 ng-if="vm.article.summary" ng-bind-html="::vm.article.summary"></h4>
@@ -168,11 +163,9 @@
 				</ion-item>
 			</ion-list>
 
-			<div class="item item-divider" ng-if="vm.section && !vm.banners.length">
-    			<div adsrv what="bot{{ vm.section.normalized }}" class="top"></div>
+			<div class="item item-divider" ng-if="vm.section">
+    			<div adsrv what="tileone{{ vm.section.normalized }}" class="top"></div>
     		</div>
-
-    		<div imod position="co-sponsor" catid="{{ vm.section.catid }}" rel="list" ng-if="vm.section && vm.banners.length"></div>
 
 			<ion-list ng-show="vm.appearance.length" class="h3-list">
 				<ion-item class="item-divider">
@@ -180,8 +173,7 @@
 				</ion-item>
 				<ion-item class="item-icon-right"
 					ng-repeat="section in vm.appearance" ui-sref="app.section({ id: section.catid })">
-					<!-- <i class="icon icon-mini ion-grid"></i> -->
-
+					
 					<div class="row" ng-style="{ 'min-height': section.attribs.img ? '24px' : '24px' }">
 						<h3 class="col col-center">
 							{{ ::section.title }}
@@ -194,8 +186,8 @@
 				</ion-item>
 			</ion-list>
 
-			<div class="item item-divider" ng-if="vm.section && vm.banners.length">
-    			<div adsrv what="bot{{ vm.section.normalized }}" class="top"></div>
+			<div class="item item-divider" ng-if="vm.section && vm.banner.length">
+    			<div adsrv what="tileone{{ vm.section.normalized }}" class="top"></div>
     		</div>
 
 			<div ng-if="vm.pagination.prev || vm.pagination.next" class="row">

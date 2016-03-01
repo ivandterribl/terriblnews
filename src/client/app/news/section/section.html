@@ -17,14 +17,24 @@
     	<section ng-show="!vm.loading">
 	    	<ion-list ng-show="vm.items.length">
 	    		<div ng-repeat="(i, item) in vm.items"> 
-	    			<div imod position="sponsor" catid="{{ vm.category.id }}" rel="list" ng-if="i === 3"></div>
-
-	    			<div imod position="co-sponsor" catid="{{ vm.category.id }}" rel="list" ng-if="i === 10"></div>
-		            
-		            <ion-item class="item-divider" ng-if="i === 20">
-		            	<div adsrv what="bot{{ ::vm.category.normalized }}" width="100%" height="{{ ::vm.metrics.top.height }}px" class="top"></div>
+	    			
+	    			<ion-item class="item-divider" ng-if="i % 25 === 3">
+		            	<div adsrv what="top{{ ::vm.category.normalized }}" class="top"></div>
 		            </ion-item>
-	    		    <ion-item class="item-light"  ng-include="'app/news/news.item.html'">
+
+	    			<ion-item class="item-divider" ng-if="i % 25 === 9">
+		            	<div adsrv what="noop{{ ::vm.category.normalized }}" class="top"></div>
+		            </ion-item>
+
+	    			<ion-item class="item-divider" ng-if="i % 25 === 18">
+		            	<div adsrv what="noop{{ ::vm.category.normalized }}" class="top"></div>
+		            </ion-item>
+
+		            <ion-item class="item-divider" ng-if="i % 25 === 24">
+		            	<div adsrv what="tileone{{ ::vm.category.normalized }}" class="top"></div>
+		            </ion-item>
+		            
+		            <ion-item class="item-light"  ng-include="'app/news/news.item.html'">
 		            </ion-item>
 		        </div>
 	        </ion-list>
