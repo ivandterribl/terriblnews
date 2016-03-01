@@ -167,12 +167,11 @@
         }
 
         function banners(section) {
-            var innerWidth = _.min([window.innerWidth - 20, 728]),
-                estimatedHeight = vm.h = Math.floor(innerWidth / 728 * 90);
-
             return section.normalized ? [
-                '<div imod position="sponsor" catid="' + section.catid + '" rel="section"></div>',
-                '<div imod position="co-sponsor" catid="' + section.catid + '" rel="section"></div>'
+                // '<div imod position="sponsor" catid="' + section.catid + '" rel="section"></div>',
+                // '<div imod position="co-sponsor" catid="' + section.catid + '" rel="section"></div>'
+                '<div class="item item-divider item-strech"><div adsrv what="noop' + section.normalized + '"></div></div>',
+                '<div class="item item-divider item-strech"><div adsrv what="noop' + section.normalized + '"></div></div>'
             ] : [];
         }
 
