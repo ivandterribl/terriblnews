@@ -9,9 +9,12 @@
     /* @ngInject */
     function Controller(nav, articles, categories, api, _, meta, moment, $scope, $state, searchBar) {
         var vm = this,
-            catId = $state.params.id;
+            catId = $state.params.id,
+            limitstart = 0,
+            limit = 25;
 
         vm.loadItems = loadItems;
+        vm.complete = 1;
 
         activate();
 
@@ -20,6 +23,7 @@
 
             vm.loading = 1;
             vm.items = [];
+            articles.set(vm.items);
             loadItems();
 
             // cached view
@@ -47,17 +51,21 @@
                     endpoint = 'tag=section&id=' + catId;
             }
 
-            api(endpoint)
+            api(endpoint + '&limitstart=' + limitstart + '&limit=' + limit, {
+                    new: 1
+                })
                 .then(function(response) {
-                    var section = response[0].section || '';
+                    var section = response[0].section || '',
+                        items;
                     vm.category = {
                         title: section,
                         id: response[0].catid,
                         normalized: section.toLowerCase().replace(/\s/g, '')
                     };
-                    vm.items = _.map(response, function(row) {
+                    items = _.map(response, function(row) {
                         var slug = row.section.split(':');
                         return _.assign(row, {
+                            hideSection: 1,
                             copyPath: row.copyPath === 'n' || row.copyPath === 'itweb' ? null : row.copyPath,
                             section: {
                                 id: row.catid,
@@ -65,12 +73,19 @@
                             }
                         });
                     });
-                    articles.set(vm.items);
+                    vm.items = vm.items.concat(items);
+                    articles.push(items);
+
+                    limitstart += items.length;
+
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
 
                     seo();
+                    vm.complete = 0;
                 })
                 .catch(function(response) {
                     vm.items = [];
+                    vm.complete = 1;
                 })
                 .finally(function() {
                     vm.loading = 0;

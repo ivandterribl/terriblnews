@@ -16,6 +16,9 @@
             set: function(items) {
                 cache = items;
             },
+            push: function(items) {
+                cache = cache.concat(items);
+            },
             len: function() {
                 return cache.length;
             },

@@ -69,7 +69,7 @@
     				<i class="icon ion-chevron-right"></i>
     			</h3>
     			</a> -->
-	    		<h1 class="assertive" itemprop="headline">{{::vm.article.title}}</h1>
+	    		<h1 itemprop="headline">{{::vm.article.title}}</h1>
 	    		
 	    		<h4 ng-if="vm.article.summary" ng-bind-html="::vm.article.summary"></h4>
 				<div ng-if="vm.article.storytype !== 'P' && vm.article.authorImg" 
@@ -83,15 +83,14 @@
 						<time datetime="{{ ::vm.article.created }}">{{ ::vm.article.created | date:'d MMM yyyy'}}</time> 
 					</h5>
 				</div>
-				<h5 ng-if="vm.article.storytype !== 'P' && !vm.article.authorImg">
+				<h5 ng-if="vm.article.storytype !== 'P' && !vm.article.authorImg" class="stable">
 					<span ng-if="vm.article.created_by_alias">
-						<i class="icon ion-edit"></i> 
-						<span itemprop="author">{{ ::vm.article.created_by_alias }}</span>
+						By&nbsp;<span itemprop="author">{{ ::vm.article.created_by_alias }}</span>
 					</span><br />
-					<span>{{ ::vm.article.issueplace }}, </span> 
+					<span>{{ ::vm.article.issueplace }},&nbsp;</span> 
 					<time datetime="{{ ::vm.article.created }}">{{ ::vm.article.created | date:'d MMM yyyy'}}</time> 
 				</h5>
-				<h5 ng-if="vm.article.storytype === 'P'">
+				<h5 ng-if="vm.article.storytype === 'P'" class="stable">
 					<span ng-if="vm.article.issuedby_alias">
 						<span itemprop="author">Press release issued by {{ ::vm.article.issuedby_alias }}</span>
 					</span><br />

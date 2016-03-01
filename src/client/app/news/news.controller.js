@@ -9,7 +9,9 @@
     /* @ngInject */
     function Controller(nav, articles, categories, api, _, meta, moment, $scope, $state, searchBar) {
         var vm = this,
-            id = $state.params.id;
+            id = $state.params.id,
+            limitstart = $state.params.limitstart || 0,
+            limit = $state.params.limit || 25;
 
         vm.i = 0;
         vm.prev = prev;
@@ -61,8 +63,10 @@
                     break;
             }
 
+            vm.complete = 1;
             vm.loading = 1;
             vm.items = [];
+            articles.set(vm.items);
             loadItems();
 
             // cached view
@@ -73,13 +77,19 @@
         }
 
         function loadItems() {
-            api('tag=' + id)
+            api('tag=' + id + '&limitstart=' + limitstart + '&limit=' + limit, {
+                    new: 1
+                })
                 .then(function(response) {
+                    var items = [];
                     switch (id) {
                         case 'top-news':
                         case 'industry-news':
                         case 'world':
-                            vm.items = _.map(response, function(row) {
+                            items = _.reject(response, function(row) {
+                                return !row.section;
+                            });
+                            items = _.map(items, function(row) {
                                 var slug = row.section.split(':');
                                 return _.assign(row, {
                                     section: {
@@ -90,13 +100,23 @@
                             });
                             break;
                         default:
-                            vm.items = response;
+                            items = response;
                     }
 
-                    articles.set(vm.items);
+                    vm.items = vm.items.concat(items);
+                    articles.push(items);
+
+                    limitstart += limit;
+
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+
+                    articles.push(items);
+
+                    vm.complete = 0;
                 })
                 .catch(function(response) {
                     vm.items = [];
+                    vm.complete = 1;
                 })
                 .finally(function() {
                     vm.loading = 0;

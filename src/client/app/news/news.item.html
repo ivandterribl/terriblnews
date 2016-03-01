@@ -1,0 +1,26 @@
+<div class="item-content">
+    <a ui-sref="app.article({ id: item.itemid, catid: item.section.id })">
+        <div class="news-img" ng-if="item.introtextImg">
+        	<img ng-src="{{ item.introtextImg }}"  />
+        </div>
+        <h3 class="itw-section stable" ng-if="item.topic">
+    		{{ item.topic }}
+        </h3>
+        <h2>{{ item.title }}</h2>
+    </a>
+
+    <p>
+    	<itw-timestamp timestamp="'{{ item.created }}'"></itw-timestamp>
+    	
+    	<span class="assertive" ng-if="item.topic && !item.copyPath">
+    		<span class="stable">|</span> {{ item.created_by_alias }}
+        </span>
+
+        <a ng-if="item.copyPath" class="assertive" ng-href="http://www.itweb.co.za/office/{{ item.copyPath }}">
+        	<span class="stable">|</span> {{ item.company }}
+        </a>
+        <a ng-if="item.section.id && !item.hideSection" class="assertive" ui-sref="app.section({ id: item.section.id })">
+        	<span class="stable">|</span> {{ item.section.title }}
+        </a>
+    </p>
+</div>

@@ -26,7 +26,9 @@
             $http({
                 method: 'GET',
                 //url: config.url + url,
-                url: 'http://www.itweb.co.za/mobilesite/feed/ivan/?' + url,
+                url: (opts.new || true ?
+                    'http://www.itweb.co.za/mobilesite/feed/ivan/i.php?' + url :
+                    'http://www.itweb.co.za/mobilesite/feed/ivan/?' + url),
                 timeout: opts.timeout || config.timeout
             }).success(function(response) {
                 //console.log('%c' + url, 'background-color: yellow');
@@ -48,4 +50,5 @@
             return def.promise;
         };
     }
+
 })();

@@ -11,7 +11,8 @@
     	</section>
     	<section ng-show="!vm.loading">
 	    	<ion-list ng-if="vm.lead || vm.items.length">
-	    		<ion-item class="item-light" ui-sref="app.article({ id: item.itemid, catid: item.section.id })" ng-init="item = vm.lead" ng-if="vm.lead">
+	    		<ion-item class="item-light" ui-sref="app.article({ id: item.itemid, catid: item.section.id })" 
+	    		ng-init="item = vm.lead" ng-if="vm.lead">
 	                <div class="pic responsive-pic">
 	    				<img ng-src="{{ item.module.img }}">
     				</div>
@@ -22,27 +23,9 @@
 	            	<div adsrv what="tophome" width="100%" class="top"></div>
 	            </ion-item>
 
-	            <ion-item class="item-light" ng-repeat="item in vm.groups.top">
-	                <div class="item-content">
-		                <a ui-sref="app.article({ id: item.itemid, catid: item.section.id })">
-			                <div class="news-img" ng-if="item.introtextImg">
-			                	<img ng-src="{{ ::item.introtextImg }}"  />
-			                </div>
-			                <h3 class="itw-section stable" ng-if="item.topic">
-		                		{{ ::item.topic }}
-			                </h3>
-			                <h2>{{ ::item.title }}</h2>
-			            </a>
-		            
-		                <p>
-		                	<itw-timestamp timestamp="'{{ item.created }}'"></itw-timestamp>
-		                	
-		                	<a ng-if="item.section.id" class="assertive" ui-sref="app.section({ id: item.section.id })">
-					        	<span class="stable">|</span> {{ ::item.section.title }}
-			                </a>
-		                </p>
-	                </div>    
+	            <ion-item class="item-light" ng-repeat="item in vm.groups.top" ng-include="'app/news/news.item.html'">
 	            </ion-item>
+
 	            <ion-item class="item-divider" ng-show="vm.items.length">
 	            	<div adsrv what="bigtrigghome" width="100%" class="top"></div>
 	            </ion-item>
@@ -77,6 +60,10 @@
 	                </a>
 	            </ion-item>
 
+	            <ion-item class="item-divider" ng-show="vm.items.length">
+	            	<div adsrv what="noophome" width="300" height="100" class="top"></div>
+	            </ion-item>
+
 				<!-- company news -->
 	            <ion-item class="item-divider" ng-if="vm.groups.company.length">
 	            	<a ui-sref="app.news.category({ id: 'company-news' })" class="item-content">
@@ -86,26 +73,8 @@
 		                </h3>
 	                </a>
 	            </ion-item>
-	            <ion-item class="item-light" ng-repeat="(i, item) in vm.groups.company">
-	                <div class="item-content">
-		                <a ng-click="vm.go($event, 'app.article', { id: item.itemid })">
-			                <div class="news-img" ng-if="item.introtextImg">
-			                	<img ng-src="{{ ::item.introtextImg }}"  />
-			                </div>
-			                <h3 class="itw-section stable" ng-if="item.topic">
-		                		{{ ::item.topic }}
-			                </h3>
-			                <h2>{{ ::item.title }}</h2>
-			            </a>
-		            
-		                <p>
-		                	<itw-timestamp timestamp="'{{ item.created }}'"></itw-timestamp>
-		                	
-		                	<a ng-if="item.copyPath" class="assertive" ng-href="http://www.itweb.co.za/office/{{ item.copyPath }}">
-					        	<span class="stable">|</span> {{ item.company }}
-			                </a>
-		                </p>
-	                </div>    
+	            <ion-item class="item-light" ng-repeat="(i, item) in vm.groups.company" ng-include="'app/news/news.item.html'">
+	                
 	            </ion-item>
 	            <ion-item class="item-divider" ng-show="vm.items.length">
 	            	<div adsrv what="trigg3home" width="100%" class="top"></div>
@@ -149,8 +118,8 @@
 		                	<itw-timestamp timestamp="'{{ item.created }}'"></itw-timestamp>
 		                	
 		                	<span class="assertive" ng-if="item.topic">
-		                		<i class="icon ion-edit" style="" ng-if="item.topic"></i> 
-		                		{{ item.created_by_alias }}
+		                		<!-- <i class="icon ion-edit" style="" ng-if="item.topic"></i>  -->
+		                		<span class="stable">|</span> {{ item.created_by_alias }}
 			                </span>
 		                </p>
 	                </div>    
@@ -181,8 +150,7 @@
 		                	<itw-timestamp timestamp="'{{ item.created }}'"></itw-timestamp>
 		                	
 		                	<span class="assertive" ng-if="item.topic">
-		                		<i class="icon ion-edit" style="" ng-if="item.topic"></i> 
-		                		{{ item.created_by_alias }}
+		                		<span class="stable">|</span> {{ item.created_by_alias }}
 			                </span>
 		                </p>
 	                </div> 
@@ -213,8 +181,8 @@
 		                	<itw-timestamp timestamp="'{{ item.created }}'"></itw-timestamp>
 		                	
 		                	<span class="assertive" ng-if="item.topic">
-		                		<i class="icon ion-edit" style="" ng-if="item.topic"></i> 
-		                		{{ item.created_by_alias }}
+		                		<!-- <i class="icon ion-edit" style="" ng-if="item.topic"></i>  -->
+		                		<span class="stable">|</span> {{ item.created_by_alias }}
 			                </span>
 		                </p>
 	                </div> 

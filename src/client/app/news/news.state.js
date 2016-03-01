@@ -49,7 +49,8 @@
             })
             .state('app.portals', {
                 params: {
-                    id: 'portals'
+                    id: 'portals',
+                    limit: 255
                 },
                 url: '/portals',
                 templateUrl: 'app/news/section/portals.html',

@@ -35,6 +35,10 @@
                     width = _.min([$window.innerWidth - 24, 648]);
                     height = Math.floor(width / 648 * 180);
 
+                } else if (scope.what.indexOf('noop') === 0) {
+                    width = _.min([$window.innerWidth - 24, 648]);
+                    height = Math.floor(width / 3);
+
                 } else {
                     width = 300;
                     height = 150;
