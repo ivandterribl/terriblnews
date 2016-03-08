@@ -12,6 +12,7 @@
 
         return function(url, options) {
             var opts = _.assign({}, options),
+                prefetched = window.prefetched,
                 def = $q.defer();
 
             def.promise.success = function(fn) {
@@ -23,29 +24,40 @@
                 return def.promise;
             };
 
-            $http({
-                method: 'GET',
-                //url: config.url + url,
-                url: (opts.new || true ?
-                    'http://www.itweb.co.za/mobilesite/feed/ivan/i.php?' + url :
-                    'http://www.itweb.co.za/mobilesite/feed/ivan/?' + url),
-                timeout: opts.timeout || config.timeout
-            }).success(function(response) {
-                //console.log('%c' + url, 'background-color: yellow');
-                //console.log('%c' + JSON.stringify(response), 'background-color: #aFa');
-                if (response.length) {
-                    def.resolve(response);
-                } else {
-                    def.reject(response);
+            var resolved = 0;
+            angular.forEach(window.prefetched || [], function(cache) {
+                if (cache.response.length && url.indexOf(cache.url) !== -1) {
+                    def.resolve(cache.response);
+                    cache.response = [];
+                    resolved = 1;
                 }
-            }).error(function(response) {
-                def.reject(response);
-            }).finally(function() {
-                queue = _.reject(queue, function(d) {
-                    return d === def;
-                });
             });
-            queue.push(def);
+
+            if (!resolved) {
+                $http({
+                    method: 'GET',
+                    //url: config.url + url,
+                    url: (opts.new && false ?
+                        'http://www.itweb.co.za/mobilesite/feed/ivan/i.php?' + url :
+                        'http://www.itweb.co.za/mobilesite/feed/ivan/?' + url),
+                    timeout: opts.timeout || config.timeout
+                }).success(function(response) {
+                    //console.log('%c' + url, 'background-color: yellow');
+                    //console.log('%c' + JSON.stringify(response), 'background-color: #aFa');
+                    if (response.length) {
+                        def.resolve(response);
+                    } else {
+                        def.reject(response);
+                    }
+                }).error(function(response) {
+                    def.reject(response);
+                }).finally(function() {
+                    queue = _.reject(queue, function(d) {
+                        return d === def;
+                    });
+                });
+                queue.push(def);
+            }
 
             return def.promise;
         };

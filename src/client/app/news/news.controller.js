@@ -90,13 +90,7 @@
                                 return !row.section;
                             });
                             items = _.map(items, function(row) {
-                                var slug = row.section.split(':');
-                                return _.assign(row, {
-                                    section: {
-                                        id: slug[0],
-                                        title: slug[1]
-                                    }
-                                });
+                                return row;
                             });
                             break;
                         default:

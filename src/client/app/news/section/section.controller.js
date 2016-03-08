@@ -55,22 +55,19 @@
                     new: 1
                 })
                 .then(function(response) {
-                    var section = response[0].section || '',
+                    var section = response[0].section || {
+                            title: ''
+                        },
                         items;
                     vm.category = {
-                        title: section,
-                        id: response[0].catid,
-                        normalized: section.toLowerCase().replace(/\s/g, '')
+                        title: section.title,
+                        id: section.id || section.catid,
+                        normalized: section.title.toLowerCase().replace(/\s/g, '')
                     };
                     items = _.map(response, function(row) {
-                        var slug = row.section.split(':');
                         return _.assign(row, {
                             hideSection: 1,
-                            copyPath: row.copyPath === 'n' || row.copyPath === 'itweb' ? null : row.copyPath,
-                            section: {
-                                id: row.catid,
-                                title: row.section
-                            }
+                            copyPath: row.copyPath === 'n' || row.copyPath === 'itweb' ? null : row.copyPath
                         });
                     });
                     vm.items = vm.items.concat(items);

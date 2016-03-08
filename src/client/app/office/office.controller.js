@@ -73,6 +73,7 @@
                             image: row.image
                         };
                     });
+                    items = items.slice(0, 10);
                     if (id === 'microsites') {
                         vm.items = _.sortBy(items, 'title');
                     } else {

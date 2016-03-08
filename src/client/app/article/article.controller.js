@@ -22,6 +22,7 @@
             'view=article',
             'id=' + articleId
         ].join('&');
+        vm.shortlink = 'http://on.itweb.co.za/' + articleId;
         vm.prev = prev;
         vm.next = next;
 
@@ -34,7 +35,7 @@
 
             vm.loading = 1;
             $q.all({
-                    article: api('tag=articlen&id=' + articleId),
+                    article: api('tag=article&id=' + articleId),
                     appearance: api('tag=appearance&id=' + articleId)
                 })
                 .then(onReady)

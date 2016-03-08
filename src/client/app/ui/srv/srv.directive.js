@@ -5,18 +5,33 @@
         .module('itw.ui')
         .directive('adsrv', Adsrv);
 
-    Adsrv.$inject = ['$window', '_', '$http', '$sce', '$timeout'];
+    Adsrv.$inject = ['$window', '_', '$http', '$sce', '$timeout', '$ionicPosition'];
 
-    function Adsrv($window, _, $http, $sce, $timeout) {
+    function Adsrv($window, _, $http, $sce, $timeout, $ionicPosition) {
+        // see https://api.jquery.com/offset/
+        // see http://ionicframework.com/docs/api/service/$ionicPosition/
+        function offset(elementSelector) {
+            return $ionicPosition.offset(elementSelector);
+        }
+
+        // see https://api.jquery.com/position/
+        // see http://ionicframework.com/docs/api/service/$ionicPosition/
+        function position(elementSelector) {
+            return $ionicPosition.position(elementSelector);
+        }
+
         return {
             restrict: 'EA',
             scope: {
                 what: '@'
             },
+            require: '^$ionicScroll',
             templateUrl: 'app/ui/srv/srv.html',
-            link: function(scope, $element) {
+            link: function(scope, $element, $attr, $ionicScroll) {
                 var width,
-                    height;
+                    height,
+                    $scrollElement = angular.element($ionicScroll.element),
+                    activated = 0;
 
                 scope.loading = 1;
                 if (scope.what.indexOf('top') === 0 || scope.what.indexOf('bot') === 0) {
@@ -49,10 +64,38 @@
                 //$element.css('min-height', scope.height + 20);
                 $element.css('max-height', (height + 20) + 'px');
 
-                $timeout(function() {
+                scope.$on('$destroy', function() {
+                    $scrollElement.off('scroll');
+                });
+
+                var scrollOffset = $ionicPosition.offset($scrollElement),
+                    calculateScrollLimits = function() {
+                        var offset;
+
+                        if (!activated) {
+                            offset = $ionicPosition.offset($element);
+                            if ((offset.top - scrollOffset.top - scrollOffset.height) < 0) {
+                                console.log('%c' + scope.what + 'activated', 'color:red');
+                                activate();
+                            }
+                        }
+                    },
+                    throttledCalculateScrollLimits = ionic.Utils.throttle(
+                        calculateScrollLimits,
+                        100, {
+                            trailing: false
+                        }
+                    );
+
+                $scrollElement.on('scroll', throttledCalculateScrollLimits);
+
+                $timeout(calculateScrollLimits, 250);
+
+                function activate() {
+                    activated = 1;
                     $http({
                         method: 'GET',
-                        url: 'http://adsrv.itweb.co.za/adjson.php?' +
+                        url: 'http://ad.itweb.co.za/adjson.php?' +
                             'n=' + _.random(100000000) + '&what=' + scope.what + '&target=_new'
                     }).success(function(response) {
                         var result = _.get(response, 'html'),
@@ -74,7 +117,7 @@
                     }).finally(function() {
                         scope.loading = 0;
                     });
-                }, 350);
+                }
             }
         };
     }

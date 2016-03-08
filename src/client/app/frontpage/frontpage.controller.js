@@ -13,27 +13,22 @@
     function Controller(categories, articles, api, _, meta, moment, $scope, $state, searchBar, $ionicHistory) {
         var vm = this,
             day = {
-                ymd: '2016-03-01',
-                groups: []
+                groups: {},
+                length: 0
             },
             id = $state.params.id;
 
         $ionicHistory.clearHistory();
-        vm.i = 0;
-        vm.prev = prev;
-        vm.next = next;
-        vm.showSearchbar = showSearchbar;
+
         vm.openMenu = openMenu;
         vm.loadItems = loadItems;
-        vm.go = function($event, stateName, stateParams) {
-            $event.preventDefault();
-            $state.go(stateName, stateParams);
-        };
+        vm.next = next;
 
         activate();
 
         function activate() {
-
+            vm.i = 0;
+            vm.complete = 1;
             vm.categories = categories.get();
             vm.category = _.findWhere(vm.categories, {
                 id: id
@@ -52,30 +47,32 @@
         }
 
         function loadLead() {
-            api('tag=lead-picture')
+            api('tag=lead-picture&limit=5')
                 .then(function(response) {
-                    var row = response[0],
-                        slug = row.section.split(':');
+                    var row = response[0];
 
-                    vm.lead = _.assign(row, {
-                        importance: parseInt(row.importance),
-                        section: {
-                            id: slug[0],
-                            title: slug[1]
-                        }
+                    vm.leads = _.map(response, function(row) {
+                        var slug = row.section.split(':');
+                        return _.assign(row, {
+                            importance: parseInt(row.importance),
+                            section: {
+                                id: slug[0],
+                                title: slug[1]
+                            }
+                        });
                     });
                     vm.loading = 0;
                 })
                 .finally(loadItems);
 
-            api('tag=imod&q=quoteoftheday')
+            api('tag=imod&q=quoteoftheday&limit=5')
                 .then(function(response) {
-                    vm.quote = response[0];
+                    vm.quotes = response;
                 });
 
-            api('tag=imod&q=picoftheday')
+            api('tag=imod&q=picoftheday&limit=5')
                 .then(function(response) {
-                    vm.pic = response[0];
+                    vm.pics = response;
                 });
 
         }
@@ -85,6 +82,7 @@
                 .then(parse)
                 .catch(function(response) {
                     vm.items = [];
+                    vm.complete = 1;
                 })
                 .finally(function() {
                     vm.loading = 0;
@@ -94,14 +92,7 @@
 
         function parse(response) {
             var items = _.map(response, function(row) {
-                    var slug = row.section.split(':');
-                    return _.assign(row, {
-                        importance: parseInt(row.importance),
-                        section: {
-                            id: slug[0],
-                            title: slug[1]
-                        }
-                    });
+                    return row;
                 }),
                 groups = {
                     lead: _.filter(items, function(row) {
@@ -135,7 +126,7 @@
                 minDate = _.pluck(groups.top, 'created').sort().shift(),
                 startOfDay = moment(minDate).startOf('day').format();
 
-            vm.items = items;
+            vm.startOfDay = startOfDay;
 
             groups.columnists = _.reject(groups.columnists, function(row) {
                 return row.created < startOfDay;
@@ -159,21 +150,74 @@
                 });
             });
 
-            vm.groups = groups;
+            vm.days[0].groups = _.assign(vm.days[0].groups, groups);
             var displayed = [];
-            _.each(vm.groups, function(group) {
+            _.each(vm.days[0].groups, function(group) {
                 displayed = displayed.concat(group);
             });
-            articles.set(displayed);
-        }
+            vm.days[0].length = displayed.length;
 
-        function prev() {
-            // $emit event up | $broadcast event down
-            $scope.$emit('category.prev');
+            articles.set(displayed);
+
+            vm.complete = 0;
         }
 
         function next() {
-            $scope.$emit('category.next');
+            api('tag=by-day&to=' + vm.startOfDay)
+                .then(function(response) {
+                    var items = _.map(response, function(row) {
+                            return row;
+                        }),
+                        groups = {
+                            lead: _.filter(items, function(row) {
+                                return false;
+                            }),
+                            top: _.filter(items, function(row) {
+                                var leads = vm.leads;
+                                return row.storytype === 'N' && !_.findWhere(leads, {
+                                    itemid: row.itemid
+                                });
+                            }),
+                            industry: _.filter(items, function(row) {
+                                return row.storytype === 'PN';
+                            }),
+                            reuters: _.filter(items, function(row) {
+                                return row.company === 'Reuters News Service' && row.storytype === 'S';
+                            }),
+                            company: _.filter(items, function(row) {
+                                return row.storytype === 'P';
+                            }),
+                            columnists: _.filter(items, function(row) {
+                                return row.catid === '79' && row.storytype === 'E';
+                            }),
+                            insights: _.filter(items, function(row) {
+                                return row.catid === '143' && row.storytype === 'E';
+                            }),
+                            features: _.filter(items, function(row) {
+                                return row.catid === '116' && row.storytype === 'E';
+                            }),
+                            international: _.filter(items, function(row) {
+                                return row.company === 'Business Wire' && row.storytype === 'S';
+                            })
+                        },
+                        minDate = _.pluck(groups.top, 'created').shift(),
+                        startOfDay = moment(minDate).startOf('day').format();
+
+                    vm.startOfDay = startOfDay;
+                    vm.days.push({
+                        displayDate: minDate,
+                        groups: groups,
+                        length: response.length
+                    });
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+                    vm.complete = vm.days.length === vm.leads.length ? 1 : 0;
+                })
+                .catch(function() {
+                    vm.complete = 1;
+                })
+                .finally(function() {
+
+                });
         }
 
         function showSearchbar() {

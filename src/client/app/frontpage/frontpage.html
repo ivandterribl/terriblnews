@@ -6,220 +6,233 @@
     	<section ng-show="vm.loading" class="text-center padding">
     		<ion-spinner></ion-spinner>
     	</section>
-    	<section ng-show="!vm.loading && !vm.lead && !vm.items.length" class="padding">
+    	<section ng-show="!vm.loading && !vm.leads.length && !vm.items.length" class="padding">
     		<h3 class="text-center assertive" ng-cloak>Oops, something went wrong</h3>
     	</section>
     	<section ng-show="!vm.loading">
-	    	<ion-list ng-if="vm.lead || vm.items.length">
-	    		<ion-item class="item-light" ui-sref="app.article({ id: item.itemid, catid: item.section.id })" 
-	    		ng-init="item = vm.lead" ng-if="vm.lead">
-	                <div class="pic responsive-pic">
-	    				<img ng-src="{{ item.module.img }}">
-    				</div>
-	                <h1 style="margin: 10px 0 0 0; font-size: 30px;">{{ item.title }}</h1>
-	            </ion-item>
-	            
-	            <ion-item class="item-divider" ng-show="vm.items.length">
-	            	<div adsrv what="tophome" width="100%" class="top"></div>
-	            </ion-item>
+	    	<ion-list ng-if="vm.leads.length">
+	    		<div ng-repeat="(i, day) in vm.days">
+	    			<ion-item class="item-divider item-dark" ng-if="day.displayDate && i">
+		            	<h2 class="light" style="padding-top: 12px;">{{ day.displayDate | date:'EEE, dd MMM' }}</h2>
+		            </ion-item>
 
-	            <ion-item class="item-light" ng-repeat="item in vm.groups.top" ng-include="'app/news/news.item.html'">
-	            </ion-item>
-
-	            <ion-item class="item-divider" ng-show="vm.items.length">
-	            	<div adsrv what="bigtrigghome" width="100%" class="top"></div>
-	            </ion-item>
-
-	            <!-- more news -->
-	            <ion-item class="item-divider" ng-if="vm.groups.industry.length" nav-clear>
-	            	<a ui-sref="app.news.category({ id: 'industry-news' })" class="item-content">
-			            <h3 class="itw-section assertive">
-	                		Industry news
-	                		<i class="icon ion-chevron-right"></i> 
-		                </h3>
-	                </a>
-	            </ion-item>
-	            <ion-item class="item-light" ng-repeat="(i, item) in vm.groups.industry">
-		            <a ui-sref="app.article({ id: item.itemid })" class="item-content">
-		                <h3>{{ ::item.title }}</h3>
-	                </a>
-	            </ion-item>
-
-	            <!-- reuters -->
-	            <ion-item class="item-divider" ng-if="vm.groups.reuters.length">
-	            	<a ui-sref="app.news.category({ id: 'world' })" class="item-content">
-			            <h3 class="itw-section assertive">
-	                		Reuters
-	                		<i class="icon ion-chevron-right"></i> 
-		                </h3>
-	                </a>
-	            </ion-item>
-	            <ion-item class="item-light" ng-repeat="(i, item) in vm.groups.reuters">
-		            <a ui-sref="app.article({ id: item.itemid })" class="item-content">
-		                <h3>{{ ::item.title }}</h3>
-	                </a>
-	            </ion-item>
-
-	            <ion-item class="item-divider" ng-show="vm.items.length">
-	            	<div adsrv what="noophome" class="top"></div>
-	            </ion-item>
-
-				<!-- company news -->
-	            <ion-item class="item-divider" ng-if="vm.groups.company.length">
-	            	<a ui-sref="app.news.category({ id: 'company-news' })" class="item-content">
-			            <h3 class="itw-section assertive">
-	                		Company news
-	                		<i class="icon ion-chevron-right"></i> 
-		                </h3>
-	                </a>
-	            </ion-item>
-	            <ion-item class="item-light" ng-repeat="(i, item) in vm.groups.company" ng-include="'app/news/news.item.html'"></ion-item>
-
-	            <ion-item class="item-divider" ng-show="vm.items.length">
-	            	<div adsrv what="trigg3home" width="100%" class="top"></div>
-	            </ion-item>
-
-	            <ion-item class="item-divider" ng-show="vm.quote && vm.items.length">
-	            	<h3 class="itw-section stable">
-                		Quote of the day
-	                </h3>
-	            </ion-item>
-	            <ion-item ng-show="vm.quote && vm.items.length">
-	                <blockquote class="quote-of-the-day">
-		                <h2>{{ ::vm.quote.module.title }}</h2>
-		                <p class="body">{{ ::vm.quote.module.body }}</p>
-		                <p class="caption"> &ndash; {{ ::vm.quote.module.caption }}</p>
-	                </blockquote>
-	            </ion-item>	            
-	            
-	            <!-- columnists -->
-	            <ion-item class="item-divider" ng-if="vm.groups.columnists.length">
-	            	<a ui-sref="app.opinion.category({ id: 'columnists' })" class="item-content">
-			            <h3 class="itw-section assertive">
-	                		Columnists
-	                		<i class="icon ion-chevron-right"></i> 
-		                </h3>
-	                </a>
-	            </ion-item>
-	            <ion-item ng-repeat="(i, item) in vm.groups.columnists" class="item-light">
-		            <div class="item-content">
-		                <a ui-sref="app.article({ id: item.itemid, catid: item.section.id })">
-			                <div class="news-img" ng-if="item.introtextImg">
-			                	<img ng-src="{{ ::item.introtextImg }}"  />
-			                </div>
-			                <h3 class="itw-section stable" ng-if="item.topic">
-		                		{{ item.topic }}
-			                </h3>
-			                <h2>{{ item.title }}</h2>
-			            </a>
+		    		<ion-item class="item-light" ui-sref="app.article({ id: item.itemid, catid: item.section.id })" 
+		    		ng-init="item = vm.leads[i]" ng-if="vm.leads[i]">
+		                <div class="pic responsive-pic">
+		    				<img ng-src="{{ item.module.img }}">
+	    				</div>
+		                <h1 style="margin: 10px 0 0 0; font-size: 30px;">{{ item.title }}</h1>
+		            </ion-item>
 		            
-		                <p>
-		                	<itw-timestamp timestamp="'{{ item.created }}'"></itw-timestamp>
-		                	
-		                	<span class="assertive" ng-if="item.topic">
-		                		<!-- <i class="icon ion-edit" style="" ng-if="item.topic"></i>  -->
-		                		<span class="stable">|</span> {{ item.created_by_alias }}
-			                </span>
-		                </p>
-	                </div>    
-	            </ion-item>
+		            <ion-item class="item-divider" ng-if="day.length">
+		            	<div adsrv what="tophome" width="100%" class="top"></div>
+		            </ion-item>
 
-	            <!-- industry-insight -->
-	            <ion-item class="item-divider" ng-if="vm.groups.insights.length">
-	            	<a ui-sref="app.opinion.category({ id: 'industry-insight' })" class="item-content">
-			            <h3 class="itw-section assertive">
-	                		Industry insight
-	                		<i class="icon ion-chevron-right"></i> 
-		                </h3>
-	                </a>
-	            </ion-item>
-	            <ion-item ng-repeat="(i, item) in vm.groups.insights" class="item-light">
-		            <div class="item-content">
-		                <a ui-sref="app.article({ id: item.itemid, catid: item.section.id })">
-			                <div class="news-img" ng-if="item.introtextImg">
-			                	<img ng-src="{{ ::item.introtextImg }}"  />
-			                </div>
-			                <h3 class="itw-section stable" ng-if="item.topic">
-		                		{{ item.topic }}
+		            <ion-item class="item-light" ng-repeat="item in day.groups.top" ng-include="'app/news/news.item.html'">
+		            </ion-item>
+
+		            <ion-item class="item-divider" ng-if="day.length">
+		            	<div adsrv what="bigtrigghome" width="100%" class="top"></div>
+		            </ion-item>
+
+		            <!-- more news -->
+		            <ion-item class="item-divider" ng-if="day.groups.industry.length" nav-clear>
+		            	<a ui-sref="app.news.category({ id: 'industry-news' })" class="item-content">
+				            <h3 class="itw-section assertive">
+		                		Industry news
+		                		<i class="icon ion-chevron-right"></i> 
 			                </h3>
-			                <h2>{{ item.title }}</h2>
-			            </a>
-		            
-		                <p>
-		                	<itw-timestamp timestamp="'{{ item.created }}'"></itw-timestamp>
-		                	
-		                	<span class="assertive" ng-if="item.topic">
-		                		<span class="stable">|</span> {{ item.created_by_alias }}
-			                </span>
-		                </p>
-	                </div> 
-	            </ion-item>
+		                </a>
+		            </ion-item>
+		            <ion-item class="item-light" ng-repeat="(i, item) in day.groups.industry">
+			            <a ui-sref="app.article({ id: item.itemid })" class="item-content">
+			                <h3>{{ ::item.title }}</h3>
+		                </a>
+		            </ion-item>
 
-	            <!-- features -->
-	            <ion-item class="item-divider" ng-if="vm.groups.features.length">
-	            	<a ui-sref="app.features" class="item-content">
-			            <h3 class="itw-section assertive">
-	                		Features
-	                		<i class="icon ion-chevron-right"></i> 
-		                </h3>
-	                </a>
-	            </ion-item>
-	            <ion-item ng-repeat="(i, item) in vm.groups.features" class="item-light">
-		            <div class="item-content">
-		                <a ui-sref="app.article({ id: item.itemid, catid: item.section.id })">
-			                <div class="news-img" ng-if="item.introtextImg">
-			                	<img ng-src="{{ ::item.introtextImg }}"  />
-			                </div>
-			                <h3 class="itw-section stable" ng-if="item.topic">
-		                		{{ item.topic }}
+		            <!-- reuters -->
+		            <ion-item class="item-divider" ng-if="day.groups.reuters.length">
+		            	<a ui-sref="app.news.category({ id: 'world' })" class="item-content">
+				            <h3 class="itw-section assertive">
+		                		Reuters
+		                		<i class="icon ion-chevron-right"></i> 
 			                </h3>
-			                <h2>{{ item.title }}</h2>
-			            </a>
-		            
-		                <p>
-		                	<itw-timestamp timestamp="'{{ item.created }}'"></itw-timestamp>
-		                	
-		                	<span class="assertive" ng-if="item.topic">
-		                		<!-- <i class="icon ion-edit" style="" ng-if="item.topic"></i>  -->
-		                		<span class="stable">|</span> {{ item.created_by_alias }}
-			                </span>
-		                </p>
-	                </div> 
-	            </ion-item>
+		                </a>
+		            </ion-item>
+		            <ion-item class="item-light" ng-repeat="(i, item) in day.groups.reuters">
+			            <a ui-sref="app.article({ id: item.itemid })" class="item-content">
+			                <h3>{{ ::item.title }}</h3>
+		                </a>
+		            </ion-item>
 
-	            <ion-item class="item-divider" ng-show="vm.items.length">
-	            	<div adsrv what="trigg3noop" class="top"></div>
-	            </ion-item>
+		            <ion-item class="item-divider" ng-if="day.length">
+		            	<div adsrv what="noophome" class="top"></div>
+		            </ion-item>
 
-	            <ion-item class="item-divider" ng-show="vm.pic && vm.items.length">
-	            	<h3 class="itw-section stable">
-                		Pic of the day
-	                </h3>
-	            </ion-item>
-	            <ion-item ng-show="vm.pic && vm.items.length">
-	            	<div class="pic responsive-pic">
-	                	<img ng-src="{{ vm.pic.module.img }}" />
-	                </div>
-	                <h2>{{ vm.pic.module.title }}</h2>
-	                <p>{{ vm.pic.module.body }}</p>
-	                <p class="caption"> &ndash; <span ng-bind-html="vm.pic.module.caption"></span></p>
-	            </ion-item>
+					<!-- company news -->
+		            <ion-item class="item-divider" ng-if="day.groups.company.length">
+		            	<a ui-sref="app.news.category({ id: 'company-news' })" class="item-content">
+				            <h3 class="itw-section assertive">
+		                		Company news
+		                		<i class="icon ion-chevron-right"></i> 
+			                </h3>
+		                </a>
+		            </ion-item>
+		            <ion-item class="item-light" ng-repeat="(i, item) in day.groups.company" ng-include="'app/news/news.item.html'"></ion-item>
 
-	            <!-- international -->
-				<ion-item class="item-divider" ng-if="vm.groups.international.length">
-	            	<a ui-sref="app.section({ id: 74 })" class="item-content">
-			            <h3 class="itw-section assertive">
-	                		International
-	                		<i class="icon ion-chevron-right"></i> 
+		            <ion-item class="item-divider" ng-if="day.length">
+		            	<div adsrv what="trigg3home" width="100%" class="top"></div>
+		            </ion-item>
+
+		            <ion-item class="item-divider" ng-show="vm.quotes[i] && day.length">
+		            	<h3 class="itw-section stable">
+	                		Quote of the day
 		                </h3>
-	                </a>
-	            </ion-item>
-	            <ion-item class="item-light" ng-repeat="(i, item) in vm.groups.international">
-		            <a ui-sref="app.article({ id: item.itemid })" class="item-content">
-		                <h3>{{ item.title }}</h3>
-	                </a>
-	            </ion-item>
+		            </ion-item>
+		            <ion-item ng-show="vm.quotes[i] && day.length">
+		                <blockquote class="quote-of-the-day">
+			                <h2>{{ ::vm.quotes[i].module.title }}</h2>
+			                <p class="body">{{ ::vm.quotes[i].module.body }}</p>
+			                <p class="caption"> &ndash; {{ ::vm.quotes[i].module.caption }}</p>
+		                </blockquote>
+		            </ion-item>	            
+		            
+		            <!-- columnists -->
+		            <ion-item class="item-divider" ng-if="day.groups.columnists.length">
+		            	<a ui-sref="app.opinion.category({ id: 'columnists' })" class="item-content">
+				            <h3 class="itw-section assertive">
+		                		Columnists
+		                		<i class="icon ion-chevron-right"></i> 
+			                </h3>
+		                </a>
+		            </ion-item>
+		            <ion-item ng-repeat="(i, item) in day.groups.columnists" class="item-light">
+			            <div class="item-content">
+			                <a ui-sref="app.article({ id: item.itemid, catid: item.section.id })">
+				                <div class="news-img" ng-if="item.introtextImg">
+				                	<img ng-src="{{ ::item.introtextImg }}"  />
+				                </div>
+				                <h3 class="itw-section stable" ng-if="item.topic">
+			                		{{ item.topic }}
+				                </h3>
+				                <h2>{{ item.title }}</h2>
+				            </a>
+			            
+			                <p>
+			                	<itw-timestamp timestamp="'{{ item.created }}'"></itw-timestamp>
+			                	
+			                	<span class="assertive" ng-if="item.topic">
+			                		<!-- <i class="icon ion-edit" style="" ng-if="item.topic"></i>  -->
+			                		<span class="stable">|</span> {{ item.created_by_alias }}
+				                </span>
+			                </p>
+		                </div>    
+		            </ion-item>
+
+		            <!-- industry-insight -->
+		            <ion-item class="item-divider" ng-if="day.groups.insights.length">
+		            	<a ui-sref="app.opinion.category({ id: 'industry-insight' })" class="item-content">
+				            <h3 class="itw-section assertive">
+		                		Industry insight
+		                		<i class="icon ion-chevron-right"></i> 
+			                </h3>
+		                </a>
+		            </ion-item>
+		            <ion-item ng-repeat="(i, item) in day.groups.insights" class="item-light">
+			            <div class="item-content">
+			                <a ui-sref="app.article({ id: item.itemid, catid: item.section.id })">
+				                <div class="news-img" ng-if="item.introtextImg">
+				                	<img ng-src="{{ ::item.introtextImg }}"  />
+				                </div>
+				                <h3 class="itw-section stable" ng-if="item.topic">
+			                		{{ item.topic }}
+				                </h3>
+				                <h2>{{ item.title }}</h2>
+				            </a>
+			            
+			                <p>
+			                	<itw-timestamp timestamp="'{{ item.created }}'"></itw-timestamp>
+			                	
+			                	<span class="assertive" ng-if="item.topic">
+			                		<span class="stable">|</span> {{ item.created_by_alias }}
+				                </span>
+			                </p>
+		                </div> 
+		            </ion-item>
+
+		            <!-- features -->
+		            <ion-item class="item-divider" ng-if="day.groups.features.length">
+		            	<a ui-sref="app.features" class="item-content">
+				            <h3 class="itw-section assertive">
+		                		Features
+		                		<i class="icon ion-chevron-right"></i> 
+			                </h3>
+		                </a>
+		            </ion-item>
+		            <ion-item ng-repeat="(i, item) in day.groups.features" class="item-light">
+			            <div class="item-content">
+			                <a ui-sref="app.article({ id: item.itemid, catid: item.section.id })">
+				                <div class="news-img" ng-if="item.introtextImg">
+				                	<img ng-src="{{ ::item.introtextImg }}"  />
+				                </div>
+				                <h3 class="itw-section stable" ng-if="item.topic">
+			                		{{ item.topic }}
+				                </h3>
+				                <h2>{{ item.title }}</h2>
+				            </a>
+			            
+			                <p>
+			                	<itw-timestamp timestamp="'{{ item.created }}'"></itw-timestamp>
+			                	
+			                	<span class="assertive" ng-if="item.topic">
+			                		<!-- <i class="icon ion-edit" style="" ng-if="item.topic"></i>  -->
+			                		<span class="stable">|</span> {{ item.created_by_alias }}
+				                </span>
+			                </p>
+		                </div> 
+		            </ion-item>
+
+		            <ion-item class="item-divider" ng-if="day.length">
+		            	<div adsrv what="trigg3noop" class="top"></div>
+		            </ion-item>
+
+		            <ion-item class="item-divider" ng-show="vm.pics[i] && day.length">
+		            	<h3 class="itw-section stable">
+	                		Pic of the day
+		                </h3>
+		            </ion-item>
+		            <ion-item ng-show="vm.pics[i] && day.length">
+		            	<div class="pic responsive-pic">
+		                	<img ng-src="{{ vm.pics[i].module.img }}" />
+		                </div>
+		                <h2>{{ vm.pics[i].module.title }}</h2>
+		                <p>{{ vm.pics[i].module.body }}</p>
+		                <p class="caption"> &ndash; <span ng-bind-html="vm.pics[i].module.caption"></span></p>
+		            </ion-item>
+
+		            <!-- international -->
+					<ion-item class="item-divider" ng-if="day.groups.international.length">
+		            	<a ui-sref="app.section({ id: 74 })" class="item-content">
+				            <h3 class="itw-section assertive">
+		                		International
+		                		<i class="icon ion-chevron-right"></i> 
+			                </h3>
+		                </a>
+		            </ion-item>
+		            <ion-item class="item-light" ng-repeat="(i, item) in day.groups.international">
+			            <a ui-sref="app.article({ id: item.itemid })" class="item-content">
+			                <h3>{{ item.title }}</h3>
+		                </a>
+		            </ion-item>
+	            </div>
 	        </ion-list>
+
+	        <ion-infinite-scroll
+	        	immediate-check="false"
+	        	ng-if="!vm.complete"
+			    on-infinite="vm.next()"
+			    distance="1%">
+			</ion-infinite-scroll>
         </section>
 	</ion-content>
 </ion-view>

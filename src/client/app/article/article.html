@@ -14,7 +14,7 @@
 	      </button>
 	      <md-menu-content width="3">
 	        <md-menu-item>
-		        <md-button class="row" socialshare socialshare-provider="facebook" socialshare-url="{{ vm.canonical }}">
+		        <md-button class="row" socialshare socialshare-provider="facebook" socialshare-url="{{ vm.shortlink }}">
 		          	<span class="md-menu-icon" >
 		          		<i class="icon ion-social-facebook"></i>
 		          	</span>
@@ -22,7 +22,7 @@
 		        </md-button>
 	        </md-menu-item>
 	        <md-menu-item>
-		        <md-button class="row" socialshare socialshare-provider="twitter" socialshare-url="{{ vm.canonical }}">
+		        <md-button class="row" socialshare socialshare-provider="twitter" socialshare-url="{{ vm.shortlink }}">
 		          	<span class="md-menu-icon">
 		          		<i class="icon ion-social-twitter"></i>
 		          	</span>
@@ -30,7 +30,7 @@
 		        </md-button>
 	        </md-menu-item>
 	        <md-menu-item>
-		        <md-button class="row" socialshare socialshare-provider="linkedin" socialshare-url="{{ vm.canonical }}">
+		        <md-button class="row" socialshare socialshare-provider="linkedin" socialshare-url="{{ vm.shortlink }}">
 		          	<span class="md-menu-icon">
 		          		<i class="icon ion-social-linkedin"></i>
 		          	</span>
@@ -38,7 +38,7 @@
 		        </md-button>
 	        </md-menu-item>
 	        <md-menu-item>
-		        <md-button class="row" socialshare socialshare-provider="google+" socialshare-url="{{ vm.canonical }}">
+		        <md-button class="row" socialshare socialshare-provider="google+" socialshare-url="{{ vm.shortlink }}">
 		          	<span class="md-menu-icon">
 		          		<i class="icon ion-social-googleplus"></i>
 		          	</span>
@@ -63,39 +63,39 @@
     		</div>
 
     		<main class="padding" itemscope itemtype="http://schema.org/NewsArticle">
-    			
+
 	    		<h1 itemprop="headline">{{::vm.article.title}}</h1>
-	    		
+
 	    		<h4 ng-if="vm.article.summary" ng-bind-html="::vm.article.summary"></h4>
-				<div ng-if="vm.article.storytype !== 'P' && vm.article.authorImg" 
+				<div ng-if="vm.article.storytype !== 'P' && vm.article.authorImg"
 					style="border-width: 0; position: relative; padding: 0 0 0 48px">
 					<img ng-src="{{ vm.article.authorImg }}" style="position: absolute; top: 0; left: 0; max-width: 40px; max-height: 40px; border-radius: 50%" />
 					<h5 style="line-height: 20px">
 						<span ng-if="vm.article.created_by_alias" itemprop="author">
 							{{ ::vm.article.created_by_alias }}
 						</span><br />
-						<span>{{ ::vm.article.issueplace }}, </span> 
-						<time datetime="{{ ::vm.article.created }}">{{ ::vm.article.created | date:'d MMM yyyy'}}</time> 
+						<span>{{ ::vm.article.issueplace }}, </span>
+						<time datetime="{{ ::vm.article.created }}">{{ ::vm.article.created | date:'d MMM yyyy'}}</time>
 					</h5>
 				</div>
 				<h5 ng-if="vm.article.storytype !== 'P' && !vm.article.authorImg" class="stable">
 					<span ng-if="vm.article.created_by_alias">
 						By&nbsp;<span itemprop="author">{{ ::vm.article.created_by_alias }}</span>
 					</span><br />
-					<span>{{ ::vm.article.issueplace }},&nbsp;</span> 
-					<time datetime="{{ ::vm.article.created }}">{{ ::vm.article.created | date:'d MMM yyyy'}}</time> 
+					<span>{{ ::vm.article.issueplace }},&nbsp;</span>
+					<time datetime="{{ ::vm.article.created }}">{{ ::vm.article.created | date:'d MMM yyyy'}}</time>
 				</h5>
 				<h5 ng-if="vm.article.storytype === 'P'" class="stable">
 					<span ng-if="vm.article.issuedby_alias">
 						<span itemprop="author">Press release issued by {{ ::vm.article.issuedby_alias }}</span>
 					</span><br />
-					<span>{{ ::vm.article.issueplace }}, </span> 
-					<time datetime="{{ ::vm.article.created }}">{{ ::vm.article.created | date:'d MMM yyyy'}}</time> 
+					<span>{{ ::vm.article.issueplace }}, </span>
+					<time datetime="{{ ::vm.article.created }}">{{ ::vm.article.created | date:'d MMM yyyy'}}</time>
 				</h5>
 				<a ng-if="vm.article.storytype === 'P' && vm.article.copyPath" class="row"
-					ng-href="http://www.itweb.co.za/office/{{ vm.article.copyPath }}"	
+					ng-href="http://www.itweb.co.za/office/{{ vm.article.copyPath }}"
 					style="border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; margin-bottom: 10px;padding: 5px 0">
-					
+
 					<h5 class="col col-center" style="padding: 5px 0 0; text-transform: uppercase; margin: 0;">
 						<span style="color: #3A72AB; font-size:12px"> Visit our press office</span>
 					</h5>
@@ -106,7 +106,7 @@
 
 				<meta itemprop="mainEntityOfPage" content="{{ vm.canonical }}" />
 				<span itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
-					<span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">      
+					<span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
 				      <meta itemprop="url" content="http://www.itweb.co.za/templates/ja_itweb/images/itweb_logo_sml.png"/>
 				      <meta itemprop="width" content="116"/>
 				      <meta itemprop="height" content="49"/>
@@ -149,13 +149,13 @@
 					<h3>{{ ::related.title }}</h3>
 					<i class="icon icon-mini ion-chevron-right"></i>
 				</ion-item>
-				<ion-item class="item-icon-left item-icon-right" 
+				<ion-item class="item-icon-left item-icon-right"
 					ng-repeat="recommended in vm.recommended" ui-sref="app.article({ id: recommended.id })">
 					<i class="icon icon-mini ion-star"></i>
 					<h3>{{ ::recommended.title }}</h3>
 					<i class="icon icon-mini ion-chevron-right"></i>
 				</ion-item>
-				<ion-item class="item-icon-left item-icon-right" 
+				<ion-item class="item-icon-left item-icon-right"
 					ng-repeat="topic in vm.topics track by $index" ui-sref="app.topic({ q: topic })" ng-if="vm.related.length">
 					<i class="icon icon-mini ion-bookmark"></i>
 					<h3>{{ ::topic }}</h3>
@@ -173,7 +173,7 @@
 				</ion-item>
 				<ion-item class="item-icon-right"
 					ng-repeat="section in vm.appearance" ui-sref="app.section({ id: section.catid })">
-					
+
 					<div class="row" ng-style="{ 'min-height': section.attribs.img ? '24px' : '24px' }">
 						<h3 class="col col-center">
 							{{ ::section.title }}
@@ -191,19 +191,19 @@
     		</div>
 
 			<div ng-if="vm.pagination.prev || vm.pagination.next" class="row">
-				<a class="button button-clear button-assertive icon-left ion-chevron-left" 
+				<a class="button button-clear button-assertive icon-left ion-chevron-left"
 					ng-click="vm.prev()"
 					ng-if="vm.pagination.prev">
 					Prev
 				</a>
 				<span class="col text-center"><span style="color: #666;font-size: 12px;line-height: 36px;">Swipe across articles</span></span>
-				<a class="button button-clear button-assertive icon-right ion-chevron-right" 
+				<a class="button button-clear button-assertive icon-right ion-chevron-right"
 					ng-click="vm.next()"
 					ng-if="vm.pagination.next">
 					Next
 				</a>
 			</div>
-			
+
 			<!-- <disqus disqus-shortname="itweb-za"
 		         disqus-identifier="{{ ::vm.disqus.id }}"
 		         disqus-url="{{ ::vm.disqus.url }}"

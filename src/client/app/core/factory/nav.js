@@ -5,11 +5,12 @@
         .module('app.core')
         .factory('nav', Factory);
 
-    Factory.$inject = [];
+    Factory.$inject = ['_', '$state'];
 
-    function Factory() {
+    function Factory(_, $state) {
         return {
-            get: get
+            get: get,
+            export: routes
         };
 
         function get() {
@@ -23,30 +24,7 @@
                 items: [{
                     title: 'Top stories',
                     id: 'top-news',
-                    sref: 'app.news.category({ id: \'top-news\' })',
-                    items: [{
-                        title: 'Business'
-                    }, {
-                        title: 'Telecoms'
-                    }, {
-                        title: 'Financial'
-                    }, {
-                        title: 'Internet'
-                    }, {
-                        title: 'Security'
-                    }, {
-                        title: 'Enterprise'
-                    }, {
-                        title: 'Computing'
-                    }, {
-                        title: 'Networking'
-                    }, {
-                        title: 'Software'
-                    }, {
-                        title: 'Hardware'
-                    }, {
-                        title: 'Channel'
-                    }]
+                    sref: 'app.news.category({ id: \'top-news\' })'
                 }, {
                     title: 'Industry news',
                     id: 'industry-news',
@@ -154,6 +132,25 @@
                     sref: 'app.about.bee'
                 }]
             }];
+        }
+
+        function routes() {
+            return [];
+            //var result = _.map(this.get(), transform);
+            //return result;
+            //
+            //function transform(row) {
+            //    var a = row.sref && row.sref.indexOf('(') > -1 ? row.sref.replace(')', '').split('(') : null;
+            //
+            //    return {
+            //        title: row.title,
+            //        icon: row.icon,
+            //        url: a && a[1] ? $state.href(a[0], {
+            //            id: row.id
+            //        }) : $state.href(row.sref),
+            //        items: _.map(row.items || [], transform)
+            //    };
+            //}
         }
     }
 })();

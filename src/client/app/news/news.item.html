@@ -12,15 +12,14 @@
     <p>
     	<itw-timestamp timestamp="'{{ item.created }}'"></itw-timestamp>
     	
-    	<span class="assertive" ng-if="item.topic && !item.copyPath && item.created_by_alias">
-    		<span class="stable">|</span> {{ item.created_by_alias }}
-        </span>
-
-        <a ng-if="item.copyPath" class="assertive" ng-href="http://www.itweb.co.za/office/{{ item.copyPath }}">
+    	<a ng-if="item.copyPath" class="assertive" ng-href="http://www.itweb.co.za/office/{{ item.copyPath }}">
         	<span class="stable">|</span> {{ item.company }}
         </a>
-        <a ng-if="item.section.id && !item.hideSection" class="assertive" ui-sref="app.section({ id: item.section.id })">
+        <a ng-if="!item.copyPath && item.section.id && !item.hideSection" class="assertive" ui-sref="app.section({ id: item.section.id })">
         	<span class="stable">|</span> {{ item.section.title }}
         </a>
+        <span class="assertive" ng-if="!item.copyPath && item.topic && item.created_by_alias">
+            <span class="stable">|</span> {{ item.created_by_alias }}
+        </span>
     </p>
 </div>

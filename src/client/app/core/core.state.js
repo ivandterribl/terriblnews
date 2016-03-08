@@ -22,7 +22,6 @@
                 },
                 templateUrl: 'app/article/article.html',
                 controller: 'ArticleController as vm'
-
             })
             .state('app.404', {
                 url: '/404',
