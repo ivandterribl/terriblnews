@@ -18,7 +18,7 @@
 	    	<ion-list ng-show="vm.items.length">
 	    		<div ng-repeat="(i, item) in vm.items"> 
 	    			
-	    			<ion-item class="item-divider" ng-if="i % 25 === 3">
+<!-- 	    			<ion-item class="item-divider" ng-if="i % 25 === 3">
 		            	<div adsrv what="top{{ ::vm.category.normalized }}" class="top"></div>
 		            </ion-item>
 
@@ -32,6 +32,22 @@
 
 		            <ion-item class="item-divider" ng-if="i % 25 === 24">
 		            	<div adsrv what="tileone{{ ::vm.category.normalized }}" class="top"></div>
+		            </ion-item> -->
+
+		            <ion-item class="item-divider" ng-if="i % 25 === 0" style="padding-left: 0; padding-right: 0">
+		            	<div adsrv what="mobile-leaderboard" class="top"></div>
+		            </ion-item>
+
+		            <ion-item class="item-divider" ng-if="i % 25 === 3" style="padding-left: 0; padding-right: 0">
+		            	<div adsrv what="mobile-leaderboard-xx" width="100%" class="top"></div>
+		            </ion-item>
+
+		            <ion-item class="item-divider" ng-if="i % 25 === 9" style="padding-left: 0; padding-right: 0">
+		            	<div adsrv what="tileone{{ ::vm.category.normalized }}" width="100%" class="top"></div>
+		            </ion-item>
+
+		            <ion-item class="item-divider" ng-if="i % 25 === 18" style="padding-left: 0; padding-right: 0">
+		            	<div adsrv what="mobile-square" width="100%" class="top"></div>
 		            </ion-item>
 		            
 		            <ion-item class="item-light"  ng-include="'app/news/news.item.html'">

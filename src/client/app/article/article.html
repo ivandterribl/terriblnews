@@ -58,9 +58,12 @@
     		<h3 class="text-center assertive" ng-cloak>Oops, something went wrong</h3>
     	</section>
     	<section ng-show="!vm.loading">
-    		<div class="item item-divider" ng-if="vm.section">
+<!--     		<div class="item item-divider" ng-if="vm.section">
     			<div adsrv what="top{{ vm.section.normalized }}" class="top"></div>
-    		</div>
+    		</div> -->
+    		<div class="item item-divider" style="padding-left: 0; padding-right: 0">
+            	<div adsrv what="mobile-leaderboard" class="top"></div>
+            </div>
 
     		<main class="padding" itemscope itemtype="http://schema.org/NewsArticle">
 
@@ -164,7 +167,7 @@
 			</ion-list>
 
 			<div class="item item-divider" ng-if="vm.section">
-    			<div adsrv what="tileone{{ vm.section.normalized }}" class="top"></div>
+    			<div adsrv what="mobile-square" class="top"></div>
     		</div>
 
 			<ion-list ng-show="vm.appearance.length" class="h3-list">
@@ -185,10 +188,6 @@
 					<i class="icon icon-mini ion-chevron-right"></i>
 				</ion-item>
 			</ion-list>
-
-			<div class="item item-divider" ng-if="vm.section && vm.banner.length">
-    			<div adsrv what="tileone{{ vm.section.normalized }}" class="top"></div>
-    		</div>
 
 			<div ng-if="vm.pagination.prev || vm.pagination.next" class="row">
 				<a class="button button-clear button-assertive icon-left ion-chevron-left"

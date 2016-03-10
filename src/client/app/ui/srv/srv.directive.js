@@ -34,7 +34,16 @@
                     activated = 0;
 
                 scope.loading = 1;
-                if (scope.what.indexOf('top') === 0 || scope.what.indexOf('bot') === 0) {
+                if (scope.what === 'mobile-leaderboard') {
+                    width = _.min([$window.innerWidth, 640]);
+                    height = Math.floor(width / 320 * 50);
+                } else if (scope.what === 'mobile-leaderboard-xx') {
+                    width = _.min([$window.innerWidth, 640]);
+                    height = Math.floor(width / 320 * 100);
+                } else if (scope.what === 'mobile-square') {
+                    width = _.min([$window.innerWidth - 20, 600]);
+                    height = Math.floor(width / 300 * 250);
+                } else if (scope.what.indexOf('top') === 0 || scope.what.indexOf('bot') === 0) {
                     width = _.min([$window.innerWidth - 24, 728]);
                     height = Math.floor(width / 728 * 90);
 
@@ -56,7 +65,7 @@
 
                 } else {
                     width = 300;
-                    height = 150;
+                    height = 250;
                 }
 
                 scope.width = width + 'px';

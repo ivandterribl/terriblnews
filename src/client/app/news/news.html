@@ -19,16 +19,16 @@
     	<section ng-show="!vm.loading">
 	    	<ion-list ng-show="vm.items.length">
 	    		<div ng-repeat="(i, item) in vm.items"> 
-		    		<ion-item class="item-divider" ng-if="i % 25 === 3">
-		            	<div adsrv what="tophome" width="100%" class="top"></div>
+		    		<ion-item class="item-divider" ng-if="i % 25 === 3" style="padding-left: 0; padding-right: 0">
+		            	<div adsrv what="mobile-leaderboard" class="top"></div>
 		            </ion-item>
-		            <ion-item class="item-divider" ng-if="i % 25 === 9">
-		            	<div adsrv what="bigtrigghome" width="100%" class="top"></div>
+		            <ion-item class="item-divider" ng-if="i % 25 === 9" style="padding-left: 0; padding-right: 0">
+		            	<div adsrv what="mobile-leaderboard-xx" width="100%" class="top"></div>
 		            </ion-item>
-		            <ion-item class="item-divider" ng-if="i % 25 === 18">
-		            	<div adsrv what="noophome" width="100%" class="top"></div>
+		            <ion-item class="item-divider" ng-if="i % 25 === 18" style="padding-left: 0; padding-right: 0">
+		            	<div adsrv what="mobile-leaderboard-xx" width="100%" class="top"></div>
 		            </ion-item>
-		            <ion-item class="item-divider" ng-if="i % 25 === 24">
+		            <ion-item class="item-divider" ng-if="i % 25 === 24" style="padding-left: 0; padding-right: 0">
 		            	<div adsrv what="trigg3home" width="100%" class="top"></div>
 		            </ion-item>
 	    		    <ion-item  class="item-light" ng-include="'app/news/news.item.html'">

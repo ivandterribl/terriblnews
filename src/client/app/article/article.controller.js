@@ -171,8 +171,12 @@
             return section.normalized ? [
                 // '<div imod position="sponsor" catid="' + section.catid + '" rel="section"></div>',
                 // '<div imod position="co-sponsor" catid="' + section.catid + '" rel="section"></div>'
-                '<div class="item item-divider item-strech"><div adsrv what="noop' + section.normalized + '"></div></div>',
-                '<div class="item item-divider item-strech"><div adsrv what="noop' + section.normalized + '"></div></div>'
+                // '<div class="item item-divider item-strech"><div adsrv what="noop' + section.normalized + '"></div></div>',
+                // '<div class="item item-divider item-strech"><div adsrv what="noop' + section.normalized + '"></div></div>'
+                '<div class="item item-divider item-strech" style="padding-left: 0; padding-right: 0">' +
+                '<div adsrv what="mobile-leaderboard-xx"></div></div>',
+                '<div class="item item-divider item-strech" style="padding-left: 0; padding-right: 0">' +
+                '<div adsrv what="tileone' + section.normalized + '"></div></div>'
             ] : [];
         }
 

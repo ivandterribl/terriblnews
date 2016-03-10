@@ -24,8 +24,8 @@
 		                <h1 style="margin: 10px 0 0 0; font-size: 30px;">{{ item.title }}</h1>
 		            </ion-item>
 		            
-		            <ion-item class="item-divider" ng-if="day.length">
-		            	<div adsrv what="tophome" width="100%" class="top"></div>
+		            <ion-item class="item-divider" ng-if="day.length" style="padding-left: 0; padding-right: 0">
+		            	<div adsrv what="mobile-leaderboard" class="top"></div>
 		            </ion-item>
 
 		            <ion-item class="item-light" ng-repeat="(j, item) in day.groups.top">
@@ -53,8 +53,8 @@
 					</div>
 		            </ion-item>
 
-		            <ion-item class="item-divider" ng-if="day.length">
-		            	<div adsrv what="bigtrigghome" width="100%" class="top"></div>
+		            <ion-item class="item-divider" ng-if="day.length" style="padding-left: 0; padding-right: 0">
+		            	<div adsrv what="mobile-leaderboard-xx" class="top"></div>
 		            </ion-item>
 
 		            <!-- more news -->
@@ -91,8 +91,8 @@
 		                </a>
 		            </ion-item>
 
-		            <ion-item class="item-divider" ng-if="day.length">
-		            	<div adsrv what="noophome" class="top"></div>
+		            <ion-item class="item-divider" ng-if="day.length" style="padding-left: 0; padding-right: 0">
+		            	<div adsrv what="mobile-leaderboard-xx" class="top"></div>
 		            </ion-item>
 
 					<!-- company news -->
@@ -239,7 +239,6 @@
 			                	<itw-timestamp timestamp="'{{ item.created }}'"></itw-timestamp>
 			                	
 			                	<span class="assertive" ng-if="item.topic">
-			                		<!-- <i class="icon ion-edit" style="" ng-if="item.topic"></i>  -->
 			                		<span class="stable">|</span> {{ item.created_by_alias }}
 				                </span>
 			                </p>
@@ -247,7 +246,7 @@
 		            </ion-item>
 
 		            <ion-item class="item-divider" ng-if="day.length">
-		            	<div adsrv what="trigg3noop" class="top"></div>
+		            	<div adsrv what="mobile-square" class="top"></div>
 		            </ion-item>
 
 		            <ion-item class="item-divider" ng-show="vm.pics[i] && day.length">
