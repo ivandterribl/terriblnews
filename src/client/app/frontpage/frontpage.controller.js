@@ -7,10 +7,10 @@
 
     Controller.$inject = [
         'categories', 'articles', 'api', '_', 'meta', 'moment',
-        '$scope', '$state', 'searchBar', '$ionicHistory'
+        '$scope', '$state', 'searchBar', '$ionicHistory', 'Analytics'
     ];
     /* @ngInject */
-    function Controller(categories, articles, api, _, meta, moment, $scope, $state, searchBar, $ionicHistory) {
+    function Controller(categories, articles, api, _, meta, moment, $scope, $state, searchBar, $ionicHistory, Analytics) {
         var vm = this,
             day = {
                 groups: {},
@@ -54,13 +54,14 @@
                     vm.leads = _.map(response, function(row) {
                         var slug = row.section.split(':');
                         return _.assign(row, {
-                            importance: parseInt(row.importance),
+                            itemid: parseInt(row.itemid),
                             section: {
                                 id: slug[0],
                                 title: slug[1]
                             }
                         });
                     });
+                    articles.set(vm.leads);
                     vm.loading = 0;
                 })
                 .finally(loadItems);
@@ -95,9 +96,6 @@
                     return row;
                 }),
                 groups = {
-                    lead: _.filter(items, function(row) {
-                        return row.importance === 1;
-                    }),
                     top: _.filter(items, function(row) {
                         return row.importance > 1 && row.importance <= 20;
                     }),
@@ -157,12 +155,13 @@
             });
             vm.days[0].length = displayed.length;
 
-            articles.set(displayed);
+            articles.push(displayed);
 
             vm.complete = 0;
         }
 
         function next() {
+            Analytics.trackEvent('frontpage', 'scroll', vm.startOfDay);
             api('tag=by-day&to=' + vm.startOfDay)
                 .then(function(response) {
                     var items = _.map(response, function(row) {
@@ -209,6 +208,15 @@
                         groups: groups,
                         length: response.length
                     });
+
+                    var displayed = [];
+                    _.each(vm.days[0].groups, function(group) {
+                        displayed = displayed.concat(group);
+                    });
+                    vm.days[0].length = displayed.length;
+
+                    articles.push(displayed);
+
                     $scope.$broadcast('scroll.infiniteScrollComplete');
                     vm.complete = vm.days.length === vm.leads.length ? 1 : 0;
                 })
@@ -234,17 +242,7 @@
         }
 
         function seo() {
-            var desc = [
-                'A vital resource for South African ICT decision-makers, ',
-                'ITWeb delivers news, views and information through diverse content platforms, ',
-                'including online, e-newsletters, social media, print and events. ',
-                'ITWeb is recognised as South Africa\'s technology news and information leader.'
-            ];
-            meta.title('ITWeb');
-            meta.description(desc.join(''));
-            meta.keywords('IT, Technology, Business, News');
-            meta.canonical(false);
-            meta.ld(false);
+            meta.set();
         }
     }
 })();

@@ -17,7 +17,7 @@
 		            </ion-item>
 
 		    		<ion-item class="item-light" ui-sref="app.article({ id: item.itemid, catid: item.section.id })" 
-		    		ng-init="item = vm.leads[i]" ng-if="vm.leads[i]">
+		    		ng-init="item = vm.leads[i]" ng-if="vm.leads[i]" ga-track-event="['frontpage/lead', 'article', item.slug, i + 1]">
 		                <div class="pic responsive-pic">
 		    				<img ng-src="{{ item.module.img }}">
 	    				</div>
@@ -28,7 +28,29 @@
 		            	<div adsrv what="tophome" width="100%" class="top"></div>
 		            </ion-item>
 
-		            <ion-item class="item-light" ng-repeat="item in day.groups.top" ng-include="'app/news/news.item.html'">
+		            <ion-item class="item-light" ng-repeat="(j, item) in day.groups.top">
+		            <div class="item-content">
+					    <a ui-sref="app.article({ id: item.itemid, catid: item.section.id })"
+					     ga-track-event="['frontpage/top-news', 'article', item.slug, j + 1]">
+					        <div class="news-img" ng-if="item.introtextImg">
+					        	<img ng-src="{{ item.introtextImg }}"  />
+					        </div>
+					        <h3 class="itw-section stable" ng-if="item.topic">
+					    		{{ item.topic }}
+					        </h3>
+					        <h2>{{ item.title }}</h2>
+					    </a>
+
+					    <p>
+					    	<itw-timestamp timestamp="'{{ item.created }}'"></itw-timestamp>
+					    	
+					    	<a ng-if="item.section.id" class="assertive" 
+					        ui-sref="app.section({ id: item.section.id })"
+					        ga-track-event="['frontpage/top-news', 'section', item.section.slug, j + 1]">
+					        	<span class="stable">|</span> {{ item.section.title }}
+					        </a>
+					    </p>
+					</div>
 		            </ion-item>
 
 		            <ion-item class="item-divider" ng-if="day.length">
@@ -37,30 +59,34 @@
 
 		            <!-- more news -->
 		            <ion-item class="item-divider" ng-if="day.groups.industry.length" nav-clear>
-		            	<a ui-sref="app.news.category({ id: 'industry-news' })" class="item-content">
+		            	<a ui-sref="app.news.category({ id: 'industry-news' })" class="item-content"
+		            	ga-track-event="['frontpage/industry-news', 'section', 'industry-news', i + 1]">
 				            <h3 class="itw-section assertive">
 		                		Industry news
 		                		<i class="icon ion-chevron-right"></i> 
 			                </h3>
 		                </a>
 		            </ion-item>
-		            <ion-item class="item-light" ng-repeat="(i, item) in day.groups.industry">
-			            <a ui-sref="app.article({ id: item.itemid })" class="item-content">
+		            <ion-item class="item-light" ng-repeat="(j, item) in day.groups.industry">
+			            <a ui-sref="app.article({ id: item.itemid })" class="item-content"
+			            ga-track-event="['frontpage/industry-news', 'article', item.slug, j + 1]">
 			                <h3>{{ ::item.title }}</h3>
 		                </a>
 		            </ion-item>
 
 		            <!-- reuters -->
 		            <ion-item class="item-divider" ng-if="day.groups.reuters.length">
-		            	<a ui-sref="app.news.category({ id: 'world' })" class="item-content">
+		            	<a ui-sref="app.news.category({ id: 'world' })" class="item-content"
+		            	ga-track-event="['frontpage/reuters', 'section', 'reuters']">
 				            <h3 class="itw-section assertive">
 		                		Reuters
 		                		<i class="icon ion-chevron-right"></i> 
 			                </h3>
 		                </a>
 		            </ion-item>
-		            <ion-item class="item-light" ng-repeat="(i, item) in day.groups.reuters">
-			            <a ui-sref="app.article({ id: item.itemid })" class="item-content">
+		            <ion-item class="item-light" ng-repeat="(j, item) in day.groups.reuters">
+			            <a ui-sref="app.article({ id: item.itemid })" class="item-content"
+			            ga-track-event="['frontpage/reuters', 'article', item.slug, j + 1]">
 			                <h3>{{ ::item.title }}</h3>
 		                </a>
 		            </ion-item>
@@ -71,14 +97,37 @@
 
 					<!-- company news -->
 		            <ion-item class="item-divider" ng-if="day.groups.company.length">
-		            	<a ui-sref="app.news.category({ id: 'company-news' })" class="item-content">
+		            	<a ui-sref="app.news.category({ id: 'company-news' })" class="item-content"
+		            	ga-track-event="['frontpage/company-news', 'section', 'company-news', i + 1]">
 				            <h3 class="itw-section assertive">
 		                		Company news
 		                		<i class="icon ion-chevron-right"></i> 
 			                </h3>
 		                </a>
 		            </ion-item>
-		            <ion-item class="item-light" ng-repeat="(i, item) in day.groups.company" ng-include="'app/news/news.item.html'"></ion-item>
+		            <ion-item class="item-light" ng-repeat="(j, item) in day.groups.company">
+		            	<div class="item-content">
+						    <a ui-sref="app.article({ id: item.itemid, catid: item.section.id })" 
+						    ga-track-event="['frontpage/company-news', 'article', item.slug, j + 1]">
+						        <div class="news-img" ng-if="item.introtextImg">
+						        	<img ng-src="{{ item.introtextImg }}"  />
+						        </div>
+						        <h3 class="itw-section stable" ng-if="item.topic">
+						    		{{ item.topic }}
+						        </h3>
+						        <h2>{{ item.title }}</h2>
+						    </a>
+
+						    <p>
+						    	<itw-timestamp timestamp="'{{ item.created }}'"></itw-timestamp>
+						    	
+						    	<a ng-if="item.copyPath" class="assertive" ng-href="http://www.itweb.co.za/office/{{ item.copyPath }}" 
+						    	ga-track-event="['frontpage/company-news', 'office', item.copyPath, j + 1]">
+						        	<span class="stable">|</span> {{ item.company }}
+						        </a>
+						    </p>
+						</div>
+					</ion-item>
 
 		            <ion-item class="item-divider" ng-if="day.length">
 		            	<div adsrv what="trigg3home" width="100%" class="top"></div>
@@ -99,16 +148,18 @@
 		            
 		            <!-- columnists -->
 		            <ion-item class="item-divider" ng-if="day.groups.columnists.length">
-		            	<a ui-sref="app.opinion.category({ id: 'columnists' })" class="item-content">
+		            	<a ui-sref="app.opinion.category({ id: 'columnists' })" class="item-content"
+		            	ga-track-event="['frontpage/columnists', 'section', 'columnists', i + 1]">
 				            <h3 class="itw-section assertive">
 		                		Columnists
 		                		<i class="icon ion-chevron-right"></i> 
 			                </h3>
 		                </a>
 		            </ion-item>
-		            <ion-item ng-repeat="(i, item) in day.groups.columnists" class="item-light">
+		            <ion-item ng-repeat="(j, item) in day.groups.columnists" class="item-light">
 			            <div class="item-content">
-			                <a ui-sref="app.article({ id: item.itemid, catid: item.section.id })">
+			                <a ui-sref="app.article({ id: item.itemid, catid: item.section.id })" 
+			                ga-track-event="['frontpage/columnists', 'article', item.slug, j + 1]">
 				                <div class="news-img" ng-if="item.introtextImg">
 				                	<img ng-src="{{ ::item.introtextImg }}"  />
 				                </div>
@@ -122,7 +173,6 @@
 			                	<itw-timestamp timestamp="'{{ item.created }}'"></itw-timestamp>
 			                	
 			                	<span class="assertive" ng-if="item.topic">
-			                		<!-- <i class="icon ion-edit" style="" ng-if="item.topic"></i>  -->
 			                		<span class="stable">|</span> {{ item.created_by_alias }}
 				                </span>
 			                </p>
@@ -131,7 +181,8 @@
 
 		            <!-- industry-insight -->
 		            <ion-item class="item-divider" ng-if="day.groups.insights.length">
-		            	<a ui-sref="app.opinion.category({ id: 'industry-insight' })" class="item-content">
+		            	<a ui-sref="app.opinion.category({ id: 'industry-insight' })" class="item-content"
+		            	ga-track-event="['frontpage/industry-insight', 'section', 'industry-insight', i + 1]">
 				            <h3 class="itw-section assertive">
 		                		Industry insight
 		                		<i class="icon ion-chevron-right"></i> 
@@ -140,7 +191,8 @@
 		            </ion-item>
 		            <ion-item ng-repeat="(i, item) in day.groups.insights" class="item-light">
 			            <div class="item-content">
-			                <a ui-sref="app.article({ id: item.itemid, catid: item.section.id })">
+			                <a ui-sref="app.article({ id: item.itemid, catid: item.section.id })"
+			                ga-track-event="['frontpage/industry-insight', 'article', item.slug, j + 1]">
 				                <div class="news-img" ng-if="item.introtextImg">
 				                	<img ng-src="{{ ::item.introtextImg }}"  />
 				                </div>
@@ -162,16 +214,18 @@
 
 		            <!-- features -->
 		            <ion-item class="item-divider" ng-if="day.groups.features.length">
-		            	<a ui-sref="app.features" class="item-content">
+		            	<a ui-sref="app.features" class="item-content"
+		            	ga-track-event="['frontpage/features', 'section', 'features', i + 1]">
 				            <h3 class="itw-section assertive">
 		                		Features
 		                		<i class="icon ion-chevron-right"></i> 
 			                </h3>
 		                </a>
 		            </ion-item>
-		            <ion-item ng-repeat="(i, item) in day.groups.features" class="item-light">
+		            <ion-item ng-repeat="(j, item) in day.groups.features" class="item-light">
 			            <div class="item-content">
-			                <a ui-sref="app.article({ id: item.itemid, catid: item.section.id })">
+			                <a ui-sref="app.article({ id: item.itemid, catid: item.section.id })"
+			                ga-track-event="['frontpage/features', 'article', item.slug, j + 1]">
 				                <div class="news-img" ng-if="item.introtextImg">
 				                	<img ng-src="{{ ::item.introtextImg }}"  />
 				                </div>
@@ -212,15 +266,17 @@
 
 		            <!-- international -->
 					<ion-item class="item-divider" ng-if="day.groups.international.length">
-		            	<a ui-sref="app.section({ id: 74 })" class="item-content">
+		            	<a ui-sref="app.section({ id: 74 })" class="item-content"
+		            	ga-track-event="['frontpage/international', 'section', '74:business-wire', i + 1]">
 				            <h3 class="itw-section assertive">
 		                		International
 		                		<i class="icon ion-chevron-right"></i> 
 			                </h3>
 		                </a>
 		            </ion-item>
-		            <ion-item class="item-light" ng-repeat="(i, item) in day.groups.international">
-			            <a ui-sref="app.article({ id: item.itemid })" class="item-content">
+		            <ion-item class="item-light" ng-repeat="(j, item) in day.groups.international">
+			            <a ui-sref="app.article({ id: item.itemid })" class="item-content"
+			            ga-track-event="['frontpage/international', 'article', item.slug, j + 1]">
 			                <h3>{{ item.title }}</h3>
 		                </a>
 		            </ion-item>

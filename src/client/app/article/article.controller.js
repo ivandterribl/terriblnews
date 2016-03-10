@@ -12,7 +12,7 @@
     /* @ngInject */
     function Controller(api, articles, $q, meta, moment, _, $state, $ionicScrollDelegate, $ionicViewSwitcher, $ionicHistory) {
         var vm = this,
-            articleId = $state.params.id,
+            articleId = parseInt($state.params.id),
             catId = $state.params.catid,
             primaryCat = [69, 77, 86, 107, 118, 133, 147, 198, 234, 250, 260];
 
