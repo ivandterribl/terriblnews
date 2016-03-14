@@ -1,6 +1,6 @@
 <div class="item-content">
     <a ui-sref="app.article({ id: item.itemid, catid: item.section.id })"
-     ga-track-event="[item.ga.category, item.ga.action, item.ga.label, item.ga.value]" ga-track-event-if="item.ga">
+     ga-track-event="['section', 'article', vm.analyticsEvent, i + 1]" ga-track-event-if="vm.analyticsEvent">
         <div class="news-img" ng-if="item.introtextImg">
         	<img ng-src="{{ item.introtextImg }}"  />
         </div>
@@ -13,10 +13,13 @@
     <p>
     	<itw-timestamp timestamp="'{{ item.created }}'"></itw-timestamp>
     	
-    	<a ng-if="item.copyPath" class="assertive" ng-href="http://www.itweb.co.za/office/{{ item.copyPath }}">
+    	<a ng-if="item.copyPath" class="assertive" ng-href="http://www.itweb.co.za/office/{{ item.copyPath }}"
+        ga-track-event="['section', 'office', vm.analyticsEvent, i + 1]" ga-track-event-if="vm.analyticsEvent">
         	<span class="stable">|</span> {{ item.company }}
         </a>
-        <a ng-if="!item.copyPath && item.section.id && !item.hideSection" class="assertive" ui-sref="app.section({ id: item.section.id })">
+        <a ng-if="!item.copyPath && item.section.id && !item.hideSection" class="assertive" 
+        ui-sref="app.section({ id: item.section.id })"
+        ga-track-event="['section', 'section', vm.analyticsEvent, i + 1]" ga-track-event-if="vm.analyticsEvent">
         	<span class="stable">|</span> {{ item.section.title }}
         </a>
         <span class="assertive" ng-if="!item.copyPath && item.topic && item.created_by_alias">

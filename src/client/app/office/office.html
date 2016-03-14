@@ -9,7 +9,8 @@
                     <ion-item itw-scroll class="item-divider" id="{{ group }}">
                     {{ group }}
                     </ion-item>
-                    <ion-item class="item-light item-icon-right" ng-repeat="item in items" ng-href="{{ item.url }}" style="">
+                    <ion-item class="item-light item-icon-right" ng-repeat="(i, item) in items" ng-href="{{ item.url }}"
+                    ga-track-event="['companies', 'office', vm.eventLabel(), i + 1]">
                         <div class="row">
                             <div class="col col-33 col-center text-center">
                                 <img ng-src="{{ item.image }}" />

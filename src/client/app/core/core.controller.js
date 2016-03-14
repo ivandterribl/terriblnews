@@ -5,36 +5,55 @@
         .module('app.core')
         .controller('CoreController', Controller);
 
-    Controller.$inject = ['_', 'nav', 'searchBar', '$state', '$ionicHistory', '$location'];
+    Controller.$inject = ['_', 'nav', 'searchBar', '$state', '$ionicHistory', '$location', 'Analytics'];
     /* @ngInject */
-    function Controller(_, nav, searchBar, $state, $ionicHistory, $location) {
+    function Controller(_, nav, searchBar, $state, $ionicHistory, $location, Analytics) {
         var vm = this;
         vm.nav = nav.get();
 
         vm.toggleGroup = toggleGroup;
         vm.isGroupShown = isGroupShown;
         vm.showSearchbar = showSearchbar;
+        vm.eventName = eventName;
         vm.eventLabel = eventLabel;
-        vm.eventValue = eventValue;
         vm.back = back;
 
         function eventLabel() {
-            var segments = _.compact($location.url().split('/')),
-                parts = _.reject(segments, function(segment) {
-                    return segment === 'news';
-                });
-
-            return parts.length ? parts[0] : void 0;
+            return $location.url();
         }
 
-        function eventValue() {
-            var segments = _.compact($location.url().split('/')),
-                parts = _.reject(segments, function(segment) {
-                    return segment === 'news';
-                });
+        function eventName() {
+            var view = $ionicHistory.currentView() || {
+                    stateName: 'app.unknown'
+                },
+                group = view.stateName.split('.')[1],
+                result;
 
-            console.log(parts);
-            return parts.length ? parts[1] : void 0;
+            switch (group) {
+                case 'frontpage':
+                    result = 'frontpage';
+                    break;
+                case 'article':
+                    result = 'article';
+                    break;
+                case 'office':
+                    result = 'companies';
+                    break;
+                case 'events':
+                case 'event':
+                    result = 'events';
+                    break;
+                case 'videos':
+                case 'video':
+                    result = 'video';
+                    break;
+                case 'about':
+                    result = 'about';
+                    break;
+                default:
+                    result = 'section';
+            }
+            return result;
         }
 
         function back() {
@@ -42,6 +61,7 @@
                 params,
                 stack = _.sortBy(_.toArray($ionicHistory.viewHistory().views), 'index').reverse();
 
+            Analytics.trackEvent(eventName(), 'back', eventLabel());
             if ($ionicHistory.currentView() && $ionicHistory.currentView().stateName === 'app.article') {
                 _.each(stack, function(history) {
                     if (history.stateName !== 'app.article') {
@@ -56,6 +76,7 @@
                 });
                 $ionicHistory.clearHistory();
                 $state.go(view || 'app.frontpage', params);
+
             } else {
                 $ionicHistory.goBack();
             }
@@ -74,6 +95,7 @@
         }
 
         function showSearchbar() {
+            Analytics.trackEvent(eventName(), 'search', eventLabel());
             searchBar.show();
         }
     }

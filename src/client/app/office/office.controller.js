@@ -5,9 +5,9 @@
         .module('app.news')
         .controller('OfficeController', Controller);
 
-    Controller.$inject = ['nav', 'categories', 'api', '_', 'meta', 'moment', '$scope', '$state', 'searchBar'];
+    Controller.$inject = ['nav', 'api', '_', 'meta', '$scope', '$state', '$location'];
     /* @ngInject */
-    function Controller(nav, categories, api, _, meta, moment, $scope, $state, searchBar) {
+    function Controller(nav, api, _, meta, $scope, $state, $location) {
         var vm = this,
             id = $state.params.id;
 
@@ -15,8 +15,13 @@
         vm.prev = prev;
         vm.next = next;
         vm.loadItems = loadItems;
+        vm.eventLabel = eventLabel;
 
         activate();
+
+        function eventLabel() {
+            return $location.url();
+        }
 
         function activate() {
             var match = {
@@ -73,7 +78,6 @@
                             image: row.image
                         };
                     });
-                    items = items.slice(0, 10);
                     if (id === 'microsites') {
                         vm.items = _.sortBy(items, 'title');
                     } else {

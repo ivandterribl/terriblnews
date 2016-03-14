@@ -5,9 +5,9 @@
         .module('app.news')
         .controller('SectionController', Controller);
 
-    Controller.$inject = ['nav', 'articles', 'categories', 'api', '_', 'meta', 'moment', '$scope', '$state'];
+    Controller.$inject = ['articles', 'api', '_', 'meta', '$scope', '$state', '$location', 'Analytics'];
     /* @ngInject */
-    function Controller(nav, articles, categories, api, _, meta, moment, $scope, $state, searchBar) {
+    function Controller(articles, api, _, meta, $scope, $state, $location, Analytics) {
         var vm = this,
             catId = $state.params.id,
             limitstart = 0,
@@ -19,11 +19,13 @@
         activate();
 
         function activate() {
+            vm.analyticsEvent = $location.url();
             vm.categories = [];
 
             vm.loading = 1;
             vm.items = [];
             articles.set(vm.items);
+
             loadItems();
 
             // cached view
@@ -51,9 +53,11 @@
                     endpoint = 'tag=section&id=' + catId;
             }
 
-            api(endpoint + '&limitstart=' + limitstart + '&limit=' + limit, {
-                    new: 1
-                })
+            if (vm.items.length) {
+                Analytics.trackEvent('section', 'scroll', vm.analyticsEvent, limitstart);
+            }
+
+            api(endpoint + '&limitstart=' + limitstart + '&limit=' + limit)
                 .then(function(response) {
                     var section = response[0].section || {
                             title: ''
@@ -64,6 +68,7 @@
                         id: section.id || section.catid,
                         normalized: section.title.toLowerCase().replace(/\s/g, '')
                     };
+
                     items = _.map(response, function(row) {
                         return _.assign(row, {
                             hideSection: 1,
@@ -87,9 +92,6 @@
                 .finally(function() {
                     vm.loading = 0;
                 });
-
-            // api('tag=sponsor&q=sponsor&id=' + catId);
-            // api('tag=sponsor&q=co-sponsor&id=' + catId);
         }
 
         function seo() {

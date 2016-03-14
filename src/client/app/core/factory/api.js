@@ -37,9 +37,7 @@
                 $http({
                     method: 'GET',
                     //url: config.url + url,
-                    url: (opts.new && false ?
-                        'http://www.itweb.co.za/mobilesite/feed/ivan/i.php?' + url :
-                        'http://www.itweb.co.za/mobilesite/feed/ivan/?' + url),
+                    url: 'http://www.itweb.co.za/mobilesite/feed/ivan/?' + url,
                     timeout: opts.timeout || config.timeout
                 }).success(function(response) {
                     //console.log('%c' + url, 'background-color: yellow');
@@ -61,6 +59,14 @@
 
             return def.promise;
         };
+
+        function logStats(data) {
+            $http({
+                method: 'GET',
+                url: 'http://stats.itweb.co.za/mobicount.asp',
+                data: data
+            });
+        }
     }
 
 })();

@@ -34,34 +34,13 @@
                     activated = 0;
 
                 scope.loading = 1;
-                if (scope.what === 'mobile-leaderboard') {
-                    width = _.min([$window.innerWidth, 640]);
-                    height = Math.floor(width / 320 * 50);
-                } else if (scope.what === 'mobile-leaderboard-xx') {
-                    width = _.min([$window.innerWidth, 640]);
-                    height = Math.floor(width / 320 * 100);
-                } else if (scope.what === 'mobile-square') {
-                    width = _.min([$window.innerWidth - 20, 600]);
-                    height = Math.floor(width / 300 * 250);
-                } else if (scope.what.indexOf('top') === 0 || scope.what.indexOf('bot') === 0) {
-                    width = _.min([$window.innerWidth - 24, 728]);
-                    height = Math.floor(width / 728 * 90);
+                if (scope.what.indexOf('top') === 0 || scope.what.indexOf('bot') === 0) {
+                    width = 320;
+                    height = 50;
 
-                } else if (scope.what.indexOf('tileone') === 0 || scope.what.indexOf('trigg3') === 0) {
-                    width = 300;
-                    height = 250;
-
-                } else if (scope.what.indexOf('triggerone') === 0) {
-                    width = 120;
-                    height = 250;
-
-                } else if (scope.what.indexOf('bigtrigg') === 0) {
-                    width = _.min([$window.innerWidth - 24, 648]);
-                    height = Math.floor(width / 648 * 180);
-
-                } else if (scope.what.indexOf('noop') === 0) {
-                    width = _.min([$window.innerWidth - 24, 648]);
-                    height = Math.floor(width / 3);
+                } else if (scope.what.indexOf('dbl') === 0) {
+                    width = 320;
+                    height = 100;
 
                 } else {
                     width = 300;
@@ -70,7 +49,6 @@
 
                 scope.width = width + 'px';
                 scope.height = height + 'px';
-                //$element.css('min-height', scope.height + 20);
                 $element.css('max-height', (height + 20) + 'px');
 
                 scope.$on('$destroy', function() {
@@ -84,7 +62,7 @@
                         if (!activated) {
                             offset = $ionicPosition.offset($element);
                             if ((offset.top - scrollOffset.top - scrollOffset.height) < 0) {
-                                console.log('%c' + scope.what + 'activated', 'color:red');
+                                console.log('%c' + scope.what + '\tactivated', 'color:red');
                                 activate();
                             }
                         }

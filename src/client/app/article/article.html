@@ -1,20 +1,20 @@
 <ion-view cache-view="false">
     <ion-nav-title>
-	    <a ui-sref="app.section({ id: vm.section.catid })" ng-show="vm.section">
+	    <a ui-sref="app.section({ id: vm.section.catid })" ng-show="vm.section"
+	    ga-track-event="['article', 'section', 'header']">
 			{{ vm.section.title }}
 			<i class="icon ion-chevron-right"></i>
 		</a>
     </ion-nav-title>
 
     <ion-nav-buttons side="secondary">
-	    <!-- <a class="button button-icon button-clear ion-arrow-up-b" ui-sref="app.section({ id: vm.section.catid })">
-		</a> -->
       <md-menu style="padding: 0">
 	      <button md-menu-origin class="button button-icon ion-android-share-alt" ng-click="$mdOpenMenu($event)">
 	      </button>
 	      <md-menu-content width="3">
 	        <md-menu-item>
-		        <md-button class="row" socialshare socialshare-provider="facebook" socialshare-url="{{ vm.shortlink }}">
+		        <md-button class="row" socialshare socialshare-provider="facebook" socialshare-url="{{ vm.shortlink }}"
+		        ga-track-event="['article', 'share', 'facebook']">
 		          	<span class="md-menu-icon" >
 		          		<i class="icon ion-social-facebook"></i>
 		          	</span>
@@ -22,7 +22,8 @@
 		        </md-button>
 	        </md-menu-item>
 	        <md-menu-item>
-		        <md-button class="row" socialshare socialshare-provider="twitter" socialshare-url="{{ vm.shortlink }}">
+		        <md-button class="row" socialshare socialshare-provider="twitter" socialshare-url="{{ vm.shortlink }}"
+		        ga-track-event="['article', 'share', 'twitter']">
 		          	<span class="md-menu-icon">
 		          		<i class="icon ion-social-twitter"></i>
 		          	</span>
@@ -30,7 +31,8 @@
 		        </md-button>
 	        </md-menu-item>
 	        <md-menu-item>
-		        <md-button class="row" socialshare socialshare-provider="linkedin" socialshare-url="{{ vm.shortlink }}">
+		        <md-button class="row" socialshare socialshare-provider="linkedin" socialshare-url="{{ vm.shortlink }}"
+		        ga-track-event="['article', 'share', 'linkedin']">
 		          	<span class="md-menu-icon">
 		          		<i class="icon ion-social-linkedin"></i>
 		          	</span>
@@ -38,7 +40,8 @@
 		        </md-button>
 	        </md-menu-item>
 	        <md-menu-item>
-		        <md-button class="row" socialshare socialshare-provider="google+" socialshare-url="{{ vm.shortlink }}">
+		        <md-button class="row" socialshare socialshare-provider="google+" socialshare-url="{{ vm.shortlink }}"
+		        ga-track-event="['article', 'share', 'google+']">
 		          	<span class="md-menu-icon">
 		          		<i class="icon ion-social-googleplus"></i>
 		          	</span>
@@ -50,7 +53,7 @@
     </ion-nav-buttons>
 
 
-	<ion-content on-swipe-right="vm.prev()" on-swipe-left="vm.next()">
+	<ion-content on-swipe-right="vm.prev(1)" on-swipe-left="vm.next(1)">
 		<section ng-show="vm.loading" class="text-center padding">
     		<ion-spinner></ion-spinner>
     	</section>
@@ -58,11 +61,8 @@
     		<h3 class="text-center assertive" ng-cloak>Oops, something went wrong</h3>
     	</section>
     	<section ng-show="!vm.loading">
-<!--     		<div class="item item-divider" ng-if="vm.section">
-    			<div adsrv what="top{{ vm.section.normalized }}" class="top"></div>
-    		</div> -->
-    		<div class="item item-divider" style="padding-left: 0; padding-right: 0">
-            	<div adsrv what="mobile-leaderboard" class="top"></div>
+    		<div class="item item-divider" style="padding-left: 0; padding-right: 0" ng-if="vm.section">
+            	<div adsrv what="top{{ ::vm.section.normalized }}-mobi" class="top"></div>
             </div>
 
     		<main class="padding" itemscope itemtype="http://schema.org/NewsArticle">
@@ -147,35 +147,39 @@
 					<h3 class="itw-section stable">See also</h3>
 				</ion-item>
 				<ion-item class="item-icon-left item-icon-right"
-					ng-repeat="related in vm.related" ui-sref="app.article({ id: related.id })">
+					ng-repeat="related in vm.related" ui-sref="app.article({ id: related.id })"
+					ga-track-event="['article', 'article', 'related']">
 					<i class="icon icon-mini ion-document"></i>
 					<h3>{{ ::related.title }}</h3>
 					<i class="icon icon-mini ion-chevron-right"></i>
 				</ion-item>
 				<ion-item class="item-icon-left item-icon-right"
-					ng-repeat="recommended in vm.recommended" ui-sref="app.article({ id: recommended.id })">
+					ng-repeat="recommended in vm.recommended" ui-sref="app.article({ id: recommended.id })"
+					ga-track-event="['article', 'article', 'recommended']">
 					<i class="icon icon-mini ion-star"></i>
 					<h3>{{ ::recommended.title }}</h3>
 					<i class="icon icon-mini ion-chevron-right"></i>
 				</ion-item>
 				<ion-item class="item-icon-left item-icon-right"
-					ng-repeat="topic in vm.topics track by $index" ui-sref="app.topic({ q: topic })" ng-if="vm.related.length">
+					ng-repeat="topic in vm.topics track by $index" ui-sref="app.topic({ q: topic })" ng-if="vm.related.length"
+					ga-track-event="['article', 'tag', 'related']">
 					<i class="icon icon-mini ion-bookmark"></i>
 					<h3>{{ ::topic }}</h3>
 					<i class="icon icon-mini ion-chevron-right"></i>
 				</ion-item>
 			</ion-list>
 
-			<div class="item item-divider" ng-if="vm.section">
-    			<div adsrv what="mobile-square" class="top"></div>
-    		</div>
+			<div class="item item-divider" style="padding-left: 0; padding-right: 0" ng-if="vm.section">
+            	<div adsrv what="rec{{ ::vm.section.normalized }}-mobi" class="top"></div>
+            </div>
 
 			<ion-list ng-show="vm.appearance.length" class="h3-list">
 				<ion-item class="item-divider">
 					<h3 class="itw-section stable">Related sectors</h3>
 				</ion-item>
 				<ion-item class="item-icon-right"
-					ng-repeat="section in vm.appearance" ui-sref="app.section({ id: section.catid })">
+					ng-repeat="section in vm.appearance" ui-sref="app.section({ id: section.catid })"
+					ga-track-event="['article', 'section', 'portals']">
 
 					<div class="row" ng-style="{ 'min-height': section.attribs.img ? '24px' : '24px' }">
 						<h3 class="col col-center">
@@ -192,24 +196,18 @@
 			<div ng-if="vm.pagination.prev || vm.pagination.next" class="row">
 				<a class="button button-clear button-assertive icon-left ion-chevron-left"
 					ng-click="vm.prev()"
+					ga-track-event="['article', 'article', 'prev']"
 					ng-if="vm.pagination.prev">
 					Prev
 				</a>
 				<span class="col text-center"><span style="color: #666;font-size: 12px;line-height: 36px;">Swipe across articles</span></span>
 				<a class="button button-clear button-assertive icon-right ion-chevron-right"
 					ng-click="vm.next()"
+					ga-track-event="['article', 'article', 'next']"
 					ng-if="vm.pagination.next">
 					Next
 				</a>
 			</div>
-
-			<!-- <disqus disqus-shortname="itweb-za"
-		         disqus-identifier="{{ ::vm.disqus.id }}"
-		         disqus-url="{{ ::vm.disqus.url }}"
-		         disqus-on-ready="vm.onDisqus()"
-		         ready-to-bind="{{ !vm.loading }}">
-			</disqus> -->
         </section>
 	</ion-content>
-
 </ion-view>

@@ -6,11 +6,11 @@
         .controller('ArticleController', Controller);
 
     Controller.$inject = [
-        'api', 'articles', '$q', 'meta', 'moment', '_',
-        '$state', '$ionicScrollDelegate', '$ionicViewSwitcher', '$ionicHistory'
+        'api', 'stats', 'articles', '$q', 'meta', 'moment', '_',
+        '$state', '$ionicViewSwitcher', 'Analytics'
     ];
     /* @ngInject */
-    function Controller(api, articles, $q, meta, moment, _, $state, $ionicScrollDelegate, $ionicViewSwitcher, $ionicHistory) {
+    function Controller(api, stats, articles, $q, meta, moment, _, $state, $ionicViewSwitcher, Analytics) {
         var vm = this,
             articleId = parseInt($state.params.id),
             catId = $state.params.catid,
@@ -30,8 +30,6 @@
 
         function activate() {
             meta.canonical(vm.canonical);
-
-            window.prerenderReady = false;
 
             vm.loading = 1;
             $q.all({
@@ -68,6 +66,7 @@
 
             var rand,
                 categories = vm.appearance.length ? vm.appearance : response.appearance;
+
             if (!vm.section) {
                 rand = categories[_.random(categories.length - 1)];
                 vm.section = _.assign(rand, {
@@ -79,13 +78,12 @@
 
             elem.innerHTML = article.fulltext;
             if (_.isArray(article.xhead) && article.xhead[2] && article.xhead[2].length >= 2) {
-                paragraphs = elem.querySelectorAll('h3');
+                paragraphs = elem.querySelectorAll('h3:not(.quote-headline)');
                 paragraphs[0].insertAdjacentHTML('beforebegin', vm.banners.shift());
                 paragraphs[1].insertAdjacentHTML('beforebegin', vm.banners.shift());
 
             } else {
                 paragraphs = elem.querySelectorAll('p:not(.pic-caption)');
-                console.log('%c' + paragraphs.length + 'p', 'color: red');
                 if (paragraphs.length > 3) {
                     paragraphs[3].insertAdjacentHTML('afterend', vm.banners.shift());
                 }
@@ -162,21 +160,25 @@
             }
             seo();
 
-            setTimeout(function() {
-                window.prerenderReady = true;
-            }, 100);
+            logStats();
+        }
+
+        function logStats() {
+            var data = {
+                loc: '/article/' + articleId,
+                ts: _.random(1000000000),
+                id: articleId,
+                catid: parseInt(vm.section.catid)
+            };
+            stats.log(data);
         }
 
         function banners(section) {
             return section.normalized ? [
-                // '<div imod position="sponsor" catid="' + section.catid + '" rel="section"></div>',
-                // '<div imod position="co-sponsor" catid="' + section.catid + '" rel="section"></div>'
-                // '<div class="item item-divider item-strech"><div adsrv what="noop' + section.normalized + '"></div></div>',
-                // '<div class="item item-divider item-strech"><div adsrv what="noop' + section.normalized + '"></div></div>'
                 '<div class="item item-divider item-strech" style="padding-left: 0; padding-right: 0">' +
-                '<div adsrv what="mobile-leaderboard-xx"></div></div>',
+                '<div adsrv what="dbl' + section.normalized + '-mobi"></div></div>',
                 '<div class="item item-divider item-strech" style="padding-left: 0; padding-right: 0">' +
-                '<div adsrv what="tileone' + section.normalized + '"></div></div>'
+                '<div adsrv what="tileone' + section.normalized + '-mobi"></div></div>'
             ] : [];
         }
 
@@ -205,8 +207,12 @@
             return result;
         }
 
-        function prev() {
+        function prev(trackEvent) {
             if (vm.pagination.prev && vm.pagination.prev.itemid) {
+                if (trackEvent) {
+                    Analytics.trackEvent('article', 'swipe', 'right');
+                }
+
                 $ionicViewSwitcher.nextDirection('back');
                 $state.go('app.article', {
                     id: vm.pagination.prev.itemid,
@@ -217,8 +223,12 @@
             }
         }
 
-        function next() {
+        function next(trackEvent) {
             if (vm.pagination.next && vm.pagination.next.itemid) {
+                if (trackEvent) {
+                    Analytics.trackEvent('article', 'swipe', 'left');
+                }
+
                 $ionicViewSwitcher.nextDirection('forward');
                 $state.go('app.article', {
                     id: vm.pagination.next.itemid,

@@ -5,9 +5,10 @@
         .module('app.news')
         .controller('NewsController', Controller);
 
-    Controller.$inject = ['nav', 'articles', 'categories', 'api', '_', 'meta', 'moment', '$scope', '$state', 'searchBar'];
+    Controller.$inject = ['nav', 'articles', 'api', '_', 'meta', 'Analytics', '$scope', '$state', '$location'];
     /* @ngInject */
-    function Controller(nav, articles, categories, api, _, meta, moment, $scope, $state, searchBar) {
+    function Controller(nav, articles, api, _, meta, Analytics, $scope, $state, $location) {
+
         var vm = this,
             id = $state.params.id,
             limitstart = $state.params.limitstart || 0,
@@ -16,17 +17,12 @@
         vm.i = 0;
         vm.prev = prev;
         vm.next = next;
-        vm.showSearchbar = showSearchbar;
         vm.openMenu = openMenu;
         vm.loadItems = loadItems;
-        vm.go = function($event, stateName, stateParams) {
-            $event.preventDefault();
-            $state.go(stateName, stateParams);
-        };
-
         activate();
 
         function activate() {
+            vm.analyticsEvent = $location.url();
             var match = {
                     items: []
                 },
@@ -77,9 +73,11 @@
         }
 
         function loadItems() {
-            api('tag=' + id + '&limitstart=' + limitstart + '&limit=' + limit, {
-                    new: 1
-                })
+            if (vm.items.length) {
+                Analytics.trackEvent('section', 'scroll', vm.analyticsEvent, limitstart);
+            }
+
+            api('tag=' + id + '&limitstart=' + limitstart + '&limit=' + limit)
                 .then(function(response) {
                     var items = [];
                     switch (id) {
@@ -108,7 +106,7 @@
 
                     vm.complete = 0;
                 })
-                .catch(function(response) {
+                .catch(function() {
                     vm.items = [];
                     vm.complete = 1;
                 })
@@ -129,10 +127,6 @@
 
         function openMenu($mdOpenMenu, ev) {
             $mdOpenMenu(ev);
-        }
-
-        function showSearchbar() {
-            searchBar.show();
         }
 
         function seo() {

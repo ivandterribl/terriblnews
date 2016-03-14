@@ -6,16 +6,17 @@
         .run(Runnable);
 
     Runnable.$inject = [
+        'stats',
         '$injector',
         '$rootScope',
         '$ionicPlatform',
-        '$ionicSideMenuDelegate',
+        '$state',
         //https://github.com/revolunet/angular-google-analytics
         //If you are relying on automatic page tracking, you need to inject Analytics at least once in your application.
         'Analytics'
     ];
 
-    function Runnable($injector, $rootScope, $ionicPlatform, $ionicSideMenuDelegate, Analytics) {
+    function Runnable(stats, $injector, $rootScope, $ionicPlatform, $state, Analytics) {
 
         $ionicPlatform.ready(function() {
             var cordova = window.cordova,
@@ -40,15 +41,23 @@
             //$ionicSideMenuDelegate.toggleLeft(false);
         });
 
-        $rootScope.$on('$stateChangeSuccess', function stateChangeStart(event, toState, toParams, fromState, fromParams) {
-            //var a = 1;
+        $rootScope.$on('$stateChangeSuccess', function stateChangeSuccess(event, toState, toParams, fromState, fromParams) {
+            // article is logged after we have a catId
+            if (toState.name !== 'app.article') {
+                var data = {
+                    loc: $state.href(toState.name, toParams),
+                    ts: _.random(1000000000)
+                };
+
+                stats.log(data);
+            }
         });
 
-        $rootScope.$on('$stateChangeError', function stateChangeStart(event, toState, toParams, fromState, fromParams) {
+        $rootScope.$on('$stateChangeError', function stateChangeError(event, toState, toParams, fromState, fromParams) {
             //console.log('$stateChangeError:' + toState.name);
         });
 
-        $rootScope.$on('$stateNotFound', function stateChangeStart(event, toState, toParams, fromState, fromParams) {
+        $rootScope.$on('$stateNotFound', function stateNotFound(event, toState, toParams, fromState, fromParams) {
             //console.log('$stateNotFound:' + toState.name);
         });
     }
