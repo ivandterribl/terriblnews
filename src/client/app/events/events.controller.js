@@ -5,9 +5,9 @@
         .module('app.news')
         .controller('EventsController', Controller);
 
-    Controller.$inject = ['nav', 'categories', 'api', '_', 'meta', 'moment', '$scope', '$state', '$sce'];
+    Controller.$inject = ['nav', 'api', '_', 'meta', 'moment', '$scope', '$state', '$sce'];
     /* @ngInject */
-    function Controller(nav, categories, api, _, meta, moment, $scope, $state, $sce) {
+    function Controller(nav, api, _, meta, moment, $scope, $state, $sce) {
         var vm = this,
             id = $state.params.id;
 
@@ -28,7 +28,7 @@
                 .then(function(response) {
                     if (!angular.equals(vm.items, response)) {
                         vm.items = _.map(response, function(item) {
-                            item.summary = _.trim(item.summary);
+                            item.summary = item.summary.trim();
                             return item;
                         });
                     }

@@ -8,7 +8,7 @@
       </button>
     </ion-nav-buttons>
 
-	<ion-content ng-class="{ 'has-subheader': vm.hasSubheader }" on-swipe-right="vm.prev()" on-swipe-left="vm.next()">
+	<ion-content lazy-scroll ng-class="{ 'has-subheader': vm.hasSubheader }" on-swipe-right="vm.prev()" on-swipe-left="vm.next()">
     	<section ng-show="vm.loading" class="text-center padding">
     		<ion-spinner></ion-spinner>
     	</section>

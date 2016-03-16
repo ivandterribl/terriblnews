@@ -85,7 +85,7 @@
                         url: 'http://ad.itweb.co.za/adjson.php?' +
                             'n=' + _.random(100000000) + '&what=' + scope.what + '&target=_new'
                     }).success(function(response) {
-                        var result = _.get(response, 'html'),
+                        var result = response.html,
                             el = document.createElement('div');
 
                         if (result) {

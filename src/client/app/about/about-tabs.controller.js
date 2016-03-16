@@ -5,9 +5,9 @@
         .module('app.news')
         .controller('AboutTabsController', Controller);
 
-    Controller.$inject = ['nav', 'categories', '_', '$scope', '$state', '$ionicHistory', '$ionicViewSwitcher'];
+    Controller.$inject = ['nav', '_', '$scope', '$state', '$ionicHistory', '$ionicViewSwitcher'];
     /* @ngInject */
-    function Controller(nav, categories, _, $scope, $state, $ionicHistory, $ionicViewSwitcher) {
+    function Controller(nav, _, $scope, $state, $ionicHistory, $ionicViewSwitcher) {
         var vm = this;
 
         vm.onCategory = showCategory;

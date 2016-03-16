@@ -63,19 +63,15 @@
 
             Analytics.trackEvent(eventName(), 'back', eventLabel());
             if ($ionicHistory.currentView() && $ionicHistory.currentView().stateName === 'app.article') {
-                _.each(stack, function(history) {
-                    if (history.stateName !== 'app.article') {
-                        view = history.stateName;
-                        params = history.stateParams;
-                        return false;
-                    }
+                view = _.find(stack, function(needle) {
+                    return needle.stateName !== 'app.article';
                 });
 
                 $ionicHistory.nextViewOptions({
                     disableBack: true
                 });
                 $ionicHistory.clearHistory();
-                $state.go(view || 'app.frontpage', params);
+                $state.go(view ? view.stateName : 'app.frontpage', view ? view.stateParams : void 0);
 
             } else {
                 $ionicHistory.goBack();

@@ -5,74 +5,85 @@
         .module('app.news')
         .controller('AboutController', Controller);
 
-    Controller.$inject = ['api', '$ionicPlatform'];
+    Controller.$inject = ['aboutHtml', '_', '$ionicPlatform'];
     /* @ngInject */
-    function Controller(api, $ionicPlatform) {
+    function Controller(aboutHtml, _, $ionicPlatform) {
         var vm = this;
 
         activate();
 
         function activate() {
-            vm.groups = groups();
+
+            var groups = _groups();
+
+            angular.forEach(groups, function(group) {
+                angular.forEach(group.items, function(row) {
+                    var match = _.findWhere(aboutHtml, {
+                        name: row.templateUrl
+                    });
+                    row.html = match ? match.html : '';
+                });
+            });
+            vm.groups = groups;
         }
 
-        function groups() {
+        function _groups() {
             return [{
                 title: 'Online',
                 items: [{
                     title: 'ITWeb Online',
-                    templateUrl: 'app/about/about-itweb.html'
+                    templateUrl: 'about-itweb.html'
                 }, {
                     title: 'ITWeb eNews',
-                    templateUrl: 'app/about/about-enews.html'
+                    templateUrl: 'about-enews.html'
                 }, {
                     title: 'ITWeb Africa',
-                    templateUrl: 'app/about/about-africa.html'
+                    templateUrl: 'about-africa.html'
                 }, {
                     title: 'CareerWeb',
-                    templateUrl: 'app/about/about-careerweb.html'
+                    templateUrl: 'about-careerweb.html'
                 }, {
                     title: 'ITWeb Multimedia',
-                    templateUrl: 'app/about/about-multimedia.html'
+                    templateUrl: 'about-multimedia.html'
                 }, {
                     title: 'ITWeb on Social Media',
-                    templateUrl: 'app/about/about-social.html'
+                    templateUrl: 'about-social.html'
                 }]
             }, {
                 title: 'Print',
                 items: [{
                     title: 'ITWeb Brainstorm',
-                    templateUrl: 'app/about/about-brainstorm.html'
+                    templateUrl: 'about-brainstorm.html'
                 }, {
                     title: 'ICT Insight',
-                    templateUrl: 'app/about/about-ict-insight.html'
+                    templateUrl: 'about-ict-insight.html'
                 }, {
                     title: 'The Margin',
-                    templateUrl: 'app/about/about-margin.html'
+                    templateUrl: 'about-margin.html'
                 }, {
                     title: 'Custom publishing',
-                    templateUrl: 'app/about/about-custom-publishing.html'
+                    templateUrl: 'about-custom-publishing.html'
                 }]
             }, {
                 title: 'Events',
                 items: [{
                     title: 'ITWeb Events',
-                    templateUrl: 'app/about/about-events.html'
+                    templateUrl: 'about-events.html'
                 }]
             }, {
                 title: 'Other websites',
                 items: [{
                     title: 'DefenceWeb',
-                    templateUrl: 'app/about/about-defenseweb.html'
+                    templateUrl: 'about-defenseweb.html'
                 }, {
                     title: 'iFashion',
-                    templateUrl: 'app/about/about-ifashion.html'
+                    templateUrl: 'about-ifashion.html'
                 }, {
                     title: 'HR Pulse',
-                    templateUrl: 'app/about/about-hr-pulse.html'
+                    templateUrl: 'about-hr-pulse.html'
                 }, {
                     title: 'TrainingWeb',
-                    templateUrl: 'app/about/about-trainingweb.html'
+                    templateUrl: 'about-trainingweb.html'
                 }]
             }];
         }

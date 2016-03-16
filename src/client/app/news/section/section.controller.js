@@ -5,9 +5,9 @@
         .module('app.news')
         .controller('SectionController', Controller);
 
-    Controller.$inject = ['articles', 'api', '_', 'meta', '$scope', '$state', '$location', 'Analytics'];
+    Controller.$inject = ['articles', 'api', 'stats', '_', 'meta', '$scope', '$state', '$location', 'Analytics'];
     /* @ngInject */
-    function Controller(articles, api, _, meta, $scope, $state, $location, Analytics) {
+    function Controller(articles, api, stats, _, meta, $scope, $state, $location, Analytics) {
         var vm = this,
             catId = $state.params.id,
             limitstart = 0,
@@ -31,6 +31,7 @@
             // cached view
             $scope.$on('$ionicView.enter', function() {
                 $scope.$emit('category', vm.category, vm.categories);
+                logStats();
             });
         }
 
@@ -63,6 +64,7 @@
                             title: ''
                         },
                         items;
+
                     vm.category = {
                         title: section.title,
                         id: section.id || section.catid,
@@ -99,6 +101,15 @@
                 title: vm.category.title,
                 description: 'Latest ' + vm.category.title + ' headlines on ITWeb'
             });
+        }
+
+        function logStats() {
+            var data = {
+                loc: '/news/section/' + catId,
+                ts: _.random(1000000000),
+                catid: parseInt(catId)
+            };
+            stats.log(data);
         }
     }
 })();

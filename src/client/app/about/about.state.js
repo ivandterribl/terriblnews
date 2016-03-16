@@ -22,6 +22,11 @@
                         templateUrl: 'app/about/about.html',
                         controller: 'AboutController as vm'
                     }
+                },
+                resolve: {
+                    aboutHtml: ['api', function(api) {
+                        return api('tag=about');
+                    }]
                 }
             })
             .state('app.about.contact', {

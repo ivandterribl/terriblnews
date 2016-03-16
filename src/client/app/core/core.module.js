@@ -7,7 +7,8 @@
 		'itw.ui',
 		'angular-bind-html-compile',
 		'angular-google-analytics',
-		'720kb.socialshare'
+		'720kb.socialshare',
+		'ionicLazyLoad'
 		// 'ion-sticky',
 		// 'ion-affix'
 	]);

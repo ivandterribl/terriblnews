@@ -57,6 +57,7 @@
     "globals": {
         "angular": false,
         "ionic": false,
-        "cordova": false
+        "cordova": false,
+        "_em": false
     }
 }

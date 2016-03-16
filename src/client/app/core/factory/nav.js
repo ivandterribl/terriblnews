@@ -62,12 +62,12 @@
                 title: 'Features',
                 icon: 'ion-bookmark',
                 id: 'features',
-                sref: 'app.features'
+                sref: 'app.section({ id: 116 })'
             }, {
                 title: 'CIO zone',
                 icon: 'ion-trophy',
                 id: 'cio-zone',
-                sref: 'app.cioZone'
+                sref: 'app.section({ id: 869 })'
                     // }, {
                     //     title: 'Surveys',
                     //     icon: 'ion-stats-bars',
@@ -77,7 +77,7 @@
                 title: 'Reviews',
                 icon: 'ion-iphone',
                 id: 'reviews',
-                sref: 'app.reviews'
+                sref: 'app.section({ id: 220 })'
                     // }, {
                     //     title: 'Jobs',
                     //     icon: 'ion-briefcase',

@@ -19,7 +19,7 @@
             $http({
                 method: 'GET',
                 url: 'http://stats.itweb.co.za/mobicount.asp',
-                data: data
+                params: data
             });
         }
     }

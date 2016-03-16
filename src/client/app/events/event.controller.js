@@ -28,19 +28,18 @@
         }
 
         function loadItems() {
-            window.prerenderReady = false;
             api('tag=event&id=' + id)
                 .then(function(response) {
                     if (!angular.equals(vm.items, response)) {
                         vm.items = _.map(response, function(item) {
                             var duration = moment.unix(Math.round(item.duration)).utc().format('mm:ss');
 
-                            item.summary = _.trim(item.summary);
+                            item.summary = item.summary.trim();
                             item.mmss = duration;
                             return item;
                         });
                         vm.player.playlist.add({
-                            title: _.get(vm, 'items[0]'),
+                            title: vm.items ? vm.items[0] : '',
                             tracks: _.map(response, function(item) {
                                 return {
                                     title: item.title,
@@ -62,19 +61,18 @@
                             });
                         });
 
-                        meta.description(_.get(response, '[0].summary'));
+                        meta.description(response[0].summary);
                         meta.keywords(_.pluck(response, 'artist').join(', '));
                         meta.canonical(false);
                         meta.ld({
                             '@context': 'http://schema.org',
                             '@type': 'MusicPlaylist',
-                            'name': _.get(response, '[0].category'),
+                            'name': response[0].category,
                             'numTracks': response.length,
                             'track': tracks
                         });
                         vm.title = response[0].category;
                         document.getElementsByTagName('title')[0].innerText = vm.title + ' audio tracks';
-                        window.prerenderReady = true;
                     }
                 })
                 .catch(function() {

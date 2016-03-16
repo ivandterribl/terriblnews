@@ -6,17 +6,16 @@
         .controller('FrontpageController', Controller);
 
     Controller.$inject = [
-        'categories', 'articles', 'api', '_', 'meta', 'moment',
+        'articles', 'api', '_', 'meta', 'moment',
         '$scope', '$state', 'searchBar', '$ionicHistory', 'Analytics'
     ];
     /* @ngInject */
-    function Controller(categories, articles, api, _, meta, moment, $scope, $state, searchBar, $ionicHistory, Analytics) {
+    function Controller(articles, api, _, meta, moment, $scope, $state, searchBar, $ionicHistory, Analytics) {
         var vm = this,
             day = {
                 groups: {},
                 length: 0
-            },
-            id = $state.params.id;
+            };
 
         $ionicHistory.clearHistory();
 
@@ -29,11 +28,6 @@
         function activate() {
             vm.i = 0;
             vm.complete = 1;
-            vm.categories = categories.get();
-            vm.category = _.findWhere(vm.categories, {
-                id: id
-            }) || vm.categories[0];
-
             vm.loading = 1;
             vm.days = [day];
 
@@ -226,15 +220,6 @@
                 .finally(function() {
 
                 });
-        }
-
-        function showSearchbar() {
-            searchBar.show({
-                items: [],
-                update: function(filteredItems) {
-                    console.log(filteredItems);
-                }
-            });
         }
 
         function openMenu($mdOpenMenu, ev) {

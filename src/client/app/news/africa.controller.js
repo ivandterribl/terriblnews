@@ -5,17 +5,15 @@
         .module('app.news')
         .controller('AfricaController', Controller);
 
-    Controller.$inject = ['nav', 'categories', 'api', '_', 'meta', 'moment', '$scope', '$state', 'searchBar'];
+    Controller.$inject = ['nav', 'api', '_', '$scope', '$state'];
     /* @ngInject */
-    function Controller(nav, categories, api, _, meta, moment, $scope, $state, searchBar) {
+    function Controller(nav, api, _, $scope, $state) {
         var vm = this,
             id = $state.params.id;
 
         vm.i = 0;
         vm.prev = prev;
         vm.next = next;
-        vm.showSearchbar = showSearchbar;
-        vm.openMenu = openMenu;
         vm.loadItems = loadItems;
 
         activate();
@@ -27,7 +25,7 @@
                 category;
 
             _.each(nav.get(), function(group) {
-                var items = _.get(group, 'items', []),
+                var items = group.items || [],
                     cat = _.findWhere(items, {
                         id: id
                     });
@@ -81,19 +79,6 @@
 
         function next() {
             $scope.$emit('category.next');
-        }
-
-        function showSearchbar() {
-            searchBar.show({
-                items: [],
-                update: function(filteredItems) {
-                    console.log(filteredItems);
-                }
-            });
-        }
-
-        function openMenu($mdOpenMenu, ev) {
-            $mdOpenMenu(ev);
         }
     }
 })();

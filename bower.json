@@ -24,13 +24,14 @@
     "angular-ui-router": "^0.2.15",
     "angular-animate": "^1.4.5",
     "ionic": "~1.2.4",
-    "lodash": "~3.10.1",
     "angular-bind-html-compile": "~1.1.0",
     "angular-google-analytics": "~1.1.5",
     "angular-material": "^1.0.5",
     "moment": "^2.11.1",
     "ion-autocomplete": "^0.3.1",
-    "angular-socialshare": "angularjs-socialshare#^0.1.20"
+    "angular-socialshare": "angularjs-socialshare#^0.1.20",
+    "underscore": "^1.8.3",
+    "ionic-image-lazy-load": "ion-image-lazy-load#*"
   },
   "resolutions": {
     "angular": "^1.4.8",

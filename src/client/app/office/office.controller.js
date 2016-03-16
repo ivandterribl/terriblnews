@@ -30,7 +30,7 @@
                 category;
 
             _.each(nav.get(), function(group) {
-                var items = _.get(group, 'items', []),
+                var items = group.items || [],
                     cat = _.findWhere(items, {
                         id: id
                     });

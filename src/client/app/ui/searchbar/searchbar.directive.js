@@ -54,15 +54,19 @@
             // Action when filter bar is cancelled via backdrop click/swipe or cancel/back buton click.
             // Invokes cancel function defined in filterBar service
             var cancelFilterBar = function() {
-              if ($state.current.name === 'app.search') {
-                var view = $ionicHistory.backView();
-                // while ($ionicHistory.backView() && $ionicHistory.backView().stateName == 'app.search') {
-                //   view = $ionicHistory.backView().stateName;
-                // }
+              var view,
+                stack = _.sortBy(_.toArray($ionicHistory.viewHistory().views), 'index').reverse();
+
+              if ($ionicHistory.currentView() && $ionicHistory.currentView().stateName === 'app.search') {
+                view = _.find(stack, function(needle) {
+                  return needle.stateName !== 'app.search';
+                });
+
                 $ionicHistory.nextViewOptions({
                   disableBack: true
                 });
-                $state.go(view || 'app.frontpage');
+                $ionicHistory.clearHistory();
+                $state.go(view ? view.stateName : 'app.frontpage', view ? view.stateParams : void 0);
               } else {
                 $scope.cancelFilterBar();
               }

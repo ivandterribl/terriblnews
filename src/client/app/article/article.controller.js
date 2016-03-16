@@ -93,7 +93,7 @@
             }
 
             angular.forEach(elem.querySelectorAll('.pullquoteauthor'), function(span) {
-                if (_.trim(span.innerText) === '-') {
+                if (span.innerText.trim() === '-') {
                     span.style.display = 'none';
                 }
             });
@@ -125,12 +125,12 @@
             var topics = [];
             if (_.isString(article.metakey) && article.metakey.length) {
                 topics = _.map(article.metakey.split(', '), function(row) {
-                    return _.trim(row);
+                    return row.trim ? row.trim() : row;
                 });
                 topics = _.reject(topics, function(row) {
                     return row.length > 20;
                 });
-                topics = _.slice(topics, 0, 4 - related.length);
+                topics = topics.slice(0, 4 - related.length);
             }
             vm.topics = topics;
 
@@ -201,7 +201,7 @@
                     var parts = param.split('='),
                         k = parts[0];
 
-                    result[k] = _.trim(parts[1]);
+                    result[k] = parts[1].trim ? parts[1].trim() : parts[1];
                 });
             }
             return result;

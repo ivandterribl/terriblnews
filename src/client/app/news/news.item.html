@@ -2,7 +2,7 @@
     <a ui-sref="app.article({ id: item.itemid, catid: item.section.id })"
      ga-track-event="['section', 'article', vm.analyticsEvent, i + 1]" ga-track-event-if="vm.analyticsEvent">
         <div class="news-img" ng-if="item.introtextImg">
-        	<img ng-src="{{ item.introtextImg }}"  />
+        	<img image-lazy-src="{{ item.introtextImg }}"  />
         </div>
         <h3 class="itw-section stable" ng-if="item.topic">
     		{{ item.topic }}

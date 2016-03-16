@@ -3,12 +3,12 @@ describe('Core module spec', function() {
 
 	beforeEach(function() {
 		bard.appModule('app.core');
-		bard.inject('categories');
+		bard.inject('nav');
 	});
 
 	describe('Categories', function() {
 		it('should be defined', function() {
-			expect(categories).to.defined;
+			expect(nav).to.defined;
 		});
 	});
 });
