@@ -39,25 +39,75 @@
             window.$i = $injector;
         });
 
-        $rootScope.$on('$stateChangeStart', function stateChangeStart(event, toState, toParams, fromState, fromParams) {
-            //console.log('$stateChangeStart:' + toState.name);
-            //$ionicSideMenuDelegate.toggleLeft(false);
-        });
+        $rootScope.$on('$stateChangeStart', function stateChangeStart(event, toState, toParams, fromState, fromParams) {});
 
         $rootScope.$on('$stateChangeSuccess', function stateChangeSuccess(event, toState, toParams, fromState, fromParams) {
-            var url = $state.href(toState.name, toParams);
-            // article & section are logged separately #catId
+            var url = $state.href(toState.name, toParams),
+                catId;
+
+            // jshint ignore:start
             switch (toState.name) {
                 case 'app.article':
                 case 'app.section':
+                case 'app.event':
+                    // logged separately
+                    break;
+                case 'app.frontpage':
+                    catId = 10000;
+                    break;
+                case 'app.news.category':
+                case 'app.news.africa':
+                    catId = 10001;
+                    break;
+                case 'app.portals':
+                    catId = 10002;
+                    break;
+                case 'app.opinion.category':
+                    switch (toParams.id) {
+                        case 'tech-forum':
+                            catId = 355;
+                            break;
+                        case 'industry-insight':
+                            catId = 143;
+                            break;
+                        default:
+                            catId = 79;
+                    }
+                    break;
+                case 'app.office.news':
+                case 'app.office.vpo':
+                case 'app.office.zones':
+                case 'app.office.microsites':
+                    catId = 10200;
+                    break;
+                case 'app.events':
+                    catId = 10100;
+                    break;
+                case 'app.about.us':
+                case 'app.about.contact':
+                case 'app.about.privacy':
+                case 'app.about.competition':
+                case 'app.about.bee':
+                    catId = 10300;
+                    break;
+                case 'app.search':
+                    catId = 10500;
+                    break;
+                case 'app.topic':
+                    catId = 10501;
                     break;
                 default:
-                    var data = {
-                        loc: url,
-                        ts: _.random(1000000000)
-                    };
-                    stats.log(data);
+                    //debugger;
             }
+            if (catId) {
+                var data = {
+                    catid: catId,
+                    loc: url,
+                    ts: _.random(1000000000)
+                };
+                stats.log(data);
+            }
+            // jshint ignore:end
         });
 
         $rootScope.$on('$locationChangeSuccess', function stateChangeError(event, toUrl) {

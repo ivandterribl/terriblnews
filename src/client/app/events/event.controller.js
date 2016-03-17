@@ -5,11 +5,11 @@
         .module('app.news')
         .controller('EventController', Controller);
 
-    Controller.$inject = ['audioPlayer', 'api', '_', 'meta', 'moment', '$scope', '$state', '$sce'];
+    Controller.$inject = ['audioPlayer', 'api', 'stats', '_', 'meta', 'moment', '$scope', '$state', '$sce'];
     /* @ngInject */
-    function Controller(audioPlayer, api, _, meta, moment, $scope, $state, $sce) {
+    function Controller(audioPlayer, api, stats, _, meta, moment, $scope, $state, $sce) {
         var vm = this,
-            id = $state.params.id;
+            eventId = $state.params.id;
 
         vm.i = 0;
         vm.player = audioPlayer;
@@ -25,10 +25,21 @@
             vm.loading = 1;
             vm.items = [];
             loadItems();
+
+            // cached view
+            $scope.$on('$ionicView.enter', function() {
+                var data = {
+                    loc: '/events/' + eventId,
+                    ts: _.random(1000000000),
+                    id: eventId,
+                    catid: 10100
+                };
+                stats.log(data);
+            });
         }
 
         function loadItems() {
-            api('tag=event&id=' + id)
+            api('tag=event&id=' + eventId)
                 .then(function(response) {
                     if (!angular.equals(vm.items, response)) {
                         vm.items = _.map(response, function(item) {

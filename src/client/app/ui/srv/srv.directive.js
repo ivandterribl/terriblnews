@@ -62,7 +62,7 @@
                         if (!activated) {
                             offset = $ionicPosition.offset($element);
                             if ((offset.top - scrollOffset.top - scrollOffset.height) < 0) {
-                                console.log('%c' + scope.what + '\tactivated', 'color:red');
+                                //console.log('%c' + scope.what + '\tactivated', 'color:red');
                                 activate();
                             }
                         }

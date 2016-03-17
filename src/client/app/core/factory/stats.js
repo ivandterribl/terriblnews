@@ -15,7 +15,8 @@
         };
 
         function logStats(data) {
-            console.log('%c' + angular.toJson(data), 'color:purple');
+            //console.log('%c' + angular.toJson(data), 'color:purple');
+            //return;
             $http({
                 method: 'GET',
                 url: 'http://stats.itweb.co.za/mobicount.asp',

@@ -104,12 +104,15 @@
         }
 
         function logStats() {
-            var data = {
-                loc: '/news/section/' + catId,
-                ts: _.random(1000000000),
-                catid: parseInt(catId)
-            };
-            stats.log(data);
+            if (parseInt(catId)) {
+                // opinion logged in core.run
+                var data = {
+                    loc: '/news/section/' + catId,
+                    ts: _.random(1000000000),
+                    catid: parseInt(catId)
+                };
+                stats.log(data);
+            }
         }
     }
 })();
