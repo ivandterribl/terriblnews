@@ -1,0 +1,37 @@
+md-ink-bar {
+    color: rgb(204, 44, 14);
+    background: rgb(204, 44, 14);
+}
+
+md-tabs-wrapper {
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+.md-tab {
+    color: rgba(0, 0, 0, 0.54);
+}
+
+.md-tab.md-active {
+    color: rgb(58, 114, 171);
+}
+
+.md-visually-hidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    text-transform: none;
+    width: 1px;
+}
+
+md-icon {
+    margin: auto;
+    background-repeat: no-repeat no-repeat;
+    fill: currentColor;
+    height: 24px;
+    width: 24px;
+    color: rgba(0, 0, 0, 0.54);
+}

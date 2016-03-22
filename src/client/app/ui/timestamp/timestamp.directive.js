@@ -30,7 +30,6 @@
                                 scope.timestamp = created.format('D MMM YY');
                             }
                         }
-
                     }
                 );
             }

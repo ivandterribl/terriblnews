@@ -3,12 +3,13 @@
 
 	angular.module('app.core', [
 		'ionic',
-		'ngMaterial',
+		//'ngMaterial',
 		'itw.ui',
 		'angular-bind-html-compile',
 		'angular-google-analytics',
 		'720kb.socialshare',
-		'ionicLazyLoad'
+		'ionicLazyLoad',
+		//'material.components.tabs'
 		// 'ion-sticky',
 		// 'ion-affix'
 	]);
