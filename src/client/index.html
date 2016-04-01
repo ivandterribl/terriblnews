@@ -13,9 +13,10 @@
     <meta name="apple-touch-fullscreen" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
 
-    <meta name="description" content="{{ vm.meta.description() }}" />
-    <meta name="keywords" content="{{ vm.meta.keywords() }}" />
-    <meta name="canonical" content="{{ vm.meta.canonical() }}" ng-if="vm.meta.canonical()"/>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="news_keywords" content="" />
+    <meta name="canonical" content="" />
 
     <script type="application/ld+json" id="structured-data"></script>
 
@@ -25,17 +26,25 @@
     <!-- bower:css -->
     <!-- endbower -->
     <!-- endbuild -->
-    
+
     <!-- build:css styles/app.css -->
     <!-- inject:css -->
     <link rel="stylesheet" href="/.tmp/styles.css">
     <!-- endinject -->
     <!-- endbuild -->
-    
+    <style>
+
+    </style>
 </head>
 <body>
 <ui-view></ui-view>
 
+<div class="backdrop"></div>
+<script>
+    (function() {
+        document.getElementsByClassName('backdrop')[0].className += ' visible backdrop-loading active';
+    })();
+</script>
 <!-- build:js js/lib.js -->
 <!-- bower:js -->
 <script src="/bower_components/angular/angular.js"></script>
@@ -60,19 +69,15 @@
 <script src="/src/client/app/about/about.module.js"></script>
 <script src="/src/client/app/core/core.module.js"></script>
 <script src="/src/client/app/events/events.module.js"></script>
-<script src="/src/client/app/frontpage/frontpage.module.js"></script>
 <script src="/src/client/app/news/news.module.js"></script>
 <script src="/src/client/app/office/office.module.js"></script>
-<script src="/src/client/app/opinion/opinion.module.js"></script>
 <script src="/src/client/app/search/search.module.js"></script>
 <script src="/src/client/app/ui/tabs/tabs.module.js"></script>
 <script src="/src/client/app/ui/ui.module.js"></script>
 <script src="/src/client/app/video/video.module.js"></script>
-<script src="/src/client/app/about/about-tabs.controller.js"></script>
 <script src="/src/client/app/about/about.controller.js"></script>
 <script src="/src/client/app/about/about.state.js"></script>
 <script src="/src/client/app/app.controller.js"></script>
-<script src="/src/client/app/article/article.controller.js"></script>
 <script src="/src/client/app/core/core.config.js"></script>
 <script src="/src/client/app/core/core.constants.js"></script>
 <script src="/src/client/app/core/core.controller.js"></script>
@@ -84,22 +89,18 @@
 <script src="/src/client/app/core/factory/meta.js"></script>
 <script src="/src/client/app/core/factory/nav.js"></script>
 <script src="/src/client/app/core/factory/stats.js"></script>
+<script src="/src/client/app/core/tabs/tabs.controller.js"></script>
 <script src="/src/client/app/events/audio.player.js"></script>
 <script src="/src/client/app/events/event.controller.js"></script>
 <script src="/src/client/app/events/events.controller.js"></script>
 <script src="/src/client/app/events/events.state.js"></script>
-<script src="/src/client/app/frontpage/frontpage.controller.js"></script>
-<script src="/src/client/app/frontpage/frontpage.state.js"></script>
-<script src="/src/client/app/news/africa.controller.js"></script>
-<script src="/src/client/app/news/news-tabs.controller.js"></script>
+<script src="/src/client/app/news/article/article.controller.js"></script>
+<script src="/src/client/app/news/frontpage/frontpage.controller.js"></script>
 <script src="/src/client/app/news/news.controller.js"></script>
 <script src="/src/client/app/news/news.state.js"></script>
 <script src="/src/client/app/news/section/section.controller.js"></script>
-<script src="/src/client/app/office/office-tabs.controller.js"></script>
 <script src="/src/client/app/office/office.controller.js"></script>
 <script src="/src/client/app/office/office.state.js"></script>
-<script src="/src/client/app/opinion/opinion-tabs.controller.js"></script>
-<script src="/src/client/app/opinion/opinion.state.js"></script>
 <script src="/src/client/app/search/search.controller.js"></script>
 <script src="/src/client/app/search/search.state.js"></script>
 <script src="/src/client/app/search/searchtag.controller.js"></script>
@@ -130,5 +131,6 @@
 <noscript>
     <img src="//za.effectivemeasure.net/em_image" alt="" style="position:absolute; left:-5px;" />
 </noscript>
+
 </body>
 </html>

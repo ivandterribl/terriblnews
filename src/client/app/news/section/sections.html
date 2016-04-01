@@ -11,7 +11,7 @@
     	<section ng-show="!vm.loading">
 	    	<ion-list ng-show="vm.items.length">
     		    <ion-item ng-repeat="(i, item) in vm.items" class="item-light item-icon-right" ui-sref="app.section({ id: item.catid })"
-                ga-track-event="['portals', 'section', item.title, i + 1]">
+                ga-track-event="['sections', 'section', item.title, i + 1]">
     		    	<div class="row" style="min-height: 24px">
                         <h3 class="col col-center" style="margin: 0">
                             {{ ::item.title }}

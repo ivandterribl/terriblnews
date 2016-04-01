@@ -14,25 +14,20 @@
             limitstart = $state.params.limitstart || 0,
             limit = $state.params.limit || 25;
 
-        vm.i = 0;
         vm.prev = prev;
         vm.next = next;
-        vm.openMenu = openMenu;
         vm.loadItems = loadItems;
         activate();
 
         function activate() {
             vm.analyticsEvent = $location.url();
-            var match = {
-                    items: []
-                },
+            var match = {},
                 category;
 
             _.each(nav.get(), function(group) {
-                var items = group.items || [],
-                    cat = _.findWhere(items, {
-                        id: id
-                    });
+                var cat = _.findWhere(group.items || [], {
+                    id: id
+                });
 
                 if (cat) {
                     category = cat;
@@ -41,7 +36,7 @@
                 }
             });
 
-            vm.categories = match.items;
+            vm.categories = match.items || [];
             if (!category) {
                 vm.category = category = _.findWhere(nav.get(), {
                     id: id

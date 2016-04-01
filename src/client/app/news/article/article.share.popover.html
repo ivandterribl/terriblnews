@@ -1,0 +1,30 @@
+<ion-popover-view>
+    <ion-content scroll="false">
+        <div class="list">
+            <div class="item item-icon-left" socialshare socialshare-provider="facebook" socialshare-url="{{ vm.shortlink }}"
+                 ga-track-event="['article', 'share', 'facebook']">
+
+                <i class="icon icon-midi ion-social-facebook"></i>
+                Facebook
+            </div>
+            <div class="item icon-midi item-icon-left" socialshare socialshare-provider="twitter" socialshare-url="{{ vm.shortlink }}"
+                 ga-track-event="['article', 'share', 'twitter']">
+
+                <i class="icon icon-midi ion-social-twitter"></i>
+                <span>Twitter</span>
+            </div>
+            <div class="item icon-midi item-icon-left" socialshare socialshare-provider="linkedin" socialshare-url="{{ vm.shortlink }}"
+                 ga-track-event="['article', 'share', 'linkedin']">
+
+                <i class="icon icon-midi ion-social-linkedin"></i>
+                <span>LinkedIn</span>
+            </div>
+            <div class="item icon-midi item-icon-left" socialshare socialshare-provider="google+" socialshare-url="{{ vm.shortlink }}"
+                 ga-track-event="['article', 'share', 'google+']">
+
+                <i class="icon icon-midi ion-social-googleplus"></i>
+                <span>Google+</span>
+            </div>
+        </div>
+    </ion-content>
+</ion-popover-view>

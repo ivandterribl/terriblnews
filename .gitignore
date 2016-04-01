@@ -7,5 +7,7 @@ cordova/
 report/
 .idea
 
+*.php
+
 # other
 .tmp

@@ -107,7 +107,7 @@
             if (parseInt(catId)) {
                 // opinion logged in core.run
                 var data = {
-                    loc: '/news/section/' + catId,
+                    loc: $state.href($state.current.name, $state.params),
                     ts: _.random(1000000000),
                     catid: parseInt(catId)
                 };

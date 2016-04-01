@@ -34,15 +34,15 @@
 </svg>
       </ion-header-bar>
       <ion-content has-header="true">
-        <ion-list>
+        <div class="list">
           <div ng-repeat="group in vm.nav">
-              <ion-item class="item-icon-left"
+              <a class="item item-icon-left"
                         ng-click="vm.toggleGroup(group)"
                         ng-class="{active: vm.isGroupShown(group), 'item-icon-right': group.items.length }"  
-                        ng-if="group.sref"
+                        ng-if="group.href"
                         menu-close
                         nav-clear
-                        ui-sref="{{ group.sref }}"
+                        ng-href="{{ group.href }}"
                         ga-track-event="[vm.eventName(), 'mainmenu', vm.eventLabel()]">
                   
                   <i class="icon icon-mini" ng-class="group.icon"></i> 
@@ -51,12 +51,12 @@
                   <i class="icon icon-mini" 
                     ng-if="group.items.length"
                     ng-class="vm.isGroupShown(group) ? 'ion-chevron-up' : 'ion-chevron-down'"></i>
-              </ion-item>
+              </a>
               
-              <ion-item class="item-icon-left"
+              <a class="item item-icon-left"
                         ng-click="vm.toggleGroup(group)"
                         ng-class="{active: vm.isGroupShown(group), 'item-icon-right': group.items.length }"  
-                        ng-if="!group.sref">
+                        ng-if="!group.href">
                   
                   <i class="icon icon-mini" ng-class="group.icon"></i> 
                   {{ group.title }}
@@ -64,18 +64,18 @@
                   <i class="icon icon-mini" 
                     ng-if="group.items.length"
                     ng-class="vm.isGroupShown(group) ? 'ion-chevron-up' : 'ion-chevron-down'"></i>
-              </ion-item>
-              <ion-item class="item-accordion"
+              </a>
+              <a class="item item-accordion"
                         ng-repeat="item in group.items"
                         ng-show="vm.isGroupShown(group)" 
                         menu-close
                         nav-clear 
-                        ui-sref="{{ item.sref }}"
+                        ng-href="{{ item.href }}"
                         ga-track-event="[vm.eventName(), 'mainmenu', vm.eventLabel()]">
                   {{ item.title }}
-              </ion-item>
+              </a>
           </div>
-        </ion-list>
+        </div>
       </ion-content>
     </ion-side-menu>
 </ion-side-menus>

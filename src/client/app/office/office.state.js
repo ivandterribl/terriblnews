@@ -10,28 +10,16 @@
     function Config($stateProvider) {
         $stateProvider
             .state('app.office', {
-                url: '/office',
+                url: '/companies',
                 abstract: true,
                 params: {
                     nav: 'Companies'
                 },
-                templateUrl: 'app/office/office-tabs.html',
-                controller: 'OfficeTabsController as vm'
-            })
-            .state('app.office.news', {
-                url: '/news',
-                params: {
-                    id: 'in-the-news'
-                },
-                views: {
-                    tabContent: {
-                        templateUrl: 'app/office/office.html',
-                        controller: 'OfficeController as vm'
-                    }
-                }
+                templateUrl: 'app/core/tabs/tabs.html',
+                controller: 'TabsController as vm'
             })
             .state('app.office.vpo', {
-                url: '/virtual-press-office',
+                url: '/press-offices',
                 params: {
                     id: 'virtual-press-office'
                 },
@@ -43,7 +31,7 @@
                 }
             })
             .state('app.office.zones', {
-                url: '/company-zones',
+                url: '/zones',
                 params: {
                     id: 'company-zones'
                 },
@@ -55,7 +43,7 @@
                 }
             })
             .state('app.office.microsites', {
-                url: '/microsites',
+                url: '/sites',
                 params: {
                     id: 'microsites'
                 },

@@ -26,7 +26,7 @@
             var view = $ionicHistory.currentView() || {
                     stateName: 'app.unknown'
                 },
-                group = view.stateName.split('.')[1],
+                group = view.stateName.split('.')[1], //app.*
                 result;
 
             switch (group) {
@@ -57,24 +57,27 @@
         }
 
         function back() {
-            var view,
-                params,
-                stack = _.sortBy(_.toArray($ionicHistory.viewHistory().views), 'index').reverse();
 
             Analytics.trackEvent(eventName(), 'back', eventLabel());
             if ($ionicHistory.currentView() && $ionicHistory.currentView().stateName === 'app.article') {
-                view = _.find(stack, function(needle) {
-                    return needle.stateName !== 'app.article';
-                });
+                goBack();
+            } else {
+                $ionicHistory.goBack();
+            }
+            // article back goes to non article
+            function goBack() {
+                var stack = _.sortBy(_.toArray($ionicHistory.viewHistory().views), 'index').reverse(),
+                    current = stack.indexOf($ionicHistory.currentView()),
+                    view = _.find(stack, function(needle, i) {
+                        // stack is reversed so > = back
+                        return ['app.article', 'app.article-raw'].indexOf(needle.stateName) === -1 && i > current;
+                    });
 
                 $ionicHistory.nextViewOptions({
                     disableBack: true
                 });
                 $ionicHistory.clearHistory();
                 $state.go(view ? view.stateName : 'app.frontpage', view ? view.stateParams : void 0);
-
-            } else {
-                $ionicHistory.goBack();
             }
         }
 

@@ -8,52 +8,15 @@
     </ion-nav-title>
 
     <ion-nav-buttons side="secondary">
-      <md-menu style="padding: 0">
-	      <button md-menu-origin class="button button-icon ion-android-share-alt" ng-click="$mdOpenMenu($event)">
-	      </button>
-	      <md-menu-content width="3">
-	        <md-menu-item>
-		        <md-button class="row" socialshare socialshare-provider="facebook" socialshare-url="{{ vm.shortlink }}"
-		        ga-track-event="['article', 'share', 'facebook']">
-		          	<span class="md-menu-icon" >
-		          		<i class="icon ion-social-facebook"></i>
-		          	</span>
-		          	Facebook
-		        </md-button>
-	        </md-menu-item>
-	        <md-menu-item>
-		        <md-button class="row" socialshare socialshare-provider="twitter" socialshare-url="{{ vm.shortlink }}"
-		        ga-track-event="['article', 'share', 'twitter']">
-		          	<span class="md-menu-icon">
-		          		<i class="icon ion-social-twitter"></i>
-		          	</span>
-		          	<span>Twitter</span>
-		        </md-button>
-	        </md-menu-item>
-	        <md-menu-item>
-		        <md-button class="row" socialshare socialshare-provider="linkedin" socialshare-url="{{ vm.shortlink }}"
-		        ga-track-event="['article', 'share', 'linkedin']">
-		          	<span class="md-menu-icon">
-		          		<i class="icon ion-social-linkedin"></i>
-		          	</span>
-		          	<span>LinkedIn</span>
-		        </md-button>
-	        </md-menu-item>
-	        <md-menu-item>
-		        <md-button class="row" socialshare socialshare-provider="google+" socialshare-url="{{ vm.shortlink }}"
-		        ga-track-event="['article', 'share', 'google+']">
-		          	<span class="md-menu-icon">
-		          		<i class="icon ion-social-googleplus"></i>
-		          	</span>
-		          	<span>Google+</span>
-		        </md-button>
-	        </md-menu-item>
-	      </md-menu-content>
-	    </md-menu>
+    	<button class="button button-icon ion-chatbubble" ng-click="vm.showDisqus()" ng-show="vm.disqus.ready"></button>
+    	<button md-menu-origin class="button button-icon ion-android-share-alt" ng-click="vm.popover.show($event)">
+	  	</button>
     </ion-nav-buttons>
 
 
-	<ion-content on-swipe-right="vm.prev(1)" on-swipe-left="vm.next(1)">
+	<ion-content on-swipe-right="vm.prev(1)" on-swipe-left="vm.next(1)" overflow-scroll="true"
+	>
+	<!-- style="-webkit-overflow-scrolling: touch !important;overflow: scroll !important;" -->
 		<section ng-show="vm.loading" class="text-center padding">
     		<ion-spinner></ion-spinner>
     	</section>
@@ -77,7 +40,7 @@
 						<span ng-if="vm.article.created_by_alias" itemprop="author">
 							{{ ::vm.article.created_by_alias }}
 						</span><br />
-						<span>{{ ::vm.article.issueplace }}, </span>
+						<span ng-if="vm.article.issueplace">{{ ::vm.article.issueplace }}, </span>
 						<time datetime="{{ ::vm.article.created }}">{{ ::vm.article.created | date:'d MMM yyyy'}}</time>
 					</h5>
 				</div>
@@ -85,14 +48,14 @@
 					<span ng-if="vm.article.created_by_alias">
 						By&nbsp;<span itemprop="author">{{ ::vm.article.created_by_alias }}</span>
 					</span><br />
-					<span>{{ ::vm.article.issueplace }},&nbsp;</span>
+					<span ng-if="vm.article.issueplace">{{ ::vm.article.issueplace }},&nbsp;</span>
 					<time datetime="{{ ::vm.article.created }}">{{ ::vm.article.created | date:'d MMM yyyy'}}</time>
 				</h5>
 				<h5 ng-if="vm.article.storytype === 'P'" class="stable">
 					<span ng-if="vm.article.issuedby_alias">
 						<span itemprop="author">Press release issued by {{ ::vm.article.issuedby_alias }}</span>
 					</span><br />
-					<span>{{ ::vm.article.issueplace }}, </span>
+					<span ng-if="vm.article.issueplace">{{ ::vm.article.issueplace }}, </span>
 					<time datetime="{{ ::vm.article.created }}">{{ ::vm.article.created | date:'d MMM yyyy'}}</time>
 				</h5>
 				<a ng-if="vm.article.storytype === 'P' && vm.article.copyPath" class="row"
@@ -107,6 +70,10 @@
 
 				<article bind-html-compile="::vm.article.html" itemprop="articleBody"></article>
 
+				<p ng-if="vm.article.created_by_alias == 'Reuters'" style="font-size:11px">Copyright 2016 Reuters Limited. All rights reserved. 
+		Republication and redistribution of Reuters content is expressly prohibited without the prior written consent of Reuters. 
+		Reuters shall not be liable for any errors or delays in the content, or for any actions taken in reliance thereon.</p>
+				
 				<meta itemprop="mainEntityOfPage" content="{{ vm.canonical }}" />
 				<span itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
 					<span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
@@ -142,27 +109,29 @@
 				</div>
 			</div>
 
+			
+
 			<ion-list ng-show="vm.related.length || vm.recommended.length" class="h3-list">
 				<ion-item class="item-divider">
 					<h3 class="itw-section stable">See also</h3>
 				</ion-item>
 				<ion-item class="item-icon-left item-icon-right"
-					ng-repeat="related in vm.related" ui-sref="app.article({ id: related.id })"
-					ga-track-event="['article', 'article', 'related']">
+					ng-repeat="(i, related) in vm.related" ui-sref="app.article-raw({ id: related.id })"
+					ga-track-event="['article', 'article', 'related', i]">
 					<i class="icon icon-mini ion-document"></i>
 					<h3>{{ ::related.title }}</h3>
 					<i class="icon icon-mini ion-chevron-right"></i>
 				</ion-item>
 				<ion-item class="item-icon-left item-icon-right"
-					ng-repeat="recommended in vm.recommended" ui-sref="app.article({ id: recommended.id })"
-					ga-track-event="['article', 'article', 'recommended']">
+					ng-repeat="(i, recommended) in vm.recommended" ui-sref="app.article-raw({ id: recommended.id })"
+					ga-track-event="['article', 'article', 'recommended', i]">
 					<i class="icon icon-mini ion-star"></i>
 					<h3>{{ ::recommended.title }}</h3>
 					<i class="icon icon-mini ion-chevron-right"></i>
 				</ion-item>
 				<ion-item class="item-icon-left item-icon-right"
-					ng-repeat="topic in vm.topics track by $index" ui-sref="app.topic({ q: topic })" ng-if="vm.related.length"
-					ga-track-event="['article', 'tag', 'related']">
+					ng-repeat="(i, topic) in vm.topics track by $index" ui-sref="app.topic({ q: topic })" ng-if="vm.related.length"
+					ga-track-event="['article', 'tag', 'related', i]">
 					<i class="icon icon-mini ion-bookmark"></i>
 					<h3>{{ ::topic }}</h3>
 					<i class="icon icon-mini ion-chevron-right"></i>
@@ -178,8 +147,8 @@
 					<h3 class="itw-section stable">Related sectors</h3>
 				</ion-item>
 				<ion-item class="item-icon-right"
-					ng-repeat="section in vm.appearance" ui-sref="app.section({ id: section.catid })"
-					ga-track-event="['article', 'section', 'portals']">
+					ng-repeat="(i, section) in vm.appearance" ui-sref="app.section({ id: section.catid })"
+					ga-track-event="['article', 'section', 'related', i]">
 
 					<div class="row" ng-style="{ 'min-height': section.attribs.img ? '24px' : '24px' }">
 						<h3 class="col col-center">
@@ -207,6 +176,20 @@
 					ng-if="vm.pagination.next">
 					Next
 				</a>
+			</div>
+
+			<ion-list>
+				<ion-item class="item-divider">
+					&nbsp;
+				</ion-item>
+			</ion-list>
+
+			<div class="padding" id="disqusIt">
+				<disqus disqus-shortname="itweb-za"
+			         disqus-identifier="{{ vm.disqus.id }}"
+			         disqus-url="{{ vm.disqus.url }}"
+			         ready-to-bind="{{ vm.disqus.ready }}">
+				</disqus>
 			</div>
         </section>
 	</ion-content>

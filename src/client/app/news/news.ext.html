@@ -8,11 +8,10 @@
     	</section>
     	<section ng-show="!vm.loading">
 	    	<ion-list ng-show="vm.items.length">
-	            <ion-item class="item-light" ng-repeat="item in vm.items" href="{{ item.id }}">
+	            <ion-item class="item-light" ng-repeat="item in vm.items" ng-href="{{ item.href }}">
 	                <h2>{{ item.title }}</h2>
-	                <!-- <p>{{ item.summary }}</p> -->
 	                <div class="assertive">
-	                	<itw-timestamp timestamp="'{{ ::item.published }}'"></itw-timestamp>
+	                	<itw-timestamp timestamp="'{{ ::item.created }}'"></itw-timestamp>
 	                </div>
 	            </ion-item>
 	        </ion-list>

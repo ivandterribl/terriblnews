@@ -3,8 +3,8 @@
 	
 	<ion-nav-buttons side="right">
       <button class="button button-icon ion-grid" 
-                ui-sref="app.portals" ng-if="vm.portalIcon"
-                ga-track-event="['section', 'portals', vm.analyticsEvent]"></button>
+                ui-sref="app.sections" ng-if="vm.portalIcon"
+                ga-track-event="['section', 'sections', vm.analyticsEvent]"></button>
       <button class="button button-icon ion-cube" 
                 ui-sref="app.office.vpo" ng-if="vm.companyIcon"
                 ga-track-event="['section', 'companies', vm.analyticsEvent]"></button>
@@ -24,16 +24,16 @@
 		            	<div adsrv what="tophome-mobi"></div>
 		            </ion-item>
 		            <ion-item class="item-divider" ng-if="i % 25 === 9" style="padding-left: 0; padding-right: 0">
-		            	<div adsrv what="dblhome-mobi"></div>
+		            	<div adsrv what="dbl1home-mobi"></div>
 		            </ion-item>
 		            <ion-item class="item-divider" ng-if="i % 25 === 12" style="padding-left: 0; padding-right: 0">
-		            	<div adsrv what="dblhome-mobi" width="100%" class="top"></div>
+		            	<div adsrv what="dbl2home-mobi" width="100%" class="top"></div>
 		            </ion-item>
 		            <ion-item class="item-divider" ng-if="i % 25 === 18" style="padding-left: 0; padding-right: 0">
-		            	<div adsrv what="rechome-mobi" width="100%" class="top"></div>
+		            	<div adsrv what="rec1home-mobi" width="100%" class="top"></div>
 		            </ion-item>
 		            <ion-item class="item-divider" ng-if="i % 25 === 24" style="padding-left: 0; padding-right: 0">
-		            	<div adsrv what="rechome-mobi" width="100%" class="top"></div>
+		            	<div adsrv what="rec2home-mobi" width="100%" class="top"></div>
 		            </ion-item>
 	    		    <ion-item  class="item-light" ng-include="'app/news/news.item.html'">
 		            </ion-item>

@@ -9,38 +9,79 @@
 
     function Factory(_, $state) {
         return {
-            get: get,
+            get: map,
             export: routes
         };
+
+        function map() {
+            var groups = get();
+            angular.forEach(groups, traverse);
+            return groups;
+
+            function traverse(item) {
+                angular.forEach(item.items || [], traverse);
+                if (angular.isObject(item.state)) {
+                    item.href = $state.href(item.state.name, item.state.params);
+                }
+            }
+
+        }
 
         function get() {
             return [{
                 title: 'Home',
                 icon: 'ion-home',
-                sref: 'app.frontpage'
+                state: {
+                    name: 'app.frontpage'
+                }
             }, {
                 title: 'News',
                 icon: 'ion-document',
                 items: [{
                     title: 'Top stories',
                     id: 'top-news',
-                    sref: 'app.news.category({ id: \'top-news\' })'
+                    state: {
+                        name: 'app.news.category',
+                        params: {
+                            id: 'top-news'
+                        }
+                    }
                 }, {
                     title: 'Industry news',
                     id: 'industry-news',
-                    sref: 'app.news.category({ id: \'industry-news\' })'
+                    state: {
+                        name: 'app.news.category',
+                        params: {
+                            id: 'industry-news'
+                        }
+                    }
                 }, {
                     title: 'Company news',
                     id: 'company-news',
-                    sref: 'app.news.category({ id: \'company-news\' })'
+                    state: {
+                        name: 'app.news.category',
+                        params: {
+                            id: 'company-news'
+                        }
+                    }
                 }, {
                     title: 'Africa',
                     id: 'africa',
-                    sref: 'app.news.category({ id: \'africa\' })'
+                    state: {
+                        name: 'app.news.category',
+                        params: {
+                            id: 'africa'
+                        }
+                    }
                 }, {
                     title: 'World',
                     id: 'world',
-                    sref: 'app.news.category({ id: \'world\' })'
+                    state: {
+                        name: 'app.news.category',
+                        params: {
+                            id: 'world'
+                        }
+                    }
                 }]
             }, {
                 title: 'Opinion',
@@ -48,88 +89,120 @@
                 items: [{
                     title: 'Columnists',
                     id: 'columnists',
-                    sref: 'app.opinion.category({ id: \'columnists\' })'
+                    state: {
+                        name: 'app.opinion.category',
+                        params: {
+                            id: 'columnists'
+                        }
+                    }
                 }, {
                     title: 'Tech forum',
                     id: 'tech-forum',
-                    sref: 'app.opinion.category({ id: \'tech-forum\' })'
+                    state: {
+                        name: 'app.opinion.category',
+                        params: {
+                            id: 'tech-forum'
+                        }
+                    }
                 }, {
                     title: 'Industry insight',
                     id: 'industry-insight',
-                    sref: 'app.opinion.category({ id: \'industry-insight\' })'
+                    state: {
+                        name: 'app.opinion.category',
+                        params: {
+                            id: 'industry-insight'
+                        }
+                    }
                 }]
             }, {
                 title: 'Features',
                 icon: 'ion-bookmark',
                 id: 'features',
-                sref: 'app.section({ id: 116 })'
+                sref: 'app.section({ id: 116 })',
+                state: {
+                    name: 'app.section',
+                    params: {
+                        id: 116
+                    }
+                }
             }, {
                 title: 'CIO zone',
                 icon: 'ion-trophy',
                 id: 'cio-zone',
-                sref: 'app.section({ id: 869 })'
-                    // }, {
-                    //     title: 'Surveys',
-                    //     icon: 'ion-stats-bars',
-                    //     id: 'surveys',
-                    //     sref: 'app.surveys'
+                sref: 'app.section({ id: 869 })',
+                state: {
+                    name: 'app.section',
+                    params: {
+                        id: 869
+                    }
+                }
             }, {
                 title: 'Reviews',
                 icon: 'ion-iphone',
                 id: 'reviews',
-                sref: 'app.section({ id: 220 })'
-                    // }, {
-                    //     title: 'Jobs',
-                    //     icon: 'ion-briefcase',
-                    //     sref: 'app.jobs'
+                sref: 'app.section({ id: 220 })',
+                state: {
+                    name: 'app.section',
+                    params: {
+                        id: 220
+                    }
+                }
             }, {
                 title: 'Companies',
                 icon: 'ion-cube',
                 items: [{
-                        title: 'Virtual press offices',
-                        id: 'virtual-press-office',
-                        sref: 'app.office.vpo'
-                    }, {
-                        title: 'Company zones',
-                        id: 'company-zones',
-                        sref: 'app.office.zones'
-                    }, {
-                        title: 'Microsites',
-                        id: 'microsites',
-                        sref: 'app.office.microsites'
-                    }]
-                    // }, {
-                    //     title: 'Video',
-                    //     icon: 'ion-videocamera',
-                    //     sref: 'app.video'
+                    title: 'Virtual press offices',
+                    id: 'virtual-press-office',
+                    state: {
+                        name: 'app.office.vpo'
+                    }
+                }, {
+                    title: 'Company zones',
+                    id: 'company-zones',
+                    state: {
+                        name: 'app.office.zones'
+                    }
+                }, {
+                    title: 'Microsites',
+                    id: 'microsites',
+                    state: {
+                        name: 'app.office.microsites'
+                    }
+                }]
             }, {
                 title: 'Events',
                 icon: 'ion-person-stalker',
-                sref: 'app.events'
+                state: {
+                    name: 'app.events'
+                }
             }, {
                 title: 'About',
                 icon: 'ion-information',
                 items: [{
                     title: 'About us',
-                    sref: 'app.about.us'
+                    state: {
+                        name: 'app.about.us'
+                    }
                 }, {
                     title: 'Contact us',
-                    sref: 'app.about.contact'
-                        // }, {
-                        //     title: 'Advertise',
-                        //     sref: 'app.about.advertise'
-                        // }, {
-                        //     title: 'Terms of use',
-                        //     sref: 'app.about.terms'
+                    state: {
+                        name: 'app.about.contact'
+                    }
                 }, {
                     title: 'Privacy policy',
-                    sref: 'app.about.privacy'
+                    state: {
+                        name: 'app.about.privacy'
+                    }
                 }, {
                     title: 'Competition policy',
-                    sref: 'app.about.competition'
+                    state: {
+                        name: 'app.about.competition'
+                    }
                 }, {
                     title: 'BEE certificate',
-                    sref: 'app.about.bee'
+                    state: {
+                        name: 'app.about.bee'
+                    }
                 }]
             }];
         }

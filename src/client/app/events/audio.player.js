@@ -52,6 +52,13 @@
 				}
 			},
 
+			toggle: function(track, album) {
+				track = track || 0;
+				album = album || 0;
+				return player.playing && track === current.track && album === current.album ?
+					player.pause() : player.play(track, album);
+			},
+
 			reset: function() {
 				player.pause();
 				current.album = 0;

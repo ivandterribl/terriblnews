@@ -206,10 +206,9 @@ gulp.task('build', ['optimize', 'images', 'fonts'], function() {
 
     var msg = {
         title: 'gulp build',
-        subtitle: 'Deployed to the build folder',
-        message: 'Running `gulp serve-build`'
+        subtitle: 'Deployed to the build folder'
     };
-    del(config.temp);
+    //del(config.temp);
     log(msg);
     //notify(msg);
 });
@@ -260,6 +259,8 @@ gulp.task('optimize', ['inject', 'test'], function() {
         .pipe($.useref())
         // Replace the file names in the html with rev numbers
         .pipe($.revReplace())
+        .pipe(gulp.dest(config.build))
+        .pipe($.rev.manifest())
         .pipe(gulp.dest(config.build));
 });
 

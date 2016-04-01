@@ -1,10 +1,10 @@
-@import 
-	"ionic/ionic.scss",
-  "ionic-filter-bar/ionic.filter.bar.scss",
-  "angular-material/tabs.scss",
-  "itweb/_core.scss",
-  "itweb/_md.scss";
-  
+@import
+    "ionic/ionic.scss",
+    "ionic-filter-bar/ionic.filter.bar.scss",
+    "angular-material/tabs.scss",
+    "itweb/_core.scss",
+    "itweb/_ionic.scss",
+    "itweb/_md.scss";
 
 a {
   text-decoration: none;
@@ -30,7 +30,7 @@ md-tabs-canvas, md-pagination-wrapper {
 }
 
 .list .item.item-accordion {
-  padding-left: 28px;
+  padding-left: 40px;
   transition: 0.09s all linear;
 }
 .list .item.item-accordion.ng-hide {
@@ -63,7 +63,7 @@ md-tabs-canvas, md-pagination-wrapper {
   }
   .pic-caption {
     font-size: 12px;
-    font-weight: bold;   
+    font-weight: bold;
   }
 }
 
@@ -263,8 +263,8 @@ blockquote, .pullquote {
   margin: 10px -10px;
 }
 .news-img {
-  float:right; 
-  margin: 0 0 4px 4px; 
+  float:right;
+  margin: 0 0 4px 4px;
   width: 100px;
   height: 70px;
   overflow: hidden;
@@ -278,7 +278,7 @@ md-tabs .md-tab {
 }
 @media only screen and (max-device-width: 480px) {
   .item .pic.responsive-pic img {
-    min-width: 100%;  
+    min-width: 100%;
   }
 }
 .item .row, .item .col {
@@ -286,7 +286,7 @@ md-tabs .md-tab {
 }
 .h3-list .item h3 {
   margin: 0;
-}  
+}
 .pullquote p {
   margin: 0 0 5px;
 }
@@ -294,7 +294,7 @@ md-tabs .md-tab {
   font-size: 14px;
   font-style: italic;
 }
-.sidebar { 
+.sidebar {
     float: right;
     width: 50%;
     font-size: 12px;
@@ -306,7 +306,7 @@ md-tabs .md-tab {
       color: #fff;
     }
     p {
-      color: #fff; 
+      color: #fff;
     }
     &::after {
       clear: both;

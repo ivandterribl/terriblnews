@@ -28,7 +28,7 @@ module.exports = function() {
             '!' + clientApp + 'ui/material/**/*.js',
             '!' + clientApp + 'ui/searchbar/**/*.js'
         ],
-        build: './build/',
+        build: './build/client/',
         cordova: './cordova/www/',
         client: client,
         css: temp + 'styles.css',

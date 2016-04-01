@@ -3,8 +3,8 @@
 
 	<ion-nav-buttons side="right">
       <button class="button button-icon ion-grid"
-            ui-sref="app.portals"
-            ga-track-event="['section', 'portals', vm.analyticsEvent]">
+            ui-sref="app.sections"
+            ga-track-event="['section', 'sections', vm.analyticsEvent]">
       </button>
     </ion-nav-buttons>
 
@@ -27,7 +27,7 @@
 		            	<div adsrv what="dbl{{ ::vm.category.normalized }}-mobi" ></div>
 		            </ion-item>
 
-		            <ion-item class="item-divider" ng-if="i % 25 === 9" style="padding-left: 0; padding-right: 0">
+		            <ion-item class="item-divider" ng-if="i % 25 === 12" style="padding-left: 0; padding-right: 0">
 		            	<div adsrv what="tileone{{ ::vm.category.normalized }}-mobi"></div>
 		            </ion-item>
 

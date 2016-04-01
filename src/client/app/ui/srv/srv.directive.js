@@ -95,10 +95,11 @@
                             }
                         }
                         if (!result) {
-                            result = '<img src="http://placehold.it/' + width + 'x' + height + '">';
+                            //result = '<img src="http://placehold.it/' + width + 'x' + height + '">';
+                            $element.remove();
+                        } else {
+                            scope.result = $sce.trustAsHtml(result);
                         }
-                        scope.result = $sce.trustAsHtml(result);
-
                     }).error(function(response) {
                         console.log('adsrv:0', response);
                     }).finally(function() {

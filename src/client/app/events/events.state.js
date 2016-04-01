@@ -13,12 +13,12 @@
                 params: {
                     id: 'events'
                 },
-                url: '/events',
+                url: '/events/audio',
                 templateUrl: 'app/events/events.html',
                 controller: 'EventsController as vm'
             })
             .state('app.event', {
-                url: '/events/:id',
+                url: '/events/audio/:id',
                 templateUrl: 'app/events/event.html',
                 controller: 'EventController as vm'
             });

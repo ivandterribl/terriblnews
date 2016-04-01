@@ -11,9 +11,12 @@
         $stateProvider
             .state('app.about', {
                 url: '/about',
+                params: {
+                    nav: 'About'
+                },
                 abstract: true,
-                templateUrl: 'app/news/news-tabs.html',
-                controller: 'AboutTabsController as vm'
+                templateUrl: 'app/core/tabs/tabs.html',
+                controller: 'TabsController as vm'
             })
             .state('app.about.us', {
                 url: '/us',
@@ -34,18 +37,6 @@
                 views: {
                     tabContent: {
                         templateUrl: 'app/about/contact-us.html'
-                    }
-                }
-            })
-            .state('app.about.advertise', {
-                url: '/advertise',
-                params: {
-                    id: '33679'
-                },
-                views: {
-                    tabContent: {
-                        templateUrl: 'app/article/article.html',
-                        controller: 'ArticleController as vm'
                     }
                 }
             })

@@ -59,14 +59,5 @@
 
             return def.promise;
         };
-
-        function logStats(data) {
-            $http({
-                method: 'GET',
-                url: 'http://stats.itweb.co.za/mobicount.asp',
-                data: data
-            });
-        }
     }
-
 })();

@@ -6,15 +6,16 @@
         .controller('ArticleController', Controller);
 
     Controller.$inject = [
-        'api', 'stats', 'articles', '$q', 'meta', 'moment', '_',
-        '$state', '$ionicViewSwitcher', 'Analytics'
+        'api', 'stats', 'response', 'articles', 'meta', 'moment', '_',
+        '$scope', '$state', '$ionicPopover', '$ionicViewSwitcher', '$injector', 'Analytics'
     ];
     /* @ngInject */
-    function Controller(api, stats, articles, $q, meta, moment, _, $state, $ionicViewSwitcher, Analytics) {
+    function Controller(api, stats, response, articles, meta, moment, _,
+        $scope, $state, $ionicPopover, $ionicViewSwitcher, $injector, Analytics) {
         var vm = this,
             articleId = parseInt($state.params.id),
-            catId = $state.params.catid,
-            primaryCat = [69, 77, 86, 107, 118, 133, 147, 198, 234, 250, 260];
+            catId = parseInt($state.params.catid),
+            exclude = [69, 77, 86, 107, 118, 133, 147, 198, 234, 250, 260];
 
         vm.articleId = articleId;
         vm.canonical = 'http://www.itweb.co.za/index.php?' + [
@@ -25,39 +26,44 @@
         vm.shortlink = 'http://on.itweb.co.za/' + articleId;
         vm.prev = prev;
         vm.next = next;
+        vm.showDisqus = showDisqus;
 
         activate();
 
         function activate() {
-            meta.canonical(vm.canonical);
+            vm.disqus = {
+                shortname: 'itweb-za',
+                id: '8f3edde904_id' + articleId,
+                url: 'http://www.itweb.co.za/index.php?option=com_content&view=article&id=' + $state.params.id
+            };
 
-            vm.loading = 1;
-            $q.all({
-                    article: api('tag=article&id=' + articleId),
-                    appearance: api('tag=appearance&id=' + articleId)
-                })
-                .then(onReady)
-                .finally(function() {
-                    vm.loading = 0;
-                });
+            vm.loading = 0;
+            onReady(response);
+
+            $ionicPopover.fromTemplateUrl('app/news/article/article.share.popover.html', {
+                scope: $scope
+            }).then(function(popover) {
+                vm.popover = popover;
+            });
+
+            //Cleanup the popover when we're done with it!
+            $scope.$on('$destroy', function() {
+                vm.popover.remove();
+            });
         }
 
-        function onReady(response, appearance) {
-            var article,
-                elem = document.createElement('div'),
-                paragraphs;
-
-            article = _.assign(response.article[0], {
+        function onReady(response) {
+            var article = _.assign(response.article[0], {
                 created: moment(response.article[0].created).format(),
                 meta: jparam(response.article[0].meta)
             });
 
             vm.appearance = _.reject(response.appearance, function(row) {
-                return primaryCat.indexOf(parseInt(row.catid)) !== -1;
-            });
+                return exclude.indexOf(parseInt(row.catid)) !== -1;
+            }).slice(0, 5);
 
             _.each(response.appearance, function(row) {
-                if (catId && row.catid === catId) {
+                if (catId && parseInt(row.catid) === catId) {
                     vm.section = _.assign(row, {
                         normalized: row.title.toLowerCase().replace(/\s/g, '')
                     });
@@ -76,36 +82,8 @@
 
             vm.banners = banners(vm.section);
 
-            elem.innerHTML = article.fulltext;
-            if (_.isArray(article.xhead) && article.xhead[2] && article.xhead[2].length >= 2) {
-                paragraphs = elem.querySelectorAll('h3:not(.quote-headline)');
-                paragraphs[0].insertAdjacentHTML('beforebegin', vm.banners.shift());
-                paragraphs[1].insertAdjacentHTML('beforebegin', vm.banners.shift());
-
-            } else {
-                paragraphs = elem.querySelectorAll('p:not(.pic-caption)');
-                if (paragraphs.length > 3) {
-                    paragraphs[3].insertAdjacentHTML('afterend', vm.banners.shift());
-                }
-                if (paragraphs.length > 8) {
-                    paragraphs[7].insertAdjacentHTML('afterend', vm.banners.shift());
-                }
-            }
-
-            angular.forEach(elem.querySelectorAll('.pullquoteauthor'), function(span) {
-                if (span.innerText.trim() === '-') {
-                    span.style.display = 'none';
-                }
-            });
-
-            var $el = angular.element('<div />')
-                .html(elem.innerHTML);
-
-            $el.find('table')
-                .wrap('<ion-scroll direction="x" scroll-outside="true" scrollbar-x="true"></ion-scroll>');
-
             vm.article = _.assign(article, {
-                html: $el.html()
+                html: parseHtml(article)
             });
 
             var related = [];
@@ -147,6 +125,8 @@
                 })
             };
 
+            var $timeout = $injector.get('$timeout');
+
             if (topics.length) {
                 api('tag=recommended&id=' + articleId + '&q=' + topics[0])
                     .then(function(response) {
@@ -156,16 +136,73 @@
                         if (!match) {
                             vm.recommended = response;
                         }
+                    })
+                    .finally(function() {
+                        $timeout(function() {
+                            vm.disqus.ready = 1;
+                        }, 750);
                     });
+            } else {
+                $timeout(function() {
+                    vm.disqus.ready = 1;
+                }, 750);
             }
             seo();
 
             logStats();
         }
 
+        function parseHtml(article) {
+            var elem = document.createElement('div'),
+                paragraphs;
+
+            elem.innerHTML = article.fulltext;
+
+            // sidebar floating above pic layout issue
+            // swap sidebar & pic
+            var picElem;
+            if (elem.children[0] && elem.children[1] &&
+                elem.children[0].className.indexOf('sidebar') !== -1 &&
+                elem.children[1].className.indexOf('pic') !== -1) {
+
+                picElem = elem.children[1];
+                elem.removeChild(picElem);
+                elem.insertBefore(picElem, elem.children[0]);
+            }
+
+            if (_.isArray(article.xhead) && article.xhead[2] && article.xhead[2].length >= 2) {
+                paragraphs = elem.querySelectorAll('h3:not(.quote-headline):not(.sidebar-headline)');
+                paragraphs[0].insertAdjacentHTML('beforebegin', vm.banners.shift());
+                paragraphs[1].insertAdjacentHTML('beforebegin', vm.banners.shift());
+
+            } else {
+                paragraphs = elem.querySelectorAll('p:not(.pic-caption)');
+                if (paragraphs.length > 3) {
+                    paragraphs[3].insertAdjacentHTML('afterend', vm.banners.shift());
+                }
+                if (paragraphs.length > 8) {
+                    paragraphs[7].insertAdjacentHTML('afterend', vm.banners.shift());
+                }
+            }
+
+            angular.forEach(elem.querySelectorAll('.pullquoteauthor'), function(span) {
+                if (span.innerText.trim() === '-') {
+                    span.style.display = 'none';
+                }
+            });
+
+            var $el = angular.element('<div />')
+                .html(elem.innerHTML);
+
+            $el.find('table')
+                .wrap('<ion-scroll direction="x" scroll-outside="true" scrollbar-x="true"></ion-scroll>');
+
+            return $el.html();
+        }
+
         function logStats() {
             var data = {
-                loc: '/article/' + articleId,
+                loc: $state.href($state.current.name, $state.params),
                 ts: _.random(1000000000),
                 id: articleId,
                 catid: parseInt(vm.section.catid)
@@ -183,15 +220,15 @@
         }
 
         function seo() {
-            meta.title(vm.article.title);
-            meta.description(vm.article.blurb);
-            meta.keywords(vm.article.metakey);
-            meta.ld(false);
-            meta.canonical('http://www.itweb.co.za/index.php?' + [
-                'option=com_content',
-                'view=article',
-                'id=' + articleId
-            ].join('&'));
+            // meta.title(vm.article.title);
+            // meta.description(vm.article.blurb);
+            // meta.keywords(vm.article.metakey);
+            // meta.ld(false);
+            // meta.canonical('http://www.itweb.co.za/index.php?' + [
+            //     'option=com_content',
+            //     'view=article',
+            //     'id=' + articleId
+            // ].join('&'));
         }
 
         function jparam(params) {
@@ -239,5 +276,14 @@
             }
         }
 
+        function showDisqus() {
+            var $ionicScrollDelegate = $injector.get('$ionicScrollDelegate'),
+                $ionicPosition = $injector.get('$ionicPosition'),
+                elem = angular.element(document.getElementById('disqusIt')),
+                y = $ionicPosition.offset(elem).top +
+                $ionicScrollDelegate.getScrollPosition().top - 44;
+            y = $ionicPosition.offset(elem).top - 44;
+            $ionicScrollDelegate.scrollBy(0, y, true);
+        }
     }
 })();

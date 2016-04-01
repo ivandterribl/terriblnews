@@ -38,18 +38,22 @@
             description: function(value) {
                 if (value || value === false) {
                     description = value;
+                    document.querySelector('meta[name="description"]').setAttribute('content', value);
                 }
                 return description;
             },
             keywords: function(value) {
                 if (value || value === false) {
                     keywords = value;
+                    document.querySelector('meta[name="keywords"]').setAttribute('content', value);
+                    document.querySelector('meta[name="news_keywords"]').setAttribute('content', value);
                 }
                 return keywords;
             },
             canonical: function(value) {
                 if (value || value === false) {
                     canonical = value;
+                    document.querySelector('meta[name="canonical"]').setAttribute('content', value ? value : '');
                 }
                 return canonical;
             },

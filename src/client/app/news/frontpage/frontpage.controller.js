@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('app.frontpage')
+        .module('app.news')
         .controller('FrontpageController', Controller);
 
     Controller.$inject = [
@@ -19,7 +19,6 @@
 
         $ionicHistory.clearHistory();
 
-        vm.openMenu = openMenu;
         vm.loadItems = loadItems;
         vm.next = next;
 
@@ -181,13 +180,13 @@
                                 return row.storytype === 'P';
                             }),
                             columnists: _.filter(items, function(row) {
-                                return row.catid === '79' && row.storytype === 'E';
+                                return row.catid === 79 && row.storytype === 'E';
                             }),
                             insights: _.filter(items, function(row) {
-                                return row.catid === '143' && row.storytype === 'E';
+                                return row.catid === 143 && row.storytype === 'E';
                             }),
                             features: _.filter(items, function(row) {
-                                return row.catid === '116' && row.storytype === 'E';
+                                return row.catid === 116 && row.storytype === 'E';
                             }),
                             international: _.filter(items, function(row) {
                                 return row.company === 'Business Wire' && row.storytype === 'S';
@@ -220,10 +219,6 @@
                 .finally(function() {
 
                 });
-        }
-
-        function openMenu($mdOpenMenu, ev) {
-            $mdOpenMenu(ev);
         }
 
         function seo() {

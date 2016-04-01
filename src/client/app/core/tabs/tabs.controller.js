@@ -3,21 +3,21 @@
 
     angular
         .module('app.news')
-        .controller('NewsTabsController', Controller);
+        .controller('TabsController', Controller);
 
     Controller.$inject = ['nav', '_', '$scope', '$state', '$ionicHistory', '$ionicViewSwitcher'];
     /* @ngInject */
     function Controller(nav, _, $scope, $state, $ionicHistory, $ionicViewSwitcher) {
         var vm = this;
 
-        vm.onCategory = showCategory;
+        vm.select = select;
 
         $scope.$on('category.prev', prev);
         $scope.$on('category.next', next);
         $scope.$on('category', activate);
 
         vm.categories = _.findWhere(nav.get(), {
-            title: 'News'
+            title: $state.params.nav || 'News'
         }).items;
 
         //activate();
@@ -31,15 +31,15 @@
 
         function prev() {
             vm.selectedIndex = !vm.selectedIndex ? vm.categories.length - 1 : vm.selectedIndex - 1;
-            showCategory(vm.categories[vm.selectedIndex]);
+            select(vm.categories[vm.selectedIndex]);
         }
 
         function next() {
             vm.selectedIndex = vm.selectedIndex === vm.categories.length - 1 ? 0 : vm.selectedIndex + 1;
-            showCategory(vm.categories[vm.selectedIndex]);
+            select(vm.categories[vm.selectedIndex]);
         }
 
-        function showCategory(category) {
+        function select(category) {
             var dir = vm.categories.indexOf(vm.category) > vm.categories.indexOf(category) ? 'back' : 'forward';
             $ionicViewSwitcher.nextDirection(dir);
             vm.category = category;
@@ -48,13 +48,7 @@
                 disableBack: true
             });
 
-            if (category.id === 'africa') {
-                $state.transitionTo('app.news.africa');
-            } else {
-                $state.transitionTo('app.news.category', {
-                    id: category.id
-                });
-            }
+            $state.transitionTo(category.state.name, category.state.params);
         }
     }
 })();

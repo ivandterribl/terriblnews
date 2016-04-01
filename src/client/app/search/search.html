@@ -22,7 +22,7 @@
     	</section>
     	<section ng-show="!vm.loading">
 	    	<ion-list ng-show="vm.items.length">
-	            <ion-item class="item-light" ng-repeat="item in vm.items" ui-sref="app.article({ id: item.itemid })">
+	            <ion-item class="item-light" ng-repeat="item in vm.items" ui-sref="app.article-raw({ id: item.itemid })">
 	                <h2>{{ item.title }}</h2>
 	                <p ng-bind-html="item.text"></p>
 	                <div class="assertive">
