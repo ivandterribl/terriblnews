@@ -27,13 +27,15 @@
                         canonical: false,
                         ld: false
                     },
-                    opts = _.assign(defaults, _.compact(options));
+                    opts = _.defaults(options || {}, defaults);
 
                 this.title(opts.title);
                 this.description(opts.description);
                 this.keywords(opts.keywords);
                 this.canonical(opts.canonical);
                 this.ld(opts.ld);
+
+                return opts;
             },
             description: function(value) {
                 if (value || value === false) {

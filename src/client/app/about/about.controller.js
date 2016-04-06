@@ -5,9 +5,9 @@
         .module('app.news')
         .controller('AboutController', Controller);
 
-    Controller.$inject = ['aboutHtml', '_', '$ionicPlatform'];
+    Controller.$inject = ['aboutHtml', '_', '$ionicPlatform', 'nav', '$state'];
     /* @ngInject */
-    function Controller(aboutHtml, _, $ionicPlatform) {
+    function Controller(aboutHtml, _, $ionicPlatform, nav, $state) {
         var vm = this;
 
         activate();

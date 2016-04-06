@@ -1,5 +1,8 @@
-<ion-view view-title="{{ vm.category.title }}">
-	<ion-content ng-class="{ 'has-subheader': vm.categories.length }" on-swipe-right="vm.prev()" on-swipe-left="vm.next()">
+<ion-view>
+	<ion-nav-title>
+		{{ vm.category.title }}
+	</ion-nav-title>
+	<ion-content ng-class="{ 'has-subheader': vm.hasSubheader }" on-swipe-right="vm.prev()" on-swipe-left="vm.next()">
     	<section ng-show="vm.loading" class="text-center padding">
     		<ion-spinner></ion-spinner>
     	</section>

@@ -17,14 +17,8 @@
 	<ion-content on-swipe-right="vm.prev(1)" on-swipe-left="vm.next(1)" overflow-scroll="true"
 	>
 	<!-- style="-webkit-overflow-scrolling: touch !important;overflow: scroll !important;" -->
-		<section ng-show="vm.loading" class="text-center padding">
-    		<ion-spinner></ion-spinner>
-    	</section>
-    	<section ng-show="!vm.loading && !vm.article" class="padding">
-    		<h3 class="text-center assertive" ng-cloak>Oops, something went wrong</h3>
-    	</section>
-    	<section ng-show="!vm.loading">
-    		<div class="item item-divider" style="padding-left: 0; padding-right: 0" ng-if="vm.section">
+		<section ng-show="!vm.loading">
+    		<div class="item item-divider" style="padding-left: 0; padding-right: 0" ng-if="vm.section && !vm.isPR">
             	<div adsrv what="top{{ ::vm.section.normalized }}-mobi" class="top"></div>
             </div>
 
@@ -138,7 +132,7 @@
 				</ion-item>
 			</ion-list>
 
-			<div class="item item-divider" style="padding-left: 0; padding-right: 0" ng-if="vm.section">
+			<div class="item item-divider" style="padding-left: 0; padding-right: 0" ng-if="vm.section && !vm.isPR">
             	<div adsrv what="rec{{ ::vm.section.normalized }}-mobi" class="top"></div>
             </div>
 

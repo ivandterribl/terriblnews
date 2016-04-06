@@ -80,10 +80,12 @@
                 });
             }
 
-            vm.banners = banners(vm.section);
+            vm.isPR = (article.storytype === 'P') ? 1 : 0;
+
+            vm.banners = vm.isPR ? [] : banners(vm.section);
 
             vm.article = _.assign(article, {
-                html: parseHtml(article)
+                html: vm.isPR ? article.fulltext : parseHtml(article)
             });
 
             var related = [];
@@ -161,6 +163,12 @@
             // sidebar floating above pic layout issue
             // swap sidebar & pic
             var picElem;
+            // clean up empty elements
+            angular.forEach(elem.children, function(child) {
+                if (!child.innerText.trim()) {
+                    elem.removeChild(child);
+                }
+            });
             if (elem.children[0] && elem.children[1] &&
                 elem.children[0].className.indexOf('sidebar') !== -1 &&
                 elem.children[1].className.indexOf('pic') !== -1) {

@@ -5,9 +5,9 @@
         .module('app.news')
         .controller('NewsController', Controller);
 
-    Controller.$inject = ['nav', 'articles', 'api', '_', 'meta', 'Analytics', '$scope', '$state', '$location'];
+    Controller.$inject = ['nav', 'articles', 'api', '_', 'activeNav', 'response', 'Analytics', '$scope', '$state', '$location'];
     /* @ngInject */
-    function Controller(nav, articles, api, _, meta, Analytics, $scope, $state, $location) {
+    function Controller(nav, articles, api, _, activeNav, response, Analytics, $scope, $state, $location) {
 
         var vm = this,
             id = $state.params.id,
@@ -21,49 +21,28 @@
 
         function activate() {
             vm.analyticsEvent = $location.url();
-            var match = {},
-                category;
 
-            _.each(nav.get(), function(group) {
-                var cat = _.findWhere(group.items || [], {
-                    id: id
-                });
+            vm.category = activeNav;
+            vm.hasSubheader = $state.params.subheader;
 
-                if (cat) {
-                    category = cat;
-                    match = group;
-                    return;
-                }
-            });
-
-            vm.categories = match.items || [];
-            if (!category) {
-                vm.category = category = _.findWhere(nav.get(), {
-                    id: id
-                });
-            } else {
-                vm.category = category;
-            }
+            vm.shortcuts = {};
 
             switch (id) {
                 case 'industry-news':
-                    vm.portalIcon = 1;
+                    vm.shortcuts['sections'] = 1;
                     break;
                 case 'company-news':
-                    vm.companyIcon = 1;
+                    vm.shortcuts['companies'] = 1;
                     break;
             }
 
-            vm.complete = 1;
-            vm.loading = 1;
-            vm.items = [];
+            vm.items = response;
             articles.set(vm.items);
-            loadItems();
+            vm.complete = 0;
 
             // cached view
             $scope.$on('$ionicView.enter', function() {
-                $scope.$emit('category', vm.category, vm.categories);
-                seo();
+                $scope.$emit('category', activeNav.item);
             });
         }
 
@@ -74,21 +53,7 @@
 
             api('tag=' + id + '&limitstart=' + limitstart + '&limit=' + limit)
                 .then(function(response) {
-                    var items = [];
-                    switch (id) {
-                        case 'top-news':
-                        case 'industry-news':
-                        case 'world':
-                            items = _.reject(response, function(row) {
-                                return !row.section;
-                            });
-                            items = _.map(items, function(row) {
-                                return row;
-                            });
-                            break;
-                        default:
-                            items = response;
-                    }
+                    var items = response;
 
                     vm.items = vm.items.concat(items);
                     articles.push(items);
@@ -118,17 +83,6 @@
 
         function next() {
             $scope.$emit('category.next');
-        }
-
-        function openMenu($mdOpenMenu, ev) {
-            $mdOpenMenu(ev);
-        }
-
-        function seo() {
-            meta.set({
-                title: vm.category ? vm.category.title : null,
-                keywords: vm.category ? vm.category.title + ', IT, Technology, Business, News' : null
-            });
         }
     }
 })();

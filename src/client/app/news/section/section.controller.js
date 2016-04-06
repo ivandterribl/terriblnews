@@ -5,12 +5,12 @@
         .module('app.news')
         .controller('SectionController', Controller);
 
-    Controller.$inject = ['articles', 'api', 'stats', '_', 'meta', '$scope', '$state', '$location', 'Analytics'];
+    Controller.$inject = ['articles', 'api', 'stats', '_', 'response', '$scope', '$state', '$location', 'Analytics'];
     /* @ngInject */
-    function Controller(articles, api, stats, _, meta, $scope, $state, $location, Analytics) {
+    function Controller(articles, api, stats, _, response, $scope, $state, $location, Analytics) {
         var vm = this,
             catId = $state.params.id,
-            limitstart = 0,
+            limitstart = $state.params.limitstart || 25,
             limit = 25;
 
         vm.loadItems = loadItems;
@@ -22,15 +22,31 @@
             vm.analyticsEvent = $location.url();
             vm.categories = [];
 
-            vm.loading = 1;
-            vm.items = [];
-            articles.set(vm.items);
+            var section = response[0].section || {
+                    title: ''
+                },
+                items;
 
-            loadItems();
+            vm.hasSubheader = $state.params.subheader;
+            vm.category = {
+                title: section.title,
+                id: section.id || section.catid,
+                normalized: section.title.toLowerCase().replace(/\s/g, '')
+            };
+
+            items = _.map(response, function(row) {
+                return _.assign(row, {
+                    hideSection: 1,
+                    copyPath: row.copyPath === 'n' || row.copyPath === 'itweb' ? null : row.copyPath
+                });
+            });
+            vm.items = items;
+            articles.set(items);
+            vm.complete = 0;
 
             // cached view
             $scope.$on('$ionicView.enter', function() {
-                $scope.$emit('category', vm.category, vm.categories);
+                $scope.$emit('category', vm.category);
                 logStats();
             });
         }
@@ -84,7 +100,6 @@
 
                     $scope.$broadcast('scroll.infiniteScrollComplete');
 
-                    seo();
                     vm.complete = 0;
                 })
                 .catch(function(response) {
@@ -94,13 +109,6 @@
                 .finally(function() {
                     vm.loading = 0;
                 });
-        }
-
-        function seo() {
-            meta.set({
-                title: vm.category.title,
-                description: 'Latest ' + vm.category.title + ' headlines on ITWeb'
-            });
         }
 
         function logStats() {

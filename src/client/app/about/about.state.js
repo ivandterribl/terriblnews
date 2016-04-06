@@ -29,6 +29,11 @@
                 resolve: {
                     aboutHtml: ['api', function(api) {
                         return api('tag=about');
+                    }],
+                    seo: ['meta', function(meta) {
+                        return meta.set({
+                            title: 'About us'
+                        });
                     }]
                 }
             })
@@ -38,6 +43,13 @@
                     tabContent: {
                         templateUrl: 'app/about/contact-us.html'
                     }
+                },
+                resolve: {
+                    seo: ['meta', function(meta) {
+                        return meta.set({
+                            title: 'Contact us'
+                        });
+                    }]
                 }
             })
             .state('app.about.privacy', {
@@ -46,6 +58,13 @@
                     tabContent: {
                         templateUrl: 'app/about/privacy-policy.html'
                     }
+                },
+                resolve: {
+                    seo: ['meta', function(meta) {
+                        return meta.set({
+                            title: 'Privacy policy'
+                        });
+                    }]
                 }
             })
             .state('app.about.competition', {
@@ -54,6 +73,13 @@
                     tabContent: {
                         templateUrl: 'app/about/competition-policy.html'
                     }
+                },
+                resolve: {
+                    seo: ['meta', function(meta) {
+                        return meta.set({
+                            title: 'Competition policy'
+                        });
+                    }]
                 }
             })
             .state('app.about.bee', {
@@ -62,6 +88,13 @@
                     tabContent: {
                         templateUrl: 'app/about/bee.html'
                     }
+                },
+                resolve: {
+                    seo: ['meta', function(meta) {
+                        return meta.set({
+                            title: 'BEE certificate'
+                        });
+                    }]
                 }
             });
     }

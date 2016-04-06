@@ -6,11 +6,11 @@
         .controller('FrontpageController', Controller);
 
     Controller.$inject = [
-        'articles', 'api', '_', 'meta', 'moment',
+        'articles', 'api', '_', 'moment',
         '$scope', '$state', 'searchBar', '$ionicHistory', 'Analytics'
     ];
     /* @ngInject */
-    function Controller(articles, api, _, meta, moment, $scope, $state, searchBar, $ionicHistory, Analytics) {
+    function Controller(articles, api, _, moment, $scope, $state, searchBar, $ionicHistory, Analytics) {
         var vm = this,
             day = {
                 groups: {},
@@ -32,11 +32,6 @@
 
             vm.items = [];
             loadLead();
-
-            // cached view
-            $scope.$on('$ionicView.enter', function() {
-                seo();
-            });
         }
 
         function loadLead() {
@@ -215,14 +210,7 @@
                 })
                 .catch(function() {
                     vm.complete = 1;
-                })
-                .finally(function() {
-
                 });
-        }
-
-        function seo() {
-            meta.set();
         }
     }
 })();

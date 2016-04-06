@@ -107,7 +107,7 @@
 		            </ion-item>
 		            <ion-item class="item-light" ng-repeat="(j, item) in day.groups.company">
 		            	<div class="item-content">
-						    <a ui-sref="app.article({ id: item.itemid, catid: item.section.id })" 
+						    <a ui-sref="app.article-raw({ id: item.itemid })" 
 						    ga-track-event="['frontpage', 'article', 'company-news', j + 1]">
 						        <div class="news-img" ng-if="item.introtextImg">
 						        	<img image-lazy-src="{{ item.introtextImg }}"  />
@@ -274,7 +274,7 @@
 		                </a>
 		            </ion-item>
 		            <ion-item class="item-light" ng-repeat="(j, item) in day.groups.international">
-			            <a ui-sref="app.article({ id: item.itemid })" class="item-content"
+			            <a ui-sref="app.article-raw({ id: item.itemid })" class="item-content"
 			            ga-track-event="['frontpage', 'article', 'international', j + 1]">
 			                <h3>{{ item.title }}</h3>
 		                </a>
