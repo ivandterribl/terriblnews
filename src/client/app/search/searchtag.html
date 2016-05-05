@@ -1,4 +1,4 @@
-<ion-view view-title="{{ vm.category.title }}" cache-view="false">
+<ion-view cache-view="false">
 	 <ion-nav-bar class="bar-assertive">
 	 	<ion-nav-back-button>
         </ion-nav-back-button>
@@ -14,12 +14,6 @@
     </ion-nav-bar>
         
 	<ion-content>
-    	<section ng-show="vm.loading" class="text-center padding">
-    		<ion-spinner></ion-spinner>
-    	</section>
-    	<section ng-show="!vm.loading && !vm.items.length" class="padding">
-    		<p class="text-center assertive" ng-cloak>No results found</p>
-    	</section>
     	<section ng-show="!vm.loading">
 	    	<ion-list ng-show="vm.items.length">
 	            <ion-item class="item-light" ng-repeat="item in vm.items" ui-sref="app.article-raw({ id: item.itemid })">

@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -14,7 +14,7 @@
             ld;
 
         return {
-            set: function(options) {
+            set: function (options) {
                 var defaults = {
                         title: 'Business Technology News and Information Site',
                         description: [
@@ -37,39 +37,59 @@
 
                 return opts;
             },
-            description: function(value) {
+            description: function (value) {
+                var el = document.querySelector('meta[name="description"]');
                 if (value || value === false) {
                     description = value;
-                    document.querySelector('meta[name="description"]').setAttribute('content', value);
+                    if (el) {
+                        el.setAttribute('content', value);
+                    }
                 }
                 return description;
             },
-            keywords: function(value) {
+            keywords: function (value) {
+                var el;
                 if (value || value === false) {
                     keywords = value;
-                    document.querySelector('meta[name="keywords"]').setAttribute('content', value);
-                    document.querySelector('meta[name="news_keywords"]').setAttribute('content', value);
+                    el = document.querySelector('meta[name="keywords"]');
+                    if (el) {
+                        el.setAttribute('content', value);
+                    }
+                    el = document.querySelector('meta[name="news_keywords"]');
+                    if (el) {
+                        el.setAttribute('content', value);
+                    }
                 }
                 return keywords;
             },
-            canonical: function(value) {
+            canonical: function (value) {
+                var el = document.querySelector('meta[name="canonical"]');
                 if (value || value === false) {
                     canonical = value;
-                    document.querySelector('meta[name="canonical"]').setAttribute('content', value ? value : '');
+                    if (el) {
+                        el.setAttribute('content', value ? value : '');
+                    }
                 }
                 return canonical;
             },
-            ld: function(value) {
+            ld: function (value) {
+                var el = document.getElementById('structured-data');
                 if (value) {
-                    document.getElementById('structured-data').innerText = JSON.stringify(value);
+                    ld = value;
+                    if (el) {
+                        el.innerText = JSON.stringify(value);
+                    }
                 } else if (value === false) {
-                    document.getElementById('structured-data').innerText = '';
+                    if (el) {
+                        el.innerText = '';
+                    }
                 }
                 return ld;
             },
-            title: function(value) {
-                if (_.isString(value)) {
-                    document.getElementsByTagName('title')[0].innerText = [value, 'ITWeb'].join(' | ');
+            title: function (value) {
+                var el = document.getElementsByTagName('title');
+                if (_.isString(value) && el && el.length) {
+                    el[0].innerText = [value, 'ITWeb'].join(' | ');
                 }
             }
         };

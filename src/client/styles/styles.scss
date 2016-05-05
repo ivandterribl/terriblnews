@@ -115,6 +115,17 @@ ion-header-bar.bar.bar-stable {
   img {
     max-width: 100%;
   }
+  &.item-divider.item-block {
+    padding-left: 0;
+    padding-right: 0;
+    clear: both;
+  }
+  &.item-divider.item-stretch {
+    margin: 10px -10px;
+    padding-left: 0;
+    padding-right: 0;
+    clear: both;
+  }
 }
 
 .highlight {
@@ -258,9 +269,6 @@ blockquote, .pullquote {
 }
 [adsrv] > div:first-child {
   overflow: hidden;
-}
-.item.item-divider.item-strech {
-  margin: 10px -10px;
 }
 .news-img {
   float:right;

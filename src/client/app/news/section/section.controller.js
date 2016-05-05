@@ -102,7 +102,7 @@
 
                     vm.complete = 0;
                 })
-                .catch(function(response) {
+                .catch(function() {
                     vm.items = [];
                     vm.complete = 1;
                 })

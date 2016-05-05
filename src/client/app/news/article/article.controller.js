@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -11,7 +11,7 @@
     ];
     /* @ngInject */
     function Controller(api, stats, response, articles, meta, moment, _,
-        $scope, $state, $ionicPopover, $ionicViewSwitcher, $injector, Analytics) {
+                        $scope, $state, $ionicPopover, $ionicViewSwitcher, $injector, Analytics) {
         var vm = this,
             articleId = parseInt($state.params.id),
             catId = parseInt($state.params.catid),
@@ -19,10 +19,10 @@
 
         vm.articleId = articleId;
         vm.canonical = 'http://www.itweb.co.za/index.php?' + [
-            'option=com_content',
-            'view=article',
-            'id=' + articleId
-        ].join('&');
+                'option=com_content',
+                'view=article',
+                'id=' + articleId
+            ].join('&');
         vm.shortlink = 'http://on.itweb.co.za/' + articleId;
         vm.prev = prev;
         vm.next = next;
@@ -42,12 +42,12 @@
 
             $ionicPopover.fromTemplateUrl('app/news/article/article.share.popover.html', {
                 scope: $scope
-            }).then(function(popover) {
+            }).then(function (popover) {
                 vm.popover = popover;
             });
 
             //Cleanup the popover when we're done with it!
-            $scope.$on('$destroy', function() {
+            $scope.$on('$destroy', function () {
                 vm.popover.remove();
             });
         }
@@ -58,23 +58,35 @@
                 meta: jparam(response.article[0].meta)
             });
 
-            vm.appearance = _.reject(response.appearance, function(row) {
+            vm.appearance = _.reject(response.appearance, function (row) {
                 return exclude.indexOf(parseInt(row.catid)) !== -1;
             }).slice(0, 5);
 
-            _.each(response.appearance, function(row) {
-                if (catId && parseInt(row.catid) === catId) {
-                    vm.section = _.assign(row, {
-                        normalized: row.title.toLowerCase().replace(/\s/g, '')
+            if (catId) {
+                // ilog_lb missing catid quickfix
+                if (catId === parseInt(article.catid)) {
+                    vm.section = {
+                        catid: article.catid,
+                        title: article.category,
+                        normalized: article.category.toLowerCase().replace(/\s/g, '')
+                    };
+                } else {
+                    _.each(response.appearance, function (row) {
+                        if (catId && parseInt(row.catid) === catId) {
+                            vm.section = _.assign(row, {
+                                normalized: row.title.toLowerCase().replace(/\s/g, '')
+                            });
+                        }
                     });
                 }
-            });
+            }
 
             var rand,
-                categories = vm.appearance.length ? vm.appearance : response.appearance;
+                categories = response.appearance;
 
             if (!vm.section) {
-                rand = categories[_.random(categories.length - 1)];
+                //rand = categories[_.random(categories.length - 1)];
+                rand = categories[0];
                 vm.section = _.assign(rand, {
                     normalized: rand.title.toLowerCase().replace(/\s/g, '')
                 });
@@ -90,7 +102,7 @@
 
             var related = [];
             if (_.isString(article.related) && article.related.length) {
-                _.each(article.related.split('\n'), function(row) {
+                _.each(article.related.split('\n'), function (row) {
                     // <format>id:slug;title\nid:slug;title</format>
                     var parts = row.split(';');
 
@@ -104,10 +116,10 @@
 
             var topics = [];
             if (_.isString(article.metakey) && article.metakey.length) {
-                topics = _.map(article.metakey.split(', '), function(row) {
+                topics = _.map(article.metakey.split(', '), function (row) {
                     return row.trim ? row.trim() : row;
                 });
-                topics = _.reject(topics, function(row) {
+                topics = _.reject(topics, function (row) {
                     return row.length > 20;
                 });
                 topics = topics.slice(0, 4 - related.length);
@@ -131,7 +143,7 @@
 
             if (topics.length) {
                 api('tag=recommended&id=' + articleId + '&q=' + topics[0])
-                    .then(function(response) {
+                    .then(function (response) {
                         var match = _.findWhere(related, {
                             id: response[0].id
                         });
@@ -139,13 +151,13 @@
                             vm.recommended = response;
                         }
                     })
-                    .finally(function() {
-                        $timeout(function() {
+                    .finally(function () {
+                        $timeout(function () {
                             vm.disqus.ready = 1;
                         }, 750);
                     });
             } else {
-                $timeout(function() {
+                $timeout(function () {
                     vm.disqus.ready = 1;
                 }, 750);
             }
@@ -164,7 +176,7 @@
             // swap sidebar & pic
             var picElem;
             // clean up empty elements
-            angular.forEach(elem.children, function(child) {
+            angular.forEach(elem.children, function (child) {
                 if (!child.innerText.trim()) {
                     elem.removeChild(child);
                 }
@@ -193,7 +205,7 @@
                 }
             }
 
-            angular.forEach(elem.querySelectorAll('.pullquoteauthor'), function(span) {
+            angular.forEach(elem.querySelectorAll('.pullquoteauthor'), function (span) {
                 if (span.innerText.trim() === '-') {
                     span.style.display = 'none';
                 }
@@ -220,9 +232,9 @@
 
         function banners(section) {
             return section.normalized ? [
-                '<div class="item item-divider item-strech" style="padding-left: 0; padding-right: 0">' +
+                '<div class="item item-divider item-stretch">' +
                 '<div adsrv what="dbl' + section.normalized + '-mobi"></div></div>',
-                '<div class="item item-divider item-strech" style="padding-left: 0; padding-right: 0">' +
+                '<div class="item item-divider item-stretch">' +
                 '<div adsrv what="tileone' + section.normalized + '-mobi"></div></div>'
             ] : [];
         }
@@ -242,7 +254,7 @@
         function jparam(params) {
             var result = {};
             if (_.isString(params) && params.length) {
-                _.each(params.split('\n'), function(param) {
+                _.each(params.split('\n'), function (param) {
                     var parts = param.split('='),
                         k = parts[0];
 
@@ -289,7 +301,7 @@
                 $ionicPosition = $injector.get('$ionicPosition'),
                 elem = angular.element(document.getElementById('disqusIt')),
                 y = $ionicPosition.offset(elem).top +
-                $ionicScrollDelegate.getScrollPosition().top - 44;
+                    $ionicScrollDelegate.getScrollPosition().top - 44;
             y = $ionicPosition.offset(elem).top - 44;
             $ionicScrollDelegate.scrollBy(0, y, true);
         }

@@ -6,6 +6,9 @@ build/
 mobilesite/
 cordova/
 report/
+satellizer/
+silex/
+client/
 .idea
 
 *.php

@@ -100,6 +100,16 @@
                     }]
                 }
             })
+            .state('app.frontpage-fix', {
+                url: '/news/',
+                templateUrl: 'app/news/frontpage/frontpage.html',
+                controller: 'FrontpageController as vm',
+                resolve: {
+                    seo: ['meta', function(meta) {
+                        return meta.set();
+                    }]
+                }
+            })
             // app.article matches news/123/123 && news/123/
             // but not news/123 hence the below
             .state('app.article-raw', {
