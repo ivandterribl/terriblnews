@@ -11,7 +11,7 @@
                     ga-track-event="['companies', 'office', vm.eventLabel(), i + 1]">
                         <div class="row">
                             <div class="col col-33 col-center text-center">
-                                <img ng-src="{{ item.image }}" />
+                                <img ng-src="{{ item.image }}" ng-if="item.image" style="max-height: 48px" />
                             </div>
                             <div class="col col-center col-offset-10">
                                 <h3 class="itw-section stable">{{ item.title }}</h3>

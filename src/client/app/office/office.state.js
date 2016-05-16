@@ -61,7 +61,7 @@
                 },
                 views: {
                     tabContent: {
-                        templateUrl: 'app/office/office.html',
+                        templateUrl: 'app/office/microsites.html',
                         controller: 'OfficeController as vm'
                     }
                 },

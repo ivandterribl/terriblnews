@@ -9,7 +9,7 @@
 		'angular-google-analytics',
 		'720kb.socialshare',
 		'ionicLazyLoad',
-		//'material.components.tabs'
+		// 'material.components.tabs'
 		// 'ion-sticky',
 		// 'ion-affix'
 	]);

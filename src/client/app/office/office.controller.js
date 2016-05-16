@@ -46,11 +46,11 @@
                     image: row.image
                 };
             });
-            if (id === 'microsites') {
-                vm.items = _.sortBy(items, 'title');
-            } else {
+            if (id === 'virtual-press-office') {
                 vm.groups = _.groupBy(items, 'group');
                 vm.items = items;
+            } else {
+                vm.items = _.sortBy(items, 'title');
             }
 
         }
