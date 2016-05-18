@@ -16,9 +16,11 @@
         $scope.$on('category.next', next);
         $scope.$on('category', activate);
 
-        vm.categories = _.findWhere(nav.get(), {
-            title: $state.params.nav || 'News'
-        }).items;
+        vm.categories = $state.params.items && $state.params.items.length ?
+            $state.params.items :
+            _.findWhere(nav.get(), {
+                title: $state.params.nav || 'News'
+            }).items;
 
         //activate();
 

@@ -7,6 +7,7 @@
 		'app.events',
 		'app.office',
 		'app.about',
-		'app.search'
+		'app.search',
+		'itw.user'
 	]);
 })();

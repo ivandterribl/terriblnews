@@ -29,7 +29,8 @@
     "moment": "^2.11.1",
     "angular-socialshare": "angularjs-socialshare#^0.1.20",
     "underscore": "^1.8.3",
-    "ionic-image-lazy-load": "ion-image-lazy-load#*"
+    "ionic-image-lazy-load": "ion-image-lazy-load#*",
+    "angular-messages": "^1.5.5"
   },
   "resolutions": {
     "angular": "^1.4.8",

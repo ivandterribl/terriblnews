@@ -3,6 +3,7 @@
 
 	angular.module('app.core', [
 		'ionic',
+		'ngMessages',
 		//'ngMaterial',
 		'itw.ui',
 		'angular-bind-html-compile',
