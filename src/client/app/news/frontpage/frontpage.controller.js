@@ -136,6 +136,60 @@
                 });
             });
 
+            groups.promo = [{
+                itemid: 152682,
+                title: 'Application security exposes businesses',
+                created: '2016-05-18 12:54:00'
+            }, {
+                itemid: 152674,
+                title: 'Collaborating to beat the bad guys',
+                created: '2016-05-18 12:04:00'
+            }, {
+                itemid: 152669,
+                title: 'Youth lack public security information',
+                created: '2016-05-18 11:37:00'
+            }, {
+                itemid: 152664,
+                title: 'Passwords are broken',
+                created: '2016-05-18 10:53:00'
+            }, {
+                itemid: 152656,
+                title: 'Rica needs greater transparency',
+                created: '2016-05-18 10:02:00'
+            }, {
+                itemid: 152612,
+                title: 'Cyber security Bill has been \'mishandled\'',
+                created: '2016-05-18 09:34:00'
+            }, {
+                itemid: 152608,
+                title: 'The \'big five\' national cyber security projects',
+                created: '2016-05-18 09:15:00'
+            }, {
+                itemid: 152607,
+                title: 'Law needs to catch up with cyber crime',
+                created: '2016-05-18 09:11:00'
+            }, {
+                itemid: 152606,
+                title: 'Study the opposition in fighting cyber crime',
+                created: '2016-05-18 09:01:00'
+            }, {
+                itemid: 152604,
+                title: 'Penetration tests are overstated',
+                created: '2016-05-18 08:43:00'
+            }, {
+                itemid: 152600,
+                title: 'Cyber criminals cash in with ransomware',
+                created: '2016-05-18 08:25:00'
+            }, {
+                itemid: 152599,
+                title: 'Geo-locations don\'t deter cyber attacks',
+                created: '2016-05-18 08:11:00'
+            }, {
+                itemid: 152598,
+                title: 'Hacking off-the-shelf devices',
+                created: '2016-05-18 08:03:00'
+            }];
+
             vm.days[0].groups = _.assign(vm.days[0].groups, groups);
             var displayed = [];
             _.each(vm.days[0].groups, function(group) {

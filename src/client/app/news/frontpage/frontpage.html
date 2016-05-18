@@ -28,6 +28,36 @@
 		            	<div adsrv what="tophome-mobi" class="top"></div>
 		            </ion-item>
 
+		            <ion-item class="item-divider item-dark" ng-if="day.groups.industry.length" nav-clear 
+		            style="border-top: 3px solid #CC2C0E">
+		            	<a ui-sref="app.topic({ q: 'ITWeb Security Summit 2016' })" class="item-content"
+						     ga-track-event="['frontpage', 'tag', 'promo', 0]">
+				            <h3 class="itw-section assertive">
+		                		ITWeb Security Summit 2016
+		                		<i class="icon ion-chevron-right"></i> 
+			                </h3>
+		                </a>
+		            </ion-item>
+
+		            <ion-item class="item-dark" ng-repeat="(j, item) in day.groups.promo">
+			            <a ui-sref="app.article-raw({ id: item.itemid })" 
+			            ga-track-event="['frontpage', 'article', 'promo', j + 1]">
+			                <h3 style="color: #fff">
+			                	<itw-timestamp timestamp="'{{ item.created }}'" style="float: right"></itw-timestamp> {{ ::item.title }}
+			                </h3>
+		                </a>
+		            </ion-item>
+
+		            <ion-item class="item-divider" ng-if="day.groups.top.length" nav-clear style="border-top: 3px solid #CC2C0E">
+		            	<a ui-sref="app.news.category({ id: 'top-news' })" class="item-content"
+		            	ga-track-event="['frontpage', 'section', 'top-news', i + 1]">
+				            <h3 class="itw-section assertive">
+		                		Top news
+		                		<i class="icon ion-chevron-right"></i> 
+			                </h3>
+		                </a>
+		            </ion-item>
+
 		            <ion-item class="item-light" ng-repeat="(j, item) in day.groups.top">
 		            <div class="item-content">
 					    <a ui-sref="app.article({ id: item.itemid, catid: item.section.id })"
