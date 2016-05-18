@@ -8,7 +8,7 @@ cordova/
 report/
 satellizer/
 silex/
-client/
+satellizer_demo/
 .idea
 
 *.php
