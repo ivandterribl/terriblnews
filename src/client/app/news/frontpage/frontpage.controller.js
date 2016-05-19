@@ -137,6 +137,18 @@
             });
 
             groups.promo = [{
+                itemid: 152693,
+                title: 'Security breaches not caused by bad luck',
+                created: '2016-05-19 08:42:00'
+            }, {
+                itemid: 152688,
+                title: 'Info security outsourcing is almost inevitable',
+                created: '2016-05-19 08:19:00'
+            }, {
+                itemid: 152687,
+                title: 'Security in a cloud-first, mobile-first world',
+                created: '2016-05-18 15:09:00'
+            }, {
                 itemid: 152682,
                 title: 'Application security exposes businesses',
                 created: '2016-05-18 12:54:00'
@@ -164,30 +176,6 @@
                 itemid: 152608,
                 title: 'The \'big five\' national cyber security projects',
                 created: '2016-05-18 09:15:00'
-            }, {
-                itemid: 152607,
-                title: 'Law needs to catch up with cyber crime',
-                created: '2016-05-18 09:11:00'
-            }, {
-                itemid: 152606,
-                title: 'Study the opposition in fighting cyber crime',
-                created: '2016-05-18 09:01:00'
-            }, {
-                itemid: 152604,
-                title: 'Penetration tests are overstated',
-                created: '2016-05-18 08:43:00'
-            }, {
-                itemid: 152600,
-                title: 'Cyber criminals cash in with ransomware',
-                created: '2016-05-18 08:25:00'
-            }, {
-                itemid: 152599,
-                title: 'Geo-locations don\'t deter cyber attacks',
-                created: '2016-05-18 08:11:00'
-            }, {
-                itemid: 152598,
-                title: 'Hacking off-the-shelf devices',
-                created: '2016-05-18 08:03:00'
             }];
 
             vm.days[0].groups = _.assign(vm.days[0].groups, groups);
