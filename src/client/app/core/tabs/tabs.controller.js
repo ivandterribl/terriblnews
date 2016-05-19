@@ -24,10 +24,12 @@
 
         //activate();
 
-        function activate() {
-            vm.category = _.findWhere(vm.categories, {
-                id: $state.params.id
-            }) || vm.categories[0];
+        function activate($event, activeItem) {
+            vm.category = activeItem ?
+                activeItem :
+                _.findWhere(vm.categories, {
+                    id: $state.params.id
+                }) || vm.categories[0];
             vm.selectedIndex = vm.categories.indexOf(vm.category);
         }
 

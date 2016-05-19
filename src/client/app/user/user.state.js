@@ -8,33 +8,39 @@
     Config.$inject = ['$stateProvider'];
 
     function Config($stateProvider) {
+        var items = [{
+            title: 'Login',
+            id: 'login',
+            state: {
+                name: 'app.user.login'
+            }
+        }, {
+            title: 'Sign up',
+            id: 'signup',
+            state: {
+                name: 'app.user.login'
+            }
+        }];
         $stateProvider
             .state('app.user', {
                 url: '/user',
                 abstract: true,
                 params: {
-                    items: [{
-                        title: 'Login',
-                        id: 'login',
-                        state: {
-                            name: 'app.user.login'
-                        }
-                    }, {
-                        title: 'Sign up',
-                        id: 'signup',
-                        state: {
-                            name: 'app.user.signup'
-                        }
-                    }]
+                    nav: 'User'
                 },
                 templateUrl: 'app/core/tabs/tabs.html',
                 controller: 'TabsController as vm'
             })
             .state('app.user.login', {
-                url: '/login',
+                url: '/:id',
+                params: {
+                    id: null
+                },
                 views: {
                     tabContent: {
-                        templateUrl: 'app/user/login.html',
+                        templateUrl: function($stateParams) {
+                            return 'app/user/' + $stateParams.id + '.html'
+                        },
                         controller: 'LoginController as vm'
                     }
                 }
@@ -42,11 +48,12 @@
             .state('app.user.signup', {
                 url: '/signup',
                 params: {
-                    id: 'signup'
+                    active: items[1]
                 },
                 views: {
                     tabContent: {
-                        templateUrl: 'app/user/signup.html'
+                        templateUrl: 'app/user/signup.html',
+                        controller: 'SignupController as vm'
                     }
                 }
             });

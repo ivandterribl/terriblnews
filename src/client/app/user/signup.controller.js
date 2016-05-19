@@ -3,14 +3,14 @@
 
     angular
         .module('itw.user')
-        .controller('LoginController', Controller);
+        .controller('SignupController', Controller);
 
-    Controller.$inject = ['$scope', '$state', '$ionicHistory'];
+    Controller.$inject = ['$scope', '$state'];
     /* @ngInject */
-    function Controller($scope, $state, $ionicHistory) {
+    function Controller($scope, $state) {
         var vm = this;
 
-        vm.login = function(form) {
+        vm.signup = function(form) {
             console.log(form);
         };
 
@@ -18,9 +18,6 @@
 
         function activate() {
             console.log('oauth2 :)');
-            $ionicHistory.nextViewOptions({
-                disableAnimate: true
-            });
 
             $scope.$on('$ionicView.enter', function() {
                 $scope.$emit('category', $state.params.active);

@@ -156,7 +156,7 @@
                             return row;
                         }),
                         groups = {
-                            lead: _.filter(items, function(row) {
+                            lead: _.filter(items, function() {
                                 return false;
                             }),
                             top: _.filter(items, function(row) {
