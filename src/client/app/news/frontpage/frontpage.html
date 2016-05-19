@@ -28,7 +28,7 @@
 		            	<div adsrv what="tophome-mobi" class="top"></div>
 		            </ion-item>
 
-		            <ion-item class="item-divider item-dark" ng-if="day.groups.industry.length" nav-clear 
+		            <ion-item class="item-divider item-dark" ng-if="day.groups.promo.length" nav-clear
 		            style="border-top: 3px solid #CC2C0E">
 		            	<a ui-sref="app.topic({ q: 'ITWeb Security Summit 2016' })" class="item-content"
 						     ga-track-event="['frontpage', 'tag', 'promo', 0]">
@@ -48,7 +48,8 @@
 		                </a>
 		            </ion-item>
 
-		            <ion-item class="item-divider" ng-if="day.groups.top.length" nav-clear style="border-top: 3px solid #CC2C0E">
+		            <ion-item class="item-divider" ng-if="day.groups.promo.length" nav-clear
+							  style="border-top: 3px solid #CC2C0E">
 		            	<a ui-sref="app.news.category({ id: 'top-news' })" class="item-content"
 		            	ga-track-event="['frontpage', 'section', 'top-news', i + 1]">
 				            <h3 class="itw-section assertive">

@@ -7,10 +7,10 @@
 
     Controller.$inject = [
         'articles', 'api', '_', 'moment',
-        '$scope', '$state', 'searchBar', '$ionicHistory', 'Analytics'
+        '$scope', '$ionicHistory', 'Analytics'
     ];
     /* @ngInject */
-    function Controller(articles, api, _, moment, $scope, $state, searchBar, $ionicHistory, Analytics) {
+    function Controller(articles, api, _, moment, $scope, $ionicHistory, Analytics) {
         var vm = this,
             day = {
                 groups: {},
@@ -32,13 +32,15 @@
 
             vm.items = [];
             loadLead();
+            api('tag=promo')
+                .then(function(response) {
+                    vm.days[0].groups.promo = response;
+                });
         }
 
         function loadLead() {
             api('tag=lead-picture&limit=5')
                 .then(function(response) {
-                    var row = response[0];
-
                     vm.leads = _.map(response, function(row) {
                         var slug = row.section.split(':');
                         return _.assign(row, {
@@ -135,48 +137,6 @@
                     section: null
                 });
             });
-
-            groups.promo = [{
-                itemid: 152693,
-                title: 'Security breaches not caused by bad luck',
-                created: '2016-05-19 08:42:00'
-            }, {
-                itemid: 152688,
-                title: 'Info security outsourcing is almost inevitable',
-                created: '2016-05-19 08:19:00'
-            }, {
-                itemid: 152687,
-                title: 'Security in a cloud-first, mobile-first world',
-                created: '2016-05-18 15:09:00'
-            }, {
-                itemid: 152682,
-                title: 'Application security exposes businesses',
-                created: '2016-05-18 12:54:00'
-            }, {
-                itemid: 152674,
-                title: 'Collaborating to beat the bad guys',
-                created: '2016-05-18 12:04:00'
-            }, {
-                itemid: 152669,
-                title: 'Youth lack public security information',
-                created: '2016-05-18 11:37:00'
-            }, {
-                itemid: 152664,
-                title: 'Passwords are broken',
-                created: '2016-05-18 10:53:00'
-            }, {
-                itemid: 152656,
-                title: 'Rica needs greater transparency',
-                created: '2016-05-18 10:02:00'
-            }, {
-                itemid: 152612,
-                title: 'Cyber security Bill has been \'mishandled\'',
-                created: '2016-05-18 09:34:00'
-            }, {
-                itemid: 152608,
-                title: 'The \'big five\' national cyber security projects',
-                created: '2016-05-18 09:15:00'
-            }];
 
             vm.days[0].groups = _.assign(vm.days[0].groups, groups);
             var displayed = [];
