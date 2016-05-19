@@ -46,8 +46,7 @@
                 },
                 views: {
                     tabContent: {
-                        templateUrl: 'app/user/signup.html',
-                        controller: 'LoginController as vm'
+                        templateUrl: 'app/user/signup.html'
                     }
                 }
             });
