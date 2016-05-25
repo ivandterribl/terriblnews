@@ -35,3 +35,10 @@ md-icon {
     width: 24px;
     color: rgba(0, 0, 0, 0.54);
 }
+
+.md-tab {
+    padding: 10px 12px;
+}
+md-tabs-canvas, md-pagination-wrapper {
+    height: $bar-subheader-height;
+}

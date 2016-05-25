@@ -1,5 +1,5 @@
 (function() {
 	'use strict';
 
-	angular.module('itw.ui', ['app.core', 'itw.ui.tabs']);
+	angular.module('itw.ui', ['app.core', 'itw.ui.tabs', 'satellizer', 'toastr']);
 })();

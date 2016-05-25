@@ -10,3 +10,11 @@ a.item {
 .loading-container .loading {
     background-color: transparent;
 }
+.button.button-small {
+  font-family: $headings-font-family;
+  font-weight: $headings-font-weight;
+  min-height: 42px;
+  line-height: 24px;
+  text-transform: uppercase;
+  font-size: 14px;
+}

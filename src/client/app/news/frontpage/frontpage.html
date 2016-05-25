@@ -4,11 +4,9 @@
 	</ion-nav-title>
 	<ion-nav-buttons side="right">
       <button class="button button-icon ion-person" 
-                ui-sref="app.user.profile" ng-if="vm.user.access"></button>
+                ui-sref="app.user.profile"></button>
 
-      <button class="button button-icon ion-person-add" 
-                ui-sref="app.user.login" ng-if="!vm.user.access"></button>
-    </ion-nav-buttons>
+	</ion-nav-buttons>
 	<ion-content lazy-scroll>
     	<section ng-show="vm.loading" class="text-center padding">
     		<ion-spinner></ion-spinner>

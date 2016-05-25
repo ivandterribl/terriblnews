@@ -1,12 +1,12 @@
 <ion-view>
 	<ion-nav-title>Sign up</ion-nav-title>
 	
-	<ion-content ng-class="{ 'has-subheader': 1 }" padding="1">
+	<ion-content ng-class="{ 'has-subheader': 0 }" padding="1">
     	<form method="post"  name="signupForm">
         	<div class="list list-inset">
 			  <label class="item item-input" ng-class="{ 'has-error' : signupForm.displayName.$invalid && signupForm.displayName.$dirty }">
 			    <i class="icon ion-person placeholder-icon"></i>
-			    <input type="text" placeholder="Name" name="displayName" ng-model="vm.user.displayName" required autofocus>
+			    <input type="text" placeholder="Name" name="displayName" ng-model="vm.user.displayName" required>
 			  </label>
 			  <div class="error-container" ng-if="signupForm.displayName.$dirty" 
 			  ng-messages="signupForm.displayName.$error">
@@ -44,10 +44,19 @@
 			      <div ng-message="compareTo">Password must match.</div>
 			   </div>
 			</div>	
-			<div class="padding text-center stable">By clicking on Sign up, you agree to <a ui-sref="app.about.privacy">terms &amp; conditions</a> and <a ui-sref="app.about.privacy">privacy policy</a></div>
-			<button class="button button-full button-positive" ng-click="vm.signup(signupForm)" >
+			<div class="padding text-center stable">By signing up, you agree to <a ui-sref="app.about.privacy">terms &amp; conditions</a> and <a ui-sref="app.about.privacy">privacy policy</a></div>
+			<button class="button button-block button-small button-clear button-assertive" ng-click="vm.signup(signupForm)" >
 			    Sign up
+			    <i class="icon ion-chevron-right"></i> 
 			  </button>
         </form>
+        <div class="signup-or-separator">
+            <h4 class="text">or</h4>
+            <hr>
+        </div>
+        <button class="button button-block button-small button-clear button-small button-positive" ui-sref="app.user.login">
+          <i class="icon ion-chevron-left"></i> 
+          Have an account? Login
+        </button>
 	</ion-content>
 </ion-view>

@@ -5,13 +5,29 @@
         .module('itw.user')
         .controller('SignupController', Controller);
 
-    Controller.$inject = ['$scope', '$state'];
+    Controller.$inject = ['$scope', '$state', '$auth', 'toastr'];
     /* @ngInject */
-    function Controller($scope, $state) {
+    function Controller($scope, $state, $auth, toastr) {
         var vm = this;
 
         vm.signup = function(form) {
-            console.log(form);
+            var payload = {
+                client_id: 'itweb/app',
+                displayName: vm.user.displayName,
+                username: vm.user.email,
+                password: vm.user.password,
+                redirect_uri: 'http://localhost:3000/user/activate'
+            };
+
+            $auth.signup(payload)
+                .then(function(response) {
+                    $auth.setToken(response);
+                    $state.go('app.user.profile');
+                    toastr.info('You have successfully created a new account and have been signed-in');
+                })
+                .catch(function(response) {
+                    toastr.error(response.data.error_description);
+                });
         };
 
         activate();

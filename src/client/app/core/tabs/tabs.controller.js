@@ -49,7 +49,8 @@
             vm.category = category;
 
             $ionicHistory.nextViewOptions({
-                disableBack: true
+                disableBack: true,
+                disableAnimate: true
             });
 
             $state.transitionTo(category.state.name, category.state.params);

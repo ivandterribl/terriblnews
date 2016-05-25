@@ -18,7 +18,7 @@
             title: 'Sign up',
             id: 'signup',
             state: {
-                name: 'app.user.login'
+                name: 'app.user.signup'
             }
         }];
         $stateProvider
@@ -26,23 +26,23 @@
                 url: '/user',
                 abstract: true,
                 params: {
-                    nav: 'User'
+                    items: items
                 },
-                templateUrl: 'app/core/tabs/tabs.html',
-                controller: 'TabsController as vm'
+                template: '<ion-view><ion-nav-view name="tabContent"></ion-nav-view></ion-view>'
             })
             .state('app.user.login', {
-                url: '/:id',
+                url: '/login',
                 params: {
-                    id: null
+                    active: items[0]
                 },
                 views: {
                     tabContent: {
-                        templateUrl: function($stateParams) {
-                            return 'app/user/' + $stateParams.id + '.html'
-                        },
+                        templateUrl: 'app/user/login.html',
                         controller: 'LoginController as vm'
                     }
+                },
+                resolve: {
+                    skipIfLoggedIn: skipIfLoggedIn
                 }
             })
             .state('app.user.signup', {
@@ -55,8 +55,71 @@
                         templateUrl: 'app/user/signup.html',
                         controller: 'SignupController as vm'
                     }
+                },
+                resolve: {
+                    skipIfLoggedIn: skipIfLoggedIn
+                }
+            })
+            .state('app.user.profile', {
+                url: '/profile',
+                views: {
+                    tabContent: {
+                        templateUrl: 'app/user/profile.html',
+                        controller: 'ProfileController as vm'
+                    }
+                },
+                resolve: {
+                    loginRequired: loginRequired
+                }
+            })
+            .state('app.user.activate', {
+                url: '/activate?token',
+                resolve: {
+                    activation: function($q, $state, $stateParams, $http, $auth, toastr) {
+                        var deferred = $q.defer();
+
+                        $http.get('https://secure.itweb.co.za/api/accounts/activate', {
+                            params: {
+                                token: $stateParams.token
+                            }
+                        }).then(function(response) {
+                            $auth.setToken(response.data.access_token);
+
+                            toastr.success('Thank you, your account is now active');
+
+                            $state.go('app.user.profile');
+                        }).catch(function(response) {
+                            var data = response.data || {},
+                                error = data.error || {};
+
+                            toastr.error(error.error_description, response.status);
+
+                            $state.go('app.user.login');
+                        });
+                        return deferred.promise;
+                    }
                 }
             });
+
+        function skipIfLoggedIn($q, $location, $auth) {
+            var deferred = $q.defer();
+            if ($auth.isAuthenticated()) {
+                $location.path('/user/profile');
+            } else {
+                deferred.resolve();
+            }
+            return deferred.promise;
+        }
+
+        function loginRequired($q, $location, $auth) {
+            var deferred = $q.defer();
+            if ($auth.isAuthenticated()) {
+                deferred.resolve();
+            } else {
+                $location.path('/user/login');
+            }
+            return deferred.promise;
+        }
     }
 
 })();

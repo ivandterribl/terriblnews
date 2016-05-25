@@ -4,17 +4,14 @@
     "angular-material/tabs.scss",
     "itweb/_core.scss",
     "itweb/_ionic.scss",
-    "itweb/_md.scss";
+    "itweb/_md.scss",
+    "itweb/_user.scss",
+    "itweb/_angular-toastr.scss";
 
 a {
   text-decoration: none;
 }
-.md-tab {
-	padding: 10px 12px;
-}
-md-tabs-canvas, md-pagination-wrapper {
-    height: $bar-subheader-height;
-}
+
 .spinner svg {
 	stroke: $assertive;
 	fill: $assertive;
@@ -33,22 +30,27 @@ md-tabs-canvas, md-pagination-wrapper {
   padding-left: 40px;
   transition: 0.09s all linear;
 }
+
 .list .item.item-accordion.ng-hide {
   line-height: 0px;
 }
+
 .list .item.item-accordion.ng-hide-add,
 .list .item.item-accordion.ng-hide-remove {
   display: block !important;
 }
+
 .item h1, .item-content h1,
 .item h2, .item-content h2,
 .item h3, .item-content h3,
 .item p, .item-content p {
   white-space: normal;
 }
+
 .item-complex .item-content, .item-radio .item-content {
   padding: 12px;
 }
+
 .item-thumbnail-left.item-complex .item-content {
     padding-top: 6px;
     padding-left: 102px;
@@ -127,7 +129,6 @@ ion-header-bar.bar.bar-stable {
     clear: both;
   }
 }
-
 .highlight {
     background-color: #FFFFCC;
     font-weight: bold;
@@ -211,15 +212,8 @@ article span {
 .card {
   margin: 10px 10px 0 10px;
   padding: 0;
-  h2 {
-    font-size: 16px;
-    margin: 4px;
-  }
   .itw-section {
     padding: 4px 0 2px 4px;
-  }
-  p {
-    margin: 0 0 0 4px;
   }
 }
 .ellipsis {
@@ -319,53 +313,6 @@ md-tabs .md-tab {
     &::after {
       clear: both;
     }
-}
-
-
-.password-strength-indicator {
-  position: absolute;
-  top: 10px;
-  right: 0;
-  width: 5px;
-  padding: 0 15px;
-}
-
-.password-strength-indicator span {
-  display: block;
-  width: 5px;
-  height: 5px;
-  margin-bottom: 2px;
-  background: #ebeef1;
-  border-radius: 5px;
-}
-
-.signup-or-separator {
-  position: relative;
-  height: 34px;
-  text-align: center;
-  background: none;
-}
-
-.signup-or-separator hr {
-  width: 90%;
-  margin: -16px auto 10px auto;
-  border-top: 1px solid #dce0e0;
-}
-
-.signup-or-separator .text {
-  display: inline-block;
-  padding: 8px;
-  margin: 0;
-  background-color: #fff;
-}
-
-.error-container div {
-  color: $assertive;
-  padding: 4px;
-}
-
-.item.item-input.has-error {
-  border: 1px solid $assertive;
 }
 
 

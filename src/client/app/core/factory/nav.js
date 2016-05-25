@@ -204,28 +204,6 @@
                         name: 'app.about.bee'
                     }
                 }]
-            }, {
-                title: 'User',
-                icon: 'ion-person',
-                items: [{
-                    title: 'Login',
-                    id: 'login',
-                    state: {
-                        name: 'app.user.login',
-                        params: {
-                            id: 'login'
-                        }
-                    }
-                }, {
-                    title: 'Sign up',
-                    id: 'signup',
-                    state: {
-                        name: 'app.user.signup',
-                        params: {
-                            id: 'signup'
-                        }
-                    }
-                }]
             }];
         }
 
