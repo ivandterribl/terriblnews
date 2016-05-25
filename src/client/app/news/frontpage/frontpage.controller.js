@@ -32,10 +32,6 @@
 
             vm.items = [];
             loadLead();
-            api('tag=promo')
-                .then(function(response) {
-                    vm.days[0].groups.promo = response;
-                });
         }
 
         function loadLead() {
