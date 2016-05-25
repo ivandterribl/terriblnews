@@ -1,0 +1,58 @@
+
+
+
+.password-strength-indicator {
+  position: absolute;
+  top: 10px;
+  right: 0;
+  width: 5px;
+  padding: 0 15px;
+}
+
+.password-strength-indicator span {
+  display: block;
+  width: 5px;
+  height: 5px;
+  margin-bottom: 2px;
+  background: #ebeef1;
+  border-radius: 5px;
+}
+
+.signup-or-separator {
+  position: relative;
+  height: 34px;
+  text-align: center;
+  background: none;
+  padding: 0 4px;
+}
+
+.signup-or-separator hr {
+  width: 100%;
+  margin: -16px auto 10px auto;
+  border-top: 1px solid #dce0e0;
+}
+
+.signup-or-separator .text {
+  display: inline-block;
+  padding: 8px;
+  margin: 0;
+  background-color: #fff;
+}
+
+.error-container div {
+  color: $assertive;
+  padding: 4px;
+}
+
+.item.item-input.has-error {
+  border: 1px solid $assertive;
+  margin: 0 0 1px;
+}
+
+form .list.list-inset {
+  margin: 10px 0;
+}
+
+.button-small.icon-left:before {
+  width: 24px;
+}
