@@ -8,6 +8,7 @@
 		'app.office',
 		'app.about',
 		'app.search',
-		'itw.user'
+		'itw.user',
+		'itw.jobs'
 	]);
 })();

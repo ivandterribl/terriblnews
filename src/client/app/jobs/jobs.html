@@ -1,0 +1,28 @@
+<ion-view>
+	<ion-nav-title>Jobs</ion-nav-title>
+	
+	<ion-nav-buttons side="secondary">
+		<button class="button button-icon ion-android-search" 
+                ng-click="vm.showSearchbar()"></button>
+      	<button class="button button-icon ion-person" 
+                ui-sref="app.user.profile"></button>
+	</ion-nav-buttons>
+
+	<ion-content lazy-scroll ng-class="{ 'has-subheader': vm.hasSubheader }" on-swipe-right="vm.prev()" on-swipe-left="vm.next()">
+    	<section>
+	    	<ion-list>
+	    		<ion-item ng-repeat="(i, item) in vm.items" ui-sref="app.job({ id: item.JobID, job: item })"> 
+	    			<h2>{{ item.JobTitle }}</h2>
+	    			<p>{{ item.JobDescBrief }}</p>
+		    	</ion-item>
+	        </ion-list>
+        </section>
+
+        <ion-infinite-scroll
+        	immediate-check="false"
+        	ng-if="false && !vm.complete"
+		    on-infinite="vm.loadItems()"
+		    distance="5%">
+		</ion-infinite-scroll>
+	</ion-content>
+</ion-view>

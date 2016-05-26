@@ -12,6 +12,12 @@ a {
   text-decoration: none;
 }
 
+b {
+  font-weight: normal;
+  font-style: italic;
+  display: block;
+}
+
 .spinner svg {
 	stroke: $assertive;
 	fill: $assertive;

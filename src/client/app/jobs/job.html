@@ -1,0 +1,42 @@
+<ion-view>
+	<ion-nav-title>Jobs</ion-nav-title>
+	
+	<ion-nav-buttons side="secondary">
+		<button class="button button-icon ion-android-search" 
+                ng-click="vm.showSearchbar()"></button>
+      	<button class="button button-icon ion-person" 
+                ui-sref="app.user.profile"></button>
+	</ion-nav-buttons>
+
+	<ion-content padding="1">
+		<h2>{{ vm.job.JobTitle }}</h2>
+		<section>
+			<label>Duration</label><br />
+			<strong>{{ vm.job.JobTypeCode }}</strong><br />
+			<label>Employer</label><br />
+			<strong>{{ vm.job.Name }}<br /><span class="stable">{{ vm.job.CompanyTypeCode }}</span></strong><br />
+			<label>Added</label><br />
+			<strong>{{ vm.job.CreationDate | date }}</strong>
+		</section>
+		<br />
+		<ul>
+			<li>There have been {{ vm.job.JobResponses }} applications for this job.</li>
+			<li>This job has been viewed {{ vm.job.Hits }} times.</li>
+		</ul>
+		<br />
+		<section>
+			<label>Location</label><br />
+			<strong>{{ vm.job.AreaID }}</strong><br />
+			<label>Salary</label><br />
+			<strong>{{ vm.job.SalaryCurrency }} {{ vm.job.SalaryLow }} &dash; {{ vm.job.SalaryHigh }}</strong><br />
+			<label>Benefits</label><br />
+			<strong>{{ vm.job.CreationDate | date }}</strong>
+		</section>
+		<br />
+    	<p>{{ vm.job.JobDescDetail }}</p>
+    	<br />
+    	<button class="button button-clear button-positive">
+    		Apply
+    	</button>
+	</ion-content>
+</ion-view>
