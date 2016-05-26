@@ -32,11 +32,17 @@
 
             vm.items = [];
             loadLead();
+            api('tag=promo')
+                .then(function(response) {
+                    vm.days[0].groups.promo = response;
+                });
         }
 
         function loadLead() {
             api('tag=lead-picture&limit=5')
                 .then(function(response) {
+                    var row = response[0];
+
                     vm.leads = _.map(response, function(row) {
                         var slug = row.section.split(':');
                         return _.assign(row, {

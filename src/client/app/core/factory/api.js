@@ -42,7 +42,7 @@
                 }).success(function(response) {
                     //console.log('%c' + url, 'background-color: yellow');
                     //console.log('%c' + JSON.stringify(response), 'background-color: #aFa');
-                    if (response.length) {
+                    if (response.length || (response.items && response.items.length)) {
                         def.resolve(response);
                     } else {
                         def.reject(response);
