@@ -25,15 +25,12 @@
             .state('app.user', {
                 url: '/user',
                 abstract: true,
-                params: {
-                    items: items
-                },
                 template: '<ion-view><ion-nav-view name="tabContent"></ion-nav-view></ion-view>'
             })
             .state('app.user.login', {
                 url: '/login',
                 params: {
-                    active: items[0]
+                    redirect: {}
                 },
                 views: {
                     tabContent: {
@@ -48,7 +45,7 @@
             .state('app.user.signup', {
                 url: '/signup',
                 params: {
-                    active: items[1]
+                    redirect: {}
                 },
                 views: {
                     tabContent: {

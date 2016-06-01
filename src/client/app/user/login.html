@@ -2,20 +2,25 @@
 	<ion-nav-title>Login</ion-nav-title>
 	
 	<ion-content ng-class="{ 'has-subheader': 0 }" padding="1">
-    	<form method="post" ng-submit="vm.login(loginForm)"  name="loginForm">
+    	<form name="loginForm" ng-submit="false">
         	<div class="list list-inset">
-			  <label class="item item-input">
+			  <label class="item item-input" 
+                ng-class="{ 'has-error' : loginForm.email.$invalid && loginForm.$submitted }"
+                style="margin-bottom: 1px">
 			    <i class="icon ion-at placeholder-icon"></i>
 			    <input type="email" placeholder="Email" name="email" ng-model="vm.user.email" required>
 			  </label>
 			</div>
 			<div class="list list-inset">
-			  <label class="item item-input">
+			  <label class="item item-input" 
+                ng-class="{ 'has-error' : loginForm.password.$invalid && loginForm.$submitted }"
+                style="margin-bottom: 1px">
 			    <i class="icon ion-key placeholder-icon"></i>
 			    <input type="password" placeholder="Password" name="password" ng-model="vm.user.password" required>
 			  </label>
 			</div>
-			<button type="submit" ng-disabled="false && loginForm.$invalid" class="button button-block button-small button-clear button-outline2 button-assertive">
+			<button ng-click="vm.login(loginForm)" class="button button-block button-small button-clear"
+                ng-class="{ 'button-assertive': loginForm.$valid, 'button-assertive': loginForm.$invalid }">
             Log in
             <i class="icon ion-chevron-right"></i> 
             </button>

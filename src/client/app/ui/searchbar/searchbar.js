@@ -93,11 +93,12 @@
             favoritesTitle: 'Favorite Searches',
             favoritesAddPlaceholder: 'Add a search term',
             favoritesEnabled: false,
-            favoritesKey: 'ionic_filter_bar_favorites'
+            favoritesKey: 'ionic_filter_bar_favorites',
+            stateName: 'app.search'
           }, opts);
 
           scope.data = {
-            filterText: ''
+            filterText: opts.filterText || ''
           };
 
           //if no custom theme was configured, get theme of containers bar-header
@@ -122,7 +123,7 @@
 
           var stateChangeListenDone = scope.cancelOnStateChange ?
             $rootScope.$on('$stateChangeSuccess', function($event, toState) {
-              if (toState.name !== 'app.search') {
+              if (toState.name !== scope.stateName) {
                 scope.cancelFilterBar();
               } else {
                 hideKeyboard();

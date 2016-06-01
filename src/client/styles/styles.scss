@@ -1,12 +1,12 @@
 @import
-    "ionic/ionic.scss",
-    "ionic-filter-bar/ionic.filter.bar.scss",
-    "angular-material/tabs.scss",
-    "itweb/_core.scss",
-    "itweb/_ionic.scss",
-    "itweb/_md.scss",
-    "itweb/_user.scss",
-    "itweb/_angular-toastr.scss";
+  "ionic/ionic.scss",
+  "ionic-filter-bar/ionic.filter.bar.scss",
+  "angular-material/tabs.scss",
+  "itweb/_core.scss",
+  "itweb/_ionic.scss",
+  "itweb/_md.scss",
+  "itweb/_user.scss",
+  "itweb/_angular-toastr.scss";
 
 a {
   text-decoration: none;
@@ -73,12 +73,6 @@ b {
     font-size: 12px;
     font-weight: bold;
   }
-}
-
-
-ion-side-menu .item {
-  margin: 0;
-  border-width: 0px;
 }
 
 article img {
@@ -222,6 +216,7 @@ article span {
     padding: 4px 0 2px 4px;
   }
 }
+
 .ellipsis {
     text-overflow: ellipsis;
     white-space: nowrap;

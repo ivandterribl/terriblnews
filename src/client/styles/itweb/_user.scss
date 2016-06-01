@@ -1,5 +1,6 @@
-
-
+button[disabled] {
+  opacity: .6;
+}
 
 .password-strength-indicator {
   position: absolute;
@@ -55,4 +56,8 @@ form .list.list-inset {
 
 .button-small.icon-left:before {
   width: 24px;
+}
+
+.item.item-input {
+    margin: 0 0 1px;
 }

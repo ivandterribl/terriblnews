@@ -5,15 +5,16 @@
         .module('itw.jobs')
         .controller('JobsController', Controller);
 
-    Controller.$inject = ['api2', 'activeNav', '$scope', '$state', '$location'];
+    Controller.$inject = ['api2', 'activeNav', 'jobs', '$scope', '$state', '$location', 'searchBar'];
     /* @ngInject */
-    function Controller(api2, activeNav, $scope, $state, $location) {
-
+    function Controller(api2, activeNav, jobs, $scope, $state, $location, searchBar) {
+        console.log(jobs);
         var vm = this,
-            id = $state.params.id,
-            limitstart = $state.params.limitstart || 0,
-            limit = $state.params.limit || 25;
+            limit = $state.params.limit || 16,
+            limitstart = jobs.length || limit;
 
+        vm.loadItems = loadItems;
+        vm.showSearchbar = showSearchbar;
         activate();
 
         function activate() {
@@ -22,18 +23,37 @@
             vm.category = activeNav;
             vm.hasSubheader = $state.params.subheader;
 
-            fetchItems();
-
+            vm.items = jobs;
+            vm.complete = 0;
             // cached view
             $scope.$on('$ionicView.enter', function() {
                 $scope.$emit('category', activeNav.item);
             });
         }
 
-        function fetchItems() {
-            api2('jobs/' + activeNav.id)
+        function showSearchbar() {
+            searchBar.show({
+                stateName: 'app.jobs.search'
+            });
+        }
+
+        function loadItems() {
+            api2('jobs/category/' + activeNav.id + '?limitstart=' + limitstart + '&limit=' + limit)
                 .then(function(response) {
-                    vm.items = response;
+                    vm.items = vm.items.concat(response);
+
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+
+                    limitstart += response.length;
+                    vm.complete = 0;
+                })
+                .catch(function() {
+                    vm.items = [];
+                    vm.complete = 1;
+                })
+                .finally(function() {
+                    vm.loading = 0;
+                    $scope.$broadcast('scroll.refreshComplete');
                 });
         }
     }

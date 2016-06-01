@@ -8,35 +8,63 @@
                 ui-sref="app.user.profile"></button>
 	</ion-nav-buttons>
 
-	<ion-content padding="1">
-		<h2>{{ vm.job.JobTitle }}</h2>
+	<ion-content>
+		<div class="padding" style="padding-bottom: 0">
+			<h3 class="assertive">{{ vm.job.JobTitle }}</h3>
+			<h4><i class="icon ion-university" ng-if="vm.job.CompanyTypeCode==='A'"></i> {{ vm.job.Name }}</h4>
+		</div>
 		<section>
-			<label>Duration</label><br />
-			<strong>{{ vm.job.JobTypeCode }}</strong><br />
-			<label>Employer</label><br />
-			<strong>{{ vm.job.Name }}<br /><span class="stable">{{ vm.job.CompanyTypeCode }}</span></strong><br />
-			<label>Added</label><br />
-			<strong>{{ vm.job.CreationDate | date }}</strong>
+			<div class="row">
+				<label class="col">Ref no</label>
+				<strong class="col text-right">{{ vm.job.JobID }}</strong>
+			</div>
+			<div class="row">
+				<label class="col">Job type</label>
+				<strong class="col text-right">{{ vm.job.JobType }}</strong>
+			</div>
+			<div class="row">
+				<label class="col">Date added</label>
+				<strong class="col text-right">{{ vm.job.CreationDateText | date }}</strong>
+			</div>
 		</section>
-		<br />
-		<ul>
-			<li>There have been {{ vm.job.JobResponses }} applications for this job.</li>
-			<li>This job has been viewed {{ vm.job.Hits }} times.</li>
-		</ul>
-		<br />
+		<section class="padding" style="background: #e5e5e5; border-style: solid; border-color: #ccc; border-width: 1px 0">
+			<ul>
+				<li class="assertive" ng-if="vm.job.Affirmative === 'Y'"><i class="icon ion-android-checkmark-circle"></i> Affirmative action position</li>
+				<li>
+					<i class="icon ion-clipboard"></i> 
+					<ng-pluralize count="vm.job.Stats.Hits" when="{ 'one': '1 view', 'other': '{} views' }"></ng-pluralize>
+				</li>
+				<li>
+					<i class="icon ion-briefcase"></i> 
+					<ng-pluralize count="vm.job.Stats.JobResponses" when="{ 'one': '1 application', 'other': '{} applications' }"></ng-pluralize>
+				</li>
+			</ul>
+		</section>
 		<section>
-			<label>Location</label><br />
-			<strong>{{ vm.job.AreaID }}</strong><br />
-			<label>Salary</label><br />
-			<strong>{{ vm.job.SalaryCurrency }} {{ vm.job.SalaryLow }} &dash; {{ vm.job.SalaryHigh }}</strong><br />
-			<label>Benefits</label><br />
-			<strong>{{ vm.job.CreationDate | date }}</strong>
+			<div class="row">
+				<label class="col">Location</label>
+				<strong class="col text-right">{{ vm.job.Area }}</strong>
+			</div>
+			<div class="row">
+				<label class="col col-40">Salary</label>
+				<strong class="col col-60 text-right">{{ vm.job.SalaryDisplayText }}</strong>
+			</div>
+			<div class="row">
+				<label class="col">Benefits</label>
+				<strong class="col text-right">{{ vm.job.Perks }}</strong>
+			</div>
 		</section>
-		<br />
-    	<p>{{ vm.job.JobDescDetail }}</p>
-    	<br />
-    	<button class="button button-clear button-positive">
-    		Apply
-    	</button>
+		<section class="padding">
+			<h4 style="margin-top: 16px; margin-bottom: 0">Role details:</h4>
+			<p ng-bind-html="vm.job.JobDescDetail"></p>
+			<!-- <button class="button button-block button-clear button-itweb button-assertive">
+	          Apply
+	          <i class="icon ion-chevron-right"></i> 
+	        </button> -->
+		</section>
 	</ion-content>
+
+	<ion-footer-bar class="bar-balanced" align-title="center">
+		<h3 class="title" ng-click="vm.apply()">APPLY <i class="icon ion-chevron-right"></i></h3>
+	</ion-footer-bar>
 </ion-view>

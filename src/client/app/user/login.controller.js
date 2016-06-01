@@ -5,12 +5,32 @@
         .module('itw.user')
         .controller('LoginController', Controller);
 
-    Controller.$inject = ['$scope', '$state', '$auth', 'toastr'];
+    Controller.$inject = ['$scope', '$state', '$auth', 'user', 'toastr'];
     /* @ngInject */
-    function Controller($scope, $state, $auth, toastr) {
+    function Controller($scope, $state, $auth, user, toastr) {
         var vm = this;
 
-        vm.login = function() {
+        vm.login = login;
+        vm.authenticate = authenticate;
+
+        activate();
+
+        function activate() {
+            vm.user = {};
+            console.log($state.params);
+        }
+
+        function login(form) {
+            if (form.$invalid) {
+                form.$setSubmitted(true);
+                angular.forEach(['email', 'password'], function(fieldName) {
+                    var input = form[fieldName];
+                    if (input.$invalid) {
+                        input.$setDirty(true);
+                    }
+                });
+                return;
+            }
             var payload = angular.extend({}, {
                 grant_type: 'password',
                 client_id: 'itweb/app',
@@ -20,16 +40,25 @@
 
             $auth.login(payload)
                 .then(function() {
-                    $state.go('app.user.profile');
+                    var redirect = $state.params.redirect || {};
+
+                    switch (redirect.name) {
+                        case 'app.jobs.job123':
+                            toastr.info('');
+                            $state.go(redirect.name, redirect.params);
+                            break;
+                        default:
+                            $state.go('app.user.profile');
+                    }
                 })
                 .catch(function(error) {
                     toastr.error(error.data.error_description, error.status);
                 });
-        };
-        vm.authenticate = function(provider) {
+        }
+
+        function authenticate(provider) {
             $auth.authenticate(provider)
                 .then(function() {
-                    //toastr.success('You have successfully signed in with ' + provider);
                     $state.go('app.user.profile');
                 })
                 .catch(function(error) {
@@ -44,15 +73,6 @@
                     }
                 });
 
-        };
-
-        activate();
-
-        function activate() {
-            vm.user = {};
-            $scope.$on('$ionicView.enter', function() {
-                $scope.$emit('category', $state.params.active);
-            });
         }
     }
 })();

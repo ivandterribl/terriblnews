@@ -57,9 +57,9 @@
               var view,
                 stack = _.sortBy(_.toArray($ionicHistory.viewHistory().views), 'index').reverse();
 
-              if ($ionicHistory.currentView() && $ionicHistory.currentView().stateName === 'app.search') {
+              if ($ionicHistory.currentView() && $ionicHistory.currentView().stateName === $scope.stateName) {
                 view = _.find(stack, function(needle) {
-                  return needle.stateName !== 'app.search';
+                  return needle.stateName !== $scope.stateName;
                 });
 
                 $ionicHistory.nextViewOptions({
@@ -126,7 +126,7 @@
                   disableAnimate: true
                 });
                 //$ionicHistory.currentView($ionicHistory.backView());
-                $state.go('app.search', {
+                $state.go($scope.stateName, {
                   q: text
                 });
               }

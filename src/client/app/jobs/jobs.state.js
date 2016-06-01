@@ -9,33 +9,47 @@
 
     function Config($stateProvider, $urlRouterProvider) {
         var resolveNav = ['nav', 'meta', '_', '$stateParams', function(nav, meta, _, $stateParams) {
-            var group = _.find(nav.get(), function(group) {
-                    return _.findWhere(group.items || [], {
+                var group = _.find(nav.get(), function(group) {
+                        return _.findWhere(group.items || [], {
+                            id: $stateParams.id
+                        });
+                    }),
+                    item = _.findWhere(group.items || [], {
                         id: $stateParams.id
                     });
-                }),
-                item = _.findWhere(group.items || [], {
-                    id: $stateParams.id
-                });
 
-            meta.set({
-                title: item ? item.title : void 0,
-                keywords: item ? item.title + ', IT, Technology, Business, News' : void 0
-            });
-            return item;
-        }];
+                meta.set({
+                    title: item ? item.title : void 0,
+                    keywords: item ? item.title + ', IT, Technology, Business, News' : void 0
+                });
+                return item;
+            }],
+            resolveJobs = ['api2', 'meta', '$q', '$stateParams', function(api2, meta, $q, $stateParams) {
+                return api2('jobs/category/' + $stateParams.id + '?limit=16')
+                    .then(function(response) {
+                        return response;
+                    });
+            }];
 
         $stateProvider
             .state('app.jobs', {
                 url: '/jobs',
+                abstract: true
+            })
+            .state('app.jobs.tabs', {
+                url: '/section',
                 abstract: true,
                 params: {
                     nav: 'Jobs'
                 },
-                templateUrl: 'app/core/tabs/tabs.html',
-                controller: 'TabsController as vm'
+                views: {
+                    '@app': {
+                        templateUrl: 'app/core/tabs/tabs.html',
+                        controller: 'TabsController as vm'
+                    }
+                }
             })
-            .state('app.jobs.feed', {
+            .state('app.jobs.tabs.feed', {
                 params: {
                     id: null,
                     subheader: 1
@@ -48,16 +62,44 @@
                     }
                 },
                 resolve: {
-                    activeNav: resolveNav
+                    activeNav: resolveNav,
+                    jobs: resolveJobs
                 }
             })
-            .state('app.job', {
-                url: '/job/:id',
+            .state('app.jobs.search', {
+                url: '/search?q',
+                views: {
+                    '@app': {
+                        templateUrl: 'app/jobs/job-search.html',
+                        controller: 'JobSearchController as vm'
+                    }
+                },
+                resolve: {
+                    response: ['api2', '$q', '$stateParams', function(api2, $q, $stateParams) {
+                        var deferred = $q.defer();
+                        api2('jobs/search?q=' + encodeURIComponent($stateParams.q))
+                            .then(function(response) {
+                                deferred.resolve(response);
+                            })
+                            .catch(function() {
+                                deferred.reject([]);
+                            });
+
+                        return deferred.promise;
+                    }]
+                }
+            })
+            .state('app.jobs.job', {
+                url: '/:id',
                 params: {
                     job: null
                 },
-                templateUrl: 'app/jobs/job.html',
-                controller: 'JobController as vm'
+                views: {
+                    '@app': {
+                        templateUrl: 'app/jobs/job.html',
+                        controller: 'JobController as vm'
+                    }
+                }
             });
     }
 })();

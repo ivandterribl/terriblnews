@@ -11,6 +11,16 @@
         var vm = this;
 
         vm.signup = function(form) {
+            if (form.$invalid) {
+                form.$setSubmitted(true);
+                angular.forEach(['displayName', 'email', 'password', 'confirmPassword'], function(fieldName) {
+                    var input = form[fieldName];
+                    if (input.$invalid) {
+                        input.$setDirty(true);
+                    }
+                });
+                return;
+            }
             var payload = {
                 client_id: 'itweb/app',
                 displayName: vm.user.displayName,

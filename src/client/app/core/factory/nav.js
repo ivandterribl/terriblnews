@@ -176,7 +176,7 @@
                     title: 'IT',
                     id: 'it,sect_id-1',
                     state: {
-                        name: 'app.jobs.feed',
+                        name: 'app.jobs.tabs.feed',
                         params: {
                             id: 'it,sect_id-1'
                         }
@@ -185,7 +185,7 @@
                     title: 'Financial',
                     id: 'financial,sect_id-2',
                     state: {
-                        name: 'app.jobs.feed',
+                        name: 'app.jobs.tabs.feed',
                         params: {
                             id: 'financial,sect_id-2'
                         }
@@ -194,7 +194,7 @@
                     title: 'Engineering',
                     id: 'engineering,sect_id-3',
                     state: {
-                        name: 'app.jobs.feed',
+                        name: 'app.jobs.tabs.feed',
                         params: {
                             id: 'engineering,sect_id-3'
                         }
@@ -203,7 +203,7 @@
                     title: 'Sales',
                     id: 'sales,sect_id-4',
                     state: {
-                        name: 'app.jobs.feed',
+                        name: 'app.jobs.tabs.feed',
                         params: {
                             id: 'sales,sect_id-4'
                         }
