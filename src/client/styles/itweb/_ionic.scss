@@ -10,11 +10,25 @@ a.item {
 .loading-container .loading {
     background-color: transparent;
 }
-.button.button-small {
-  font-family: $headings-font-family;
-  font-weight: $headings-font-weight;
-  min-height: 42px;
-  line-height: 24px;
-  text-transform: uppercase;
-  font-size: 14px;
+.button {
+  &.button-small {
+    font-family: $headings-font-family;
+    font-weight: $headings-font-weight;
+    min-height: 42px;
+    line-height: 24px;
+    text-transform: uppercase;
+    font-size: 14px;
+  }
+  &.button-itweb {
+    font-family: $headings-font-family;
+    font-weight: $headings-font-weight;
+    text-transform: uppercase;
+  }
+}
+.item .badge {
+  right: 12px;
+}
+ion-side-menu .item {
+  margin: 0;
+  border-width: 0px;
 }
