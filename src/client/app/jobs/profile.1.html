@@ -1,0 +1,139 @@
+<ion-view hide-back-button="true" style="background-color: #f5f5f5">
+    <ion-nav-title>My CV</ion-nav-title>
+
+    <ion-content>
+        <div class="list card">
+
+            <div class="item">
+                <h2>Personal details</h2>
+            </div>
+
+            <label class="item item-input">
+                <i class="icon ion-person placeholder-icon" style="width: 24px"></i>
+                <input type="text" placeholder="First name" name="displayName" ng-model="vm.form.a" required>
+            </label>
+
+            <label class="item item-input">
+                <i class="icon ion-person placeholder-icon" style="width: 24px"></i>
+                <input type="text" placeholder="Surname" name="companyName" ng-model="vm.form.b">
+            </label>
+
+            <label class="item item-input">
+                <i class="icon ion-ios-telephone placeholder-icon" style="width: 24px"></i>
+                <input type="tel" placeholder="Contact no" name="position" ng-model="vm.form.c">
+            </label>
+
+            <label class="item item-input">
+                <i class="icon ion-ios-telephone placeholder-icon" style="width: 24px"></i>
+                <input type="tel" placeholder="Alternate contact no" name="position" ng-model="vm.form.d">
+            </label>
+
+            <label class="item item-input">
+                <i class="icon ion-clock placeholder-icon" style="width: 24px"></i>
+                <input type="tel" placeholder="Year of birth (CCYY)" name="position" ng-model="vm.form.e">
+            </label>
+
+            <label class="item item-input">
+                <i class="icon ion-clock placeholder-icon" style="width: 24px"></i>
+                <input type="text" placeholder="Years of IT experience" name="position" ng-model="vm.form.f">
+            </label>
+        </div>
+
+        <div class="list card">
+            <div class="item item-divider">
+                Gender
+            </div>
+            <ion-radio ng-model="chiwh.Gender" ng-value="'M'">Male</ion-radio>
+            <ion-radio ng-model="chiwh.Gender" ng-value="'F'">Female</ion-radio>
+
+            <div class="item item-divider">
+                Affirmative action
+            </div>
+            <ion-radio ng-model="chiwh.Affirmative" ng-value="'A'">Black</ion-radio>
+            <ion-radio ng-model="chiwh.Affirmative" ng-value="'B'">Colored</ion-radio>
+            <ion-radio ng-model="chiwh.Affirmative" ng-value="'C'">Asian</ion-radio>
+            <ion-radio ng-model="chiwh.Affirmative" ng-value="'D'">White</ion-radio>
+
+            <div class="item item-divider">
+                &nbsp;
+            </div>
+            <div class="item item-toggle">
+                Physically disabled
+                <label class="toggle toggle-assertive">
+                    <input type="checkbox">
+                    <div class="track">
+                        <div class="handle"></div>
+                    </div>
+                </label>
+            </div>
+
+        </div>
+
+        <div class="list card">
+            <label class="item item-input item-select">
+                <div class="input-label">
+                    Country of birth
+                </div>
+                <select>
+                    <option>Blue</option>
+                    <option selected>Green</option>
+                    <option>Red</option>
+                </select>
+            </label>
+
+            <label class="item item-input item-select">
+                <div class="input-label">
+                    Country of residence
+                </div>
+                <select>
+                    <option>Blue</option>
+                    <option selected>Green</option>
+                    <option>Red</option>
+                </select>
+            </label>
+
+            <label class="item item-input item-select">
+                <div class="input-label">
+                    Work location
+                </div>
+                <select>
+                    <option>Blue</option>
+                    <option selected>Green</option>
+                    <option>Red</option>
+                </select>
+            </label>
+
+            <label class="item item-input item-select">
+                <div class="input-label">
+                    Job type
+                </div>
+                <select>
+                    <option>Both</option>
+                    <option>Permanent</option>
+                    <option>Contracting</option>
+                </select>
+            </label>
+
+
+            <!-- <label class="item">
+                <button class="button button-small button-balanced button-clear icon-left ion-briefcase"
+                        ui-sref="app.jobs.profile-2">
+                    STEP 2 &ndash; Skills
+                    <i class="icon ion-chevron-right"></i>
+                </button>
+            </label> -->
+
+        </div>
+    </ion-content>
+    <ion-footer-bar class="bar-dark" align-title="center">
+        <div class="buttons">
+        </div>
+        <h3 class="title">&nbsp;</h3>
+        <div class="buttons">
+            <button class="button button-clear" ui-sref="app.jobs.profile-2">
+                Skills
+                <i class="icon ion-chevron-right"></i>
+            </button>
+        </div>
+    </ion-footer-bar>
+</ion-view>

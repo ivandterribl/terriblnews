@@ -5,9 +5,9 @@
         .module('itw.jobs')
         .controller('JobsController', Controller);
 
-    Controller.$inject = ['api2', 'activeNav', 'jobs', '$scope', '$state', '$location', 'searchBar'];
+    Controller.$inject = ['api2', 'user', 'activeNav', 'jobs', '$scope', '$state', '$location', 'searchBar'];
     /* @ngInject */
-    function Controller(api2, activeNav, jobs, $scope, $state, $location, searchBar) {
+    function Controller(api2, user, activeNav, jobs, $scope, $state, $location, searchBar) {
         console.log(jobs);
         var vm = this,
             limit = $state.params.limit || 16,
@@ -23,7 +23,17 @@
             vm.category = activeNav;
             vm.hasSubheader = $state.params.subheader;
 
-            vm.items = jobs;
+            vm.items = _.map(jobs, function(job) {
+                var application;
+                if (user.$auth.isAuthenticated() && user.profile) {
+                    application = _.find(user.profile.careerweb.applications, {
+                        uniq: job.uniq
+                    });
+                }
+                return angular.extend(job, {
+                    application: application
+                });
+            });
             vm.complete = 0;
             // cached view
             $scope.$on('$ionicView.enter', function() {

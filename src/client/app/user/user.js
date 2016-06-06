@@ -9,47 +9,38 @@
 
     function User(api2, $auth, $q) {
         var user = {
+            $auth: $auth,
             login: login,
-            get: get
+            //loginWith: loginWith,
+            get: getProfile,
+            career: {
+                applications: applications
+            }
         };
 
         return user;
 
-        function login(credentials, params) {
-            credentials = {
-                username: 'ivan@itweb.co.za',
-                password: 'abc123'
-            };
-            var deferred = $q.defer(),
-                payload = angular.extend({
-                    grant_type: 'password',
-                    client_id: 'itweb/app'
-                }, credentials);
-
-            $auth
-                .login(payload)
-                .then(function() {
-                    get()
-                        .then(function(profile) {
-                            if (profile.careerweb && profile.careerweb.identifier) {
-                                api2('jobs/cv/' + profile.careerweb.identifier)
-                                    .then(function(response) {
-                                        angular.extend(profile.careerweb, response);
-                                    })
-                                    .finally(function(response) {
-                                        deferred.resolve(profile);
-                                    });
-                            } else {
-                                deferred.resolve(profile);
-                            }
-                        })
-                        .catch(function(response) {
-                            deferred.reject(response);
-                        });
+        function applications(CVID) {
+            return api2('jobs/me/' + user.profile.careerweb.CVID)
+                .then(function(response) {
+                    user.profile.careerweb.applications = response;
                 });
         }
 
-        function get() {
+        function login(credentials, params) {
+            var payload = angular.extend({
+                grant_type: 'password',
+                client_id: 'itweb/app'
+            }, credentials);
+
+            return $auth
+                .login(payload)
+                .then(function() {
+                    return getProfile();
+                });
+        }
+
+        function getProfile() {
             var deferred = $q.defer();
             api2('v2/me')
                 .then(parseProfile)
@@ -59,13 +50,12 @@
             return deferred.promise;
 
             function parseProfile(response) {
-                var response = response || {},
-                    picture = _.find(response.profile, {
-                        key: 'photoURL'
-                    });
+                response = response || {
+                    profile: []
+                }
 
-                if (response.profile && response.profile.length) {
-                    var profile = new Object();
+                if (response.profile.length) {
+                    var profile = user.profile = new Object();
                     _.each(_.groupBy(response.profile, 'origin'), function(items, origin) {
                         var key = origin.toLowerCase();
                         profile[key] = {};
@@ -83,9 +73,17 @@
                         response.activated = 1;
                     }
 
-                    user.profile = profile;
-
-                    deferred.resolve(profile);
+                    if (profile.careerweb && profile.careerweb.identifier) {
+                        api2('jobs/cv/' + profile.careerweb.identifier)
+                            .then(function(response) {
+                                angular.extend(profile.careerweb, response);
+                            })
+                            .finally(function(response) {
+                                deferred.resolve(profile);
+                            });
+                    } else {
+                        deferred.resolve(profile);
+                    }
                 }
             }
         }

@@ -36,7 +36,7 @@
 				    <input type="text" placeholder="Password" name="displayName" ng-model="vm.usr.displayName" required>
 			  </label>
 
-			  <label class="item item-input">
+<!-- 			  <label class="item item-input">
 				    <i class="icon ion-cube placeholder-icon" style="width: 24px"></i>
 				    <input type="text" placeholder="Company" name="companyName" ng-model="vm.profile.itweb.companyName">
 			  </label>
@@ -44,15 +44,23 @@
 			  <label class="item item-input">
 				    <i class="icon ion-asterisk placeholder-icon" style="width: 24px"></i>
 				    <input type="text" placeholder="Position" name="position" ng-model="vm.profile.itweb.position">
-			  </label>
+			  </label> -->
 
 			  <label class="item">
+				    <button class="button button-small button-balanced button-clear icon-left ion-briefcase"
+				    ui-sref="app.jobs.profile">
+	                  My CV
+	                  <i class="icon ion-chevron-right"></i> 
+			        </button>
+			  </label>
+
+<!-- 			  <label class="item">
 				    <button class="button button-small button-balanced button-clear icon-left ion-edit"
 				    ng-disabled="profileForm.$invalid" ng-click="vm.edit(profileForm)">
 	                  Update information
 			        </button>
-			  </label>
-		  </section>
+			  </label> -->
+		  
 		</div>
 		
 		<div class="list card">

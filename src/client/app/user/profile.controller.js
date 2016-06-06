@@ -36,7 +36,7 @@
                 })
                 .catch(function(response) {
                     toastr.error(response.data.error_description, response.status);
-                });;
+                });
         }
 
         function emailActivationCode() {

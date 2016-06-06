@@ -29,18 +29,78 @@
                     .then(function(response) {
                         return response;
                     });
+            }],
+            items = [{
+                title: 'IT3',
+                id: 'it,sect_id-1',
+                state: {
+                    name: 'app.jobs.tabs.feed',
+                    params: {
+                        id: 'it,sect_id-1'
+                    }
+                }
+            }, {
+                title: 'Financial',
+                id: 'financial,sect_id-2',
+                state: {
+                    name: 'app.jobs.tabs.feed',
+                    params: {
+                        id: 'financial,sect_id-2'
+                    }
+                }
+            }, {
+                title: 'Engineering',
+                id: 'engineering,sect_id-3',
+                state: {
+                    name: 'app.jobs.tabs.feed',
+                    params: {
+                        id: 'engineering,sect_id-3'
+                    }
+                }
+            }, {
+                title: 'Sales',
+                id: 'sales,sect_id-4',
+                state: {
+                    name: 'app.jobs.tabs.feed',
+                    params: {
+                        id: 'sales,sect_id-4'
+                    }
+                }
             }];
 
         $stateProvider
             .state('app.jobs', {
                 url: '/jobs',
-                abstract: true
+                abstract: true,
+                resolve: {
+                    profile: ['user', '$q', function(user, $q) {
+                        var deferred = $q.defer();
+                        if (false && user.$auth.isAuthenticated() && !user.profile) {
+                            user.get()
+                                .then(function() {
+                                    user.career.applications()
+                                        .then(function() {
+                                            deferred.resolve(user);
+                                        })
+                                        .catch(function() {
+                                            deferred.resolve(user);
+                                        });
+                                })
+                                .catch(function() {
+                                    deferred.resolve(user);
+                                });
+                        } else {
+                            deferred.resolve(user);
+                        }
+                        return deferred.promise;
+                    }]
+                }
             })
             .state('app.jobs.tabs', {
                 url: '/section',
                 abstract: true,
                 params: {
-                    nav: 'Jobs'
+                    items: items
                 },
                 views: {
                     '@app': {
@@ -87,6 +147,41 @@
 
                         return deferred.promise;
                     }]
+                }
+            })
+            .state('app.jobs.profile', {
+                url: '/profile',
+                views: {
+                    '@app': {
+                        templateUrl: 'app/jobs/profile.1.html'
+                    }
+                }
+            })
+            .state('app.jobs.profile-2', {
+                url: '/profile/2',
+                views: {
+                    '@app': {
+                        templateUrl: 'app/jobs/profile.2.html',
+                        controller: 'JobProfileController as vm'
+                    }
+                }
+            })
+            .state('app.jobs.profile-3', {
+                url: '/profile/3',
+                views: {
+                    '@app': {
+                        templateUrl: 'app/jobs/profile.3.html',
+                        controller: 'JobProfileController as vm'
+                    }
+                }
+            })
+            .state('app.jobs.profile-4', {
+                url: '/profile/4',
+                views: {
+                    '@app': {
+                        templateUrl: 'app/jobs/profile.4.html',
+                        controller: 'JobProfileController as vm'
+                    }
                 }
             })
             .state('app.jobs.job', {

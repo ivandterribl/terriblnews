@@ -19,8 +19,7 @@
 			    <input type="password" placeholder="Password" name="password" ng-model="vm.user.password" required>
 			  </label>
 			</div>
-			<button ng-click="vm.login(loginForm)" class="button button-block button-small button-clear"
-                ng-class="{ 'button-assertive': loginForm.$valid, 'button-assertive': loginForm.$invalid }">
+			<button ng-click="vm.login(loginForm)" class="button button-block button-small button-clear button-assertive">
             Log in
             <i class="icon ion-chevron-right"></i> 
             </button>

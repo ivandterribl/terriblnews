@@ -5,9 +5,9 @@
         .module('itw.user')
         .controller('LoginController', Controller);
 
-    Controller.$inject = ['$scope', '$state', '$auth', 'user', 'toastr'];
+    Controller.$inject = ['$scope', '$state', '$auth', 'user', 'toastr', '$ionicHistory', '$timeout'];
     /* @ngInject */
-    function Controller($scope, $state, $auth, user, toastr) {
+    function Controller($scope, $state, $auth, user, toastr, $ionicHistory, $timeout) {
         var vm = this;
 
         vm.login = login;
@@ -16,7 +16,10 @@
         activate();
 
         function activate() {
-            vm.user = {};
+            vm.user = {
+                email: 'ivan@itweb.co.za',
+                password: 'abc123'
+            };
             console.log($state.params);
         }
 
@@ -31,25 +34,25 @@
                 });
                 return;
             }
-            var payload = angular.extend({}, {
-                grant_type: 'password',
-                client_id: 'itweb/app',
+            var payload = {
                 username: vm.user.email,
                 password: vm.user.password
-            });
+            };
 
-            $auth.login(payload)
-                .then(function() {
-                    var redirect = $state.params.redirect || {};
-
-                    switch (redirect.name) {
-                        case 'app.jobs.job123':
-                            toastr.info('');
-                            $state.go(redirect.name, redirect.params);
-                            break;
-                        default:
-                            $state.go('app.user.profile');
+            user.login(payload)
+                .then(function(profile) {
+                    var redirect = $state.params.redirect;
+                    if (_.isEmpty(redirect)) {
+                        redirect = {
+                            name: 'app.user.profile'
+                        };
                     }
+
+                    $ionicHistory.clearCache();
+                    $ionicHistory.nextViewOptions({
+                        historyRoot: true
+                    });
+                    $state.go(redirect.name, redirect.params);
                 })
                 .catch(function(error) {
                     toastr.error(error.data.error_description, error.status);

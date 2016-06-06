@@ -1,3 +1,4 @@
+
 @import
   "ionic/ionic.scss",
   "ionic-filter-bar/ionic.filter.bar.scss",
@@ -314,6 +315,10 @@ md-tabs .md-tab {
     &::after {
       clear: both;
     }
+}
+
+.input-label { 
+  font-size: 14px;
 }
 
 

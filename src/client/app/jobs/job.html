@@ -29,7 +29,9 @@
 		</section>
 		<section class="padding" style="background: #e5e5e5; border-style: solid; border-color: #ccc; border-width: 1px 0">
 			<ul>
-				<li class="assertive" ng-if="vm.job.Affirmative === 'Y'"><i class="icon ion-android-checkmark-circle"></i> Affirmative action position</li>
+				<li class="assertive" ng-if="vm.job.Affirmative === 'Y'">
+					<i class="icon ion-android-checkmark-circle"></i> Affirmative action position
+				</li>
 				<li>
 					<i class="icon ion-clipboard"></i> 
 					<ng-pluralize count="vm.job.Stats.Hits" when="{ 'one': '1 view', 'other': '{} views' }"></ng-pluralize>
@@ -57,14 +59,11 @@
 		<section class="padding">
 			<h4 style="margin-top: 16px; margin-bottom: 0">Role details:</h4>
 			<p ng-bind-html="vm.job.JobDescDetail"></p>
-			<!-- <button class="button button-block button-clear button-itweb button-assertive">
-	          Apply
-	          <i class="icon ion-chevron-right"></i> 
-	        </button> -->
 		</section>
 	</ion-content>
 
-	<ion-footer-bar class="bar-balanced" align-title="center">
-		<h3 class="title" ng-click="vm.apply()">APPLY <i class="icon ion-chevron-right"></i></h3>
+	<ion-footer-bar ng-class="vm.theme" align-title="center">
+		<h3 class="title" ng-click="vm.apply()" ng-if="!vm.match">{{ vm.instruction }} <i class="icon ion-chevron-right"></i></h3>
+		<h3 class="title" ng-if="vm.match">You've applied on {{ vm.match.ResponseDate | date }}</h3>
 	</ion-footer-bar>
 </ion-view>

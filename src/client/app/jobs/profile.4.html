@@ -1,0 +1,79 @@
+<ion-view hide-back-button="true" style="background-color: #f5f5f5">
+    <ion-nav-title>My CV</ion-nav-title>
+
+    <ion-content>
+        <div class="list card">
+
+            <div class="item">
+                <h2>STEP 4 &dash; Employment details</h2>
+            </div>
+
+            <ion-radio ng-model="vm.employ" ng-value="'A'">Seeking first time employment</ion-radio>
+            <ion-radio ng-model="vm.employ" ng-value="'B'">Been previously employed</ion-radio>
+
+            <div ng-show="vm.employ === 'B'">
+                <section ng-repeat="(i, employment) in vm.employment track by $index">
+                    <div class="item item-divider">
+                        <span ng-if="i === 0">Current employment</span>
+                        <span ng-if="i > 0">Employment {{ i + 1 }}</span>
+                    </div>
+                    <label class="item item-input">
+                        <i class="icon ion-cube placeholder-icon" style="width: 24px"></i>
+                        <input type="text" placeholder="Company" name="course" ng-model="employment.course" required>
+                    </label>
+
+                    <label class="item item-input">
+                        <i class="icon ion-person placeholder-icon" style="width: 24px"></i>
+                        <input type="text" placeholder="Job title" name="institution" ng-model="employment.institution">
+                    </label>
+
+                    <label class="item item-input item-select">
+                        <div class="input-label">
+                            Industry
+                        </div>
+                        <select>
+                            <option>Blue</option>
+                            <option selected>Green</option>
+                            <option>Red</option>
+                        </select>
+                    </label>
+
+                    <label class="item item-input item-stacked-label">
+                        <span class="input-label">From</span>
+                        <input type="date">
+                    </label>
+                    <label class="item item-input item-stacked-label">
+                        <span class="input-label">To</span>
+                        <input type="date">
+                    </label>
+                    <label class="item item-input item-stacked-label">
+                        <span class="input-label">Job description</span>
+                        <textarea placeholder="30 words minimum"></textarea>
+                    </label>
+                </section>
+                <label class="item">
+                    <button class="button button-small button-balanced button-clear icon-left ion-plus"
+                            ng-click="vm.addEmployment()">
+                        Before that i worked at?
+                    </button>
+                </label>
+            </div>
+        </div>
+    </ion-content>
+
+    <ion-footer-bar class="bar-dark" align-title="center">
+        <div class="buttons">
+            <button class="button button-clear" ui-sref="app.jobs.profile-3">
+            	<i class="icon ion-chevron-left"></i>
+            	Education
+            </button>
+        </div>
+        <h3 class="title">&nbsp;</h3>
+        <div class="buttons">
+            <button class="button button-clear">
+            	Complete CV
+            	<i class="icon ion-chevron-right"></i>
+            </button>
+        </div>
+    </ion-footer-bar>
+</ion-view>

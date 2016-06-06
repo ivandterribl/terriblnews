@@ -13,12 +13,15 @@
 	    	<ion-list>
 	    		<ion-item ng-repeat="(i, item) in vm.items" ui-sref="app.jobs.job({ id: item.JobID, job: item })"> 
 	    			<span class="badge badge-energized" ng-if="item.Affirmative==='Y'">A</span>
-	    			<h2>{{ item.JobTitle }}</h2>
-	    			<p><strong ng-class="{ 'balanced': item.CompanyTypeCode !== 'A' }">{{ item.Name }}</strong></p>
+	    			<h2 ng-class="{ 'stable': item.application }">{{ item.JobTitle }}</h2>
+	    			<div class="row" style="margin-bottom: 10px">
+	    				<span ng-class="{ 'balanced': item.CompanyTypeCode !== 'A' }" class="col">{{ item.CompanyName }}</span>
+	    				<span>{{ item.Area }}</span>
+	    			</div>
 	    			<p class="row">
-	    				<span class="col">{{ item.Description }}</span> 
+	    				<span class="col"><itw-timestamp  timestamp="'{{ item.CreationDate }}'"></itw-timestamp></span> 
 	    				<span><i class="icon ion-clipboard"></i> {{ item.Hits }} <i class="icon ion-briefcase"></i> {{ item.JobResponses }}</span>
-	    				</p>
+	    			</p>
 		    	</ion-item>
 	        </ion-list>
         </section>
