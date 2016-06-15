@@ -1,0 +1,143 @@
+<ion-view style="background-color: #f5f5f5">
+    <ion-nav-title>My CV</ion-nav-title>
+	
+	<ion-nav-buttons side="secondary">
+		<button class="button button-icon ion-person" 
+                ui-sref="app.user.profile"></button>
+	</ion-nav-buttons>
+    <ion-content>
+        <form name="vm.cvForm" ng-submit="false">
+            <div class="list card">
+                <div class="item">
+                    <h2>Personal details</h2>
+                </div>
+
+                <label class="item item-input" ng-class="{ 'has-error' : vm.cvForm.FirstName.$invalid && vm.cvForm.$submitted }">
+                    <i class="icon ion-person placeholder-icon" style="width: 24px"></i>
+                    <input type="text" placeholder="First name" name="FirstName" ng-model="vm.cv.FirstName" required>
+                </label>
+
+                <label class="item item-input" ng-class="{ 'has-error' : vm.cvForm.Surname.$invalid && vm.cvForm.$submitted }">
+                    <i class="icon ion-person placeholder-icon" style="width: 24px"></i>
+                    <input type="text" placeholder="Surname" name="Surname" ng-model="vm.cv.Surname" required>
+                </label>
+
+                <label class="item item-input" ng-class="{ 'has-error' : vm.cvForm.EmailAddress.$invalid && vm.cvForm.$submitted }">
+                    <i class="icon ion-ios-email placeholder-icon" style="width: 24px"></i>
+                    <input type="email" placeholder="Email" name="EmailAddress" ng-model="vm.cv.EmailAddress" required>
+                </label>
+
+                <label class="item item-input" ng-class="{ 'has-error' : vm.cvForm.PrefContactNo.$invalid && vm.cvForm.$submitted }">
+                    <i class="icon ion-ios-telephone placeholder-icon" style="width: 24px"></i>
+                    <input type="tel" placeholder="Contact no" name="PrefContactNo" ng-model="vm.cv.PrefContactNo" required>
+                </label>
+
+                <label class="item item-input" ng-class="{ 'has-error' : vm.cvForm.OthContactNo.$invalid && vm.cvForm.$submitted }">
+                    <i class="icon ion-ios-telephone placeholder-icon" style="width: 24px"></i>
+                    <input type="tel" placeholder="Alternate contact no" name="OthContactNo" ng-model="vm.cv.OthContactNo">
+                </label>
+
+                <label class="item item-input" ng-class="{ 'has-error' : vm.cvForm.YearofBirth.$invalid && vm.cvForm.$submitted }">
+                    <i class="icon ion-clock placeholder-icon" style="width: 24px"></i>
+                    <input type="tel" placeholder="Year of birth (CCYY)" name="YearofBirth" ng-model="vm.cv.YearofBirth" required>
+                </label>
+
+                <label class="item item-input" ng-class="{ 'has-error' : vm.cvForm.YearsExperience.$invalid && vm.cvForm.$submitted }">
+                    <i class="icon ion-clock placeholder-icon" style="width: 24px"></i>
+                    <input type="tel" placeholder="Years of experience" name="YearsExperience" ng-model="vm.cv.YearsExperience" required>
+                </label>
+            </div>
+
+            <div class="list card">
+                <div class="item item-divider">
+                    Gender
+                </div>
+                <ion-radio name="Gender" ng-model="vm.cv.Gender" ng-value="item.value" 
+                ng-class="{ 'has-error' : vm.cvForm.Gender.$invalid && vm.cvForm.$submitted }"
+                ng-repeat="item in vm.lu.genderList"
+                ng-required="true">
+                    {{ item.text }}
+                </ion-radio>
+
+                <div class="item item-divider" ng-class="{ 'has-error' : vm.cvForm.Affirmative.$invalid && vm.cvForm.$submitted }">
+                    Affirmative action
+                </div>
+                <ion-radio name="Affirmative" ng-model="vm.cv.Affirmative" ng-value="item.value" 
+                ng-class="{ 'has-error' : vm.cvForm.Affirmative.$invalid && vm.cvForm.$submitted }"
+                ng-repeat="item in vm.lu.affirmativeList"
+                ng-required="true">
+                    {{ item.text }}
+                </ion-radio>
+
+                <div class="item item-divider">
+                    &nbsp;
+                </div>
+                <ion-toggle name="Disabled" ng-model="vm.cv.Disabled">
+                    Physically disabled
+                </ion-toggle>
+            </div>
+
+            <div class="list card">
+                <label class="item item-input item-select"
+                 ng-class="{ 'has-error' : vm.cvForm.BirthCountry.$invalid && vm.cvForm.$submitted }">
+                    <div class="input-label">
+                        Country of birth
+                    </div>
+                    <select name="BirthCountry" 
+                        ng-model="vm.cv.BirthCountry"
+                        ng-options="item.Country as item.Country for item in vm.lu.countryList"
+                        required>
+                        <option value="">required</option>
+                    </select>
+                </label>
+
+                <label class="item item-input item-select"
+                ng-class="{ 'has-error' : vm.cvForm.ResCountry.$invalid && vm.cvForm.$submitted }">
+                    <div class="input-label">
+                        Country of residence
+                    </div>
+                    <select name="ResCountry" style="max-width: 50%;"
+                        ng-model="vm.cv.ResCountry"
+                        ng-options="item.Country as item.Country for item in vm.lu.countryList"
+                        required>
+                        <option value="">required</option>
+                    </select>
+                </label>
+
+                <label class="item item-input item-select"
+                ng-class="{ 'has-error' : vm.cvForm.ResCity.$invalid && vm.cvForm.$submitted }">
+                    <div class="input-label">
+                        Work location
+                    </div>
+                    <select name="ResCity"
+                        ng-model="vm.cv.ResCity"
+                        ng-options="item.Description as item.Description for item in vm.lu.areaList"
+                        required>
+                        <option value="">required</option>
+                    </select>
+                </label>
+
+                <label class="item item-input item-select">
+                    <div class="input-label">
+                        Job type
+                    </div>
+                    <select name="WishJobType" ng-model="vm.cv.WishJobType">
+                        <option value="">optional</option>
+                        <option ng-value="item" ng-repeat="item in vm.lu.jobType">{{ item }}</option>
+                    </select>
+                </label>
+            </div>
+        </form>
+    </ion-content>
+    <ion-footer-bar class="bar-dark" align-title="center">
+        <div class="buttons">
+        </div>
+        <h3 class="title">&nbsp;</h3>
+        <div class="buttons">
+            <button class="button button-clear" ng-click="vm.next(2, cvForm)">
+                Skills
+                <i class="icon ion-chevron-right"></i>
+            </button>
+        </div>
+    </ion-footer-bar>
+</ion-view>

@@ -17,8 +17,8 @@
 
         function activate() {
             vm.user = {
-                email: 'ivan@itweb.co.za',
-                password: 'abc123'
+                // email: 'ivan@itweb.co.za',
+                // password: 'abc123'
             };
             console.log($state.params);
         }
@@ -60,9 +60,19 @@
         }
 
         function authenticate(provider) {
-            $auth.authenticate(provider)
+            user.loginWith(provider)
                 .then(function() {
-                    $state.go('app.user.profile');
+                    var redirect = $state.params.redirect;
+                    if (_.isEmpty(redirect)) {
+                        redirect = {
+                            name: 'app.user.profile'
+                        };
+                    }
+                    $ionicHistory.clearCache();
+                    $ionicHistory.nextViewOptions({
+                        historyRoot: true
+                    });
+                    $state.go(redirect.name, redirect.params);
                 })
                 .catch(function(error) {
                     if (error.error) {

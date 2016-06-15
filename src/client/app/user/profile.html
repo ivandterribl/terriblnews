@@ -1,103 +1,112 @@
 <ion-view hide-back-button="true">
-	<ion-nav-title>My profile</ion-nav-title>
-	<ion-nav-buttons side="left">
+    <ion-nav-title>My profile</ion-nav-title>
+    <ion-nav-buttons side="left">
         <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
         </button>
     </ion-nav-buttons>
-	<ion-nav-buttons side="secondary">
-      <button class="button button-icon ion-log-out" ng-click="vm.logout()"></button>
+    <ion-nav-buttons side="secondary">
+        <button class="button button-icon ion-log-out" ng-click="vm.logout()"></button>
     </ion-nav-buttons>
-	<ion-content style="background-color: #f5f5f5">
-		<div class="list card" ng-show="vm.usr">
+    <ion-content style="background-color: #f5f5f5">
+        <div class="list card" ng-show="vm.profile">
 
-		  <div class="item item-avatar">
-		    <img ng-src="{{vm.usr.picture || 'http://placehold.it/100x100'}}">
-		    <h2 ng-if="vm.usr.displayName">{{ vm.usr.displayName }}</h2>
-		    <h2 ng-if="!vm.usr.displayName">&nbsp;</h2>
-		    <p>{{ vm.usr.username }}</p>
-		  </div>
+            <div class="item item-avatar">
+                <img ng-src="{{vm.profile.image}}">
+                <h2>{{ vm.profile.displayName }}</h2>
+                <p>{{ vm.profile.username }}</p>
+            </div>
 
-		  <section ng-if="!vm.usr.activated">
-		  	<div class="item">
-		  		<h2 class="assertive"><i class="icon ion-alert-circled"></i> Your account is not yet active</h2>
-		  		<p>We sent you a confirmation email to verify <strong>{{ vm.profile.itweb.email }}</strong> belongs to you.<br />
-		  		Please check your email to activate your account.</p>
-		  	</div>
-			<label class="item">
-			    <button class="button button-small button-balanced button-clear icon-left ion-at" ng-click="vm.email()">
-                  No email? Resend
-		        </button>
-			</label>
-		  </section>			  
+            <section ng-if="!vm.profile.activated">
+                <div class="item">
+                    <h2 class="assertive"><i class="icon ion-alert-circled"></i> Your account is not yet active</h2>
+                    <p>We sent you a confirmation email to verify <strong>{{ vm.profile.itweb.email }}</strong> belongs
+                        to you.<br/>
+                        Please check your email to activate your account.</p>
+                </div>
+                <label class="item">
+                    <button class="button button-small button-balanced button-clear icon-left ion-at"
+                            ng-click="vm.email()">
+                        No email? Resend
+                    </button>
+                </label>
+            </section>
 
-		  <form name="profileForm" ng-if="vm.usr.activated">
-			  <label class="item item-input" ng-class="{ 'has-error' : profileForm.displayName.$invalid && profileForm.displayName.$dirty }">
-				    <i class="icon ion-person placeholder-icon" style="width: 24px"></i>
-				    <input type="text" placeholder="Password" name="displayName" ng-model="vm.usr.displayName" required>
-			  </label>
+            <section ng-if="!vm.profile.careerweb.CVID">
+                <label class="item">
+                    <button class="button button-small button-balanced button-clear icon-left ion-person"
+                            ui-sref="app.jobs.profile-1">
+                        Create a CV
+                        <i class="icon ion-chevron-right"></i>
+                    </button>
+                </label>
+            </section>
 
-<!-- 			  <label class="item item-input">
-				    <i class="icon ion-cube placeholder-icon" style="width: 24px"></i>
-				    <input type="text" placeholder="Company" name="companyName" ng-model="vm.profile.itweb.companyName">
-			  </label>
+            <section ng-if="vm.profile.careerweb.CVID">
+                <label class="item">
+                    <h2>My CV</h2>
+                </label>
+                <label class="item">
+                    <button class="button button-small button-balanced button-clear icon-left ion-person"
+                            ui-sref="app.jobs.profile-1">
+                        Personal details
+                        <i class="icon ion-chevron-right"></i>
+                    </button>
+                </label>
+                <label class="item">
+                    <button class="button button-small button-balanced button-clear icon-left ion-hammer"
+                            ui-sref="app.jobs.profile-2">
+                        Skills
+                        <i class="icon ion-chevron-right"></i>
+                    </button>
+                </label>
+                <label class="item">
+                    <button class="button button-small button-balanced button-clear icon-left ion-university"
+                            ui-sref="app.jobs.profile-3">
+                        Education history
+                        <i class="icon ion-chevron-right"></i>
+                    </button>
+                </label>
+                <label class="item">
+                    <button class="button button-small button-balanced button-clear icon-left ion-briefcase"
+                            ui-sref="app.jobs.profile-4">
+                        Employment history
+                        <i class="icon ion-chevron-right"></i>
+                    </button>
+                </label>
+            </section>
 
-			  <label class="item item-input">
-				    <i class="icon ion-asterisk placeholder-icon" style="width: 24px"></i>
-				    <input type="text" placeholder="Position" name="position" ng-model="vm.profile.itweb.position">
-			  </label> -->
+        </div>
 
-			  <label class="item">
-				    <button class="button button-small button-balanced button-clear icon-left ion-briefcase"
-				    ui-sref="app.jobs.profile">
-	                  My CV
-	                  <i class="icon ion-chevron-right"></i> 
-			        </button>
-			  </label>
+        <div class="list card" ng-show="vm.profile">
+            <div class="item item-divider" style="padding-top: 18px">
+                <h2 class="" ng-if="vm.profile.activated"><i class="ion-link"></i> Linked accounts</h2>
+                <h2 class="" ng-if="!vm.profile.activated"><i class="ion-link"></i> OR</h2>
+            </div>
+            <div class="item" ng-if="!vm.profile.activated">
+                <p>Link an account to provide us with a trusted email.</p>
+            </div>
 
-<!-- 			  <label class="item">
-				    <button class="button button-small button-balanced button-clear icon-left ion-edit"
-				    ng-disabled="profileForm.$invalid" ng-click="vm.edit(profileForm)">
-	                  Update information
-			        </button>
-			  </label> -->
-		  
-		</div>
-		
-		<div class="list card">
-		  <div class="item item-divider" style="padding-top: 18px">
-		    <h2 class="" ng-if="vm.usr.activated"><i class="ion-link"></i> Linked accounts</h2>
-		    <h2 class="" ng-if="!vm.usr.activated"><i class="ion-link"></i> OR</h2>
-		  </div>
-		  <div class="item" ng-if="!vm.usr.activated">
-	  		<p>Link an account to provide us with a trusted email.</p>
-		  </div>
+            <label class="item">
+                <button class="button button-small button-assertive button-clear icon-left ion-social-googleplus"
+                        ng-if="!vm.profile.google.email" ng-click="vm.link('google')">
+                    Link Google
+                </button>
+                <button class="button button-small button-dark button-clear icon-left ion-social-googleplus"
+                        ng-if="vm.profile.google.email">
+                    Google
+                </button>
+            </label>
 
-		  <label class="item">
-			    <button class="button button-small button-positive button-clear icon-left ion-social-googleplus" 
-			    	ng-if="!vm.profile.google.email" ng-click="vm.link('google')">
-		            Link Google
-			    </button>
-			    <button class="button button-small button-positive button-clear icon-left ion-social-googleplus" 
-			    	ng-if="vm.profile.google.email" ng-click="vm.unlink('google')">
-		            Unlink Google
-			    </button>
-		  </label>
-		  
-		  <div class="item" ng-repeat="(k, v) in vm.profile.google">
-			  <p>{{ k }}</p>
-			  <p><strong>{{ v }}</strong></p>
-		  </div>
-			    
-		  <label class="item">
-			    <button class="button button button-small button-assertive button-clear icon-left ion-social-facebook" 
-		        ng-if="!vm.profile.facebook.email" ng-click="vm.link('facebook')">
-                  	Link Facebook
-		        </button>
-		        <button class="button button button-small button-assertive button-clear icon-left ion-social-facebook" 
-		        ng-if="vm.profile.facebook.email" ng-click="vm.unlink('facebook')">
-                  	Unlink Facebook
-		        </button>
-		  </label>
-		</div>
-	</ion-content>
+            <label class="item">
+                <button class="button button button-small button-assertive button-clear icon-left ion-social-facebook"
+                        ng-if="!vm.profile.facebook.email" ng-click="vm.link('facebook')">
+                    Link Facebook
+                </button>
+                <button class="button button button-small button-balanced button-clear icon-left ion-social-facebook"
+                        ng-if="vm.profile.facebook.email">
+                    Facebook
+                </button>
+            </label>
+        </div>
+    </ion-content>
 </ion-view>

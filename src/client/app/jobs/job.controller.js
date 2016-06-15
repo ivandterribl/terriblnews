@@ -41,6 +41,10 @@
                         vm.match = _.find(user.profile.careerweb.applications, {
                             uniq: vm.job.uniq
                         });
+                        if (vm.match) {
+                            vm.theme = 'bar-royal';
+                            vm.match.responseDate = new Date(vm.match.ResponseDate);
+                        }
                     }
                 });
 
@@ -67,7 +71,7 @@
             if (!user.$auth.isAuthenticated()) {
                 $state.go('app.user.login', params);
             } else if (!user.profile || !user.profile.careerweb || !user.profile.careerweb.CVID) {
-                $state.go('app.jobs.profile', params);
+                $state.go('app.jobs.profile-1', params);
             } else {
                 $http.post(url + 'jobs/' + jobId + '/apply', {
                         CVID: user.profile.careerweb.CVID

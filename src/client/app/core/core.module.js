@@ -10,6 +10,7 @@
 		'angular-google-analytics',
 		'720kb.socialshare',
 		'ionicLazyLoad',
+		'ion-autocomplete'
 		// 'material.components.tabs'
 		// 'ion-sticky',
 		// 'ion-affix'

@@ -66,7 +66,25 @@
                     }
                 },
                 resolve: {
-                    loginRequired: loginRequired
+                    loginRequired: ['user', '$q', '$location', function(user, $q, $location) {
+                        var deferred = $q.defer();
+                        if (user.isAuthenticated()) {
+                            if (!user.profile) {
+                                user.get()
+                                    .then(function() {
+                                        deferred.resolve();
+                                    })
+                                    .catch(function() {
+                                        deferred.reject();
+                                    });
+                            } else {
+                                deferred.resolve();
+                            }
+                        } else {
+                            $location.path('/user/login');
+                        }
+                        return deferred.promise;
+                    }]
                 }
             })
             .state('app.user.activate', {

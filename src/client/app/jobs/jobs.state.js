@@ -31,7 +31,7 @@
                     });
             }],
             items = [{
-                title: 'IT3',
+                title: 'IT',
                 id: 'it,sect_id-1',
                 state: {
                     name: 'app.jobs.tabs.feed',
@@ -75,7 +75,7 @@
                 resolve: {
                     profile: ['user', '$q', function(user, $q) {
                         var deferred = $q.defer();
-                        if (false && user.$auth.isAuthenticated() && !user.profile) {
+                        if (user.isAuthenticated() && !user.profile) {
                             user.get()
                                 .then(function() {
                                     user.career.applications()
@@ -149,39 +149,63 @@
                     }]
                 }
             })
-            .state('app.jobs.profile', {
-                url: '/profile',
+            .state('app.jobs.profile-1', {
+                url: '/profile/1',
                 views: {
                     '@app': {
-                        templateUrl: 'app/jobs/profile.1.html'
+                        templateUrl: 'app/jobs/cv.main.html',
+                        controller: 'CvMainController as vm'
                     }
+                },
+                resolve: {
+                    loginRequired: loginRequired
                 }
             })
             .state('app.jobs.profile-2', {
                 url: '/profile/2',
                 views: {
                     '@app': {
-                        templateUrl: 'app/jobs/profile.2.html',
-                        controller: 'JobProfileController as vm'
+                        templateUrl: 'app/jobs/cv.skills.html',
+                        controller: 'CvSkillsController as vm'
                     }
+                },
+                resolve: {
+                    loginRequired: loginRequired
                 }
             })
             .state('app.jobs.profile-3', {
                 url: '/profile/3',
                 views: {
                     '@app': {
-                        templateUrl: 'app/jobs/profile.3.html',
-                        controller: 'JobProfileController as vm'
+                        templateUrl: 'app/jobs/cv.education.html',
+                        controller: 'CvEducationController as vm'
                     }
+                },
+                resolve: {
+                    loginRequired: loginRequired
                 }
             })
             .state('app.jobs.profile-4', {
                 url: '/profile/4',
                 views: {
                     '@app': {
-                        templateUrl: 'app/jobs/profile.4.html',
-                        controller: 'JobProfileController as vm'
+                        templateUrl: 'app/jobs/cv.employment.html',
+                        controller: 'CvEmploymentController as vm'
                     }
+                },
+                resolve: {
+                    loginRequired: loginRequired
+                }
+            })
+            .state('app.jobs.profile-5', {
+                url: '/profile/5',
+                views: {
+                    '@app': {
+                        templateUrl: 'app/jobs/cv.wishlist.html'
+                    }
+                },
+                resolve: {
+                    loginRequired: loginRequired
                 }
             })
             .state('app.jobs.job', {
@@ -196,5 +220,15 @@
                     }
                 }
             });
+
+        function loginRequired($q, $location, $auth) {
+            var deferred = $q.defer();
+            if ($auth.isAuthenticated()) {
+                deferred.resolve();
+            } else {
+                $location.path('/user/login');
+            }
+            return deferred.promise;
+        }
     }
 })();

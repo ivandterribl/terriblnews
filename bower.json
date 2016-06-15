@@ -31,7 +31,8 @@
     "underscore": "^1.8.3",
     "ionic-image-lazy-load": "ion-image-lazy-load#*",
     "angular-messages": "^1.5.5",
-    "ionic-toast": "^0.2.0"
+    "ionic-toast": "^0.2.0",
+    "ion-autocomplete": "^0.3.2"
   },
   "resolutions": {
     "angular": "^1.4.8",

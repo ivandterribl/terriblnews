@@ -12,7 +12,6 @@
 a {
   text-decoration: none;
 }
-
 b {
   font-weight: normal;
   font-style: italic;
@@ -62,6 +61,15 @@ b {
     padding-top: 6px;
     padding-left: 102px;
     min-height: 100px;
+}
+
+.item.item-input.has-error {
+  border: 1px solid $assertive;
+  margin: 0 0 1px;
+}
+
+.item.item-radio.has-error .item-content {
+  color: $assertive;
 }
 
 .pic {
@@ -319,6 +327,7 @@ md-tabs .md-tab {
 
 .input-label { 
   font-size: 14px;
+  color: #444;
 }
 
 

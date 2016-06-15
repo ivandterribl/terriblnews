@@ -1,0 +1,152 @@
+<ion-view style="background-color: #f5f5f5">
+    <ion-nav-title>My CV</ion-nav-title>
+	<ion-nav-buttons side="secondary">
+	  	<button class="button button-icon ion-person" 
+                ui-sref="app.user.profile"></button>
+	</ion-nav-buttons>
+    <ion-content>
+        <form name="vm.cvForm" ng-if="!vm.cv.skills.length">
+            <div class="list card">
+                <div class="item">
+                    <h2>Skills</h2>
+                </div>
+
+                <div class="item item-divider">
+                    Activity
+                </div>
+                <ion-radio name="Activity" ng-model="vm.activity" ng-value="k" 
+                ng-class="{ 'has-error' : !vm.activity && vm.cvForm.$submitted }"
+                ng-repeat="(k, skills) in vm.lu.skillList"
+                ng-required="true">
+                    {{ k }}
+                </ion-radio>
+                <!-- <ion-radio ng-model="vm.activity" ng-value="'A'">Operating systems</ion-radio>
+                <ion-radio ng-model="vm.activity" ng-value="'B'">Development</ion-radio>
+                <ion-radio ng-model="vm.activity" ng-value="'C'">Networking</ion-radio>
+                <ion-radio ng-model="vm.activity" ng-value="'D'">Databases</ion-radio>
+                <ion-radio ng-model="vm.activity" ng-value="'E'">Other</ion-radio> -->
+            </div>
+
+            <div class="list card" ng-show="vm.activity">
+                <div class="item item-divider">
+                    {{ vm.activity }}
+                </div>
+
+                <div ng-repeat="skill in vm.lu.skillList[vm.activity]">
+                    <ion-checkbox ng-model="vm.description[skill]" ng-value="skill">{{ skill }}</ion-checkbox>
+                    <section ng-show="vm.description[skill]">
+                        <label class="item item-input item-select"
+                        ng-class="{ 'has-error' : vm.description[skill] && !vm.competency[skill] && vm.cvForm.$submitted }">
+                            <div class="input-label">
+                                Competency
+                            </div>
+                            <select ng-model="vm.competency[skill]">
+                                <option value="">- select -</option>
+                                <option value=Trained>Trained</option>
+                                <option value=Beginner>Beginner</option>
+                                <option value=Intermediate>Intermediate</option>
+                                <option value=Advanced>Advanced</option>
+                            </select>
+                        </label>
+                        <label class="item item-input item-select"
+                        ng-class="{ 'has-error' : vm.description[skill] && !vm.experience[skill] && vm.cvForm.$submitted }">
+                            <div class="input-label">
+                                Experience <br />
+                                <small>(in months)</small>
+                            </div>
+                            <select ng-model="vm.experience[skill]">
+                                <option value="">- select -</option>
+                                <option value="3">0-6</option>
+                                <option value="10">6-12</option>
+                                <option value="20">12-24</option>
+                                <option value="30">24-36</option>
+                                <option value="40">36-48</option>
+                                <option value="50">48-60</option>
+                                <option value="70">60+</option>
+                            </select>
+                        </label>
+                        <div class="item item-divider">
+                            &nbsp;
+                        </div>
+                    </section>
+                </div>
+
+
+                <div class="item item-divider">
+                    &nbsp;
+                </div>
+                <label class="item item-input">
+                    <i class="icon ion-ios-heart placeholder-icon" style="width: 24px"></i>
+                    <input type="text" placeholder="Your strongest skill if not listed" name="displayName"
+                           ng-model="vm.other">
+                </label>
+                <section ng-show="vm.other.length">
+                    <label class="item item-input item-select">
+                        <div class="input-label">
+                            Competency
+                        </div>
+                        <select>
+                            <option value="">- select -</option>
+                            <option value=Trained>Trained</option>
+                            <option value=Beginner>Beginner</option>
+                            <option value=Intermediate>Intermediate</option>
+                            <option value=Advanced>Advanced</option>
+                        </select>
+                    </label>
+                    <label class="item item-input item-select">
+                        <div class="input-label">
+                            Experience <br />(months)
+                        </div>
+                        <select>
+                            <option value="">- select -</option>
+                            <option value="3">0-6</option>
+                            <option value="10">6-12</option>
+                            <option value="20">12-24</option>
+                            <option value="30">24-36</option>
+                            <option value="40">36-48</option>
+                            <option value="50">48-60</option>
+                            <option value="70">60+</option>
+                        </select>
+                    </label>
+                </section>
+            </div>
+        </form>
+
+        <ion-list ng-if="vm.cv.skills.length" can-swipe="true">
+            <!-- <ion-item>
+            <input ion-autocomplete type="text" readonly="readonly" class="ion-autocomplete" autocomplete="off" 
+            ng-model="vm.newSkill" 
+            placeholder="Add skill"
+            items-method="vm.searchSkill(query)" 
+            items-clicked-method="vm.addSkill(callback)"
+            />
+            </ion-item> -->
+            <ion-item ng-repeat="skill in vm.cv.skills">
+                <h2>{{ skill.SkillDescription }}</h2>
+                <p class="row">
+                    <span class="col">{{ skill.SkillCompetency }}</span> 
+                    <span>{{ skill.MonthsExperience }} months</span>
+                </p>
+                <ion-option-button class="button-positive"
+                           ng-click="vm.editSkill(skill)">
+                  Edit
+                </ion-option-button>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+    <ion-footer-bar class="bar-dark" align-title="center">
+        <div class="buttons">
+            <button class="button button-clear" ng-click="vm.prev()">
+            	<i class="icon ion-chevron-left"></i>
+            	Personal info
+            </button>
+        </div>
+        <h3 class="title">&nbsp;</h3>
+        <div class="buttons">
+            <button class="button button-clear" ng-click="vm.next()">
+            	Education
+            	<i class="icon ion-chevron-right"></i>
+            </button>
+        </div>
+    </ion-footer-bar>
+</ion-view>

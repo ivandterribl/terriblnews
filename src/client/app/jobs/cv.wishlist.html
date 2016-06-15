@@ -1,0 +1,100 @@
+<ion-view style="background-color: #f5f5f5">
+    <ion-nav-title>My CV</ion-nav-title>
+	
+	<ion-nav-buttons side="secondary">
+		<button class="button button-icon ion-person" 
+                ui-sref="app.user.profile"></button>
+	</ion-nav-buttons>
+    <ion-content>
+        <form name="vm.cvForm" ng-submit="false">
+            <div class="list card">
+                <div class="item">
+                    <h2>Career information</h2>
+                </div>
+
+                <div class="item" style="    padding: 6px 0 5px 16px;">
+                    <p>Current/Last/Desired salary per annum</p>
+                    <div class="row"  style="padding-top: 0; padding-right: 0">
+                        <span class="col col-50">
+                            <input type="number" placeholder="0">
+                        </span>
+                        <span class="col col-50 item-select">
+                             <select name="BirthCountry" 
+                                ng-model="vm.cv.BirthCountry"
+                                ng-options="item as item for item in vm.lu.noticeList"
+                                required>
+                                <option value="">ZAR</option>
+                            </select>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- <label class="item item-input item-select"
+                ng-class="{ 'has-error' : vm.cvForm.ResCountry.$invalid && vm.cvForm.$submitted }">
+                    <div class="input-label">
+                        Currency
+                    </div>
+                    <select name="BirthCountry" 
+                        ng-model="vm.cv.BirthCountry"
+                        ng-options="item as item for item in vm.lu.noticeList"
+                        required>
+                        <option value="">ZAR</option>
+                    </select>
+                </label> -->
+
+                <label class="item item-input item-select"
+                 ng-class="{ 'has-error' : vm.cvForm.BirthCountry.$invalid && vm.cvForm.$submitted }">
+                    <div class="input-label">
+                        Notice period
+                    </div>
+                    <select name="BirthCountry" 
+                        ng-model="vm.cv.BirthCountry"
+                        ng-options="item as item for item in vm.lu.noticeList"
+                        required>
+                        <option value="">required</option>
+                    </select>
+                </label>
+
+                <label class="item item-input item-select">
+                    <div class="input-label">
+                        Desired job type
+                    </div>
+                    <select name="WishJobType" ng-model="vm.cv.WishJobType">
+                        <option value="">optional</option>
+                        <option ng-value="item" ng-repeat="item in vm.lu.jobType">{{ item }}</option>
+                    </select>
+                </label>
+
+                <ion-toggle name="Disabled" ng-model="vm.cv.AA">
+                    Willing to relocate?
+                </ion-toggle>
+            </div>
+
+            <div class="list card">
+                <div class="item">
+                    <h2>Settings</h2>
+                </div>
+                <ion-toggle name="Disabled" ng-model="vm.cv.BB">
+                    Searchable
+                    <p>My CV can be discovered</p>
+                </ion-toggle>
+            </div>
+        </form>
+    </ion-content>
+
+    <ion-footer-bar class="bar-dark" align-title="center">
+        <div class="buttons">
+            <button class="button button-clear" ui-sref="app.jobs.profile-4">
+                <i class="icon ion-chevron-left"></i>
+                Employment history
+            </button>
+        </div>
+        <h3 class="title">&nbsp;</h3>
+        <div class="buttons">
+            <button class="button button-clear" ng-click="vm.next()">
+                Save CV
+                <i class="icon ion-chevron-right"></i>
+            </button>
+        </div>
+    </ion-footer-bar>
+</ion-view>

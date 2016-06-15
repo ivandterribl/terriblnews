@@ -64,6 +64,6 @@
 
 	<ion-footer-bar ng-class="vm.theme" align-title="center">
 		<h3 class="title" ng-click="vm.apply()" ng-if="!vm.match">{{ vm.instruction }} <i class="icon ion-chevron-right"></i></h3>
-		<h3 class="title" ng-if="vm.match">You've applied on {{ vm.match.ResponseDate | date }}</h3>
+		<h3 class="title" ng-if="vm.match">You've applied on {{ vm.match.responseDate | date:'d MMM yyyy' }}</h3>
 	</ion-footer-bar>
 </ion-view>
