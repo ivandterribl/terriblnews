@@ -5,9 +5,9 @@
         .module('itw.jobs')
         .controller('CvMainController', Controller);
 
-    Controller.$inject = ['user', 'api2', '$state'];
+    Controller.$inject = ['user', 'api2', '$state', 'ui'];
     /* @ngInject */
-    function Controller(user, api2, $state) {
+    function Controller(user, api2, $state, ui) {
         var vm = this;
 
         vm.next = next;
@@ -15,7 +15,22 @@
         activate();
 
         function activate() {
-            vm.cv = user.profile.careerweb;
+            var cv = user.profile.careerweb.cv;
+            vm.cv = {
+                FirstName: cv.FirstName,
+                Surname: cv.Surname,
+                EmailAddress: cv.EmailAddress,
+                PrefContactNo: cv.PrefContactNo,
+                OthContactNo: cv.OthContactNo,
+                YearofBirth: cv.YearofBirth,
+                YearsExperience: cv.YearsExperience,
+                Gender: cv.Gender,
+                Race: cv.Race,
+                PhysicallyDisabled: cv.PhysicallyDisabled || false,
+                BirthCountry: cv.BirthCountry,
+                ResCountry: cv.ResCountry,
+                ResCity: cv.ResCity
+            };
 
             vm.lu = {
                 genderList: [{
@@ -38,8 +53,20 @@
                     value: 'W',
                     text: 'White'
                 }],
-                jobType: ['Both', 'Permanent', 'Contract']
+                jobType: ['Both', 'Permanent', 'Contract'],
+                birthYear: [],
+                yearsExperience: []
             };
+
+            var y = new Date().getYear() + 1900 - 13,
+                i = 0;
+            for (i = 0; i < 72; i++) {
+                vm.lu.birthYear.push(String(y - i));
+            }
+
+            for (i = 0; i < 66; i++) {
+                vm.lu.yearsExperience.push(String(i));
+            }
 
             api2('jobs/lu/country')
                 .then(function(response) {
@@ -53,14 +80,34 @@
         }
 
         function next() {
+
             var form = vm.cvForm;
+
             console.log('secure.cv', vm.cv);
             form.$setSubmitted(true);
-            if (false && form.$invalid) {
+            if (form.$invalid) {
                 return;
             }
 
-            $state.go('app.jobs.profile-2');
+            ui.loading.show();
+            api2('jobs/cv/main', {
+                method: 'POST',
+                data: angular.extend({
+                    LoginID: user.profile.careerweb.identifier
+                }, vm.cv)
+            }).then(function(cv) {
+                if (cv && cv.AffirmativeActionCode) {
+                    cv.Gender = cv.AffirmativeActionCode.indexOf('M') === -1 ? 'F' : 'M';
+                    cv.Race = cv.AffirmativeActionCode[0];
+                    cv.PhysicallyDisabled = cv.AffirmativeActionCode.indexOf('D') !== -1 ? true : false;
+                }
+                user.profile.careerweb.cv = cv;
+                $state.go('app.jobs.profile-2');
+            }).catch(function(response) {
+                ui.toast.show('error', response.error_description);
+            }).finally(function() {
+                ui.loading.hide();
+            });
         }
 
     }

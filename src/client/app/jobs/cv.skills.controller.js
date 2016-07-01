@@ -5,9 +5,9 @@
         .module('itw.jobs')
         .controller('CvSkillsController', Controller);
 
-    Controller.$inject = ['user', 'api2', '$state'];
+    Controller.$inject = ['user', 'api2', 'ui'];
     /* @ngInject */
-    function Controller(user, api2, $state) {
+    function Controller(user, api2, ui) {
         var vm = this;
 
         vm.prev = prev;
@@ -18,7 +18,7 @@
         activate();
 
         function activate() {
-            vm.cv = user.profile.careerweb;
+            vm.cv = user.profile.careerweb.cv;
 
             vm.lu = {
                 skillList: {
@@ -66,23 +66,102 @@
                         'Query language'
                     ],
                     'Other': []
-                }
+                },
+                competencyList: ['Trained', 'Beginner', 'Intermediate', 'Advanced'],
+                experienceList: [{
+                    key: '3',
+                    value: '0-6'
+                }, {
+                    key: '10',
+                    value: '6-12'
+                }, {
+                    key: '20',
+                    value: '12-24'
+                }, {
+                    key: '30',
+                    value: '24-36'
+                }, {
+                    key: '40',
+                    value: '36-48'
+                }, {
+                    key: '50',
+                    value: '48-60'
+                }, {
+                    key: '70',
+                    value: '60+'
+                }]
             };
+
+            vm.description = {};
+            vm.competency = {};
+            vm.experience = {};
+            vm.other = {};
         }
 
         function prev() {
-            $state.go('app.jobs.profile-1');
+            ui.show('app.jobs.profile-1');
         }
 
         function next() {
             var form = vm.cvForm;
-            console.log('secure.cv', vm);
+
+            if (!form) {
+                return ui.show('app.jobs.profile-3');
+            }
+
             form.$setSubmitted(true);
             if (form.$invalid) {
                 return;
             }
 
-            $state.go('app.jobs.profile-3');
+            var $valid = true,
+                result = [];
+
+            angular.forEach(vm.description, function(active, description) {
+                var skill = {
+                    SkillDescription: description,
+                    SkillCompetency: vm.competency[description],
+                    MonthsExperience: vm.experience[description]
+                };
+                if (active) {
+                    result.push(skill);
+                    if (!skill.SkillCompetency || !skill.MonthsExperience) {
+                        $valid = false;
+                    }
+                }
+            });
+            if (vm.other.SkillDescription) {
+                result.push(vm.other);
+                if (!vm.other.SkillCompetency || !vm.other.MonthsExperience) {
+                    $valid = false;
+                }
+            }
+            if (!result.length) {
+                $valid = false;
+            }
+
+            console.log(result);
+            console.log('$valid = ' + $valid);
+            if ($valid) {
+                ui.loading.show();
+                api2('jobs/cv/skills', {
+                    method: 'POST',
+                    data: {
+                        CVID: user.profile.careerweb.cv.CVID,
+                        LoginID: user.profile.careerweb.identifier,
+                        Skills: result
+                    }
+                }).then(function(cv) {
+                    console.log(cv);
+                    user.profile.careerweb.cv.skills = cv.skills;
+                    ui.show('app.jobs.profile-3');
+                }).catch(function(response) {
+                    ui.toast.show('error', response.error_description);
+                }).finally(function() {
+                    ui.loading.hide();
+                });
+            }
+            //$state.go('app.jobs.profile-3');
         }
 
         function lookupSkill(query) {

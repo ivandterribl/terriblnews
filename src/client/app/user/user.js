@@ -26,7 +26,11 @@
         }
 
         function applications(CVID) {
-            return api2('jobs/me/' + user.profile.careerweb.CVID)
+            var deferred = $q.defer();
+            deferred.resolve([]);
+            return deferred.promise;
+
+            return api2('jobs/me/' + user.profile.careerweb.cv.CVID)
                 .then(function(response) {
                     user.profile.careerweb.applications = response;
                 });
@@ -69,7 +73,7 @@
                 if (response.profile.length) {
                     var profile = user.profile = new Object(),
                         image = _.find(response.profile, {
-                            key: 'photoURL'
+                            key: 'photoURL1'
                         });
                     _.each(_.groupBy(response.profile, 'origin'), function(items, origin) {
                         var key = origin.toLowerCase();
@@ -115,8 +119,8 @@
 
                                 if (cv && cv.AffirmativeActionCode) {
                                     cv.Gender = cv.AffirmativeActionCode.indexOf('M') === -1 ? 'F' : 'M';
-                                    cv.Affirmative = cv.AffirmativeActionCode[0];
-                                    cv.Disabled = cv.AffirmativeActionCode.indexOf('D') !== -1 ? true : false;
+                                    cv.Race = cv.AffirmativeActionCode[0];
+                                    cv.PhysicallyDisabled = cv.AffirmativeActionCode.indexOf('D') !== -1 ? true : false;
                                 } else {
                                     if (matches.gender) {
                                         cv.Gender = matches.gender.value === 'female' ? 'F' : 'M';
@@ -129,7 +133,7 @@
                                     }
                                     cv.EmailAddress = profile.username;
                                 }
-                                angular.extend(profile.careerweb, cv);
+                                profile.careerweb.cv = cv;
                             })
                             .finally(function(response) {
                                 deferred.resolve(profile);

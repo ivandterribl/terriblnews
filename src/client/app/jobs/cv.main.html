@@ -37,15 +37,41 @@
                     <input type="tel" placeholder="Alternate contact no" name="OthContactNo" ng-model="vm.cv.OthContactNo">
                 </label>
 
-                <label class="item item-input" ng-class="{ 'has-error' : vm.cvForm.YearofBirth.$invalid && vm.cvForm.$submitted }">
+                <!-- <label class="item item-input" ng-class="{ 'has-error' : vm.cvForm.YearofBirth.$invalid && vm.cvForm.$submitted }">
                     <i class="icon ion-clock placeholder-icon" style="width: 24px"></i>
                     <input type="tel" placeholder="Year of birth (CCYY)" name="YearofBirth" ng-model="vm.cv.YearofBirth" required>
+                </label> -->
+
+                <label class="item item-input item-select"
+                 ng-class="{ 'has-error' : vm.cvForm.YearofBirth.$invalid && vm.cvForm.$submitted }">
+                    <div class="input-label">
+                        Year of birth
+                    </div>
+                    <select name="YearofBirth" 
+                        ng-model="vm.cv.YearofBirth"
+                        ng-options="item as item for item in vm.lu.birthYear"
+                        required>
+                        <option value="">required</option>
+                    </select>
                 </label>
 
-                <label class="item item-input" ng-class="{ 'has-error' : vm.cvForm.YearsExperience.$invalid && vm.cvForm.$submitted }">
+                <label class="item item-input item-select"
+                 ng-class="{ 'has-error' : vm.cvForm.YearsExperience.$invalid && vm.cvForm.$submitted }">
+                    <div class="input-label">
+                        Years of IT experience
+                    </div>
+                    <select name="YearsExperience" 
+                        ng-model="vm.cv.YearsExperience"
+                        ng-options="item as item for item in vm.lu.yearsExperience"
+                        required>
+                        <option value="">required</option>
+                    </select>
+                </label>
+
+                <!-- <label class="item item-input" ng-class="{ 'has-error' : vm.cvForm.YearsExperience.$invalid && vm.cvForm.$submitted }">
                     <i class="icon ion-clock placeholder-icon" style="width: 24px"></i>
                     <input type="tel" placeholder="Years of experience" name="YearsExperience" ng-model="vm.cv.YearsExperience" required>
-                </label>
+                </label> -->
             </div>
 
             <div class="list card">
@@ -59,11 +85,11 @@
                     {{ item.text }}
                 </ion-radio>
 
-                <div class="item item-divider" ng-class="{ 'has-error' : vm.cvForm.Affirmative.$invalid && vm.cvForm.$submitted }">
+                <div class="item item-divider" ng-class="{ 'has-error' : vm.cvForm.Race.$invalid && vm.cvForm.$submitted }">
                     Affirmative action
                 </div>
-                <ion-radio name="Affirmative" ng-model="vm.cv.Affirmative" ng-value="item.value" 
-                ng-class="{ 'has-error' : vm.cvForm.Affirmative.$invalid && vm.cvForm.$submitted }"
+                <ion-radio name="Race" ng-model="vm.cv.Race" ng-value="item.value" 
+                ng-class="{ 'has-error' : vm.cvForm.Race.$invalid && vm.cvForm.$submitted }"
                 ng-repeat="item in vm.lu.affirmativeList"
                 ng-required="true">
                     {{ item.text }}
@@ -72,7 +98,7 @@
                 <div class="item item-divider">
                     &nbsp;
                 </div>
-                <ion-toggle name="Disabled" ng-model="vm.cv.Disabled">
+                <ion-toggle name="PhysicallyDisabled" ng-model="vm.cv.PhysicallyDisabled">
                     Physically disabled
                 </ion-toggle>
             </div>
@@ -114,16 +140,6 @@
                         ng-options="item.Description as item.Description for item in vm.lu.areaList"
                         required>
                         <option value="">required</option>
-                    </select>
-                </label>
-
-                <label class="item item-input item-select">
-                    <div class="input-label">
-                        Job type
-                    </div>
-                    <select name="WishJobType" ng-model="vm.cv.WishJobType">
-                        <option value="">optional</option>
-                        <option ng-value="item" ng-repeat="item in vm.lu.jobType">{{ item }}</option>
                     </select>
                 </label>
             </div>

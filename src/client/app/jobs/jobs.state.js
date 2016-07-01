@@ -185,6 +185,17 @@
                     loginRequired: loginRequired
                 }
             })
+            .state('app.jobs.profile-3-form', {
+                url: '/profile/3/form',
+                views: {
+                    '@app': {
+                        templateUrl: 'app/jobs/cv.education.form.html'
+                    }
+                },
+                resolve: {
+                    loginRequired: loginRequired
+                }
+            })
             .state('app.jobs.profile-4', {
                 url: '/profile/4',
                 views: {
@@ -201,7 +212,8 @@
                 url: '/profile/5',
                 views: {
                     '@app': {
-                        templateUrl: 'app/jobs/cv.wishlist.html'
+                        templateUrl: 'app/jobs/cv.wishlist.html',
+                        controller: 'CvWishlistController as vm'
                     }
                 },
                 resolve: {

@@ -25,6 +25,8 @@
             document.getElementsByClassName('backdrop')[0].remove();
         }, 350);
 
+        $window.$i = $injector;
+
         $rootScope.$on('$stateChangeStart', function stateChangeStart(event, toState, toParams, fromState, fromParams) {
             if (angular.isDefined(toState.resolve)) {
                 $ionicLoading.show();
@@ -115,13 +117,13 @@
         });
 
         $rootScope.$on('$stateChangeError', function stateChangeError(event, toState, toParams, fromState, fromParams) {
-            //console.log('$stateChangeError:' + toState.name);
+            console.log('$stateChangeError', arguments);
             //debugger;
             $ionicLoading.hide();
         });
 
         $rootScope.$on('$stateNotFound', function stateNotFound(event, toState, toParams, fromState, fromParams) {
-            //console.log('$stateNotFound:' + toState.name);
+            console.log('$stateNotFound', arguments);
             //debugger;
             $ionicLoading.hide();
         });

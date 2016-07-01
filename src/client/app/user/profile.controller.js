@@ -5,9 +5,9 @@
         .module('itw.user')
         .controller('ProfileController', Controller);
 
-    Controller.$inject = ['$scope', '$auth', 'user', '$state', '$http', 'toastr', '$ionicHistory', '$timeout'];
+    Controller.$inject = ['$scope', '$auth', 'user', 'ui', '$http', 'toastr', '$ionicHistory', '$timeout'];
     /* @ngInject */
-    function Controller($scope, $auth, user, $state, $http, toastr, $ionicHistory, $timeout) {
+    function Controller($scope, $auth, user, ui, $http, toastr, $ionicHistory, $timeout) {
         var vm = this,
             url = 'https://secure.itweb.co.za/api/';
 
@@ -20,6 +20,7 @@
 
         function activate() {
             vm.profile = user.profile;
+            vm.cv = user.profile.careerweb.cv;
         }
 
         function emailActivationCode() {
@@ -59,6 +60,7 @@
         }
 
         function logout() {
+            ui.loading.show();
             return $auth.logout()
                 .finally(function() {
                     $ionicHistory.nextViewOptions({

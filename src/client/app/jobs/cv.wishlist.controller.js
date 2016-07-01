@@ -5,9 +5,9 @@
         .module('itw.jobs')
         .controller('CvWishlistController', Controller);
 
-    Controller.$inject = ['user', 'api2', '$state'];
+    Controller.$inject = ['user', 'api2', 'ui', '$q'];
     /* @ngInject */
-    function Controller(user, api2, $state) {
+    function Controller(user, api2, ui, $q) {
         var vm = this;
 
         vm.next = next;
@@ -15,52 +15,137 @@
         activate();
 
         function activate() {
-            vm.cv = user.profile.careerweb;
+            var cv = user.profile.careerweb.cv,
+                employment = _.first(cv.employment);
+
+            cv = angular.extend(cv, {
+                WishRemCurrency: cv.WishRemCurrency ? cv.WishRemCurrency : 'South African Rands',
+                WishRemFrequencyCode: cv.WishRemFrequencyCode ? cv.WishRemFrequencyCode : 'per Month'
+            });
 
             vm.lu = {
-                genderList: [{
-                    value: 'M',
-                    text: 'Male'
+                frequencyList: [{
+                    key: 'H',
+                    value: 'per Hour'
                 }, {
-                    value: 'F',
-                    text: 'Female'
+                    key: 'D',
+                    value: 'per Day'
+                }, {
+                    key: 'Q',
+                    value: 'per Week'
+                }, {
+                    key: 'M',
+                    value: 'per Month'
+                }, {
+                    key: 'A',
+                    value: 'per Annum'
                 }],
-                affirmativeList: [{
-                    value: 'B',
-                    text: 'Black'
+                noticeList: [{
+                    key: '0',
+                    value: 'Immediate'
                 }, {
-                    value: 'C',
-                    text: 'Colored'
+                    key: '7',
+                    value: '7 Days'
                 }, {
-                    value: 'A',
-                    text: 'Asian'
+                    key: '14',
+                    value: '2 Weeks'
                 }, {
-                    value: 'W',
-                    text: 'White'
+                    key: '30',
+                    value: '1 Month'
+                }, {
+                    key: '60',
+                    value: '2 months'
+                }, {
+                    key: '90',
+                    value: '3 months+'
                 }],
+                relocationList: [
+                    'Not willing to relocate',
+                    'Willing to relocate anywhere'
+                ],
                 jobType: ['Both', 'Permanent', 'Contract']
             };
+            vm.employment = angular.extend(employment, {
+                RemCurrency: employment.RemCurrency ? employment.RemCurrency : 'ZAR',
+                RemFrequencyCode: employment.RemFrequencyCode ? employment.RemFrequencyCode : employment.JobType === 'Contract' ? 'H' : 'M'
+            });
 
-            api2('jobs/lu/country')
-                .then(function(response) {
-                    vm.lu.countryList = response;
-                });
+            vm.isGraduate = employment.Company === 'New JobSeeker' ? 1 : 0;
 
-            api2('jobs/lu/area')
+            cv.Relocation = vm.lu.relocationList.indexOf(cv.Relocation) === 1 ? true : false;
+            cv.SearchableYN = (cv.SearchableYN === 'N' ? false : true);
+            vm.cv = cv;
+
+            api2('jobs/lu/currency')
                 .then(function(response) {
-                    vm.lu.areaList = response;
+                    vm.lu.currencyList = response;
+                    console.log(response);
                 });
         }
 
         function next() {
-            var form = vm.cvForm;
-            console.log('secure.cv', vm.cv);
-            form.$setSubmitted(true);
+            var $valid = 0,
+                fields = {
+                    cv: ['NoticePeriod', 'WishJobType', 'WishRemAmount', 'WishRemCurrency', 'WishRemFrequencyCode', 'Relocation', 'SearchableYN'],
+                    employment: ['RemAmount', 'RemCurrency', 'RemFrequencyCode']
+                };
+
+            vm.$submitted = 1;
+
             if (false && form.$invalid) {
                 return;
             }
+            var employment = {
+                    LoginID: user.profile.careerweb.identifier,
+                    EmploymentID: vm.employment.EmploymentID
+                },
+                cv = {
+                    LoginID: user.profile.careerweb.identifier
+                };
 
-            $state.go('app.jobs.profile-2');
+            angular.forEach(fields.employment, function(key) {
+                employment[key] = vm.employment[key];
+            });
+
+            angular.forEach(fields.cv, function(key) {
+                switch (key) {
+                    case 'Relocation':
+                        cv[key] = vm.cv[key] ? 'Willing to relocate anywhere' : 'Not willing to relocate'
+                        break;
+                    case 'SearchableYN':
+                        cv[key] = vm.cv[key] ? 'Y' : 'N'
+                        break;
+                    default:
+                        cv[key] = vm.cv[key];
+                }
+            });
+
+            ui.loading.show();
+            var promises = [],
+                promise;
+
+            promise = api2('jobs/cv/wishlist', {
+                method: 'POST',
+                data: cv
+            });
+            promises.push(promise);
+
+            if (!vm.isGraduate) {
+                promise = api2('jobs/cv/employment/rem', {
+                    method: 'POST',
+                    data: employment
+                });
+                promises.push(promise);
+            }
+
+            $q.all(promises)
+                .then(function(response) {
+                    console.log('\nwe done :)\n');
+                    ui.toast.show('success', 'Your CV is ready')
+                    ui.show('app.user.profile');
+                });
+
+            console.log(cv, employment);
         }
 
     }

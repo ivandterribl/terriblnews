@@ -1,5 +1,5 @@
 <ion-view style="background-color: #f5f5f5">
-    <ion-nav-title>My CV</ion-nav-title>
+    <ion-nav-title>My track record</ion-nav-title>
 	<ion-nav-buttons side="secondary">
 	  	<button class="button button-icon ion-person" 
                 ui-sref="app.user.profile"></button>
@@ -11,19 +11,22 @@
                 <h2>STEP 4 &dash; Employment details</h2>
             </div>
 
-            <div class="item item-icon-right" ng-click="vm.alo()">
+            <div class="item item-icon-right" ng-click="vm.skip()">
                 Seeking first time employment<br />Skip this step
                 <i class="icon ion-chevron-right" style="right: 0"></i>
             </div>
-            <!-- <ion-radio ng-model="vm.employ" ng-value="'A'">Seeking first time employment</ion-radio>
-            <ion-radio ng-model="vm.employ" ng-value="'B'">Been previously employed</ion-radio> -->
-
-            <div ng-show="true || vm.employ === 'B'">
+            
+            <div>
                 <section ng-repeat="(i, employment) in vm.employment track by $index">
-                    <div class="item item-divider">
-                        <span ng-if="i === 0"><br />Employment history</span>
-                        <span ng-if="i > 0">Employment {{ i + 1 }}</span>
+                    <div class="item item-divider" ng-if="!i">
+                        Employment history
                     </div>
+                    <div class="item item-divider item-icon-right" ng-if="i">
+                        <br />Employment #{{ i + 1 }}
+
+                        <i class="icon ion-close assertive" style="font-size: 24px; top: 10px" ng-click="vm.removeItem(employment)"></i>
+                    </div>
+
                     <label class="item item-input" ng-class="{ 'has-error' : !employment.Company && employment.$submitted }">
                         <i class="icon ion-cube placeholder-icon" style="width: 24px"></i>
                         <input type="text" placeholder="Company" name="Company" ng-model="employment.Company" required>
@@ -73,7 +76,6 @@
                             <option ng-value="item" ng-repeat="item in vm.lu.jobType">{{ item }}</option>
                         </select>
                     </label>
-                    
                 </section>
                 <label class="item">
                     <button class="button button-small button-balanced button-clear icon-left ion-plus"
@@ -85,10 +87,16 @@
         </div>
 
         <ion-list ng-if="vm.cv.employment.length" can-swipe="true">
-            <ion-item ng-repeat="item in vm.cv.employment">
-                <h2>{{ item.Company }}</h2>
-                <p>{{ item.JobTitle }}</p>
-                <p>{{ item.StartDate }} &ndash; {{ item.EndDate }}</p>
+            <ion-item ng-repeat="item in vm.cv.employment" ng-if="item.Company === 'New JobSeeker'">
+                <h2>Seeing first time employment</h2>
+            </ion-item>
+            <ion-item ng-repeat="item in vm.cv.employment" ng-if="item.Company !== 'New JobSeeker'">
+                <h2>{{ item.JobTitle }} @ {{ item.Company }}</h2>
+                <p>
+                    {{ item.StartDateD | date:'d MMM yyyy'}} &ndash; 
+                    <span ng-if="!item.EndDate"><i class="icon ion-ios-infinite" style="font-size: 24px; position: relative; top: 4px"></i></span>
+                    <span ng-if="item.EndDate">{{ item.EndDateD | date:'d MMM yyyy' }}</span>
+                </p>
                 <ion-option-button class="button-positive"
                            ng-click="vm.editEmployment(item)">
                   Edit

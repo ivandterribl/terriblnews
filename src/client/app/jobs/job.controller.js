@@ -26,7 +26,7 @@
             if (!user.$auth.isAuthenticated()) {
                 vm.theme = 'bar-energized';
                 vm.instruction = 'Login to apply';
-            } else if (!user.profile || !user.profile.careerweb || !user.profile.careerweb.CVID) {
+            } else if (!user.profile || !user.profile.careerweb || !user.profile.careerweb.cv.CVID) {
                 vm.theme = 'bar-energized';
                 vm.instruction = 'Create a CV to apply';
             } else {
@@ -70,11 +70,11 @@
 
             if (!user.$auth.isAuthenticated()) {
                 $state.go('app.user.login', params);
-            } else if (!user.profile || !user.profile.careerweb || !user.profile.careerweb.CVID) {
+            } else if (!user.profile || !user.profile.careerweb || !user.profile.careerweb.cv.CVID) {
                 $state.go('app.jobs.profile-1', params);
             } else {
                 $http.post(url + 'jobs/' + jobId + '/apply', {
-                        CVID: user.profile.careerweb.CVID
+                        CVID: user.profile.careerweb.cv.CVID
                     })
                     .then(function() {
                         toastr.success('A job application has been sent on your behalf. In future you can access this job application from the Job Seeker home page.');

@@ -63,12 +63,7 @@ b {
     min-height: 100px;
 }
 
-.item.item-input.has-error {
-  border: 1px solid $assertive;
-  margin: 0 0 1px;
-}
-
-.item.item-radio.has-error .item-content {
+.item.has-error input, .item.has-error input::-webkit-input-placeholder, .item.has-error .input-label, .item.item-radio.has-error .item-content {
   color: $assertive;
 }
 

@@ -31,50 +31,64 @@
                 </label>
             </section>
 
-            <section ng-if="!vm.profile.careerweb.CVID">
-                <label class="item">
+            <section ng-if="!vm.cv.CVID">
+                <label class="item item-icon-left item-icon-right" ui-sref="app.jobs.profile-1">
+                        <i class="icon ion-person stable" style="font-size: 24px"></i>
+                        <h3 class="itw-section balanced" style="padding: 0">Create a CV</h3>
+                        <p>Be discovered for career opportunities</p>
+                        <i class="icon ion-chevron-right balanced" style="font-size: 24px"></i>
+                </label>
+<!--                 <label class="item">
                     <button class="button button-small button-balanced button-clear icon-left ion-person"
                             ui-sref="app.jobs.profile-1">
                         Create a CV
                         <i class="icon ion-chevron-right"></i>
                     </button>
-                </label>
+                </label> -->
             </section>
+        </div>
 
-            <section ng-if="vm.profile.careerweb.CVID">
-                <label class="item">
-                    <h2>My CV</h2>
+        <div class="list card" ng-if="vm.cv.CVID">
+            <div class="item" style="padding-top: 18px">
+                <h2> My resume</h2>
+            </div>
+                
+                <label class="item item-icon-left item-icon-right" 
+                ng-class="{ 'item-balanced': vm.cv.AffirmativeActionCode }"
+                ui-sref="app.jobs.profile-1">
+                        <i class="icon ion-person" style="font-size: 24px"></i>
+                        <span>Personal details</span>
+                        <i class="icon" ng-class="{ 'ion-checkmark-round': vm.cv.AffirmativeActionCode, 'ion-chevron-right': !vm.cv.AffirmativeActionCode }" style="font-size: 24px"></i>
                 </label>
-                <label class="item">
-                    <button class="button button-small button-balanced button-clear icon-left ion-person"
-                            ui-sref="app.jobs.profile-1">
-                        Personal details
-                        <i class="icon ion-chevron-right"></i>
-                    </button>
+                <label class="item item-icon-left item-icon-right" 
+                ng-class="{ 'item-balanced': vm.cv.skills.length }"
+                ui-sref="app.jobs.profile-2">
+                        <i class="icon ion-hammer" style="font-size: 24px"></i>
+                        <span>Skills</span>
+                        <i class="icon" ng-class="{ 'ion-checkmark-round': vm.cv.skills.length, 'ion-chevron-right': !vm.cv.skills.length }" style="font-size: 24px"></i>
                 </label>
-                <label class="item">
-                    <button class="button button-small button-balanced button-clear icon-left ion-hammer"
-                            ui-sref="app.jobs.profile-2">
-                        Skills
-                        <i class="icon ion-chevron-right"></i>
-                    </button>
+                <label class="item item-icon-left item-icon-right" 
+                ng-class="{ 'item-balanced': vm.cv.education.length }"
+                ui-sref="app.jobs.profile-3">
+                        <i class="icon ion-university" style="font-size: 24px"></i>
+                        <span>Education</span>
+                         <i class="icon" ng-class="{ 'ion-checkmark-round': vm.cv.education.length, 'ion-chevron-right': !vm.cv.education.length }" style="font-size: 24px"></i>
                 </label>
-                <label class="item">
-                    <button class="button button-small button-balanced button-clear icon-left ion-university"
-                            ui-sref="app.jobs.profile-3">
-                        Education history
-                        <i class="icon ion-chevron-right"></i>
-                    </button>
+                <label class="item item-icon-left item-icon-right" 
+                ng-class="{ 'item-balanced': vm.cv.employment.length }"
+                ui-sref="app.jobs.profile-4">
+                        <i class="icon ion-briefcase" style="font-size: 24px"></i>
+                        <span>Employment history</span>
+                        <i class="icon" ng-class="{ 'ion-checkmark-round': vm.cv.employment.length, 'ion-chevron-right': !vm.cv.employment.length }" style="font-size: 24px"></i>
                 </label>
-                <label class="item">
-                    <button class="button button-small button-balanced button-clear icon-left ion-briefcase"
-                            ui-sref="app.jobs.profile-4">
-                        Employment history
-                        <i class="icon ion-chevron-right"></i>
-                    </button>
+                <label class="item item-icon-left item-icon-right" 
+                ng-if="vm.cv.employment.length"
+                ng-class="{ 'item-balanced': vm.cv.WishRemAmount }"
+                ui-sref="app.jobs.profile-5">
+                        <i class="icon ion-briefcase" style="font-size: 24px"></i>
+                        <span>Wishlist</span>
+                        <i class="icon" ng-class="{ 'ion-checkmark-round': vm.cv.WishRemAmount, 'ion-chevron-right': !vm.cv.WishRemAmount }" style="font-size: 24px"></i>
                 </label>
-            </section>
-
         </div>
 
         <div class="list card" ng-show="vm.profile">
@@ -86,27 +100,27 @@
                 <p>Link an account to provide us with a trusted email.</p>
             </div>
 
-            <label class="item">
-                <button class="button button-small button-assertive button-clear icon-left ion-social-googleplus"
-                        ng-if="!vm.profile.google.email" ng-click="vm.link('google')">
-                    Link Google
-                </button>
-                <button class="button button-small button-dark button-clear icon-left ion-social-googleplus"
-                        ng-if="vm.profile.google.email">
-                    Google
-                </button>
+            <label class="item item-icon-left item-icon-right" 
+            ng-if="vm.profile.google.email">
+                    <i class="icon ion-social-googleplus" style="font-size: 24px"></i>
+                    <span>Google</span>
+                    <i class="icon ion-checkmark-round balanced" style="font-size: 24px"></i>
             </label>
+            <ion-toggle class="item-icon-left" ng-if="!vm.profile.google.email">
+                <i class="icon ion-social-googleplus" style="font-size: 24px"></i>
+                Google
+            </ion-toggle>
 
-            <label class="item">
-                <button class="button button button-small button-assertive button-clear icon-left ion-social-facebook"
-                        ng-if="!vm.profile.facebook.email" ng-click="vm.link('facebook')">
-                    Link Facebook
-                </button>
-                <button class="button button button-small button-balanced button-clear icon-left ion-social-facebook"
-                        ng-if="vm.profile.facebook.email">
-                    Facebook
-                </button>
+            <label class="item item-icon-left item-icon-right item-balanced" 
+                ng-if="vm.profile.facebook.email">
+                    <i class="icon ion-social-facebook" style="font-size: 24px"></i>
+                    <span>Facebook</span>
+                    <i class="icon ion-checkmark-round" style="font-size: 24px"></i>
             </label>
+            <ion-toggle class="item-icon-left" ng-if="!vm.profile.facebook.email">
+                <i class="icon ion-social-facebook" style="font-size: 24px"></i>
+                Facebook
+            </ion-toggle>
         </div>
     </ion-content>
 </ion-view>

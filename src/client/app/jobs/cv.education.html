@@ -1,70 +1,68 @@
 <ion-view style="background-color: #f5f5f5">
-    <ion-nav-title>My CV</ion-nav-title>
+    <ion-nav-title>My education</ion-nav-title>
 	<ion-nav-buttons side="secondary">
 	  	<button class="button button-icon ion-person" 
                 ui-sref="app.user.profile"></button>
 	</ion-nav-buttons>
     <ion-content>
-       
-            <div class="list card" ng-if="!vm.cv.education.length" >
-
-                <div class="item">
-                    <h2>STEP 3 &dash; Education details</h2>
-                </div>
-
-                <form name="vm.cvForm" ng-submit="false">
-                <section ng-repeat="(i, education) in vm.education track by $index">
-                        
-                        <div class="item item-divider" ng-if="!i">
-                            Education #{{ i + 1 }}
-                        </div>
-                        <div class="item item-divider item-icon-right" ng-if="i">
-                            <br />Education #{{ i + 1 }}
-
-                            <i class="icon ion-close assertive" style="font-size: 24px; top: 10px" ng-click="vm.removeItem(education)"></i>
-                        </div>
-                        <label class="item item-input" ng-class="{ 'has-error' : !education.course && vm.cvForm.$submitted }">
-                            <i class="icon ion-person placeholder-icon" style="width: 24px"></i>
-                            <input type="text" placeholder="Achievement" name="course" ng-model="education.course" required>
-                        </label>
-
-                        <label class="item item-input" ng-class="{ 'has-error' : !education.institution && vm.cvForm.$submitted }">
-                            <i class="icon ion-person placeholder-icon" style="width: 24px"></i>
-                            <input type="text" placeholder="Institution" name="institution" ng-model="education.institution" required>
-                        </label>
-
-                        <label class="item item-input item-stacked-label" ng-class="{ 'has-error' : !education.dateCompleted && vm.cvForm.$submitted }">
-                                <span class="input-label" style="color: #666">Date completed</span>
-                                <input type="month" placeholder="Date completed" name="dateCompleted"
-                                   ng-model="education.dateCompleted" required>
-                        </label>
-                    
-                </section>
-                </form>
-                <label class="item">
-                    <button class="button button-small button-balanced button-clear icon-left ion-plus"
-                            ng-click="vm.addItem()">
-                        I also studied
-                    </button>
-                </label>
-            </div>
-        
-
         <ion-list ng-if="vm.cv.education.length" can-swipe="true">
-            <ion-item ng-repeat="item in vm.cv.education">
-                <h2>{{ item.Course }}</h2>
-                <p>@ {{ item.Institution }}</p>
+            <ion-item ng-repeat="item in vm.cv.education" ng-click="vm.showForm()">
+                <h2>{{ item.Course }} @ {{ item.Institution }}</h2>
                 <p>Completed {{ item.CompleteDate }}</p>
                 <ion-option-button class="button-positive"
                            ng-click="vm.editEducation(item)">
                   Edit
                 </ion-option-button>
             </ion-item>
+            
         </ion-list>
+
+
+        <div class="list card">
+            <div class="item" ng-if="!vm.cv.education.length">
+                <h2>STEP 3 &dash; Education details</h2>
+            </div>
+
+            <form name="vm.cvForm" ng-submit="false">
+                <section ng-repeat="(i, education) in vm.education track by $index">
+                    <div class="item item-divider" ng-if="!(vm.education.length + i)">
+                        Education #{{ vm.cv.education.length + i + 1 }}
+                    </div>
+                    <div class="item item-divider item-icon-right" ng-if="(vm.education.length + i)">
+                        <br />Education #{{ vm.cv.education.length + i + 1 }}
+
+                        <i class="icon ion-close assertive" style="font-size: 24px; top: 10px" ng-click="vm.removeItem(education)"></i>
+                    </div>
+                    <label class="item item-input" ng-class="{ 'has-error' : !education.Course && vm.cvForm.$submitted }">
+                        <i class="icon ion-person placeholder-icon" style="width: 24px"></i>
+                        <input type="text" placeholder="Achievement" name="Course" ng-model="education.Course" required>
+                    </label>
+
+                    <label class="item item-input" ng-class="{ 'has-error' : !education.Institution && vm.cvForm.$submitted }">
+                        <i class="icon ion-person placeholder-icon" style="width: 24px"></i>
+                        <input type="text" placeholder="Institution" name="Institution" ng-model="education.Institution" required>
+                    </label>
+
+                    <label class="item item-input item-stacked-label" ng-class="{ 'has-error' : !education.CompleteDate && vm.cvForm.$submitted }">
+                            <span class="input-label" style="color: #666">Date completed</span>
+                            <input type="month" placeholder="Date completed" name="CompleteDate"
+                               ng-model="education.CompleteDate" required>
+                    </label>
+                </section>
+            </form>
+            <label class="item">
+                <button class="button button-small button-balanced button-clear icon-left ion-plus"
+                        ng-click="vm.addItem()">
+                    I also studied
+                </button>
+            </label>
+        </div>
+
+        
     </ion-content>
     <ion-footer-bar class="bar-dark" align-title="center">
         <div class="buttons">
-            <button class="button button-clear" ng-click="vm.next(2)">
+            <button class="button button-clear" ui-sref="app.jobs.profile-2">
             	<i class="icon ion-chevron-left"></i>
             	Skills
             </button>
