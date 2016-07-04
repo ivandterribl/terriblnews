@@ -5,51 +5,138 @@
         .module('itw.jobs')
         .controller('CvSkillsController', Controller);
 
-    Controller.$inject = ['user', 'api2', 'ui', '$scope', '$mdDialog'];
+    Controller.$inject = ['user', 'api2', 'ui', '$scope'];
     /* @ngInject */
-    function Controller(user, api2, ui, $scope, $mdDialog) {
-        var vm = this;
+    function Controller(user, api2, ui, $scope) {
+        var vm = this,
+            careerweb = user.profile.careerweb,
+            defaults = {
+                skill: {
+                    SkillDescription: null,
+                    SkillCompetency: null,
+                    MonthsExperience: null
+                }
+            };;
 
-        vm.prev = prev;
+        vm.addItem = add;
+        vm.edit = edit;
+        vm.cancel = cancel;
         vm.next = next;
-        vm.showForm = showForm;
-
-        vm.lookupSkill = lookupSkill;
+        vm.prev = prev;
+        vm.submit = submit;
 
         activate();
 
-        function showForm(ev) {
-            //var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
-            $mdDialog.show({
-                    controller: DialogController,
-                    templateUrl: 'app/jobs/cv.skills.form.html',
-                    parent: angular.element(document.body),
-                    targetEvent: ev,
-                    clickOutsideToClose: true,
-                    fullscreen: true //useFullScreen
-                })
-                .then(function(answer) {
-                    $scope.status = 'You said the information was "' + answer + '".';
-                }, function() {
-                    $scope.status = 'You cancelled the dialog.';
-                });
+        function activate() {
+            var cv = careerweb.cv;
 
-            function DialogController($scope, $mdDialog) {
-                $scope.hide = function() {
-                    $mdDialog.hide();
-                };
-                $scope.cancel = function() {
-                    $mdDialog.cancel();
-                };
-                $scope.answer = function(answer) {
-                    $mdDialog.hide(answer);
-                };
+            vm.cv = cv;
+            if (!vm.cv.skills || !vm.cv.skills.length) {
+                vm.skill = angular.copy(defaults.skill);
             }
         }
 
-        function activate() {
-            vm.cv = user.profile.careerweb.cv;
+        function add() {
+            vm.skill = angular.copy(defaults.skill);
+        }
 
+        function edit(item) {
+            vm.skill = angular.copy(item);
+        }
+
+        function cancel() {
+            vm.skill = null;
+        }
+
+        function isValid(skill) {
+            var $valid = 1,
+                result = [];
+
+            skill.$submitted = 1;
+            angular.forEach(['SkillDescription', 'SkillCompetency', 'MonthsExperience'], function(input) {
+                if (!skill[input]) {
+                    $valid = 0;
+                }
+            });
+            return $valid;
+        }
+
+        function submit(skill) {
+            if (!isValid(skill)) {
+                return;
+            }
+
+            save(skill).then(cancel);
+        }
+
+        function save(skill) {
+            var payload = [{
+                    'SkillID': skill.SkillID,
+                    'SkillDescription': skill.SkillDescription,
+                    'SkillCompetency': skill.SkillCompetency,
+                    'MonthsExperience': skill.MonthsExperience
+                }],
+                opts = {
+                    method: 'POST',
+                    data: {
+                        LoginID: careerweb.identifier,
+                        Skills: payload
+                    }
+                };
+
+            ui.loading.show();
+            return api2('jobs/cv/skills', opts)
+                .then(function(cv) {
+                    careerweb.cv.skills = _.map(cv.skills, function(row) {
+                        return row;
+                    });
+                    return careerweb.cv;
+
+                }).catch(function(response) {
+                    ui.toast.show('error', response.error_description);
+                }).finally(function() {
+                    ui.loading.hide();
+                });
+
+        }
+
+        function prev() {
+            var skill = vm.skill;
+
+            if (skill) {
+                if (!isValid(skill)) {
+                    return;
+                } else {
+                    // save pending
+                    save(skill).then(function() {
+                        cancel();
+                        ui.show('app.jobs.profile-1');
+                    });
+                }
+            } else {
+                ui.show('app.jobs.profile-1');
+            }
+        }
+
+        function next() {
+            var skill = vm.skill;
+
+            if (skill) {
+                if (!isValid(skill)) {
+                    return;
+                } else {
+                    // save pending
+                    save(skill).then(function() {
+                        cancel();
+                        ui.show('app.jobs.profile-3');
+                    });
+                }
+            } else {
+                ui.show('app.jobs.profile-3');
+            }
+        }
+
+        function lookups() {
             vm.lu = {
                 skillList: {
                     'Operating systems': [
@@ -121,82 +208,7 @@
                     value: '60+'
                 }]
             };
-
-            vm.description = {};
-            vm.competency = {};
-            vm.experience = {};
-            vm.other = {};
         }
 
-        function prev() {
-            ui.show('app.jobs.profile-1');
-        }
-
-        function next() {
-            var form = vm.cvForm;
-
-            if (!form) {
-                return ui.show('app.jobs.profile-3');
-            }
-
-            form.$setSubmitted(true);
-            if (form.$invalid) {
-                return;
-            }
-
-            var $valid = true,
-                result = [];
-
-            angular.forEach(vm.description, function(active, description) {
-                var skill = {
-                    SkillDescription: description,
-                    SkillCompetency: vm.competency[description],
-                    MonthsExperience: vm.experience[description]
-                };
-                if (active) {
-                    result.push(skill);
-                    if (!skill.SkillCompetency || !skill.MonthsExperience) {
-                        $valid = false;
-                    }
-                }
-            });
-            if (vm.other.SkillDescription) {
-                result.push(vm.other);
-                if (!vm.other.SkillCompetency || !vm.other.MonthsExperience) {
-                    $valid = false;
-                }
-            }
-            if (!result.length) {
-                $valid = false;
-            }
-
-            console.log(result);
-            console.log('$valid = ' + $valid);
-            if ($valid) {
-                ui.loading.show();
-                api2('jobs/cv/skills', {
-                    method: 'POST',
-                    data: {
-                        CVID: user.profile.careerweb.cv.CVID,
-                        LoginID: user.profile.careerweb.identifier,
-                        Skills: result
-                    }
-                }).then(function(cv) {
-                    console.log(cv);
-                    user.profile.careerweb.cv.skills = cv.skills;
-                    ui.show('app.jobs.profile-3');
-                }).catch(function(response) {
-                    ui.toast.show('error', response.error_description);
-                }).finally(function() {
-                    ui.loading.hide();
-                });
-            }
-            //$state.go('app.jobs.profile-3');
-        }
-
-        function lookupSkill(query) {
-            console.log(query);
-            return api2('jobs/search/skills?q=' + encodeURIComponent(query));
-        }
     }
 })();

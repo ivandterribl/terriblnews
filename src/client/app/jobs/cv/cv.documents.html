@@ -1,0 +1,38 @@
+<ion-view style="background-color: #f5f5f5">
+    <ion-nav-title>My documents</ion-nav-title>
+	
+	<ion-nav-buttons side="secondary">
+		<button class="button button-icon ion-person" 
+                ui-sref="app.user.profile"></button>
+	</ion-nav-buttons>
+    <ion-content>
+        <form name="vm.cvForm" ng-submit="false">
+            <div class="list card">
+                <div class="item">
+                    <h2>Documents</h2>
+                </div>
+                <label class="item">
+                Select a file
+                <input type="file" ng-model="hello" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; opacity: 0">
+              </label>
+            </div>
+            <h2>{{ hello }}</h2>
+        </form>
+    </ion-content>
+
+    <ion-footer-bar class="bar-dark" align-title="center">
+        <div class="buttons">
+            <button class="button button-clear" ui-sref="app.jobs.profile-5">
+                <i class="icon ion-chevron-left"></i>
+                Wishlist
+            </button>
+        </div>
+        <h3 class="title">&nbsp;</h3>
+        <div class="buttons">
+            <button class="button button-clear" ng-click="vm.next()">
+                Done
+                <i class="icon ion-checkmark-round"></i>
+            </button>
+        </div>
+    </ion-footer-bar>
+</ion-view>

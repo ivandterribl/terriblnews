@@ -5,123 +5,65 @@
                 ui-sref="app.user.profile"></button>
 	</ion-nav-buttons>
     <ion-content>
-        <form name="vm.cvForm" ng-if="!vm.cv.skills.length">
-            <div class="list card">
-                <div class="item">
-                    <h2>Skills</h2>
-                </div>
-
-                <div class="item item-divider">
-                    Activity
-                </div>
-                <ion-radio name="Activity" ng-model="vm.activity" ng-value="k" 
-                ng-class="{ 'has-error' : !vm.activity && vm.cvForm.$submitted }"
-                ng-repeat="(k, skills) in vm.lu.skillList"
-                ng-required="true">
-                    {{ k }}
-                </ion-radio>
-            </div>
-
-            <div class="list card" ng-show="vm.activity">
-                <div class="item item-divider">
-                    {{ vm.activity }}
-                </div>
-
-                <div ng-repeat="skill in vm.lu.skillList[vm.activity]">
-                    <ion-checkbox ng-model="vm.description[skill]" ng-value="skill">{{ skill }}</ion-checkbox>
-                    <section ng-show="vm.description[skill]">
-                        <label class="item item-input item-select"
-                        ng-class="{ 'has-error' : vm.description[skill] && !vm.competency[skill] && vm.cvForm.$submitted }">
-                            <div class="input-label">
-                                Competency
-                            </div>
-                            <select ng-model="vm.competency[skill]">
-                                <option value="">- select -</option>
-                                <option value=Trained>Trained</option>
-                                <option value=Beginner>Beginner</option>
-                                <option value=Intermediate>Intermediate</option>
-                                <option value=Advanced>Advanced</option>
-                            </select>
-                        </label>
-                        <label class="item item-input item-select"
-                        ng-class="{ 'has-error' : vm.description[skill] && !vm.experience[skill] && vm.cvForm.$submitted }">
-                            <div class="input-label">
-                                Experience <br />
-                                <small>(in months)</small>
-                            </div>
-                            <select ng-model="vm.experience[skill]">
-                                <option value="">- select -</option>
-                                <option value="3">0-6</option>
-                                <option value="10">6-12</option>
-                                <option value="20">12-24</option>
-                                <option value="30">24-36</option>
-                                <option value="40">36-48</option>
-                                <option value="50">48-60</option>
-                                <option value="70">60+</option>
-                            </select>
-                        </label>
-                        <div class="item item-divider">
-                            &nbsp;
-                        </div>
-                    </section>
-                </div>
-
-
-                <div class="item item-divider">
-                    &nbsp;
-                </div>
-                <label class="item item-input">
-                    <i class="icon ion-ios-heart placeholder-icon" style="width: 24px"></i>
-                    <input type="text" placeholder="Your strongest skill if not listed" 
-                           ng-model="vm.other.SkillDescription">
-                </label>
-                <section ng-show="vm.other.SkillDescription.length">
-                    <label class="item item-input item-select"
-                    ng-class="{ 'has-error' : vm.other.SkillDescription && !vm.other.SkillCompetency && vm.cvForm.$submitted }">
-                        <div class="input-label">
-                            Competency
-                        </div>
-                        <select ng-model="vm.other.SkillCompetency">
-                            <option value="">- select -</option>
-                            <option value=Trained>Trained</option>
-                            <option value=Beginner>Beginner</option>
-                            <option value=Intermediate>Intermediate</option>
-                            <option value=Advanced>Advanced</option>
-                        </select>
-                    </label>
-                    <label class="item item-input item-select"
-                    ng-class="{ 'has-error' : vm.other.SkillDescription && !vm.other.MonthsExperience && vm.cvForm.$submitted }">
-                        <div class="input-label">
-                            Experience <br />(months)
-                        </div>
-                        <select ng-model="vm.other.MonthsExperience">
-                            <option value="">- select -</option>
-                            <option value="3">0-6</option>
-                            <option value="10">6-12</option>
-                            <option value="20">12-24</option>
-                            <option value="30">24-36</option>
-                            <option value="40">36-48</option>
-                            <option value="50">48-60</option>
-                            <option value="70">60+</option>
-                        </select>
-                    </label>
-                </section>
-            </div>
-        </form>
-
         <ion-list ng-if="vm.cv.skills.length" can-swipe="true">
-            <ion-item ng-repeat="item in vm.cv.skills" ng-click="vm.showForm(item)">
-                <h2>{{ item.SkillDescription }}</h2>
+           <div ng-repeat="skill in vm.cv.skills">
+            <ion-item ng-click="vm.edit(skill)">
+                <h2>{{ skill.SkillDescription }}</h2>
                 <p class="row">
-                    <span class="col">{{ item.SkillCompetency }}</span> 
-                    <span>{{ item.MonthsExperience }} months</span>
+                    <span class="col">{{ skill.SkillCompetency }}</span> 
+                    <span>{{ skill.MonthsExperience }} months</span>
                 </p>
-                <ion-option-button class="button-positive"
-                           ng-click="vm.editSkill(item)">
-                  Edit
+                <ion-option-button class="button-energized"
+                           ng-click="vm.edit(skill)">
+                  Delete
                 </ion-option-button>
             </ion-item>
+            <ion-item ng-if="vm.skill && vm.skill.SkillID === skill.SkillID"
+             ng-init="skill = vm.skill"
+             ng-include src="'app/jobs/cv/cv.skills.form.html'">
+                
+            </ion-item>
+           </div>
         </ion-list>
+
+        <div class="list card">
+            <div class="item" ng-show="!vm.cv.skills.length">
+                <h2>STEP 2 &dash; Skills</h2>
+            </div>
+
+            <ng-include src="'app/jobs/cv/cv.skills.form.html'"
+            ng-if="vm.skill && !vm.skill.SkillID" 
+            ng-init="skill = vm.skill">
+                
+            </ng-include>
+            
+            <label class="item" ng-show="!vm.skill">
+                <button class="button button-small button-balanced button-clear icon-left ion-plus"
+                        ng-click="vm.addItem()">
+                    I also know
+                </button>
+            </label>
+        </div>
+
+        <div class="list card">
+            <div class="item item-energized">
+                <p style="color: #fff">e.g. Windows 2000 or XP,    
+                TCP IP, 
+                SQL,    
+                Windows NT, 
+                ETHERNET,   
+                Visual Basic,   
+                Linux,  
+                Java,   
+                Oracle, 
+                Visual Basic Net,   
+                Token Ring, 
+                Unix,   
+                ASP Net,    
+                IPX SPX,    
+                PL SQL</p>
+            </div>
+        </div>
     </ion-content>
     <ion-footer-bar class="bar-dark" align-title="center">
         <div class="buttons">

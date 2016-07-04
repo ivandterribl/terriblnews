@@ -1,10 +1,6 @@
 <ion-view style="background-color: #f5f5f5">
     <ion-nav-title>My education</ion-nav-title>
-	<ion-nav-buttons side="secondary">
-	  	<button class="button button-icon ion-person" 
-                ui-sref="app.user.profile"></button>
-	</ion-nav-buttons>
-    <ion-content>
+	<ion-content>
         <ion-list ng-if="vm.cv.education.length" can-swipe="true">
            <div ng-repeat="education in vm.cv.education">
             <ion-item ng-click="vm.edit(education)">
@@ -15,8 +11,10 @@
                   Delete
                 </ion-option-button>
             </ion-item>
-            <ion-item ng-if="vm.education && vm.education.EducationID === education.EducationID">
-                <ng-include src="'app/jobs/cv/cv.education.form.html'" ng-init="education = vm.education"></ng-include>
+            <ion-item ng-if="vm.education && vm.education.EducationID === education.EducationID"
+             ng-init="education = vm.education"
+             ng-include src="'app/jobs/cv/cv.education.form.html'">
+                
             </ion-item>
            </div>
         </ion-list>
@@ -31,35 +29,7 @@
             ng-init="education = vm.education">
                 
             </ng-include>
-            <!-- <section ng-show="vm.education && !vm.education.EducationID" ng-init="education = vm.education">
-                <div class="item item-divider item-icon-right">
-                    Add education
-                    <i class="icon ion-close assertive" style="font-size: 24px; " 
-                        ng-if="vm.cv.education.length"
-                        ng-click="vm.cancel(education)"></i>
-                </div>
-                <label class="item item-input" ng-class="{ 'has-error' : !education.Course && education.$submitted }">
-                    <i class="icon ion-person placeholder-icon" style="width: 24px"></i>
-                    <input type="text" placeholder="Achievement" name="Course" ng-model="education.Course" required>
-                </label>
-
-                <label class="item item-input" ng-class="{ 'has-error' : !education.Institution && education.$submitted }">
-                    <i class="icon ion-person placeholder-icon" style="width: 24px"></i>
-                    <input type="text" placeholder="Institution" name="Institution" ng-model="education.Institution" required>
-                </label>
-
-                <label class="item item-input item-stacked-label" ng-class="{ 'has-error' : !education.CompleteDate && education.$submitted }">
-                        <span class="input-label" style="color: #666">Date completed</span>
-                        <input type="month" placeholder="Date completed" name="CompleteDate"
-                           ng-model="education.CompleteDate" required>
-                </label>
-                <label class="item item-balanced item-icon-left item-icon-right" 
-                    ng-click="vm.save(education)">
-                        <i class="icon ion-plus-round" style="font-size: 24px"></i>
-                        <span>Save</span>
-                        <i class="icon ion-checkmark-round" style="font-size: 24px"></i>
-                </label>
-            </section> -->
+            
             <label class="item" ng-show="!vm.education">
                 <button class="button button-small button-balanced button-clear icon-left ion-plus"
                         ng-click="vm.addItem()">

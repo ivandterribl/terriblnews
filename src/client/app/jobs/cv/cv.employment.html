@@ -5,109 +5,62 @@
                 ui-sref="app.user.profile"></button>
 	</ion-nav-buttons>
     <ion-content>
-        <div class="list card" ng-if="!vm.cv.employment.length">
+        <ion-list ng-if="vm.cv.employment.length" can-swipe="true">
+            <ion-item ng-if="vm.isGraduate">
+                <h2>Seeing first time employment</h2>
+            </ion-item>
+            <div ng-repeat="employment in vm.cv.employment" ng-if="!vm.isGraduate">
+                <ion-item ng-click="vm.edit(employment)">
+                    <h2>{{ employment.JobTitle }} @ {{ employment.Company }}</h2>
+                    <p>
+                        {{ employment.StartDateD | date:'d MMM yyyy'}} &ndash; 
+                        <span ng-if="!employment.EndDate">
+                            <i class="icon icon-midi ion-ios-infinite" style="position: relative; top: 4px"></i>
+                        </span>
+                        <span ng-if="employment.EndDate">{{ employment.EndDateD | date:'d MMM yyyy' }}</span>
+                    </p>
+                    <ion-option-button class="button-energized"
+                               ng-click="vm.edit(employment)">
+                      Delete
+                    </ion-option-button>
+                </ion-item>
+                <ion-item ng-if="vm.employment && vm.employment.EmploymentID === employment.EmploymentID"
+                 ng-init="employment = vm.employment"
+                 ng-include src="'app/jobs/cv/cv.employment.form.html'">
+                    
+                </ion-item>
+            </div>
+        </ion-list>
 
-            <div class="item">
+        <div class="list card">
+
+            <div class="item" ng-if="!vm.cv.employment.length">
                 <h2>STEP 4 &dash; Employment details</h2>
             </div>
 
-            <div class="item item-icon-right" ng-click="vm.skip()">
+            <div class="item item-icon-right" ng-click="vm.skip()"  ng-if="!vm.cv.employment.length">
                 Seeking first time employment<br />Skip this step
                 <i class="icon ion-chevron-right" style="right: 0"></i>
             </div>
+
+            <ng-include src="'app/jobs/cv/cv.employment.form.html'"
+            ng-if="vm.employment && !vm.employment.EmploymentID" 
+            ng-init="employment = vm.employment">
+                
+            </ng-include>
             
-            <div>
-                <section ng-repeat="(i, employment) in vm.employment track by $index">
-                    <div class="item item-divider" ng-if="!i">
-                        Employment history
-                    </div>
-                    <div class="item item-divider item-icon-right" ng-if="i">
-                        <br />Employment #{{ i + 1 }}
-
-                        <i class="icon ion-close assertive" style="font-size: 24px; top: 10px" ng-click="vm.removeItem(employment)"></i>
-                    </div>
-
-                    <label class="item item-input" ng-class="{ 'has-error' : !employment.Company && employment.$submitted }">
-                        <i class="icon ion-cube placeholder-icon" style="width: 24px"></i>
-                        <input type="text" placeholder="Company" name="Company" ng-model="employment.Company" required>
-                    </label>
-
-                    <label class="item item-input" ng-class="{ 'has-error' : !employment.JobTitle && employment.$submitted }">
-                        <i class="icon ion-person placeholder-icon" style="width: 24px"></i>
-                        <input type="text" placeholder="Job title" name="JobTitle" ng-model="employment.JobTitle">
-                    </label>
-
-                    <label class="item item-input item-select" ng-class="{ 'has-error' : !employment.Industry && employment.$submitted }">
-                        <div class="input-label">
-                            Industry
-                        </div>
-                        <select name="Industry" 
-                            ng-model="employment.Industry"
-                            ng-options="item.Description as item.Description for item in vm.lu.industryList"
-                            required>
-                            <option value="">required</option>
-                        </select>
-                    </label>
-                    
-                    <ion-toggle name="CurrentYN" ng-model="employment.CurrentYN" ng-if="!i">
-                        Currently employed here?
-                    </ion-toggle>
-
-                    <label class="item item-input item-stacked-label" 
-                    ng-class="{ 'has-error' : !employment.StartDateD && employment.$submitted }">
-                        <span class="input-label">From</span>
-                        <input type="date" name="StartDateD" ng-model="employment.StartDateD" required>
-                    </label>
-                    <label class="item item-input item-stacked-label" ng-show="!employment.CurrentYN"
-                    ng-class="{ 'has-error' : !employment.EndDateD && !employment.CurrentYN && employment.$submitted }">
-                        <span class="input-label">To</span>
-                        <input type="date" name="EndDateD" ng-model="employment.EndDateD">
-                    </label>
-                    <label class="item item-input item-stacked-label"
-                    ng-class="{ 'has-error' : !employment.Duties && employment.$submitted }">
-                        <span class="input-label">Job description</span>
-                        <textarea name="Duties" ng-model="employment.Duties" placeholder="30 words minimum"></textarea>
-                    </label>
-                    <label class="item item-input item-select">
-                        <div class="input-label">
-                            Job type
-                        </div>
-                        <select name="JobType" ng-model="employment.JobType">
-                            <option ng-value="item" ng-repeat="item in vm.lu.jobType">{{ item }}</option>
-                        </select>
-                    </label>
-                </section>
-                <label class="item">
-                    <button class="button button-small button-balanced button-clear icon-left ion-plus"
-                            ng-click="vm.addItem()">
-                        Before that i worked at?
-                    </button>
-                </label>
-            </div>
+            <label class="item" ng-show="!vm.employment">
+                <button class="button button-small button-balanced button-clear icon-left ion-plus"
+                        ng-click="vm.addItem()">
+                    I also worked at?
+                </button>
+            </label>
         </div>
-
-        <ion-list ng-if="vm.cv.employment.length" can-swipe="true">
-            <ion-item ng-repeat="item in vm.cv.employment" ng-if="item.Company === 'New JobSeeker'">
-                <h2>Seeing first time employment</h2>
-            </ion-item>
-            <ion-item ng-repeat="item in vm.cv.employment" ng-if="item.Company !== 'New JobSeeker'">
-                <h2>{{ item.JobTitle }} @ {{ item.Company }}</h2>
-                <p>
-                    {{ item.StartDateD | date:'d MMM yyyy'}} &ndash; 
-                    <span ng-if="!item.EndDate"><i class="icon ion-ios-infinite" style="font-size: 24px; position: relative; top: 4px"></i></span>
-                    <span ng-if="item.EndDate">{{ item.EndDateD | date:'d MMM yyyy' }}</span>
-                </p>
-                <ion-option-button class="button-positive"
-                           ng-click="vm.editEmployment(item)">
-                  Edit
-                </ion-option-button>
-            </ion-item>
-        </ion-list>
     </ion-content>
 
     <ion-footer-bar class="bar-dark" align-title="center">
         <div class="buttons">
-            <button class="button button-clear" ui-sref="app.jobs.profile-3">
+            <button class="button button-clear" ng-click="vm.prev()">
             	<i class="icon ion-chevron-left"></i>
             	Education
             </button>

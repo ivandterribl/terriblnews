@@ -68,6 +68,17 @@
                 resolve: {
                     loginRequired: loginRequired
                 }
+            })
+            .state('app.jobs.profile-6', {
+                url: '/cv/documents',
+                views: {
+                    '@app': {
+                        templateUrl: 'app/jobs/cv/cv.documents.html'
+                    }
+                },
+                resolve: {
+                    loginRequired: loginRequired
+                }
             });
 
         function loginRequired($q, $location, $auth) {

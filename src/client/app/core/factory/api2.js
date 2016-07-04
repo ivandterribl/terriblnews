@@ -24,6 +24,7 @@
                     def.resolve(response);
                 })
                 .error(function(response) {
+                    response = response || {};
                     switch (response.error) {
                         case 'invalid_token':
                         case 'expired_token':
