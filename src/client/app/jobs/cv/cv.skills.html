@@ -110,14 +110,14 @@
         </form>
 
         <ion-list ng-if="vm.cv.skills.length" can-swipe="true">
-            <ion-item ng-repeat="skill in vm.cv.skills">
-                <h2>{{ skill.SkillDescription }}</h2>
+            <ion-item ng-repeat="item in vm.cv.skills" ng-click="vm.showForm(item)">
+                <h2>{{ item.SkillDescription }}</h2>
                 <p class="row">
-                    <span class="col">{{ skill.SkillCompetency }}</span> 
-                    <span>{{ skill.MonthsExperience }} months</span>
+                    <span class="col">{{ item.SkillCompetency }}</span> 
+                    <span>{{ item.MonthsExperience }} months</span>
                 </p>
                 <ion-option-button class="button-positive"
-                           ng-click="vm.editSkill(skill)">
+                           ng-click="vm.editSkill(item)">
                   Edit
                 </ion-option-button>
             </ion-item>

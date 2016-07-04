@@ -60,7 +60,7 @@
                 result = [];
 
             employment.$submitted = 1;
-            angular.forEach(['Company', 'JobTitle', 'Industry', 'StartDateD', 'Duties'], function(input) {
+            angular.forEach(['Achievement', 'JobTitle', 'Industry', 'StartDateD', 'Duties'], function(input) {
                 if (!employment[input]) {
                     $valid = 0;
                 }

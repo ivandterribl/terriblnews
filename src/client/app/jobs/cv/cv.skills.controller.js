@@ -5,17 +5,47 @@
         .module('itw.jobs')
         .controller('CvSkillsController', Controller);
 
-    Controller.$inject = ['user', 'api2', 'ui'];
+    Controller.$inject = ['user', 'api2', 'ui', '$scope', '$mdDialog'];
     /* @ngInject */
-    function Controller(user, api2, ui) {
+    function Controller(user, api2, ui, $scope, $mdDialog) {
         var vm = this;
 
         vm.prev = prev;
         vm.next = next;
+        vm.showForm = showForm;
 
         vm.lookupSkill = lookupSkill;
 
         activate();
+
+        function showForm(ev) {
+            //var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
+            $mdDialog.show({
+                    controller: DialogController,
+                    templateUrl: 'app/jobs/cv.skills.form.html',
+                    parent: angular.element(document.body),
+                    targetEvent: ev,
+                    clickOutsideToClose: true,
+                    fullscreen: true //useFullScreen
+                })
+                .then(function(answer) {
+                    $scope.status = 'You said the information was "' + answer + '".';
+                }, function() {
+                    $scope.status = 'You cancelled the dialog.';
+                });
+
+            function DialogController($scope, $mdDialog) {
+                $scope.hide = function() {
+                    $mdDialog.hide();
+                };
+                $scope.cancel = function() {
+                    $mdDialog.cancel();
+                };
+                $scope.answer = function(answer) {
+                    $mdDialog.hide(answer);
+                };
+            }
+        }
 
         function activate() {
             vm.cv = user.profile.careerweb.cv;

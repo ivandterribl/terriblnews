@@ -1,0 +1,31 @@
+<div class="list" class="padding-top">
+    <div class="item item-divider item-icon-right">
+        <span ng-if="!education.EducationID">Add</span> 
+        <span ng-if="education.EducationID">Edit</span> 
+        education
+        <i class="icon icon-midi ion-close assertive" ng-click="vm.cancel(education)"
+        ng-if="vm.cv.education.length"></i>
+    </div>
+    <label class="item item-input" ng-class="{ 'has-error' : !education.Course && education.$submitted }">
+        <i class="icon ion-person placeholder-icon"></i>
+        <input type="text" placeholder="Achievement" name="Course" ng-model="education.Course" required>
+    </label>
+
+    <label class="item item-input" ng-class="{ 'has-error' : !education.Institution && education.$submitted }">
+        <i class="icon ion-university placeholder-icon"></i>
+        <input type="text" placeholder="Institution" name="Institution" ng-model="education.Institution" required>
+    </label>
+
+    <label class="item item-input item-stacked-label" ng-class="{ 'has-error' : !education.CompleteDate && education.$submitted }">
+            <span class="input-label" style="color: #666">Date (to be) completed</span>
+            <input type="month" placeholder="Date completed" name="CompleteDate"
+               ng-model="education.CompleteDate" required>
+    </label>
+
+    <label class="item item-balanced item-icon-left item-icon-right" 
+        ng-click="vm.submit(education)">
+            <i class="icon icon-midi ion-edit"></i>
+            <span>Save</span>
+            <i class="icon icon-midi ion-checkmark-round"></i>
+    </label>
+</div>
