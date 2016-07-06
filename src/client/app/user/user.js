@@ -26,11 +26,11 @@
         }
 
         function applications(CVID) {
-            var deferred = $q.defer();
-            deferred.resolve([]);
-            return deferred.promise;
+            // var deferred = $q.defer();
+            // deferred.resolve([]);
+            // return deferred.promise;
 
-            return api2('jobs/me/' + user.profile.careerweb.cv.CVID)
+            return api2('jobs/applications')
                 .then(function(response) {
                     user.profile.careerweb.applications = response;
                 });

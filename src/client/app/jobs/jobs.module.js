@@ -1,5 +1,5 @@
 (function() {
 	'use strict';
 
-	angular.module('itw.jobs', ['app.core']);
+	angular.module('itw.jobs', ['app.core', 'ngFileUpload']);
 })();

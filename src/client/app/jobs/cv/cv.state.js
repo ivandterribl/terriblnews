@@ -73,7 +73,8 @@
                 url: '/cv/documents',
                 views: {
                     '@app': {
-                        templateUrl: 'app/jobs/cv/cv.documents.html'
+                        templateUrl: 'app/jobs/cv/cv.documents.html',
+                        controller: 'CvDocumentsController as vm'
                     }
                 },
                 resolve: {

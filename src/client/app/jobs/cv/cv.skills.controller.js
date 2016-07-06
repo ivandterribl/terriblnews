@@ -5,9 +5,9 @@
         .module('itw.jobs')
         .controller('CvSkillsController', Controller);
 
-    Controller.$inject = ['user', 'api2', 'ui', '$scope'];
+    Controller.$inject = ['user', 'api2', 'ui'];
     /* @ngInject */
-    function Controller(user, api2, ui, $scope) {
+    function Controller(user, api2, ui) {
         var vm = this,
             careerweb = user.profile.careerweb,
             defaults = {
@@ -49,8 +49,7 @@
         }
 
         function isValid(skill) {
-            var $valid = 1,
-                result = [];
+            var $valid = 1;
 
             skill.$submitted = 1;
             angular.forEach(['SkillDescription', 'SkillCompetency', 'MonthsExperience'], function(input) {

@@ -43,57 +43,62 @@
 
         <div class="list card" ng-if="vm.cv.CVID">
             <div class="item" style="padding-top: 18px">
-                <h2> My resume</h2>
+                <div class="row">
+                    <h2 class="col">My resume</h2>
+                    <h2 class="col text-right energized">80%</h2>
+                </div>
             </div>
                 
             <label class="item item-icon-left item-icon-right" 
-            ng-class="{ 'item-balanced': vm.cv.AffirmativeActionCode }"
             ui-sref="app.jobs.profile-1">
                     <i class="icon icon-midi ion-person"></i>
                     <span>Personal details</span>
                     <i class="icon icon-midi" 
-                    ng-class="{ 'ion-checkmark-round': vm.cv.AffirmativeActionCode, 'ion-chevron-right': !vm.cv.AffirmativeActionCode }"></i>
+                    ng-class="{ 'balanced': vm.cv.AffirmativeActionCode, 
+                        'ion-checkmark-round': vm.cv.AffirmativeActionCode, 
+                        'ion-chevron-right': !vm.cv.AffirmativeActionCode }"></i>
             </label>
             <label class="item item-icon-left item-icon-right" 
-            ng-class="{ 'item-balanced': vm.cv.skills.length }"
             ui-sref="app.jobs.profile-2">
                     <i class="icon icon-midi ion-hammer"></i>
                     <span>Skills</span>
                     <i class="icon icon-midi" 
-                    ng-class="{ 'ion-checkmark-round': vm.cv.skills.length, 'ion-chevron-right': !vm.cv.skills.length }"></i>
+                    ng-class="{ 'balanced': vm.cv.skills.length, 
+                    'ion-checkmark-round': vm.cv.skills.length, 
+                    'ion-chevron-right': !vm.cv.skills.length }"></i>
             </label>
             <label class="item item-icon-left item-icon-right" 
-            ng-class="{ 'item-balanced': vm.cv.education.length }"
             ui-sref="app.jobs.profile-3">
                     <i class="icon icon-midi ion-university"></i>
                     <span>Education</span>
                      <i class="icon icon-midi" 
-                     ng-class="{ 'ion-checkmark-round': vm.cv.education.length, 'ion-chevron-right': !vm.cv.education.length }"></i>
+                     ng-class="{ 'balanced': vm.cv.education.length,
+                     'ion-checkmark-round': vm.cv.education.length, 'ion-chevron-right': !vm.cv.education.length }"></i>
             </label>
             <label class="item item-icon-left item-icon-right" 
-            ng-class="{ 'item-balanced': vm.cv.employment.length }"
             ui-sref="app.jobs.profile-4">
                     <i class="icon icon-midi ion-briefcase"></i>
-                    <span>Employment history</span>
+                    <span>Work history</span>
                     <i class="icon icon-midi" 
-                    ng-class="{ 'ion-checkmark-round': vm.cv.employment.length, 'ion-chevron-right': !vm.cv.employment.length }"></i>
+                    ng-class="{ 'balanced': vm.cv.employment.length,
+                    'ion-checkmark-round': vm.cv.employment.length, 'ion-chevron-right': !vm.cv.employment.length }"></i>
             </label>
             <label class="item item-icon-left item-icon-right" 
             ng-if="vm.cv.employment.length"
-            ng-class="{ 'item-balanced': vm.cv.WishRemAmount }"
             ui-sref="app.jobs.profile-5">
-                    <i class="icon ion-heart"></i>
+                    <i class="icon icon-midi ion-heart"></i>
                     <span>Wishlist</span>
                     <i class="icon icon-midi icon-midi" 
-                    ng-class="{ 'ion-checkmark-round': vm.cv.WishRemAmount, 'ion-chevron-right': !vm.cv.WishRemAmount }"></i>
+                    ng-class="{ 'balanced': vm.cv.WishRemAmount,
+                    'ion-checkmark-round': vm.cv.WishRemAmount, 'ion-chevron-right': !vm.cv.WishRemAmount }"></i>
             </label>
             <label class="item item-icon-left item-icon-right" 
-            ng-if="vm.cv.employment.length"
             ui-sref="app.jobs.profile-6">
                     <i class="icon icon-midi ion-document"></i>
                     <span>Documents</span>
                     <i class="icon icon-midi" 
-                    ng-class="{ 'ion-checkmark-round': vm.cv.Document, 'ion-chevron-right': !vm.cv.Document }"></i>
+                    ng-class="{ 'balanced': vm.cv.document,
+                    'ion-checkmark-round': vm.cv.document, 'ion-chevron-right': !vm.cv.document }"></i>
             </label>
         </div>
 

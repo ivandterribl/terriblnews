@@ -5,9 +5,9 @@
         .module('itw.jobs')
         .controller('JobController', Controller);
 
-    Controller.$inject = ['api2', '$http', '$scope', '$state', 'toastr', '$location', 'user', 'searchBar'];
+    Controller.$inject = ['api2', '$http', '$scope', '$state', 'toastr', '$location', 'user', 'searchBar', 'ui'];
     /* @ngInject */
-    function Controller(api2, $http, $scope, $state, toastr, $location, user, searchBar) {
+    function Controller(api2, $http, $scope, $state, toastr, $location, user, searchBar, ui) {
 
         var vm = this,
             url = 'https://secure.itweb.co.za/api/',
@@ -34,7 +34,7 @@
                 vm.instruction = 'Apply';
             }
 
-            api2('jobs/' + $state.params.id)
+            api2('jobs/job/' + jobId)
                 .then(function(response) {
                     vm.job = response;
                     if (user.$auth.isAuthenticated() && user.profile && user.profile.careerweb) {
@@ -73,17 +73,36 @@
             } else if (!user.profile || !user.profile.careerweb || !user.profile.careerweb.cv.CVID) {
                 $state.go('app.jobs.profile-1', params);
             } else {
-                $http.post(url + 'jobs/' + jobId + '/apply', {
-                        CVID: user.profile.careerweb.cv.CVID
+                ui.loading.show();
+                api2('jobs/applications/' + jobId, {
+                        method: 'POST'
                     })
                     .then(function() {
-                        toastr.success('A job application has been sent on your behalf. In future you can access this job application from the Job Seeker home page.');
+                        user.career.applications()
+                            .then(function() {
+                                vm.match = _.find(user.profile.careerweb.applications, {
+                                    uniq: vm.job.uniq
+                                });
+                                if (vm.match) {
+                                    vm.theme = 'bar-royal';
+                                    vm.match.responseDate = new Date(vm.match.ResponseDate);
+                                }
+                                toastr.success('A job application has been sent on your behalf. In future you can access this job application from the Job Seeker home page.');
+                            })
+                            .catch(function() {
+                                toastr.error('Oops, something went wrong');
+                            })
+                            .finally(function() {
+                                ui.loading.hide();
+                            });
+
                     })
                     .catch(function(response) {
                         // Your current employment history details are incomplete. A job application cannot be sent.
                         // The personal details section on your CV contains incomplete information. A job application cannot be sent.
                         // You have already sent through an application for this job.
                         toastr.error(response.data.error_description, response.status);
+                        ui.loading.hide();
                     });
             }
         }

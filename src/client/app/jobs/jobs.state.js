@@ -78,13 +78,16 @@
                         if (user.isAuthenticated() && !user.profile) {
                             user.get()
                                 .then(function() {
-                                    user.career.applications()
-                                        .then(function() {
-                                            deferred.resolve(user);
-                                        })
-                                        .catch(function() {
-                                            deferred.resolve(user);
-                                        });
+                                    var cv = user.profile.careerweb.cv
+                                    if (cv.CVID) {
+                                        user.career.applications()
+                                            .then(function() {
+                                                deferred.resolve(user);
+                                            })
+                                            .catch(function() {
+                                                deferred.resolve(user);
+                                            });
+                                    }
                                 })
                                 .catch(function() {
                                     deferred.resolve(user);
