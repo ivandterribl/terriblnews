@@ -13,14 +13,9 @@
                 params: {
                     id: 'events'
                 },
-                url: '/events/audio',
+                url: '/events',
                 templateUrl: 'app/events/events.html',
                 controller: 'EventsController as vm'
-            })
-            .state('app.event', {
-                url: '/events/audio/:id',
-                templateUrl: 'app/events/event.html',
-                controller: 'EventController as vm'
             });
     }
 })();
