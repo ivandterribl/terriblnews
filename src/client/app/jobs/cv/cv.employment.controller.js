@@ -25,14 +25,22 @@
         vm.next = next;
         vm.prev = prev;
         vm.submit = submit;
+        vm.remove = remove;
 
         activate();
 
         function activate() {
+
             var cv = careerweb.cv;
+
+            vm.isGraduate = _.find(cv.employment, {
+                Company: 'New JobSeeker'
+            });
 
             cv.employment = _.map(cv.employment, function(row) {
                 return angular.extend(row, {
+                    Company: row.Company === 'New JobSeeker' ? 'New job seeker' : row.Company,
+                    JobTitle: row.Company === 'New JobSeeker' ? 'Seeking 1st time employment' : row.JobTitle,
                     CurrentYN: row.CurrentYN === 'Y' ? true : false,
                     StartDateD: new Date(row.StartDateD),
                     EndDateD: row.EndDateD ? new Date(row.EndDateD) : null
@@ -44,18 +52,20 @@
                 vm.employment = angular.extend({}, defaults.employment, {
                     CurrentYN: true
                 });
+            } else {
+                vm.employment = null;
             }
 
-            vm.isGraduate = vm.cv.employment.length && vm.cv.employment[0].Company === 'New JobSeeker' ? 1 : 0;
-
             // lookups
-            vm.lu = {
-                jobType: ['Permanent', 'Contract']
-            };
-            api2('jobs/lu/industry')
-                .then(function(response) {
-                    vm.lu.industryList = response;
-                });
+            if (!vm.lu) {
+                vm.lu = {
+                    jobType: ['Permanent', 'Contract']
+                };
+                api2('jobs/lu/industry')
+                    .then(function(response) {
+                        vm.lu.industryList = response;
+                    });
+            }
         }
 
         function skip() {
@@ -66,14 +76,8 @@
                     LoginID: careerweb.identifier
                 }
             }).then(function(cv) {
-                careerweb.cv.employment = _.map(cv.employment, function(row) {
-                    return angular.extend(row, {
-                        CurrentYN: row.CurrentYN === 'Y' ? true : false,
-                        StartDateD: new Date(row.StartDateD),
-                        EndDateD: row.EndDateD ? new Date(row.EndDateD) : null
-                    });
-                });
                 ui.show('app.jobs.profile-5');
+                careerweb.cv.employment = cv.employment;
             }).catch(function(response) {
                 ui.toast.show('error', response.error_description);
             });
@@ -88,7 +92,7 @@
         }
 
         function cancel() {
-            vm.employment = null;
+            activate();
         }
 
         function isValid(employment) {
@@ -137,13 +141,7 @@
                     }
                 })
                 .then(function(cv) {
-                    careerweb.cv.employment = _.map(cv.employment, function(row) {
-                        return angular.extend(row, {
-                            CurrentYN: row.CurrentYN === 'Y' ? true : false,
-                            StartDateD: new Date(row.StartDateD),
-                            EndDateD: row.EndDateD ? new Date(row.EndDateD) : null
-                        });
-                    })
+                    careerweb.cv.employment = cv.employment;
                     return careerweb.cv;
                 })
                 .catch(function(response) {
@@ -191,43 +189,34 @@
             }
         }
 
-        function old_next() {
-            var payload = [];
-            if (!vm.employment.length) {
-                return ui.show('app.jobs.profile-5');
-            } else if (isValid()) {
-                angular.forEach(vm.employment, function(row) {
-                    var o = {
-                        'Company': row.Company,
-                        'JobTitle': row.JobTitle,
-                        'Industry': row.Industry,
-                        'StartDateD': row.StartDateD,
-                        'EndDateD': row.EndDateD,
-                        'CurrentYN': row.CurrentYN ? 'Y' : 'N',
-                        'Duties': row.Duties,
-                        'JobType': row.JobType
-                    };
-                    payload.push(o);
+        function remove(employment) {
+            var opts = {
+                title: 'Cannot be undone',
+                template: 'Are you sure you want to delete ' + employment.JobTitle + ' @ ' + employment.Company
+            };
+            ui.popup.confirm.show(opts)
+                .then(function() {
+                    ui.loading.show();
+                    api2('jobs/cv/employment/remove', {
+                            method: 'POST',
+                            data: {
+                                EmploymentID: employment.EmploymentID
+                            }
+                        })
+                        .then(function(cv) {
+                            careerweb.cv.employment = cv.employment;
+                            cancel();
+                        })
+                        .catch(function(response) {
+                            ui.toast.show('error', response.error_description);
+                        })
+                        .finally(function() {
+                            ui.loading.hide();
+                        });
+                })
+                .catch(function() {
+                    console.log('NO');
                 });
-
-                ui.loading.show();
-                api2('jobs/cv/employment', {
-                    method: 'POST',
-                    data: {
-                        CVID: careerweb.cv.CVID,
-                        LoginID: careerweb.identifier,
-                        Employment: payload
-                    }
-                }).then(function(cv) {
-                    console.log(cv);
-                    careerweb.cv.employment = cv.employment;
-                    ui.show('app.jobs.profile-5');
-                }).catch(function(response) {
-                    ui.toast.show('error', response.error_description);
-                }).finally(function() {
-                    ui.loading.hide();
-                });
-            }
         }
 
     }

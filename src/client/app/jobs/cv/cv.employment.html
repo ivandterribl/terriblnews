@@ -1,38 +1,44 @@
 <ion-view style="background-color: #f5f5f5">
-    <ion-nav-title>My track record</ion-nav-title>
+    <ion-nav-title>Work history</ion-nav-title>
 	<ion-nav-buttons side="secondary">
 	  	<button class="button button-icon ion-person" 
                 ui-sref="app.user.profile"></button>
 	</ion-nav-buttons>
     <ion-content>
-        <ion-list ng-if="vm.cv.employment.length" can-swipe="true">
-            <ion-item ng-if="vm.isGraduate">
-                <h2>Seeing first time employment</h2>
-            </ion-item>
-            <div ng-repeat="employment in vm.cv.employment" ng-if="!vm.isGraduate">
-                <ion-item ng-click="vm.edit(employment)">
-                    <h2>{{ employment.JobTitle }} @ {{ employment.Company }}</h2>
-                    <p>
-                        {{ employment.StartDateD | date:'d MMM yyyy'}} &ndash; 
-                        <span ng-if="!employment.EndDate">
-                            <i class="icon icon-midi ion-ios-infinite" style="position: relative; top: 4px"></i>
-                        </span>
-                        <span ng-if="employment.EndDate">{{ employment.EndDateD | date:'d MMM yyyy' }}</span>
-                    </p>
+        <ion-list ng-if="vm.cv.employment.length" can-swipe="true" class="itw-timeline">
+            <div ng-repeat="employment in vm.cv.employment">
+                <ion-item ng-click="vm.edit(employment)" class="item-timeline">
+                    <div class="line" ></div>
+                    <div class="row">
+                        <div class="itw-timeline-left">
+                            <span class="itw-bubble" style="">
+                                {{ employment.StartDateD | date:'MMM yyyy'}} 
+                            </span>
+                        </div>
+                        <div class="col">
+                        <div>
+                        <h2>{{ employment.Company }}</h2>
+                        <p>{{ employment.JobTitle }}</p>
+                            </div>
+                        </div>
+
+                    </div>
+            
                     <ion-option-button class="button-energized"
-                               ng-click="vm.edit(employment)">
+                               ng-click="vm.remove(employment)">
                       Delete
                     </ion-option-button>
                 </ion-item>
                 <ion-item ng-if="vm.employment && vm.employment.EmploymentID === employment.EmploymentID"
                  ng-init="employment = vm.employment"
-                 ng-include src="'app/jobs/cv/cv.employment.form.html'">
+                 ng-include src="'app/jobs/cv/cv.employment.form.html'"
+                 style="border-width: 0;">
                     
                 </ion-item>
             </div>
         </ion-list>
 
-        <div class="list card">
+        <div class="list list-inset">
 
             <div class="item" ng-if="!vm.cv.employment.length">
                 <h2>STEP 4 &dash; Employment details</h2>
@@ -49,13 +55,13 @@
                 
             </ng-include>
             
-            <label class="item" ng-show="!vm.employment">
-                <button class="button button-small button-balanced button-clear icon-left ion-plus"
-                        ng-click="vm.addItem()">
-                    I also worked at?
-                </button>
+            <label class="item item-positive item-icon-left" ng-show="!vm.employment" ng-click="vm.addItem()">
+                <i class="icon icon-midi ion-plus"></i>
+                <span ng-if="vm.isGraduate && vm.cv.employment.length === 1">I worked at?</span>
+                <span ng-if="!(vm.isGraduate && vm.cv.employment.length === 1)">I also worked at?</span>
             </label>
         </div>
+        <p>&nbsp;</p>
     </ion-content>
 
     <ion-footer-bar class="bar-dark" align-title="center">

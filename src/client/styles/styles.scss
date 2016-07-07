@@ -330,5 +330,49 @@ md-tabs .md-tab {
 .item-input .icon {
   min-width: 24px;
 }
-
+.popup-buttons {
+  min-height: 48px;
+  padding: 8px 10px;
+  .button {
+    min-height: 36px;
+    line-height: 33px;
+  }
+}
+.popup-head {
+  padding: 12px 10px;
+}
+.popup-title {
+  font-size: 16px;
+  color: $assertive;
+}
+.popup-body {
+  text-align: center;
+}
+.button {
+  background-color: #ddd;
+}
+.popup-container .popup {
+  border-radius: $button-border-radius;
+}
+.itw-timeline {
+    .list {
+      border-bottom: 1px solid #ddd;
+    }
+    .item.item-timeline {
+      border-width: 0;
+    }
+    .itw-bubble {
+      margin-top: 2px;
+      display: inline-block;
+    }
+}
+.itw-timeline-left {
+  width: 101px;
+}
+.itw-bubble {
+  background-color: #ddd; border-radius: 4px; padding: 4px 8px;
+}
+.line {
+  position: absolute; height: 100%; width: 1px; background-color: #ddd; top: 0; left: 101px;
+}
 

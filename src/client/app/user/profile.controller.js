@@ -21,6 +21,18 @@
         function activate() {
             vm.profile = user.profile;
             vm.cv = user.profile.careerweb.cv;
+            completeness();
+        }
+
+        function completeness() {
+            var percentage = 0;
+            percentage += vm.cv.AffirmativeActionCode ? 100 / 6 : 0;
+            percentage += vm.cv.skills.length ? 100 / 6 : 0;
+            percentage += vm.cv.education.length ? 100 / 6 : 0;
+            percentage += vm.cv.employment.length ? 100 / 6 : 0;
+            percentage += vm.cv.WishRemAmount ? 100 / 6 : 0;
+            percentage += vm.cv.document ? 100 / 6 : 0;
+            vm.completeness = percentage;
         }
 
         function emailActivationCode() {

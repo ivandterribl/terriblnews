@@ -5,9 +5,9 @@
         .module('app.core')
         .factory('ui', UI);
 
-    UI.$inject = ['$state', '$ionicLoading', 'toastr'];
+    UI.$inject = ['$q', '$state', '$ionicLoading', '$ionicPopup', 'toastr'];
 
-    function UI($state, $ionicLoading, toastr) {
+    function UI($q, $state, $ionicLoading, $ionicPopup, toastr) {
         var ui = {
             show: function() {
                 return $state.go.apply($state, arguments);
@@ -27,7 +27,31 @@
                 hide: function() {
                     return toastr.clear(arguments);
                 }
+            },
+            popup: {
+                confirm: {
+                    show: function(options) {
+                        var deferred = $q.defer(),
+                            opts = angular.extend({
+                                title: 'Are you sure'
+                            }, options),
+                            confirmPopup = $ionicPopup.confirm(opts);
+                        confirmPopup
+                            .then(function(result) {
+                                if (result) {
+                                    deferred.resolve();
+                                } else {
+                                    deferred.reject();
+                                }
+                            })
+                            .catch(function() {
+                                deferred.reject();
+                            });
+                        return deferred.promise;
+                    }
+                }
             }
+
         };
         return ui;
     }

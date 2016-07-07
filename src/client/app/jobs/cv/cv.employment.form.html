@@ -1,4 +1,5 @@
-<div class="list">
+<div class="line"></div>
+<div class="list" style="background-color: #fff">
     <div class="item item-divider item-icon-right">
         <span ng-if="!employment.EmploymentID">Add</span> 
         <span ng-if="employment.EmploymentID">Edit</span> 
@@ -57,7 +58,7 @@
         </select>
     </label>
 
-    <label class="item item-balanced item-icon-left item-icon-right" 
+    <label class="item item-positive item-icon-left item-icon-right" 
         ng-click="vm.submit(employment)">
             <i class="icon icon-midi ion-edit"></i>
             <span>Save</span>

@@ -100,7 +100,7 @@
                     });
 
                     if (profile.careerweb && profile.careerweb.identifier) {
-                        api2('jobs/cv/' + profile.careerweb.identifier)
+                        api2('jobs/cv/')
                             .then(function(cv) {
                                 var matches = {
                                     firstName: _.find(response.profile, {
