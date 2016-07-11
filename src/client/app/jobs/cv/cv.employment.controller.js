@@ -76,8 +76,9 @@
                     LoginID: careerweb.identifier
                 }
             }).then(function(cv) {
-                ui.show('app.jobs.profile-5');
                 careerweb.cv.employment = cv.employment;
+                ui.show('app.jobs.profile-5');
+
             }).catch(function(response) {
                 ui.toast.show('error', response.error_description);
             });
@@ -162,7 +163,7 @@
                 } else {
                     // save pending
                     save(employment).then(function() {
-                        cancel();
+                        //cancel();
                         ui.show('app.jobs.profile-3');
                     });
                 }
@@ -180,7 +181,7 @@
                 } else {
                     // save pending
                     save(employment).then(function() {
-                        cancel();
+                        //cancel();
                         ui.show('app.jobs.profile-5');
                     });
                 }
@@ -213,9 +214,6 @@
                         .finally(function() {
                             ui.loading.hide();
                         });
-                })
-                .catch(function() {
-                    console.log('NO');
                 });
         }
 

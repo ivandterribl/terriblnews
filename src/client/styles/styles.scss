@@ -66,6 +66,16 @@ b {
 .item.has-error input, .item.has-error input::-webkit-input-placeholder, .item.has-error .input-label, .item.item-radio.has-error .item-content {
   color: $assertive;
 }
+md-autocomplete input::-webkit-input-placeholder {
+  color: #444;
+}
+.has-error md-autocomplete input::-webkit-input-placeholder { 
+  color: $assertive;
+}
+.md-autocomplete-suggestions li {
+  height: 44px;
+  line-height: 44px;
+}
 
 .pic {
   text-align: center;
@@ -136,7 +146,6 @@ ion-header-bar.bar.bar-stable {
 .highlight {
     background-color: #FFFFCC;
     font-weight: bold;
-    padding: 1px 4px;
 }
 .md-menu-icon {
       display: inline-block;
@@ -360,6 +369,9 @@ md-tabs .md-tab {
     }
     .item.item-timeline {
       border-width: 0;
+      .list {
+        background-color: #fff;
+      }
     }
     .itw-bubble {
       margin-top: 2px;

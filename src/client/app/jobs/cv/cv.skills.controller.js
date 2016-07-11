@@ -5,9 +5,9 @@
         .module('itw.jobs')
         .controller('CvSkillsController', Controller);
 
-    Controller.$inject = ['user', 'api2', 'ui'];
+    Controller.$inject = ['user', 'api2', 'ui', '$timeout', '$q', '$log'];
     /* @ngInject */
-    function Controller(user, api2, ui) {
+    function Controller(user, api2, ui, $timeout, $q, $log) {
         var vm = this,
             careerweb = user.profile.careerweb,
             defaults = {
@@ -24,6 +24,36 @@
         vm.next = next;
         vm.prev = prev;
         vm.submit = submit;
+        vm.remove = remove;
+
+        vm.translateRating = function(skill) {
+            switch (skill.SkillCompetency) {
+                case 'Beginner':
+                    return [true, true, false, false];
+                    break;
+                case 'Intermediate':
+                    return [true, true, true, false];
+                    break;
+                case 'Advanced':
+                    return [true, true, true, true];
+                    break;
+                default:
+                    return [true, false, false, false];
+            }
+        };
+
+        vm.translateExperience = function(skill) {
+            var item = _.find(vm.lu.experienceList, {
+                key: skill.MonthsExperience
+            });
+            return item ? item.value : 'n/a';
+        };
+
+        vm.querySearch = querySearch;
+
+        function querySearch(query) {
+            return query ? api2('jobs/lu/skills?q=' + query) : api2('jobs/lu/skills');
+        }
 
         activate();
 
@@ -33,7 +63,10 @@
             vm.cv = cv;
             if (!vm.cv.skills || !vm.cv.skills.length) {
                 vm.skill = angular.copy(defaults.skill);
+            } else {
+                vm.skill = null;
             }
+            lookups();
         }
 
         function add() {
@@ -45,7 +78,7 @@
         }
 
         function cancel() {
-            vm.skill = null;
+            activate();
         }
 
         function isValid(skill) {
@@ -135,6 +168,33 @@
             }
         }
 
+        function remove(skill) {
+            var opts = {
+                title: 'Cannot be undone',
+                template: 'Are you sure you want to delete ' + skill.SkillDescription
+            };
+            ui.popup.confirm.show(opts)
+                .then(function() {
+                    ui.loading.show();
+                    api2('jobs/cv/skills/remove', {
+                            method: 'POST',
+                            data: {
+                                SkillID: skill.SkillID
+                            }
+                        })
+                        .then(function(cv) {
+                            careerweb.cv.skills = cv.skills;
+                            cancel();
+                        })
+                        .catch(function(response) {
+                            ui.toast.show('error', response.error_description);
+                        })
+                        .finally(function() {
+                            ui.loading.hide();
+                        });
+                });
+        }
+
         function lookups() {
             vm.lu = {
                 skillList: {
@@ -208,6 +268,5 @@
                 }]
             };
         }
-
     }
 })();

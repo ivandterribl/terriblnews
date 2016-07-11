@@ -1,28 +1,37 @@
+<div class="line"></div>
 <div class="list">
     <div class="item item-divider item-icon-right">
         <span ng-if="!skill.SkillID">Add</span> 
         <span ng-if="skill.SkillID">Edit</span> 
         skill
         <i class="icon icon-midi ion-close assertive" ng-click="vm.cancel(skill)"
+        style="right: 4px"
         ng-if="vm.cv.skills.length"></i>
     </div>
 
-    <label class="item item-input" ng-class="{ 'has-error' : !skill.SkillDescription && skill.$submitted }">
-        <i class="icon ion-hammer placeholder-icon"></i>
-        <input type="text" placeholder="Description" name="SkillDescription" ng-model="skill.SkillDescription" required>
-    </label>
+    <div class="item" ng-class="{ 'has-error' : !skill.SkillDescription && skill.$submitted }"
+      style="padding: 4px 0; ">
+        <md-autocomplete
+          md-search-text="skill.SkillDescription"
+          md-items="item in vm.querySearch(skill.SkillDescription)"
+          md-item-text="item.SkillDescription"
+          md-min-length="0"
+          md-delay="16"
+          placeholder="Describe your skill">
+        <md-item-template>
+          <span md-highlight-text="skill.SkillDescription" md-highlight-flags="^i">{{item.SkillDescription}}</span>
+        </md-item-template>
+      </md-autocomplete>
+    </div>
 
     <label class="item item-input item-select"
       ng-class="{ 'has-error' : !skill.SkillCompetency && skill.$submitted }">
           <div class="input-label">
               Competency
           </div>
-          <select ng-model="skill.SkillCompetency">
-              <option value="">- select -</option>
-              <option value=Trained>Trained</option>
-              <option value=Beginner>Beginner</option>
-              <option value=Intermediate>Intermediate</option>
-              <option value=Advanced>Advanced</option>
+          <select ng-model="skill.SkillCompetency"
+          ng-options="item as item for item in vm.lu.competencyList">
+            <option value="">- select -</option>
           </select>
       </label>
       <label class="item item-input item-select"
@@ -30,15 +39,9 @@
           <div class="input-label">
               Months experience
           </div>
-          <select ng-model="skill.MonthsExperience">
+          <select ng-model="skill.MonthsExperience"
+          ng-options="item.key as item.value for item in vm.lu.experienceList">
               <option value="">- select -</option>
-              <option value="3">0-6</option>
-              <option value="10">6-12</option>
-              <option value="20">12-24</option>
-              <option value="30">24-36</option>
-              <option value="40">36-48</option>
-              <option value="50">48-60</option>
-              <option value="70">60+</option>
           </select>
       </label>
 

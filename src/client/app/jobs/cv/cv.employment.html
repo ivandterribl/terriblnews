@@ -1,14 +1,18 @@
-<ion-view style="background-color: #f5f5f5">
+<ion-view style="background-color: #f5f5f5" cache-view="false" hide-back-button="true">
+    <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" ng-click="vm.toggleMenu()">
+        </button>
+    </ion-nav-buttons>
     <ion-nav-title>Work history</ion-nav-title>
-	<ion-nav-buttons side="secondary">
-	  	<button class="button button-icon ion-person" 
-                ui-sref="app.user.profile"></button>
-	</ion-nav-buttons>
+    <ion-nav-buttons side="secondary">
+        <button class="button button-icon ion-person"
+        ui-sref="app.user.profile"></button>
+    </ion-nav-buttons>
     <ion-content>
         <ion-list ng-if="vm.cv.employment.length" can-swipe="true" class="itw-timeline">
             <div ng-repeat="employment in vm.cv.employment">
                 <ion-item ng-click="vm.edit(employment)" class="item-timeline">
-                    <div class="line" ></div>
+                    <div class="line"></div>
                     <div class="row">
                         <div class="itw-timeline-left">
                             <span class="itw-bubble" style="">
@@ -16,24 +20,21 @@
                             </span>
                         </div>
                         <div class="col">
-                        <div>
-                        <h2>{{ employment.Company }}</h2>
-                        <p>{{ employment.JobTitle }}</p>
-                            </div>
+                            <h2>{{ employment.Company }}</h2>
+                            <p>{{ employment.JobTitle }}</p>
                         </div>
-
                     </div>
-            
+
                     <ion-option-button class="button-energized"
-                               ng-click="vm.remove(employment)">
-                      Delete
+                                       ng-click="vm.remove(employment)">
+                        Delete
                     </ion-option-button>
                 </ion-item>
                 <ion-item ng-if="vm.employment && vm.employment.EmploymentID === employment.EmploymentID"
-                 ng-init="employment = vm.employment"
-                 ng-include src="'app/jobs/cv/cv.employment.form.html'"
-                 style="border-width: 0;">
-                    
+                          ng-init="employment = vm.employment"
+                          ng-include src="'app/jobs/cv/cv.employment.form.html'"
+                          class="item-timeline">
+
                 </ion-item>
             </div>
         </ion-list>
@@ -44,17 +45,17 @@
                 <h2>STEP 4 &dash; Employment details</h2>
             </div>
 
-            <div class="item item-icon-right" ng-click="vm.skip()"  ng-if="!vm.cv.employment.length">
-                Seeking first time employment<br />Skip this step
+            <div class="item item-icon-right" ng-click="vm.skip()" ng-if="!vm.cv.employment.length">
+                Seeking first time employment<br/>Skip this step
                 <i class="icon ion-chevron-right" style="right: 0"></i>
             </div>
 
             <ng-include src="'app/jobs/cv/cv.employment.form.html'"
-            ng-if="vm.employment && !vm.employment.EmploymentID" 
-            ng-init="employment = vm.employment">
-                
+                        ng-if="vm.employment && !vm.employment.EmploymentID"
+                        ng-init="employment = vm.employment">
+
             </ng-include>
-            
+
             <label class="item item-positive item-icon-left" ng-show="!vm.employment" ng-click="vm.addItem()">
                 <i class="icon icon-midi ion-plus"></i>
                 <span ng-if="vm.isGraduate && vm.cv.employment.length === 1">I worked at?</span>
@@ -67,15 +68,15 @@
     <ion-footer-bar class="bar-dark" align-title="center">
         <div class="buttons">
             <button class="button button-clear" ng-click="vm.prev()">
-            	<i class="icon ion-chevron-left"></i>
-            	Education
+                <i class="icon ion-chevron-left"></i>
+                Education
             </button>
         </div>
         <h3 class="title">&nbsp;</h3>
         <div class="buttons">
             <button class="button button-clear" ng-click="vm.next()">
-            	Wishlist
-            	<i class="icon ion-chevron-right"></i>
+                Wishlist
+                <i class="icon ion-chevron-right"></i>
             </button>
         </div>
     </ion-footer-bar>

@@ -1,10 +1,13 @@
-<ion-view style="background-color: #f5f5f5">
+<ion-view style="background-color: #f5f5f5" cache-view="false" hide-back-button="true">
+    <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" ng-click="vm.toggleMenu()">
+        </button>
+    </ion-nav-buttons>
     <ion-nav-title>Wishlist</ion-nav-title>
-	
-	<ion-nav-buttons side="secondary">
-		<button class="button button-icon ion-person" 
-                ui-sref="app.user.profile"></button>
-	</ion-nav-buttons>
+    <ion-nav-buttons side="secondary">
+        <button class="button button-icon ion-person"
+        ui-sref="app.user.profile"></button>
+    </ion-nav-buttons>
     <ion-content>
         <form name="vm.cvForm" ng-submit="false">
             <div class="list card">
@@ -17,7 +20,7 @@
                         <div>Salary at {{ vm.employment.Company }}</div>
                         <div class="row" style="padding-top: 0; padding-right: 0">
                             <span class="col col-50">
-                                <input type="text" placeholder="0" ng-model="vm.employment.RemAmount">
+                                <input type="number" placeholder="0" ng-model="vm.employment.RemAmount">
                             </span>
                             <span class="col col-50 item-select">
                                  <select ng-model="vm.employment.RemCurrency"
@@ -70,7 +73,7 @@
                     <div>Desired salary</div>
                     <div class="row"  style="padding-top: 0; padding-right: 0">
                         <span class="col col-50">
-                            <input type="text" placeholder="0"  ng-model="vm.cv.WishRemAmount">
+                            <input type="number" placeholder="0" ng-model="vm.cv.WishRemAmount">
                         </span>
                         <span class="col col-50 item-select">
                              <select ng-model="vm.cv.WishRemCurrency"

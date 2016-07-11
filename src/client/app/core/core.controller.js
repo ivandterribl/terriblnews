@@ -5,9 +5,9 @@
         .module('app.core')
         .controller('CoreController', Controller);
 
-    Controller.$inject = ['_', 'nav', 'searchBar', '$state', '$ionicHistory', '$location', 'Analytics'];
+    Controller.$inject = ['_', 'nav', 'user', 'searchBar', '$state', '$ionicHistory', '$location', 'Analytics'];
     /* @ngInject */
-    function Controller(_, nav, searchBar, $state, $ionicHistory, $location, Analytics) {
+    function Controller(_, nav, user, searchBar, $state, $ionicHistory, $location, Analytics) {
         var vm = this;
         vm.nav = nav.get();
 
@@ -17,6 +17,11 @@
         vm.eventName = eventName;
         vm.eventLabel = eventLabel;
         vm.back = back;
+        vm.isAuthenticated = isAuthenticated;
+
+        function isAuthenticated() {
+            return user.isAuthenticated();
+        }
 
         function eventLabel() {
             return $location.url();

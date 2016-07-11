@@ -1,32 +1,43 @@
-<ion-view style="background-color: #f5f5f5">
-    <ion-nav-title>My skills</ion-nav-title>
-	<ion-nav-buttons side="secondary">
-	  	<button class="button button-icon ion-person" 
-                ui-sref="app.user.profile"></button>
-	</ion-nav-buttons>
+<ion-view style="background-color: #f5f5f5" cache-view="false" hide-back-button="true">
+    <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" ng-click="vm.toggleMenu()">
+        </button>
+    </ion-nav-buttons>
+    <ion-nav-title>Skills</ion-nav-title>
+    <ion-nav-buttons side="secondary">
+        <button class="button button-icon ion-person"
+        ui-sref="app.user.profile"></button>
+    </ion-nav-buttons>
     <ion-content>
-        <ion-list ng-if="vm.cv.skills.length" can-swipe="true">
+        <ion-list ng-if="vm.cv.skills.length" can-swipe="true" class="itw-timeline">
            <div ng-repeat="skill in vm.cv.skills">
-            <ion-item ng-click="vm.edit(skill)">
-                <h2>{{ skill.SkillDescription }}</h2>
-                <p class="row">
-                    <span class="col">{{ skill.SkillCompetency }}</span> 
-                    <span>{{ skill.MonthsExperience }} months</span>
-                </p>
+            <ion-item ng-click="vm.edit(skill)" class="item-timeline">
+                <div class="line"></div>
+                <div class="row">
+                    <div class="itw-timeline-left">
+                        <i class="icon assertive" ng-repeat="i in vm.translateRating(skill) track by $index"
+                        ng-class="{ 'ion-ios-star': i, 'ion-ios-star-outline': !i }"
+                        style="font-size: 20px;"></i>
+                    </div>
+                    <div class="col">
+                        <h2>{{ skill.SkillDescription }}</h2>
+                        <p>{{ vm.translateExperience(skill) }} m</p>
+                    </div>
+                </div>
                 <ion-option-button class="button-energized"
-                           ng-click="vm.edit(skill)">
+                           ng-click="vm.remove(skill)">
                   Delete
                 </ion-option-button>
             </ion-item>
             <ion-item ng-if="vm.skill && vm.skill.SkillID === skill.SkillID"
              ng-init="skill = vm.skill"
-             ng-include src="'app/jobs/cv/cv.skills.form.html'">
+             ng-include src="'app/jobs/cv/cv.skills.form.html'" class="item-timeline">
                 
             </ion-item>
            </div>
         </ion-list>
 
-        <div class="list card">
+        <div class="list list-inset">
             <div class="item" ng-show="!vm.cv.skills.length">
                 <h2>STEP 2 &dash; Skills</h2>
             </div>
@@ -37,33 +48,12 @@
                 
             </ng-include>
             
-            <label class="item" ng-show="!vm.skill">
-                <button class="button button-small button-balanced button-clear icon-left ion-plus"
-                        ng-click="vm.addItem()">
-                    I also know
-                </button>
+            <label class="item item-positive item-icon-left" ng-show="!vm.skill" ng-click="vm.addItem()">
+                <i class="icon icon-midi ion-plus"></i>
+                Add another skill
             </label>
         </div>
 
-        <div class="list card">
-            <div class="item item-energized">
-                <p style="color: #fff">e.g. Windows 2000 or XP,    
-                TCP IP, 
-                SQL,    
-                Windows NT, 
-                ETHERNET,   
-                Visual Basic,   
-                Linux,  
-                Java,   
-                Oracle, 
-                Visual Basic Net,   
-                Token Ring, 
-                Unix,   
-                ASP Net,    
-                IPX SPX,    
-                PL SQL</p>
-            </div>
-        </div>
     </ion-content>
     <ion-footer-bar class="bar-dark" align-title="center">
         <div class="buttons">

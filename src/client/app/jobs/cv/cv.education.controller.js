@@ -24,6 +24,7 @@
         vm.next = next;
         vm.prev = prev;
         vm.submit = submit;
+        vm.remove = remove;
 
         activate();
 
@@ -141,6 +142,33 @@
             } else {
                 ui.show('app.jobs.profile-4');
             }
+        }
+
+        function remove(education) {
+            var opts = {
+                title: 'Cannot be undone',
+                template: 'Are you sure you want to delete ' + education.Course + ' @ ' + education.Institution
+            };
+            ui.popup.confirm.show(opts)
+                .then(function() {
+                    ui.loading.show();
+                    api2('jobs/cv/education/remove', {
+                            method: 'POST',
+                            data: {
+                                EducationID: education.EducationID
+                            }
+                        })
+                        .then(function(cv) {
+                            careerweb.cv.education = cv.education;
+                            cancel();
+                        })
+                        .catch(function(response) {
+                            ui.toast.show('error', response.error_description);
+                        })
+                        .finally(function() {
+                            ui.loading.hide();
+                        });
+                });
         }
     }
 })();

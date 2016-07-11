@@ -19,6 +19,7 @@
                 employment = _.first(cv.employment);
 
             cv = angular.extend(cv, {
+                WishRemAmount: parseFloat(cv.WishRemAmount),
                 WishRemCurrency: cv.WishRemCurrency ? cv.WishRemCurrency : 'South African Rands',
                 WishRemFrequencyCode: cv.WishRemFrequencyCode ? cv.WishRemFrequencyCode : 'per Month'
             });
@@ -66,11 +67,12 @@
                 jobType: ['Both', 'Permanent', 'Contract']
             };
             vm.employment = angular.extend(employment, {
+                RemAmount: employment.RemAmount ? parseFloat(employment.RemAmount) : 0,
                 RemCurrency: employment.RemCurrency ? employment.RemCurrency : 'ZAR',
                 RemFrequencyCode: employment.RemFrequencyCode ? employment.RemFrequencyCode : employment.JobType === 'Contract' ? 'H' : 'M'
             });
 
-            vm.isGraduate = employment.Company === 'New JobSeeker' ? 1 : 0;
+            vm.isGraduate = employment.Company === 'New JobSeeker' || employment.Company === 'New job seeker' ? 1 : 0;
 
             cv.Relocation = vm.lu.relocationList.indexOf(cv.Relocation) === 1 ? true : false;
             cv.SearchableYN = (cv.SearchableYN === 'N' ? false : true);

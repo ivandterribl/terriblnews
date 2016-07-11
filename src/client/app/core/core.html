@@ -1,5 +1,4 @@
 <ion-side-menus>
-       
     <ion-side-menu-content edge-drag-threshold="true">
         <ion-nav-bar class="bar-assertive">
             <ion-nav-back-button ng-click="vm.back()">
@@ -35,6 +34,17 @@
       </ion-header-bar>
       <ion-content has-header="true">
         <div class="list">
+          <a class="item item-icon-left item-assertive"
+                    ng-show="vm.isAuthenticated()"
+                    menu-close
+                    nav-clear
+                    ui-sref="app.user.profile"
+                    ga-track-event="[vm.eventName(), 'mainmenu', vm.eventLabel()]">
+              
+              <i class="icon icon-mini ion-person"></i> 
+              My profile
+              
+          </a>
           <div ng-repeat="group in vm.nav">
               <a class="item item-icon-left"
                         ng-click="vm.toggleGroup(group)"
