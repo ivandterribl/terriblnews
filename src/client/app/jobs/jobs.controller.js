@@ -37,6 +37,17 @@
             vm.complete = 0;
             // cached view
             $scope.$on('$ionicView.enter', function() {
+                vm.items = _.map(jobs, function(job) {
+                    var application;
+                    if (user.$auth.isAuthenticated() && user.profile) {
+                        application = _.find(user.profile.careerweb.applications, {
+                            uniq: job.uniq
+                        });
+                    }
+                    return angular.extend(job, {
+                        application: application
+                    });
+                });
                 $scope.$emit('category', activeNav.item);
             });
         }

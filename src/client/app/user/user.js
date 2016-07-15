@@ -85,8 +85,7 @@
 
                     if (profile.itweb || profile.careerweb) {
                         profile.activated = _.find(response.profile, {
-                            key: 'emailVerified',
-                            value: response.username
+                            key: 'emailVerified'
                         });
                     } else {
                         profile.activated = 1;

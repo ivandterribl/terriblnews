@@ -80,10 +80,11 @@
         }
 
         function next() {
-
             var form = vm.cvForm;
+            if (vm.cv.Gender && vm.cv.Race && form.$pristine) {
+                return ui.show('app.jobs.profile-2');
+            }
 
-            console.log('secure.cv', vm.cv);
             form.$setSubmitted(true);
             if (form.$invalid) {
                 return;
@@ -102,7 +103,7 @@
                     cv.PhysicallyDisabled = cv.AffirmativeActionCode.indexOf('D') !== -1 ? true : false;
                 }
                 user.profile.careerweb.cv = cv;
-                $state.go('app.jobs.profile-2');
+                ui.show('app.jobs.profile-2');
             }).catch(function(response) {
                 ui.toast.show('error', response.error_description);
             }).finally(function() {

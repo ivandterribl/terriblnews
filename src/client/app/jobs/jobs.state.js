@@ -75,23 +75,33 @@
                 resolve: {
                     profile: ['user', '$q', function(user, $q) {
                         var deferred = $q.defer();
-                        if (user.isAuthenticated() && !user.profile) {
-                            user.get()
-                                .then(function() {
-                                    var cv = user.profile.careerweb.cv
-                                    if (cv.CVID) {
-                                        user.career.applications()
-                                            .then(function() {
-                                                deferred.resolve(user);
-                                            })
-                                            .catch(function() {
-                                                deferred.resolve(user);
-                                            });
-                                    }
-                                })
-                                .catch(function() {
-                                    deferred.resolve(user);
-                                });
+                        if (user.isAuthenticated()) {
+                            if (!user.profile) {
+                                user.get()
+                                    .then(function() {
+                                        var cv = user.profile.careerweb.cv;
+                                        if (cv.CVID) {
+                                            user.career.applications()
+                                                .then(function() {
+                                                    deferred.resolve(user);
+                                                })
+                                                .catch(function() {
+                                                    deferred.resolve(user);
+                                                });
+                                        }
+                                    })
+                                    .catch(function() {
+                                        deferred.resolve(user);
+                                    });
+                            } else if (user.profile.careerweb && !user.profile.careerweb.applications) {
+                                user.career.applications()
+                                    .then(function() {
+                                        deferred.resolve(user);
+                                    })
+                                    .catch(function() {
+                                        deferred.resolve(user);
+                                    });
+                            }
                         } else {
                             deferred.resolve(user);
                         }
@@ -162,17 +172,12 @@
                         templateUrl: 'app/jobs/job.html',
                         controller: 'JobController as vm'
                     }
+                },
+                resolve: {
+                    response: ['api2', '$q', '$stateParams', function(api2, $q, $stateParams) {
+                        return api2('jobs/job/' + $stateParams.id);
+                    }]
                 }
             });
-
-        function loginRequired($q, $location, $auth) {
-            var deferred = $q.defer();
-            if ($auth.isAuthenticated()) {
-                deferred.resolve();
-            } else {
-                $location.path('/user/login');
-            }
-            return deferred.promise;
-        }
     }
 })();

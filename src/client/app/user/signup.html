@@ -8,41 +8,41 @@
 			    <i class="icon ion-person placeholder-icon"></i>
 			    <input type="text" placeholder="Name" name="displayName" ng-model="vm.user.displayName" required>
 			  </label>
-			  <div class="error-container" ng-if="signupForm.displayName.$dirty" 
+			  <!-- <div class="error-container" ng-if="signupForm.displayName.$dirty" 
 			  ng-messages="signupForm.displayName.$error">
 			      <div ng-message="required">You must enter your name.</div>
-			   </div>
+			   </div> -->
 			</div>
 			<div class="list list-inset">
 			  <label class="item item-input" ng-class="{ 'has-error' : signupForm.email.$invalid && signupForm.email.$dirty }">
 			    <i class="icon ion-at placeholder-icon"></i>
 			    <input type="email" placeholder="Email" name="email" ng-model="vm.user.email" required>
 			  </label>
-			  <div class="error-container" ng-if="signupForm.email.$dirty" 
+			  <!-- <div class="error-container" ng-if="signupForm.email.$dirty" 
 			  ng-messages="signupForm.email.$error">
 			      <div ng-message="required">Your email address is required.</div>
 			      <div ng-message="email">Your email address is invalid.</div>
-			   </div>
+			   </div> -->
 			</div>
 			<div class="list list-inset">
 			  <label class="item item-input" ng-class="{ 'has-error' : signupForm.password.$invalid && signupForm.password.$dirty }">
 			    <i class="icon ion-key placeholder-icon"></i>
 			    <input password-strength type="password" placeholder="Password" name="password" ng-model="vm.user.password" required>
 			  </label>
-			  <div class="error-container" ng-if="signupForm.password.$dirty" 
+			  <!-- <div class="error-container" ng-if="signupForm.password.$dirty" 
 			  ng-messages="signupForm.password.$error">
 			      <div ng-message="required">You must enter your name.</div>
-			   </div>
+			   </div> -->
 			</div>
 			<div class="list list-inset">
 			  <label class="item item-input" ng-class="{ 'has-error' : signupForm.confirmPassword.$invalid && signupForm.confirmPassword.$dirty }">
 			    <i class="icon ion-key placeholder-icon"></i>
 			    <input password-match="vm.user.password" type="password" placeholder="Confirm password" name="confirmPassword" ng-model="vm.confirmPassword" required>
 			  </label>
-			  <div class="error-container" ng-if="signupForm.confirmPassword.$dirty" 
+			  <!-- <div class="error-container" ng-if="signupForm.confirmPassword.$dirty" 
 			  ng-messages="signupForm.confirmPassword.$error">
-			      <div ng-message="compareTo">Password must match.</div>
-			   </div>
+			      <div ng-message="compareTo">Passwords must match.</div>
+			   </div> -->
 			</div>	
 			<div class="padding text-center stable">By signing up, you agree to <a ui-sref="app.about.privacy">terms &amp; conditions</a> and <a ui-sref="app.about.privacy">privacy policy</a></div>
 			<button class="button button-block button-small button-clear button-assertive" 

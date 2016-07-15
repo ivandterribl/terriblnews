@@ -10,6 +10,7 @@
     function Controller(user, api2, ui, $q) {
         var vm = this;
 
+        vm.prev = prev;
         vm.next = next;
 
         activate();
@@ -19,7 +20,7 @@
                 employment = _.first(cv.employment);
 
             cv = angular.extend(cv, {
-                WishRemAmount: parseFloat(cv.WishRemAmount),
+                WishRemAmount: cv.WishRemAmount ? parseFloat(cv.WishRemAmount) : null,
                 WishRemCurrency: cv.WishRemCurrency ? cv.WishRemCurrency : 'South African Rands',
                 WishRemFrequencyCode: cv.WishRemFrequencyCode ? cv.WishRemFrequencyCode : 'per Month'
             });
@@ -64,7 +65,7 @@
                     'Not willing to relocate',
                     'Willing to relocate anywhere'
                 ],
-                jobType: ['Both', 'Permanent', 'Contract']
+                jobType: ['Either', 'Permanent', 'Contract']
             };
             vm.employment = angular.extend(employment, {
                 RemAmount: employment.RemAmount ? parseFloat(employment.RemAmount) : 0,
@@ -75,7 +76,7 @@
             vm.isGraduate = employment.Company === 'New JobSeeker' || employment.Company === 'New job seeker' ? 1 : 0;
 
             cv.Relocation = vm.lu.relocationList.indexOf(cv.Relocation) === 1 ? true : false;
-            cv.SearchableYN = (cv.SearchableYN === 'N' ? false : true);
+            vm.SearchableYN = (cv.SearchableYN === 'N' ? false : true);
             vm.cv = cv;
 
             api2('jobs/lu/currency')
@@ -85,25 +86,50 @@
                 });
         }
 
-        function next() {
-            var $valid = 0,
-                fields = {
-                    cv: ['NoticePeriod', 'WishJobType', 'WishRemAmount', 'WishRemCurrency', 'WishRemFrequencyCode', 'Relocation', 'SearchableYN'],
-                    employment: ['RemAmount', 'RemCurrency', 'RemFrequencyCode']
-                };
+        function prev() {
+            var form = vm.cvForm;
+            if (vm.cv.WishRemAmount && form.$pristine) {
+                return ui.show('app.jobs.profile-4');
+            }
 
             vm.$submitted = 1;
 
-            if (false && form.$invalid) {
-                return;
+            if (form.$valid) {
+                save().then(function() {
+                    ui.show('app.jobs.profile-4');
+                });
             }
-            var employment = {
+        }
+
+        function next() {
+            var form = vm.cvForm;
+            if (vm.cv.WishRemAmount && form.$pristine) {
+                return ui.show('app.user.profile');
+            }
+
+            vm.$submitted = 1;
+
+            if (form.$valid) {
+                save().then(function() {
+                    ui.show('app.user.profile');
+                });
+            }
+        }
+
+        function save() {
+            var fields = {
+                    cv: ['NoticePeriod', 'WishJobType', 'WishRemAmount', 'WishRemCurrency', 'WishRemFrequencyCode', 'Relocation', 'SearchableYN'],
+                    employment: ['RemAmount', 'RemCurrency', 'RemFrequencyCode']
+                },
+                employment = {
                     LoginID: user.profile.careerweb.identifier,
                     EmploymentID: vm.employment.EmploymentID
                 },
                 cv = {
                     LoginID: user.profile.careerweb.identifier
-                };
+                },
+                promises = [],
+                promise;
 
             angular.forEach(fields.employment, function(key) {
                 employment[key] = vm.employment[key];
@@ -115,7 +141,7 @@
                         cv[key] = vm.cv[key] ? 'Willing to relocate anywhere' : 'Not willing to relocate'
                         break;
                     case 'SearchableYN':
-                        cv[key] = vm.cv[key] ? 'Y' : 'N'
+                        cv[key] = vm[key] ? 'Y' : 'N'
                         break;
                     default:
                         cv[key] = vm.cv[key];
@@ -123,9 +149,6 @@
             });
 
             ui.loading.show();
-            var promises = [],
-                promise;
-
             promise = api2('jobs/cv/wishlist', {
                 method: 'POST',
                 data: cv
@@ -140,14 +163,11 @@
                 promises.push(promise);
             }
 
-            $q.all(promises)
+            return $q.all(promises)
                 .then(function(response) {
-                    console.log('\nwe done :)\n');
-                    ui.toast.show('success', 'Your CV is ready')
-                    ui.show('app.user.profile');
+                    ui.toast.show('success', 'Your CV is ready');
+                    return user.get();
                 });
-
-            console.log(cv, employment);
         }
 
     }

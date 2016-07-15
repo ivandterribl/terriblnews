@@ -5,12 +5,11 @@
         .module('itw.jobs')
         .controller('JobController', Controller);
 
-    Controller.$inject = ['api2', '$http', '$scope', '$state', 'toastr', '$location', 'user', 'searchBar', 'ui'];
+    Controller.$inject = ['api2', 'response', '$http', '$scope', '$state', 'toastr', '$location', 'user', 'searchBar', 'ui'];
     /* @ngInject */
-    function Controller(api2, $http, $scope, $state, toastr, $location, user, searchBar, ui) {
+    function Controller(api2, response, $http, $scope, $state, toastr, $location, user, searchBar, ui) {
 
         var vm = this,
-            url = 'https://secure.itweb.co.za/api/',
             jobId = $state.params.id,
             limitstart = $state.params.limitstart || 0,
             limit = $state.params.limit || 25;
@@ -34,19 +33,19 @@
                 vm.instruction = 'Apply';
             }
 
-            api2('jobs/job/' + jobId)
-                .then(function(response) {
-                    vm.job = response;
-                    if (user.$auth.isAuthenticated() && user.profile && user.profile.careerweb) {
-                        vm.match = _.find(user.profile.careerweb.applications, {
-                            uniq: vm.job.uniq
-                        });
-                        if (vm.match) {
-                            vm.theme = 'bar-royal';
-                            vm.match.responseDate = new Date(vm.match.ResponseDate);
-                        }
-                    }
+            // api2('jobs/job/' + jobId)
+            //     .then(function(response) {
+            vm.job = response;
+            if (user.$auth.isAuthenticated() && user.profile && user.profile.careerweb) {
+                vm.match = _.find(user.profile.careerweb.applications, {
+                    uniq: vm.job.uniq
                 });
+                if (vm.match) {
+                    vm.theme = 'bar-royal';
+                    vm.match.responseDate = new Date(vm.match.ResponseDate);
+                }
+            }
+            //});
 
         }
 
@@ -87,7 +86,7 @@
                                     vm.theme = 'bar-royal';
                                     vm.match.responseDate = new Date(vm.match.ResponseDate);
                                 }
-                                toastr.success('A job application has been sent on your behalf. In future you can access this job application from the Job Seeker home page.');
+                                toastr.success('A job application has been sent on your behalf. Good luck!');
                             })
                             .catch(function() {
                                 toastr.error('Oops, something went wrong');

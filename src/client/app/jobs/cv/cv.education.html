@@ -1,6 +1,6 @@
-<ion-view style="background-color: #f5f5f5" cache-view="false" hide-back-button="true">
+<ion-view style="background-color: #f5f5f5"  hide-back-button="true" cache-view="false">
     <ion-nav-buttons side="left">
-        <button class="button button-icon button-clear ion-navicon" ng-click="vm.toggleMenu()">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
         </button>
     </ion-nav-buttons>
     <ion-nav-title>Education history</ion-nav-title>
@@ -40,7 +40,7 @@
 
         <div class="list list-inset">
             <div class="item" ng-show="!vm.cv.education.length">
-                <h2>STEP 3 &dash; Education details</h2>
+                <h2>STEP 3 &mdash; Education details</h2>
             </div>
 
             <ng-include src="'app/jobs/cv/cv.education.form.html'"

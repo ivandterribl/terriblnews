@@ -46,7 +46,7 @@
             var item = _.find(vm.lu.experienceList, {
                 key: skill.MonthsExperience
             });
-            return item ? item.value : 'n/a';
+            return item ? item.value : skill.MonthsExperience;
         };
 
         vm.querySearch = querySearch;

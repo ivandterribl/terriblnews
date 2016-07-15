@@ -26,7 +26,8 @@
         function environment(env) {
             var defaults = {
                 timeout: 20000,
-                log: 1
+                log: 1,
+                redirect_uri: 'http://jsx.itrends.co.za/'
             };
             return _.assign(defaults, environments[env]);
         }

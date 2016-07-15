@@ -58,7 +58,7 @@
 
                 vm.progress = 0;
                 vm.document = null;
-                careerweb.cv.documents = cv.documents;
+                careerweb.cv.document = cv.document;
             }, function(resp) {
                 ui.toast.show('success', 'Oops, something went wrong');
 

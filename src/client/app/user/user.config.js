@@ -55,5 +55,7 @@
     DELETE FROM `cv_skills` WHERE LoginID = @login_id;
     DELETE FROM `cv_main` WHERE LoginID = @login_id;
     DELETE FROM `login` WHERE LoginID = @login_id;
+
+    UPDATE cv_main SET LastAccessDate = '2012-11-12 16:48:25' WHERE CVID = 73389
     */
 })();

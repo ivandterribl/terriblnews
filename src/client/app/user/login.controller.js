@@ -5,9 +5,9 @@
         .module('itw.user')
         .controller('LoginController', Controller);
 
-    Controller.$inject = ['$scope', '$state', '$auth', 'user', 'toastr', '$ionicHistory', '$timeout'];
+    Controller.$inject = ['$scope', '$state', 'user', 'ui', '$ionicHistory', '$timeout'];
     /* @ngInject */
-    function Controller($scope, $state, $auth, user, toastr, $ionicHistory, $timeout) {
+    function Controller($scope, $state, user, ui, $ionicHistory, $timeout) {
         var vm = this;
 
         vm.login = login;
@@ -16,11 +16,7 @@
         activate();
 
         function activate() {
-            vm.user = {
-                // email: 'ivan@itweb.co.za',
-                // password: 'abc123'
-            };
-            console.log($state.params);
+            vm.user = {};
         }
 
         function login(form) {
@@ -39,6 +35,7 @@
                 password: vm.user.password
             };
 
+            ui.loading.show();
             user.login(payload)
                 .then(function(profile) {
                     var redirect = $state.params.redirect;
@@ -52,10 +49,13 @@
                     $ionicHistory.nextViewOptions({
                         historyRoot: true
                     });
-                    $state.go(redirect.name, redirect.params);
+                    ui.show(redirect.name, redirect.params);
                 })
                 .catch(function(error) {
-                    toastr.error(error.data.error_description, error.status);
+                    ui.toast.show('error', error.data.error_description, error.status);
+                })
+                .finally(function() {
+                    ui.loading.hide();
                 });
         }
 
@@ -72,17 +72,17 @@
                     $ionicHistory.nextViewOptions({
                         historyRoot: true
                     });
-                    $state.go(redirect.name, redirect.params);
+                    ui.show(redirect.name, redirect.params);
                 })
                 .catch(function(error) {
                     if (error.error) {
                         // Popup error - invalid redirect_uri, pressed cancel button, etc.
-                        toastr.error(error.error);
+                        ui.toast.show('error', error.error);
                     } else if (error.data) {
                         // HTTP response error from server
-                        toastr.error(error.data.error_description, error.status);
+                        ui.toast.show('error', error.data.error_description, error.status);
                     } else {
-                        toastr.error(error);
+                        ui.toast.show('error', error);
                     }
                 });
 

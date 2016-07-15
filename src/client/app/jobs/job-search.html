@@ -1,20 +1,18 @@
 <ion-view>
-	<div class="bar bar-subheader bar-balanced" style="padding-top: 2px">
+	<div class="bar bar-subheader bar-dark" style="padding-top: 2px">
 		<span class="row" style="padding: 0">
 			<span class="col" style="padding-top: 0">
-				Search results<br />Showing {{ vm.items.length }} of {{ vm.pagination.total }}
+				<br />Search results
 			</span>
-			<span class="text-right" style="padding-top: 2px">
-				<button class="button button-icon">
-					<i class="icon ion-funnel"></i>
-				</button>
+			<span class="text-right">
+				<br />Showing {{ vm.items.length }} of {{ vm.pagination.total }}
 			</span>
 		</span>
 	</div>
 
 	<ion-content class="has-subheader">
 		<section ng-show="!vm.items.length" class="padding">
-    		<p class="text-center assertive" ng-cloak>No results found</p>
+    		<p class="text-center assertive" ng-cloak>No jobs found</p>
     	</section>
 		<div ng-show="vm.items.length" class="list">
 			<div class="item" ng-repeat="item in vm.items" ui-sref="app.jobs.job({ id: item.JobID })">

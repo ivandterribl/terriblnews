@@ -1,4 +1,4 @@
-<ion-view hide-back-button="true">
+<ion-view hide-back-button="true" cache-view="false">
     <ion-nav-title>My profile</ion-nav-title>
     <ion-nav-buttons side="left">
         <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
@@ -23,16 +23,15 @@
                         to you.<br/>
                         Please check your email to activate your account.</p>
                 </div>
-                <label class="item">
-                    <button class="button button-small button-balanced button-clear icon-left ion-at"
-                            ng-click="vm.email()">
-                        No email? Resend
-                    </button>
-                </label>
+                <label class="item item-icon-left item-icon-right" ng-click="vm.email()">
+                    <i class="icon icon-midi ion-at"></i>
+                    <h3 class="itw-section balanced" style="padding: 4px 0 0 0">No email? Resend</h3>
+                    <i class="icon icon-midi ion-chevron-right balanced"></i>
+                </label>                
             </section>
 
-            <section ng-if="!vm.cv.CVID">
-                <label class="item item-icon-left item-icon-right" ui-sref="app.jobs.profile-1">
+            <section ng-if="!vm.cv.CVID && vm.profile.activated">
+                <label class="item item-icon-left item-icon-right" ui-sref="app.jobs.profile-1"  style="border-top: 1px solid #ddd;">
                         <i class="icon icon-midi ion-person stable"></i>
                         <h3 class="itw-section balanced" style="padding: 0">Create a CV</h3>
                         <p>Be discovered for career opportunities</p>
@@ -41,13 +40,34 @@
             </section>
         </div>
 
-        <div class="list card" ng-if="vm.cv.CVID">
+        <div class="list card" ng-if="vm.cv.CVID && vm.profile.activated">
             <div class="item" style="padding-top: 18px">
                 <div class="row">
                     <h2 class="col">My CV</h2>
-                    <h2 class="col text-right energized">{{ vm.completeness | number:0 }} %</h2>
+                    <h2 class="col text-right" ng-class="{ 'energized': vm.completeness != 100, 'balanced': vm.completeness == 100 }">{{ vm.completeness | number:0 }} %</h2>
                 </div>
+                <p class="row" ng-if="vm.cv.SearchableYN !== 'N'">Last updated: {{ vm.cv.LastAccessDate | date:'d MMM yyyy' }}</p>
+                <p class="row" ng-if="vm.cv.SearchableYN === 'N'">Visible only to you</p>
             </div>
+
+            <section ng-if="vm.cv.outdated">
+                <div class="item item-energized">
+                    <span style="white-space: normal">
+                    <i class="icon ion-alert-circled"></i> Your CV is out of date and hence low priority. If you are still on the job market, let us know below. </span>
+                </div>
+                <label class="item item-icon-left" ng-click="vm.refresh()">
+                    <i class="icon icon-midi ion-checkmark-round balanced"></i>
+                    I'm still on the job market
+                </label>
+                <label class="item item-icon-left" ng-click="vm.searchable()">
+                    <i class="icon icon-midi ion-close-round assertive"></i>
+                    Not interested in job opportunities
+                </label>
+                <label class="item item-energized">
+                    <i class="icon ion-alert-circled"></i> Better yet review and update your information
+                </label>
+            </section>
+
                 
             <label class="item item-icon-left item-icon-right" 
             ui-sref="app.jobs.profile-1">
@@ -87,7 +107,7 @@
             ng-if="vm.cv.employment.length"
             ui-sref="app.jobs.profile-5">
                     <i class="icon icon-midi ion-heart"></i>
-                    <span>Wishlist</span>
+                    <span>Wishlist &amp; Settings</span>
                     <i class="icon icon-midi icon-midi" 
                     ng-class="{ 'balanced': vm.cv.WishRemAmount,
                     'ion-checkmark-round': vm.cv.WishRemAmount, 'ion-chevron-right': !vm.cv.WishRemAmount }"></i>
@@ -117,18 +137,20 @@
                     <span>Google</span>
                     <i class="icon icon-midi ion-checkmark-round balanced"></i>
             </label>
-            <ion-toggle class="item-icon-left" ng-if="!vm.profile.google.email">
+            <ion-toggle class="item-icon-left" ng-if="!vm.profile.google.email" 
+            ng-model="vm.profile.google.activated" ng-change="vm.link('google')">
                 <i class="icon icon-midi ion-social-googleplus"></i>
                 Google
             </ion-toggle>
 
-            <label class="item item-icon-left item-icon-right item-balanced" 
+            <label class="item item-icon-left item-icon-right" 
                 ng-if="vm.profile.facebook.email">
                     <i class="icon icon-midi ion-social-facebook"></i>
                     <span>Facebook</span>
-                    <i class="icon icon-midi ion-checkmark-round"></i>
+                    <i class="icon icon-midi ion-checkmark-round balanced"></i>
             </label>
-            <ion-toggle class="item-icon-left" ng-if="!vm.profile.facebook.email">
+            <ion-toggle class="item-icon-left" ng-if="!vm.profile.facebook.email"
+            ng-model="vm.profile.facebook.activated" ng-change="vm.link('facebook')">
                 <i class="icon icon-midi ion-social-facebook"></i>
                 Facebook
             </ion-toggle>

@@ -5,12 +5,20 @@
         .module('itw.user')
         .controller('SignupController', Controller);
 
-    Controller.$inject = ['$scope', '$state', '$auth', 'toastr'];
+    Controller.$inject = ['$scope', '$state', 'ui', '$auth'];
     /* @ngInject */
-    function Controller($scope, $state, $auth, toastr) {
+    function Controller($scope, $state, ui, $auth) {
         var vm = this;
 
-        vm.signup = function(form) {
+        vm.signup = signup;
+
+        activate();
+
+        function activate() {
+
+        }
+
+        function signup(form) {
             if (form.$invalid) {
                 form.$setSubmitted(true);
                 angular.forEach(['displayName', 'email', 'password', 'confirmPassword'], function(fieldName) {
@@ -26,28 +34,21 @@
                 displayName: vm.user.displayName,
                 username: vm.user.email,
                 password: vm.user.password,
-                redirect_uri: 'http://localhost:3000/user/activate'
+                redirect_uri: 'http://jsx.itrends.co.za/user/activate'
             };
-
+            ui.loading.show();
             $auth.signup(payload)
                 .then(function(response) {
                     $auth.setToken(response);
-                    $state.go('app.user.profile');
-                    toastr.info('You have successfully created a new account and have been signed-in');
+                    ui.show('app.user.profile');
+                    ui.toast.show('info', 'You have successfully created a new account and have been signed-in');
                 })
                 .catch(function(response) {
-                    toastr.error(response.data.error_description);
+                    ui.toast.show('error', response.data.error_description);
+                })
+                .finally(function() {
+                    ui.loading.hide();
                 });
-        };
-
-        activate();
-
-        function activate() {
-            console.log('oauth2 :)');
-
-            $scope.$on('$ionicView.enter', function() {
-                $scope.$emit('category', $state.params.active);
-            });
         }
     }
 })();

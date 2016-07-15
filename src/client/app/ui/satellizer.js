@@ -545,7 +545,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
           opts.url = opts.url ? opts.url : utils.joinUrl(config.baseUrl, config.loginUrl);
           opts.data = user || opts.data;
           opts.method = opts.method || 'POST';
-          opts.withCredentials = opts.withCredentials || config.withCredentials;
+          opts.withCredentials = true || opts.withCredentials || config.withCredentials;
 
           return $http(opts).then(function(response) {
             shared.setToken(response);
@@ -560,8 +560,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
           opts.method = opts.method || 'POST';
           opts.withCredentials = opts.withCredentials || config.withCredentials;
 
-          return $http(opts).finally(function(response) {
-            return shared.logout();
+          return $http(opts).finally(function() {
+            shared.logout();
           });
         };
 

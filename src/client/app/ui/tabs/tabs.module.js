@@ -1,5 +1,5 @@
 (function() {
-    'use strict';
+	'use strict';
 
-    angular.module('itw.ui.tabs', []);
+	angular.module('itw.ui.tabs', ['material.core']);
 })();

@@ -5,23 +5,62 @@
         .module('itw.user')
         .controller('ProfileController', Controller);
 
-    Controller.$inject = ['$scope', '$auth', 'user', 'ui', '$http', 'toastr', '$ionicHistory', '$timeout'];
+    Controller.$inject = ['$scope', '$auth', 'api2', 'user', 'ui', '$http', '$ionicHistory', '$timeout'];
     /* @ngInject */
-    function Controller($scope, $auth, user, ui, $http, toastr, $ionicHistory, $timeout) {
+    function Controller($scope, $auth, api2, user, ui, $http, $ionicHistory, $timeout) {
         var vm = this,
             url = 'https://secure.itweb.co.za/api/';
 
         vm.link = linkProfile;
-        vm.unlink = unlinkProfile;
         vm.logout = logout;
         vm.email = emailActivationCode;
+        vm.refresh = refresh;
+        vm.searchable = searchable;
 
         activate();
+        getProfile();
 
         function activate() {
+            var now = moment();
+
             vm.profile = user.profile;
             vm.cv = user.profile.careerweb.cv;
+            vm.cv.outdated = vm.cv.LastAccessDate && moment().diff(vm.cv.LastAccessDate, 'months') >= 3 ? 1 : 0;
+
             completeness();
+        }
+
+        function refresh() {
+            ui.loading.show();
+            api2('jobs/cv/refresh')
+                .then(function() {
+                    vm.cv.LastAccessDate = new Date();
+                    vm.cv.outdated = 0;
+                    ui.toast.show('success', 'Thank you for letting us know and good luck!');
+                })
+                .finally(function() {
+                    ui.loading.hide();
+                });
+
+        }
+
+        function searchable() {
+            var opts = {
+                method: 'POST',
+                data: {
+                    SearchableYN: 'N'
+                }
+            };
+            ui.loading.show();
+            api2('jobs/cv/searchable', opts)
+                .then(function() {
+                    ui.toast.show('success', 'Your CV is now private');
+                    getProfile();
+                })
+                .finally(function() {
+                    ui.loading.hide();
+                });
+
         }
 
         function completeness() {
@@ -32,55 +71,46 @@
             percentage += vm.cv.employment && vm.cv.employment.length ? 100 / 6 : 0;
             percentage += vm.cv.WishRemAmount ? 100 / 6 : 0;
             percentage += vm.cv.document ? 100 / 6 : 0;
-            vm.completeness = percentage;
+            vm.completeness = Math.round(percentage);
         }
 
         function emailActivationCode() {
             return $http.get(url + 'accounts/activation')
                 .then(function(response) {
-                    toastr.info('Verification email sent to ' + response.data.username);
+                    ui.toast.show('info', 'Verification email sent to ' + response.data.username);
                 });
         }
 
         function getProfile() {
             user.get()
                 .then(function() {
-                    vm.profile = user.profile;
+                    activate();
                 });
         }
 
         function linkProfile(provider) {
-            $auth.link(provider)
+            user.loginWith(provider)
                 .then(function() {
-                    toastr.success('You have successfully linked a ' + provider + ' account');
-                    getProfile();
+                    vm.profile = user.profile;
+                    ui.toast.show('success', 'You have successfully linked a ' + provider + ' account');
                 })
                 .catch(function(response) {
-                    toastr.error(response.data.error_description, response.status);
-                });
-        }
-
-        function unlinkProfile(provider) {
-            $auth.unlink(provider)
-                .then(function(response) {
-                    toastr.info('You have unlinked a ' + provider + ' account');
-                    getProfile();
-                })
-                .catch(function(response) {
-                    toastr.error(response.data ? response.data.error_description : 'Could not unlink ' + provider + ' account', response.status);
+                    ui.toast.show('error', response.data.error_description, response.status);
                 });
         }
 
         function logout() {
-            //ui.loading.show();
+            ui.loading.show();
             return $auth.logout()
                 .finally(function() {
                     $ionicHistory.nextViewOptions({
                         historyRoot: true
                     });
-                    $state.go('app.frontpage')
+                    ui.show('app.frontpage')
                         .then(function() {
-                            toastr.info('You have been logged out');
+                            ui.loading.hide();
+                            ui.toast.show('info', 'You have been logged out');
+
                             $timeout($ionicHistory.clearCache, 351);
                         });
 
