@@ -151,24 +151,26 @@
                 title: 'Companies',
                 icon: 'ion-cube',
                 items: [{
-                    title: 'Virtual press offices',
-                    id: 'virtual-press-office',
-                    state: {
-                        name: 'app.office.vpo'
+                        title: 'Virtual press offices',
+                        id: 'virtual-press-office',
+                        state: {
+                            name: 'app.office.vpo'
+                        }
+                    }, {
+                        title: 'Company zones',
+                        id: 'company-zones',
+                        state: {
+                            name: 'app.office.zones'
+                        }
                     }
-                }, {
-                    title: 'Company zones',
-                    id: 'company-zones',
-                    state: {
-                        name: 'app.office.zones'
-                    }
-                }, {
-                    title: 'Microsites',
-                    id: 'microsites',
-                    state: {
-                        name: 'app.office.microsites'
-                    }
-                }]
+                    /*, {
+                                        title: 'Microsites',
+                                        id: 'microsites',
+                                        state: {
+                                            name: 'app.office.microsites'
+                                        }
+                                    }*/
+                ]
             }, {
                 title: 'Jobs',
                 icon: 'ion-briefcase',

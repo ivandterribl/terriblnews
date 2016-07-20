@@ -5,13 +5,11 @@
         .module('app.news')
         .controller('EventsController', Controller);
 
-    Controller.$inject = ['nav', 'api', '_', 'meta', 'moment', '$scope', '$state', '$sce'];
+    Controller.$inject = ['api', '$scope', '$state'];
     /* @ngInject */
-    function Controller(nav, api, _, meta, moment, $scope, $state, $sce) {
+    function Controller(api, $scope, $state) {
         var vm = this,
             id = $state.params.id;
-
-        vm.i = 0;
 
         vm.loadItems = loadItems;
 
@@ -24,14 +22,9 @@
         }
 
         function loadItems() {
-            api('tag=' + id)
+            api('tag=events2')
                 .then(function(response) {
-                    if (!angular.equals(vm.items, response)) {
-                        vm.items = _.map(response, function(item) {
-                            item.summary = item.summary.trim();
-                            return item;
-                        });
-                    }
+                    vm.items = response;
                 })
                 .catch(function(response) {
                     vm.items = [];

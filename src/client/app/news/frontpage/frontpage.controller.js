@@ -7,10 +7,10 @@
 
     Controller.$inject = [
         'articles', 'api', '_', 'moment',
-        '$scope', '$state', 'searchBar', '$ionicHistory', 'Analytics'
+        '$scope', '$ionicHistory', 'Analytics'
     ];
     /* @ngInject */
-    function Controller(articles, api, _, moment, $scope, $state, searchBar, $ionicHistory, Analytics) {
+    function Controller(articles, api, _, moment, $scope, $ionicHistory, Analytics) {
         var vm = this,
             day = {
                 groups: {},
@@ -32,6 +32,10 @@
 
             vm.items = [];
             loadLead();
+            api('tag=promo')
+                .then(function(response) {
+                    vm.days[0].groups.promo = response;
+                });
         }
 
         function loadLead() {
