@@ -25,7 +25,7 @@ module.exports = function() {
         alljs: [
             './src/**/*.js',
             './*.js',
-            '!' + clientApp + 'ui/material/**/*.js',
+            '!' + clientApp + 'ui/autocomplete/**/*.js',
             '!' + clientApp + 'ui/searchbar/**/*.js'
         ],
         build: './mobilesite/client/',

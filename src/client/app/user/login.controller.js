@@ -5,9 +5,9 @@
         .module('itw.user')
         .controller('LoginController', Controller);
 
-    Controller.$inject = ['$scope', '$state', 'user', 'ui', '$ionicHistory', '$timeout'];
+    Controller.$inject = ['$state', 'user', 'ui', '$ionicHistory', '_'];
     /* @ngInject */
-    function Controller($scope, $state, user, ui, $ionicHistory, $timeout) {
+    function Controller($state, user, ui, $ionicHistory, _) {
         var vm = this;
 
         vm.login = login;

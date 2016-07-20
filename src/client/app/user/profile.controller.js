@@ -5,9 +5,9 @@
         .module('itw.user')
         .controller('ProfileController', Controller);
 
-    Controller.$inject = ['$scope', '$auth', 'api2', 'user', 'ui', '$http', '$ionicHistory', '$timeout'];
+    Controller.$inject = ['$auth', 'api2', 'user', 'ui', '$http', '$ionicHistory', '$timeout', 'moment'];
     /* @ngInject */
-    function Controller($scope, $auth, api2, user, ui, $http, $ionicHistory, $timeout) {
+    function Controller($auth, api2, user, ui, $http, $ionicHistory, $timeout, moment) {
         var vm = this,
             url = 'https://secure.itweb.co.za/api/';
 
@@ -21,8 +21,6 @@
         getProfile();
 
         function activate() {
-            var now = moment();
-
             vm.profile = user.profile;
             vm.cv = user.profile.careerweb.cv;
             vm.cv.outdated = vm.cv.LastAccessDate && moment().diff(vm.cv.LastAccessDate, 'months') >= 3 ? 1 : 0;
@@ -54,7 +52,7 @@
             ui.loading.show();
             api2('jobs/cv/searchable', opts)
                 .then(function() {
-                    ui.toast.show('success', 'Your CV is now private');
+                    ui.toast.show('success', 'Your CV is now private, you can change this in the Wishlist & Settings section');
                     getProfile();
                 })
                 .finally(function() {

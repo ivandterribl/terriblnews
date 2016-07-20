@@ -61,7 +61,7 @@
     function remove(toastId, wasClicked) {
       var toast = findToast(toastId);
 
-      if (toast && ! toast.deleting) { // Avoid clicking when fading out
+      if (toast && !toast.deleting) { // Avoid clicking when fading out
         toast.deleting = true;
         toast.isOpened = false;
         $animate.leave(toast.el).then(function() {
@@ -98,8 +98,7 @@
     }
 
     /* Internal functions */
-    function _buildNotification(type, message, title, optionsOverride)
-    {
+    function _buildNotification(type, message, title, optionsOverride) {
       if (angular.isObject(title)) {
         optionsOverride = title;
         title = null;
@@ -118,16 +117,20 @@
     }
 
     function _createOrGetContainer(options) {
-      if(container) { return containerDefer.promise; }
+      if (container) {
+        return containerDefer.promise;
+      }
 
       container = angular.element('<div></div>');
       container.attr('id', options.containerId);
       container.addClass(options.positionClass);
-      container.css({'pointer-events': 'auto'});
+      container.css({
+        'pointer-events': 'auto'
+      });
 
       var target = angular.element(document.querySelector(options.target));
 
-      if ( ! target || ! target.length) {
+      if (!target || !target.length) {
         throw 'Target for toasts doesn\'t exist';
       }
 
@@ -141,7 +144,9 @@
     function _notify(map) {
       var options = _getOptions();
 
-      if (shouldExit()) { return; }
+      if (shouldExit()) {
+        return;
+      }
 
       var newToast = createToast();
 
@@ -227,7 +232,8 @@
 
         function cleanOptionsOverride(options) {
           var badOptions = ['containerId', 'iconClasses', 'maxOpened', 'newestOnTop',
-                            'positionClass', 'preventDuplicates', 'preventOpenDuplicates', 'templates'];
+            'positionClass', 'preventDuplicates', 'preventOpenDuplicates', 'templates'
+          ];
           for (var i = 0, l = badOptions.length; i < l; i++) {
             delete options[badOptions[i]];
           }
@@ -427,18 +433,20 @@
         }
       });
 
-      scope.tapToast = function () {
+      scope.tapToast = function() {
         if (scope.options.tapToDismiss) {
           scope.close(true);
         }
       };
 
-      scope.close = function (wasClicked) {
+      scope.close = function(wasClicked) {
         toastr.remove(scope.toastId, wasClicked);
       };
 
       element.on('mouseleave', function() {
-        if (scope.options.timeOut === 0 && scope.options.extendedTimeOut === 0) { return; }
+        if (scope.options.timeOut === 0 && scope.options.extendedTimeOut === 0) {
+          return;
+        }
         scope.$apply(function() {
           scope.progressBar = scope.options.progressBar;
         });
@@ -464,6 +472,14 @@
     }
   }
 }());
-
-angular.module("toastr").run(["$templateCache", function($templateCache) {$templateCache.put("directives/progressbar/progressbar.html","<div class=\"toast-progress\"></div>\n");
-$templateCache.put("directives/toast/toast.html","<div class=\"{{toastClass}} {{toastType}}\" ng-click=\"tapToast()\">\n  <div ng-switch on=\"allowHtml\">\n    <div ng-switch-default ng-if=\"title\" class=\"{{titleClass}}\">{{title}}</div>\n    <div ng-switch-default class=\"{{messageClass}}\">{{message}}</div>\n    <div ng-switch-when=\"true\" ng-if=\"title\" class=\"{{titleClass}}\" ng-bind-html=\"title\"></div>\n    <div ng-switch-when=\"true\" class=\"{{messageClass}}\" ng-bind-html=\"message\"></div>\n  </div>\n  <progress-bar ng-if=\"progressBar\"></progress-bar>\n</div>\n");}]);
+(function() {
+  'use strict';
+  angular
+    .module('toastr')
+    .run(['$templateCache', function($templateCache) {
+      // jscs:disable
+      $templateCache.put('directives/progressbar/progressbar.html', '<div class="toast-progress"></div>\n');
+      $templateCache.put('directives/toast/toast.html', '<div class="{{toastClass}} {{toastType}}" ng-click="tapToast()">\n  <div ng-switch on="allowHtml">\n    <div ng-switch-default ng-if="title" class="{{titleClass}}">{{title}}</div>\n    <div ng-switch-default class="{{messageClass}}">{{message}}</div>\n    <div ng-switch-when="true" ng-if="title" class="{{titleClass}}" ng-bind-html="title"></div>\n    <div ng-switch-when="true" class="{{messageClass}}" ng-bind-html="message"></div>\n  </div>\n  <progress-bar ng-if="progressBar"></progress-bar>\n</div>\n'); // jshint ignore:line
+      // jscs:enable
+    }]);
+})();

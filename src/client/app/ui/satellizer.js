@@ -13,7 +13,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
   'use strict';
 
   if (!window.location.origin) {
-    window.location.origin = window.location.protocol + '//' + window.location.hostname + (window.location.port ? (':' + window.location.port) : '');
+    window.location.origin = window.location.protocol + '//' + window.location.hostname +
+      (window.location.port ? (':' + window.location.port) : '');
   }
 
   angular.module('satellizer', [])
@@ -394,7 +395,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
             try {
               var base64Url = token.split('.')[1];
               var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-              return JSON.parse(decodeURIComponent(escape(window.atob(base64))));
+              return JSON.parse(decodeURIComponent(escape(window.atob(base64)))); // jshint ignore:line
             } catch (e) {
               return undefined;
             }
@@ -619,9 +620,13 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
               url = [defaults.authorizationEndpoint, Oauth2.buildQueryString()].join('?');
 
               if (window.cordova) {
-                openPopup = popup.open(url, defaults.name, defaults.popupOptions, defaults.redirectUri).eventListener(defaults.redirectUri);
+                openPopup = popup
+                  .open(url, defaults.name, defaults.popupOptions, defaults.redirectUri)
+                  .eventListener(defaults.redirectUri);
               } else {
-                openPopup = popup.open(url, defaults.name, defaults.popupOptions, defaults.redirectUri).pollPopup(defaults.redirectUri);
+                openPopup = popup
+                  .open(url, defaults.name, defaults.popupOptions, defaults.redirectUri)
+                  .pollPopup(defaults.redirectUri);
               }
 
               return openPopup

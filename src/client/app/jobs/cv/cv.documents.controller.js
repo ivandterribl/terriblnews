@@ -45,8 +45,10 @@
         }
 
         function save() {
+            var deferred = $q.defer();
             ui.loading.show();
-            return Upload.upload({
+
+            Upload.upload({
                 url: 'https://secure.itweb.co.za/api/jobs/cv/upload',
                 data: {
                     LoginID: careerweb.identifier,
@@ -59,9 +61,14 @@
                 vm.progress = 0;
                 vm.document = null;
                 careerweb.cv.document = cv.document;
-            }, function(resp) {
-                ui.toast.show('success', 'Oops, something went wrong');
 
+                deferred.resolve(cv.document);
+            }, function(response) {
+                var errorMessage = response && response.data && response.data.error_description ?
+                    response.data.error_description : 'Upload failed';
+                ui.toast.show('error', errorMessage);
+                vm.progress = 0;
+                deferred.reject(response);
             }, function(evt) {
                 var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                 vm.progress = progressPercentage;
@@ -71,6 +78,8 @@
 
                 ui.loading.hide();
             });
+
+            return deferred.promise;
         }
     }
 })();

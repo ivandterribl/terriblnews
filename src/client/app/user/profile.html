@@ -46,11 +46,11 @@
                     <h2 class="col">My CV</h2>
                     <h2 class="col text-right" ng-class="{ 'energized': vm.completeness != 100, 'balanced': vm.completeness == 100 }">{{ vm.completeness | number:0 }} %</h2>
                 </div>
-                <p class="row" ng-if="vm.cv.SearchableYN !== 'N'">Last updated: {{ vm.cv.LastAccessDate | date:'d MMM yyyy' }}</p>
+                <p class="row">Last updated: {{ vm.cv.LastAccessDate | date:'d MMM yyyy' }}</p>
                 <p class="row" ng-if="vm.cv.SearchableYN === 'N'">Visible only to you</p>
             </div>
 
-            <section ng-if="vm.cv.outdated">
+            <section ng-if="vm.cv.outdated && vm.cv.SearchableYN !== 'N'">
                 <div class="item item-energized">
                     <span style="white-space: normal">
                     <i class="icon ion-alert-circled"></i> Your CV is out of date and hence low priority. If you are still on the job market, let us know below. </span>

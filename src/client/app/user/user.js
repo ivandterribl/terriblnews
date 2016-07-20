@@ -5,9 +5,9 @@
         .module('app.core')
         .factory('user', User);
 
-    User.$inject = ['api2', '$auth', '$q'];
+    User.$inject = ['api2', '$auth', '$q', '_'];
 
-    function User(api2, $auth, $q) {
+    function User(api2, $auth, $q, _) {
         var user = {
             $auth: $auth,
             isAuthenticated: isAuthenticated,
@@ -68,10 +68,10 @@
             function parseProfile(response) {
                 response = response || {
                     profile: []
-                }
+                };
 
                 if (response.profile.length) {
-                    var profile = user.profile = new Object(),
+                    var profile = user.profile = {},
                         image = _.find(response.profile, {
                             key: 'photoURL1'
                         });

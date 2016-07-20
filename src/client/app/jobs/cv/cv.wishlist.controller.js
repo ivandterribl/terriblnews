@@ -5,9 +5,9 @@
         .module('itw.jobs')
         .controller('CvWishlistController', Controller);
 
-    Controller.$inject = ['user', 'api2', 'ui', '$q'];
+    Controller.$inject = ['user', 'api2', 'ui', '$q', '_'];
     /* @ngInject */
-    function Controller(user, api2, ui, $q) {
+    function Controller(user, api2, ui, $q, _) {
         var vm = this;
 
         vm.prev = prev;
@@ -70,7 +70,8 @@
             vm.employment = angular.extend(employment, {
                 RemAmount: employment.RemAmount ? parseFloat(employment.RemAmount) : 0,
                 RemCurrency: employment.RemCurrency ? employment.RemCurrency : 'ZAR',
-                RemFrequencyCode: employment.RemFrequencyCode ? employment.RemFrequencyCode : employment.JobType === 'Contract' ? 'H' : 'M'
+                RemFrequencyCode: employment.RemFrequencyCode ?
+                    employment.RemFrequencyCode : employment.JobType === 'Contract' ? 'H' : 'M'
             });
 
             vm.isGraduate = employment.Company === 'New JobSeeker' || employment.Company === 'New job seeker' ? 1 : 0;
@@ -98,6 +99,8 @@
                 save().then(function() {
                     ui.show('app.jobs.profile-4');
                 });
+            } else {
+                return ui.toast.show('warning', 'Please fill everything in');
             }
         }
 
@@ -113,12 +116,17 @@
                 save().then(function() {
                     ui.show('app.user.profile');
                 });
+            } else {
+                return ui.toast.show('warning', 'Please fill everything in');
             }
         }
 
         function save() {
             var fields = {
-                    cv: ['NoticePeriod', 'WishJobType', 'WishRemAmount', 'WishRemCurrency', 'WishRemFrequencyCode', 'Relocation', 'SearchableYN'],
+                    cv: [
+                        'NoticePeriod', 'WishJobType', 'WishRemAmount', 'WishRemCurrency',
+                        'WishRemFrequencyCode', 'Relocation', 'SearchableYN'
+                    ],
                     employment: ['RemAmount', 'RemCurrency', 'RemFrequencyCode']
                 },
                 employment = {
@@ -138,10 +146,10 @@
             angular.forEach(fields.cv, function(key) {
                 switch (key) {
                     case 'Relocation':
-                        cv[key] = vm.cv[key] ? 'Willing to relocate anywhere' : 'Not willing to relocate'
+                        cv[key] = vm.cv[key] ? 'Willing to relocate anywhere' : 'Not willing to relocate';
                         break;
                     case 'SearchableYN':
-                        cv[key] = vm[key] ? 'Y' : 'N'
+                        cv[key] = vm[key] ? 'Y' : 'N';
                         break;
                     default:
                         cv[key] = vm.cv[key];

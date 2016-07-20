@@ -5,9 +5,9 @@
         .module('itw.jobs')
         .controller('CvEmploymentController', Controller);
 
-    Controller.$inject = ['user', 'api2', 'ui'];
+    Controller.$inject = ['user', 'api2', 'ui', 'moment', '_'];
     /* @ngInject */
-    function Controller(user, api2, ui) {
+    function Controller(user, api2, ui, moment, _) {
         var vm = this,
             careerweb = user.profile.careerweb,
             defaults = {
@@ -114,7 +114,7 @@
 
         function submit(employment) {
             if (!isValid(employment)) {
-                return;
+                return ui.toast.show('warning', 'Please fill everything in');
             }
 
             save(employment).then(cancel);
@@ -159,7 +159,7 @@
 
             if (employment) {
                 if (!isValid(employment)) {
-                    return;
+                    return ui.toast.show('warning', 'Please fill everything in');
                 } else {
                     // save pending
                     save(employment).then(function() {
@@ -177,7 +177,7 @@
 
             if (employment) {
                 if (!isValid(employment)) {
-                    return;
+                    return ui.toast.show('warning', 'Please fill everything in');
                 } else {
                     // save pending
                     save(employment).then(function() {

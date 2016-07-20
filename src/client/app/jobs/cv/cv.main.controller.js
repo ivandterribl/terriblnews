@@ -16,6 +16,7 @@
 
         function activate() {
             var cv = user.profile.careerweb.cv;
+            //ui.toast.show('info', 'Fill everything in and tap Next once done');
             vm.cv = {
                 FirstName: cv.FirstName,
                 Surname: cv.Surname,
@@ -87,7 +88,7 @@
 
             form.$setSubmitted(true);
             if (form.$invalid) {
-                return;
+                return ui.toast.show('warning', 'Please fill everything in');
             }
 
             ui.loading.show();

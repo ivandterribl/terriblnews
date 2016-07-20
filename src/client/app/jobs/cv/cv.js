@@ -8,8 +8,6 @@
     CV.$inject = ['api2'];
 
     function CV(api2) {
-        var identifier;
-
         return {
             get: function get() {
                 return api2('jobs/cv')
@@ -22,6 +20,6 @@
                         return cv;
                     });
             }
-        }
+        };
     }
 })();

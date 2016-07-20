@@ -64,13 +64,13 @@ b {
 }
 
 .item.has-error input, .item.has-error input::-webkit-input-placeholder, .item.has-error .input-label, .item.item-radio.has-error .item-content {
-  color: $assertive;
+  color: $assertive !important;
 }
 md-autocomplete input::-webkit-input-placeholder {
-  color: #444;
+  color: #444 !important;
 }
 .has-error md-autocomplete input::-webkit-input-placeholder { 
-  color: $assertive;
+  color: $assertive !important;
 }
 .md-autocomplete-suggestions li {
   height: 44px;

@@ -5,9 +5,9 @@
         .module('itw.jobs')
         .controller('JobsController', Controller);
 
-    Controller.$inject = ['api2', 'user', 'activeNav', 'jobs', '$scope', '$state', '$location', 'searchBar'];
+    Controller.$inject = ['api2', 'user', 'activeNav', 'jobs', '$scope', '$state', '$location', 'searchBar', '_'];
     /* @ngInject */
-    function Controller(api2, user, activeNav, jobs, $scope, $state, $location, searchBar) {
+    function Controller(api2, user, activeNav, jobs, $scope, $state, $location, searchBar, _) {
         console.log(jobs);
         var vm = this,
             limit = $state.params.limit || 16,

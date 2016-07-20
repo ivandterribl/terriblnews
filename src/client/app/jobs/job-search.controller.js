@@ -5,9 +5,9 @@
         .module('itw.jobs')
         .controller('JobSearchController', Controller);
 
-    Controller.$inject = ['api2', 'response', '$state', '$scope', 'searchBar'];
+    Controller.$inject = ['api2', 'response', '$state', '$scope', 'searchBar', '_'];
     /* @ngInject */
-    function Controller(api2, response, $state, $scope, searchBar) {
+    function Controller(api2, response, $state, $scope, searchBar, _) {
         var vm = this,
             limitstart = response.items.length || 0;
 
@@ -26,7 +26,7 @@
                 }
                 return _.assign(row, {
                     rating: rating
-                })
+                });
             });
             vm.complete = vm.items.length >= vm.pagination.total ? 1 : 0;
             $scope.$on('$ionicView.beforeEnter', function() {

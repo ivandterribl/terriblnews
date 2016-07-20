@@ -20,7 +20,7 @@
                         <div>Salary at {{ vm.employment.Company }}</div>
                         <div class="row" style="padding-top: 0; padding-right: 0">
                             <span class="col col-50">
-                                <input type="number" placeholder="0" ng-model="vm.employment.RemAmount" required>
+                                <input type="number" pattern="[0-9]*" placeholder="0" ng-model="vm.employment.RemAmount" required>
                             </span>
                             <span class="col col-50 item-select">
                                  <select ng-model="vm.employment.RemCurrency"
@@ -75,7 +75,7 @@
                     <div>Desired salary</div>
                     <div class="row"  style="padding-top: 0; padding-right: 0">
                         <span class="col col-50">
-                            <input type="number" placeholder="0" ng-model="vm.cv.WishRemAmount" required>
+                            <input type="number" pattern="[0-9]*" placeholder="0" ng-model="vm.cv.WishRemAmount" required>
                         </span>
                         <span class="col col-50 item-select">
                              <select ng-model="vm.cv.WishRemCurrency"

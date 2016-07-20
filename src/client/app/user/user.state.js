@@ -8,18 +8,14 @@
     Config.$inject = ['$stateProvider'];
 
     function Config($stateProvider) {
-        var items = [{
-            title: 'Login',
-            id: 'login',
-            state: {
-                name: 'app.user.login'
+        var skipIfLoggedIn = ['$q', '$location', '$auth', function ($q, $location, $auth) {
+            var deferred = $q.defer();
+            if ($auth.isAuthenticated()) {
+                $location.path('/user/profile');
+            } else {
+                deferred.resolve();
             }
-        }, {
-            title: 'Sign up',
-            id: 'signup',
-            state: {
-                name: 'app.user.signup'
-            }
+            return deferred.promise;
         }];
         $stateProvider
             .state('app.user', {
@@ -90,7 +86,8 @@
             .state('app.user.activate', {
                 url: '/activate?token',
                 resolve: {
-                    activation: function($q, $state, $stateParams, $http, $auth, toastr) {
+                    activation: ['$q', '$state', '$stateParams', '$http', '$auth', 'toastr',
+                        function($q, $state, $stateParams, $http, $auth, toastr) {
                         var deferred = $q.defer();
 
                         $http.get('https://secure.itweb.co.za/api/accounts/activate', {
@@ -112,29 +109,10 @@
                             $state.go('app.user.login');
                         });
                         return deferred.promise;
-                    }
+                    }]
                 }
             });
 
-        function skipIfLoggedIn($q, $location, $auth) {
-            var deferred = $q.defer();
-            if ($auth.isAuthenticated()) {
-                $location.path('/user/profile');
-            } else {
-                deferred.resolve();
-            }
-            return deferred.promise;
-        }
-
-        function loginRequired($q, $location, $auth) {
-            var deferred = $q.defer();
-            if ($auth.isAuthenticated()) {
-                deferred.resolve();
-            } else {
-                $location.path('/user/login');
-            }
-            return deferred.promise;
-        }
     }
 
 })();

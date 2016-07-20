@@ -5,9 +5,9 @@
         .module('itw.jobs')
         .controller('CvSkillsController', Controller);
 
-    Controller.$inject = ['user', 'api2', 'ui', '$timeout', '$q', '$log'];
+    Controller.$inject = ['user', 'api2', 'ui', '_'];
     /* @ngInject */
-    function Controller(user, api2, ui, $timeout, $q, $log) {
+    function Controller(user, api2, ui, _) {
         var vm = this,
             careerweb = user.profile.careerweb,
             defaults = {
@@ -16,7 +16,7 @@
                     SkillCompetency: null,
                     MonthsExperience: null
                 }
-            };;
+            };
 
         vm.addItem = add;
         vm.edit = edit;
@@ -26,39 +26,16 @@
         vm.submit = submit;
         vm.remove = remove;
 
-        vm.translateRating = function(skill) {
-            switch (skill.SkillCompetency) {
-                case 'Beginner':
-                    return [true, true, false, false];
-                    break;
-                case 'Intermediate':
-                    return [true, true, true, false];
-                    break;
-                case 'Advanced':
-                    return [true, true, true, true];
-                    break;
-                default:
-                    return [true, false, false, false];
-            }
-        };
-
-        vm.translateExperience = function(skill) {
-            var item = _.find(vm.lu.experienceList, {
-                key: skill.MonthsExperience
-            });
-            return item ? item.value : skill.MonthsExperience;
-        };
-
+        vm.translateRating = translateRating;
+        vm.translateExperience = translateExperience;
         vm.querySearch = querySearch;
-
-        function querySearch(query) {
-            return query ? api2('jobs/lu/skills?q=' + query) : api2('jobs/lu/skills');
-        }
 
         activate();
 
         function activate() {
             var cv = careerweb.cv;
+
+            //ui.toast.show('info', 'Tap to edit, pull left to remove');
 
             vm.cv = cv;
             if (!vm.cv.skills || !vm.cv.skills.length) {
@@ -67,6 +44,30 @@
                 vm.skill = null;
             }
             lookups();
+        }
+
+        function translateRating(skill) {
+            switch (skill.SkillCompetency) {
+                case 'Beginner':
+                    return [true, true, false, false];
+                case 'Intermediate':
+                    return [true, true, true, false];
+                case 'Advanced':
+                    return [true, true, true, true];
+                default:
+                    return [true, false, false, false];
+            }
+        }
+
+        function translateExperience(skill) {
+            var item = _.find(vm.lu.experienceList, {
+                key: skill.MonthsExperience
+            });
+            return item ? item.value : skill.MonthsExperience;
+        }
+
+        function querySearch(query) {
+            return query ? api2('jobs/lu/skills?q=' + query) : api2('jobs/lu/skills');
         }
 
         function add() {
@@ -95,7 +96,7 @@
 
         function submit(skill) {
             if (!isValid(skill)) {
-                return;
+                return ui.toast.show('warning', 'Please fill everything in');
             }
 
             save(skill).then(cancel);
@@ -137,7 +138,7 @@
 
             if (skill) {
                 if (!isValid(skill)) {
-                    return;
+                    return ui.toast.show('warning', 'Please fill everything in');
                 } else {
                     // save pending
                     save(skill).then(function() {
@@ -155,7 +156,7 @@
 
             if (skill) {
                 if (!isValid(skill)) {
-                    return;
+                    return ui.toast.show('warning', 'Please fill everything in');
                 } else {
                     // save pending
                     save(skill).then(function() {
@@ -197,52 +198,6 @@
 
         function lookups() {
             vm.lu = {
-                skillList: {
-                    'Operating systems': [
-                        'Windows',
-                        'Windows (server)',
-                        'Windows (mobile)',
-                        'UNIX',
-                        'Linux',
-                        'OSX',
-                        'iOS',
-                        'Android',
-                        'Embedded'
-                    ],
-                    'Development': [
-                        'C#',
-                        'C++',
-                        'Objective C',
-                        'Swift',
-                        'dot Net',
-                        'JavaScript',
-                        'JAVA',
-                        'PHP',
-                        'Python',
-                        'Ruby on Rails'
-                    ],
-                    'Networking': [
-                        'WAN',
-                        'WAN (fibre)',
-                        'LAN',
-                        'Mobile (3G/LTE)',
-                        'Firewall/Proxy',
-                        'Routing',
-                        'Cabling'
-                    ],
-                    'Databases': [
-                        'MSSQL',
-                        'Oracle',
-                        'mySQL',
-                        'PostgreSQL',
-                        'MongoDB',
-                        'DB2',
-                        'Cassandra',
-                        'SQLite',
-                        'Query language'
-                    ],
-                    'Other': []
-                },
                 competencyList: ['Trained', 'Beginner', 'Intermediate', 'Advanced'],
                 experienceList: [{
                     key: '3',
