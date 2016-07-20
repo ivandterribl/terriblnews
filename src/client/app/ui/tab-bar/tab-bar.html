@@ -1,0 +1,22 @@
+<div class="tabs tabs-dark tabs-icon-top">
+    <a class="tab-item" ui-sref="app.frontpage" 
+    ng-class="{ 'tab-bar-active': active === 'home' }">
+        <i class="icon ion-home"></i>
+        Home
+    </a>
+    <a class="tab-item" ui-sref="app.news.category({ id: 'top-news' })"
+    ng-class="{ 'tab-bar-active': active === 'news' }">
+        <i class="icon ion-document"></i>
+        News
+    </a>
+    <a class="tab-item" ui-sref="app.jobs.tabs.feed({ id: 'it,sect_id-1' })"
+    ng-class="{ 'tab-bar-active': active === 'jobs' }">
+        <i class="icon ion-briefcase"></i>
+        Jobs
+    </a>
+    <a class="tab-item" ui-sref="app.events"
+    ng-class="{ 'tab-bar-active': active === 'events' }">
+        <i class="icon ion-person-stalker"></i>
+        Events
+    </a>
+</div>

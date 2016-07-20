@@ -1,4 +1,9 @@
-<ion-view view-title="Events">
+<ion-view hide-back-button="true">
+    <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+        </button>
+    </ion-nav-buttons>
+    <ion-nav-title>Events</ion-nav-title>
     <ion-content>
         <ion-list>
             <div ng-repeat="category in vm.items">
@@ -15,4 +20,7 @@
             </div>
         </ion-list>
     </ion-content>
+    <ion-footer-bar style="padding:0">
+        <itw-tab-bar active="events"></itw-tab-bar>
+    </ion-footer-bar>
 </ion-view>

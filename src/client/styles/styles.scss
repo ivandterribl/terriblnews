@@ -389,3 +389,27 @@ md-tabs .md-tab {
   position: absolute; height: 100%; width: 1px; background-color: #ddd; top: 0; left: 101px;
 }
 
+.tabs {
+  height: 46px;
+  line-height: 46px;
+}
+.tab-item {
+  opacity: 1;
+  .icon {
+    font-size: 28px;
+    height: 28px;
+  }
+  &.tab-bar-active {
+    margin-top: -2px;
+    color: #CC2C0E;
+    border: 0 solid #CC2C0E;
+    background: #fff;
+    border-top-width: 2px;
+    height: 46px;
+  }
+}
+.tabs-icon-top > .tabs .tab-item, .tabs-icon-top.tabs .tab-item, .tabs-icon-bottom > .tabs .tab-item, .tabs-icon-bottom.tabs .tab-item {
+  padding-top: 2px;
+  font-size: 11px;
+}
+

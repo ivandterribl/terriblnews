@@ -101,6 +101,8 @@
                                     .catch(function() {
                                         deferred.resolve(user);
                                     });
+                            } else {
+                                deferred.resolve(user);
                             }
                         } else {
                             deferred.resolve(user);
