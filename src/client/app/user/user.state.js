@@ -8,7 +8,7 @@
     Config.$inject = ['$stateProvider'];
 
     function Config($stateProvider) {
-        var skipIfLoggedIn = ['$q', '$location', '$auth', function ($q, $location, $auth) {
+        var skipIfLoggedIn = ['$q', '$location', '$auth', function($q, $location, $auth) {
             var deferred = $q.defer();
             if ($auth.isAuthenticated()) {
                 $location.path('/user/profile');
@@ -68,7 +68,10 @@
                             if (!user.profile) {
                                 user.get()
                                     .then(function() {
-                                        deferred.resolve();
+                                        user.career.applications()
+                                            .finally(function() {
+                                                deferred.resolve();
+                                            });
                                     })
                                     .catch(function() {
                                         deferred.reject();
@@ -88,28 +91,29 @@
                 resolve: {
                     activation: ['$q', '$state', '$stateParams', '$http', '$auth', 'toastr',
                         function($q, $state, $stateParams, $http, $auth, toastr) {
-                        var deferred = $q.defer();
+                            var deferred = $q.defer();
 
-                        $http.get('https://secure.itweb.co.za/api/accounts/activate', {
-                            params: {
-                                token: $stateParams.token
-                            }
-                        }).then(function(response) {
-                            $auth.setToken(response.data.access_token);
+                            $http.get('https://secure.itweb.co.za/api/accounts/activate', {
+                                params: {
+                                    token: $stateParams.token
+                                }
+                            }).then(function(response) {
+                                $auth.setToken(response.data.access_token);
 
-                            toastr.success('Thank you, your account is now active');
+                                toastr.success('Thank you, your account is now active');
 
-                            $state.go('app.user.profile');
-                        }).catch(function(response) {
-                            var data = response.data || {},
-                                error = data.error || {};
+                                $state.go('app.user.profile');
+                            }).catch(function(response) {
+                                var data = response.data || {},
+                                    error = data.error || {};
 
-                            toastr.error(error.error_description, response.status);
+                                toastr.error(error.error_description, response.status);
 
-                            $state.go('app.user.login');
-                        });
-                        return deferred.promise;
-                    }]
+                                $state.go('app.user.login');
+                            });
+                            return deferred.promise;
+                        }
+                    ]
                 }
             });
 

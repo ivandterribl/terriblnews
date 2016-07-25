@@ -8,7 +8,8 @@
     Controller.$inject = ['user', 'api2', 'ui', '$q', '_'];
     /* @ngInject */
     function Controller(user, api2, ui, $q, _) {
-        var vm = this;
+        var vm = this,
+            careerweb = user.profile.careerweb;
 
         vm.prev = prev;
         vm.next = next;
@@ -173,6 +174,7 @@
 
             return $q.all(promises)
                 .then(function(response) {
+                    careerweb.cv.LastAccessDate = new Date();
                     ui.toast.show('success', 'Your CV is ready');
                     return user.get();
                 });

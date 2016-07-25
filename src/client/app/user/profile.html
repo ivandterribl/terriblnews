@@ -57,7 +57,7 @@
                 </div>
                 <label class="item item-icon-left" ng-click="vm.refresh()">
                     <i class="icon icon-midi ion-checkmark-round balanced"></i>
-                    I'm still on the job market
+                    I'm on the job market
                 </label>
                 <label class="item item-icon-left" ng-click="vm.searchable()">
                     <i class="icon icon-midi ion-close-round assertive"></i>
@@ -120,6 +120,43 @@
                     ng-class="{ 'balanced': vm.cv.document,
                     'ion-checkmark-round': vm.cv.document, 'ion-chevron-right': !vm.cv.document }"></i>
             </label>
+        </div>
+
+         <div class="list card" ng-if="vm.cv.CVID && vm.profile.activated && vm.completeness > 75">
+            <div class="item" style="padding-top: 18px">
+                <h2>My job applications</h2>
+                <span class="badge badge-assertive" style="top: 18px">{{ vm.profile.careerweb.applications.length | number:0 }}</span>
+            </div>
+            <div class="item item-icon-right" ng-repeat="(i, item) in vm.profile.careerweb.applications" 
+                ng-if="i < 3"
+                ui-sref="app.jobs.job({ id: item.JobID })">
+                <h3>{{ item.JobTitle }}</h3>
+                <p>{{ item.CompanyDesc }}</p>
+                <i class="icon icon-midi ion-chevron-right"></i>
+            </div>
+            <label class="item item-icon-left item-icon-right item-positive" 
+                ng-if="vm.profile.careerweb.applications.length"
+                ui-sref="app.jobs.applications">
+                    <i class="icon icon-midi ion-briefcase"></i>
+                    <span>View all</span>
+                    <i class="icon icon-midi ion-chevron-right"></i>
+            </label>
+            <label class="item item-icon-left item-icon-right item-positive" 
+                ng-if="!vm.profile.careerweb.applications.length"
+                ui-sref="app.jobs.tabs.feed({ id: 'it,sect_id-1' })">
+                <i class="icon icon-midi ion-briefcase"></i>
+                No applications yet. Find a job.
+                <i class="icon icon-midi ion-chevron-right"></i>
+            </label>
+        </div>
+
+        <div class="list card" ng-if="vm.cv.CVID && vm.profile.activated && vm.completeness > 75">
+            <div class="item" style="padding-top: 18px">
+                <h2>Notifications</h2>
+            </div>
+            <ion-toggle name="Newsletter" ng-model="vm.notifications.newsletter" ng-click="vm.newsletter()">
+                CareerWeb newsletter
+            </ion-toggle>
         </div>
 
         <div class="list card" ng-show="vm.profile">

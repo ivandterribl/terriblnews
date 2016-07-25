@@ -18,6 +18,6 @@
 			.trackPages(true)
 			.setPageEvent('$stateChangeSuccess');
 
-		$ionicConfigProvider.views.maxCache(1);
+		$ionicConfigProvider.views.maxCache(3);
 	}
 })();

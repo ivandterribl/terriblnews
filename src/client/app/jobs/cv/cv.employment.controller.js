@@ -77,6 +77,7 @@
                 }
             }).then(function(cv) {
                 careerweb.cv.employment = cv.employment;
+                careerweb.cv.LastAccessDate = new Date();
                 ui.show('app.jobs.profile-5');
 
             }).catch(function(response) {

@@ -1,0 +1,29 @@
+<ion-view style="background-color: #f5f5f5" cache-view="false">
+    <ion-nav-title>My job applications</ion-nav-title>
+    <ion-nav-buttons side="secondary">
+        <button class="button button-icon ion-briefcase"
+        ui-sref="app.jobs.tabs.feed({ id: 'it,sect_id-1' })"></button>
+    </ion-nav-buttons>
+    <ion-content>
+        <ion-list can-swipe="true" class="itw-timeline">
+            <div ng-repeat="item in vm.applications">
+                <ion-item class="item-timeline">
+                    <div class="line"></div>
+                    <div class="row">
+                        <div class="itw-timeline-left">
+                            <span class="itw-bubble" style="">
+                                {{ item.ResponseDate | date:'d MMM yy':'+0300' }}
+                            </span>
+                        </div>
+                        <div class="col">
+                            <h2 ng-class="{ 'stable': item.IsExpired }">{{ item.JobTitle }}</h2>
+                            <p>{{ item.CompanyDesc }}</p>
+                            <!-- <p ng-if="item.StatusCode !== 'A'" class="energized">This offer is closed</p> -->
+                            <span ng-if="item.IsExpired" class="energized">This offer expired on {{ item.ExpiryDate | date:'d MMM yy' }}</span>
+                        </div>
+                    </div>
+                </ion-item>
+            </div>
+        </ion-list>
+    </ion-content>
+</ion-view>

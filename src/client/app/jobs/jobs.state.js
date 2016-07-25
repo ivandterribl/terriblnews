@@ -141,6 +141,15 @@
                     jobs: resolveJobs
                 }
             })
+            .state('app.jobs.applications', {
+                url: '/applications',
+                views: {
+                    '@app': {
+                        templateUrl: 'app/jobs/job-applications.html',
+                        controller: 'JobApplicationsController as vm'
+                    }
+                }
+            })
             .state('app.jobs.search', {
                 url: '/search?q',
                 views: {

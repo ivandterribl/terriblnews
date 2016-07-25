@@ -143,7 +143,7 @@
 					ng-repeat="(i, section) in vm.appearance" ui-sref="app.section({ id: section.catid })"
 					ga-track-event="['article', 'section', 'related', i]">
 
-					<div class="row" ng-style="{ 'min-height': section.attribs.img ? '24px' : '24px' }">
+					<div class="row">
 						<h3 class="col col-center">
 							{{ ::section.title }}
 						</h3>
@@ -151,6 +151,21 @@
 							<img ng-src="{{ section.attribs.img }}" style="max-height: 24px" align="right" />
 						</div>
 					</div>
+					<i class="icon icon-mini ion-chevron-right"></i>
+				</ion-item>
+			</ion-list>
+
+			<ion-list ng-show="vm.jobs.length" class="h3-list">
+				<ion-item class="item-divider">
+					<h3 class="itw-section stable">Related jobs</h3>
+				</ion-item>
+				<ion-item class="item-icon-right"
+					ng-repeat="(i, job) in vm.jobs"  ui-sref="app.jobs.job({ id: job.JobID })"
+					ga-track-event="['article', 'job', 'related', i]">
+
+						<h3>{{ ::job.JobTitle }}</h3>
+						<p>{{ ::job.CompanyDesc }}</p>
+					
 					<i class="icon icon-mini ion-chevron-right"></i>
 				</ion-item>
 			</ion-list>

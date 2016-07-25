@@ -103,7 +103,7 @@
                     cv.Race = cv.AffirmativeActionCode[0];
                     cv.PhysicallyDisabled = cv.AffirmativeActionCode.indexOf('D') !== -1 ? true : false;
                 }
-                user.profile.careerweb.cv = cv;
+                angular.extend(user.profile.careerweb.cv, cv);
                 ui.show('app.jobs.profile-2');
             }).catch(function(response) {
                 ui.toast.show('error', response.error_description);

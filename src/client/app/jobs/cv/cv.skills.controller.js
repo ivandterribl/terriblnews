@@ -123,6 +123,7 @@
                     careerweb.cv.skills = _.map(cv.skills, function(row) {
                         return row;
                     });
+                    careerweb.cv.LastAccessDate = new Date();
                     return careerweb.cv;
 
                 }).catch(function(response) {

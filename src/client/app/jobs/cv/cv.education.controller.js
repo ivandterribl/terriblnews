@@ -98,6 +98,7 @@
                             CompleteDate: new Date(row.CompleteDate)
                         });
                     });
+                    careerweb.cv.LastAccessDate = new Date();
                     return careerweb.cv;
 
                 }).catch(function(response) {

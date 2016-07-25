@@ -16,9 +16,10 @@
         vm.email = emailActivationCode;
         vm.refresh = refresh;
         vm.searchable = searchable;
+        vm.newsletter = newsletter;
 
         activate();
-        getProfile();
+        //getProfile();
 
         function activate() {
             vm.profile = user.profile;
@@ -26,6 +27,45 @@
             vm.cv.outdated = vm.cv.LastAccessDate && moment().diff(vm.cv.LastAccessDate, 'months') >= 3 ? 1 : 0;
 
             completeness();
+
+            vm.notifications = {
+                newsletter: false
+            };
+            notifications();
+        }
+
+        function notifications() {
+            api2('jobs/cv/notifications')
+                .then(function(response) {
+                    if (response && response.Subscribed === 'Y') {
+                        vm.notifications.newsletter = true;
+                    }
+                });
+        }
+
+        function newsletter() {
+            ui.loading.show();
+            var opts = {
+                method: 'POST',
+                data: {
+                    Subscribed: vm.notifications.newsletter ? 'Y' : 'N'
+                }
+            };
+            ui.loading.show();
+            api2('jobs/cv/notifications', opts)
+                .then(function(response) {
+                    if (response && response.Subscribed === 'Y') {
+                        ui.toast.show('success', 'Thank you, look out for us in your inbox');
+                        vm.notifications.newsletter = true;
+                    } else {
+                        ui.toast.show('success', 'Done, you have opted out of our newsletter');
+                        vm.notifications.newsletter = false;
+                    }
+                })
+                .finally(function() {
+                    ui.loading.hide();
+                });
+
         }
 
         function refresh() {
@@ -82,7 +122,10 @@
         function getProfile() {
             user.get()
                 .then(function() {
-                    activate();
+                    user.career.applications()
+                        .finally(function() {
+                            activate();
+                        });
                 });
         }
 

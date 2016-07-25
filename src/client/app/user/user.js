@@ -33,6 +33,7 @@
             return api2('jobs/applications')
                 .then(function(response) {
                     user.profile.careerweb.applications = response;
+                    //user.profile.careerweb.applications = [];
                 });
         }
 
