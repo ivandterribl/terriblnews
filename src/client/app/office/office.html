@@ -4,7 +4,7 @@
     	<section ng-show="!vm.loading">
             <ion-list ng-show="vm.items.length">
                 <div ng-repeat="(group, items) in vm.groups" class="post">
-                    <ion-item itw-scroll class="item-divider" id="{{ group }}">
+                    <ion-item class="item-divider" id="{{ group }}">
                     {{ group }}
                     </ion-item>
                     <ion-item class="item-light item-icon-right" ng-repeat="(i, item) in items" ng-href="{{ item.url }}"

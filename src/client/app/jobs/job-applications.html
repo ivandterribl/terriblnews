@@ -2,12 +2,13 @@
     <ion-nav-title>My job applications</ion-nav-title>
     <ion-nav-buttons side="secondary">
         <button class="button button-icon ion-briefcase"
-        ui-sref="app.jobs.tabs.feed({ id: 'it,sect_id-1' })"></button>
+        ui-sref="app.jobs.tabs.feed({ id: 'it,sect_id-1' })"
+        ga-track-event="['jobs', 'it,sect_id-1', vm.analyticsEvent]"></button>
     </ion-nav-buttons>
     <ion-content>
         <ion-list can-swipe="true" class="itw-timeline">
             <div ng-repeat="item in vm.applications">
-                <ion-item class="item-timeline">
+                <ion-item class="item-timeline" ui-sref="app.jobs.job({ id: item.JobID })">
                     <div class="line"></div>
                     <div class="row">
                         <div class="itw-timeline-left">
@@ -18,8 +19,9 @@
                         <div class="col">
                             <h2 ng-class="{ 'stable': item.IsExpired }">{{ item.JobTitle }}</h2>
                             <p>{{ item.CompanyDesc }}</p>
-                            <!-- <p ng-if="item.StatusCode !== 'A'" class="energized">This offer is closed</p> -->
-                            <span ng-if="item.IsExpired" class="energized">This offer expired on {{ item.ExpiryDate | date:'d MMM yy' }}</span>
+                            <span ng-if="item.IsExpired" class="energized">
+                                This offer expired on {{ item.ExpiryDate | date:'d MMM yy' }}
+                            </span>
                         </div>
                     </div>
                 </ion-item>

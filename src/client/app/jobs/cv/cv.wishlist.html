@@ -6,7 +6,8 @@
     <ion-nav-title>Wishlist</ion-nav-title>
     <ion-nav-buttons side="secondary">
         <button class="button button-icon ion-person"
-        ui-sref="app.user.profile"></button>
+        ui-sref="app.user.profile"
+        ga-track-event="['cv', 'wishlist', 'profile']"></button>
     </ion-nav-buttons>
     <ion-content>
         <form name="vm.cvForm" ng-submit="false">
@@ -116,14 +117,16 @@
 
     <ion-footer-bar class="bar-dark" align-title="center">
         <div class="buttons">
-            <button class="button button-clear" ng-click="vm.prev()">
+            <button class="button button-clear" ng-click="vm.prev()"
+            ga-track-event="['cv', 'wishlist', 'prev']">
                 <i class="icon ion-chevron-left"></i>
                 Employment history
             </button>
         </div>
         <h3 class="title">&nbsp;</h3>
         <div class="buttons">
-            <button class="button button-clear" ng-click="vm.next()">
+            <button class="button button-clear" ng-click="vm.next()"
+            ga-track-event="['cv', 'wishlist', 'next']">
                 Done
                 <i class="icon ion-checkmark-round"></i>
             </button>

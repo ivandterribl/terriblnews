@@ -46,7 +46,8 @@
       </label>
 
     <label class="item item-positive item-icon-left item-icon-right" 
-        ng-click="vm.submit(skill)">
+        ng-click="vm.submit(skill)"
+        ga-track-event="['cv', 'skills', 'save']">
             <i class="icon icon-midi ion-edit"></i>
             <span>Save</span>
             <i class="icon icon-midi ion-checkmark-round"></i>

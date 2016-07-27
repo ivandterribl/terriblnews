@@ -6,7 +6,8 @@
     <ion-nav-title>Work history</ion-nav-title>
     <ion-nav-buttons side="secondary">
         <button class="button button-icon ion-person"
-        ui-sref="app.user.profile"></button>
+        ui-sref="app.user.profile"
+        ga-track-event="['cv', 'employment', 'profile']"></button>
     </ion-nav-buttons>
     <ion-content>
         <ion-list ng-if="vm.cv.employment.length" can-swipe="true" class="itw-timeline">
@@ -26,7 +27,8 @@
                     </div>
 
                     <ion-option-button class="button-energized"
-                                       ng-click="vm.remove(employment)">
+                                       ng-click="vm.remove(employment)"
+                                       ga-track-event="['cv', 'employment', 'remove']">
                         Delete
                     </ion-option-button>
                 </ion-item>
@@ -67,14 +69,16 @@
 
     <ion-footer-bar class="bar-dark" align-title="center">
         <div class="buttons">
-            <button class="button button-clear" ng-click="vm.prev()">
+            <button class="button button-clear" ng-click="vm.prev()"
+            ga-track-event="['cv', 'employment', 'prev']">
                 <i class="icon ion-chevron-left"></i>
                 Education
             </button>
         </div>
         <h3 class="title">&nbsp;</h3>
         <div class="buttons">
-            <button class="button button-clear" ng-click="vm.next()">
+            <button class="button button-clear" ng-click="vm.next()"
+            ga-track-event="['cv', 'employment', 'next']">
                 Wishlist
                 <i class="icon ion-chevron-right"></i>
             </button>

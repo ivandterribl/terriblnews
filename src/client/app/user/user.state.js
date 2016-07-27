@@ -35,7 +35,13 @@
                     }
                 },
                 resolve: {
-                    skipIfLoggedIn: skipIfLoggedIn
+                    skipIfLoggedIn: skipIfLoggedIn,
+                    seo: ['meta', function(meta) {
+                        meta.set({
+                            title: 'Login'
+                        });
+                        return true;
+                    }]
                 }
             })
             .state('app.user.signup', {
@@ -83,6 +89,12 @@
                             $location.path('/user/login');
                         }
                         return deferred.promise;
+                    }],
+                    seo: ['meta', function(meta) {
+                        meta.set({
+                            title: 'My profile'
+                        });
+                        return true;
                     }]
                 }
             })

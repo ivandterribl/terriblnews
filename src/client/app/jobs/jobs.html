@@ -9,7 +9,8 @@
 		<button class="button button-icon ion-android-search" 
                 ng-click="vm.showSearchbar()"></button>
       	<button class="button button-icon ion-person" 
-                ui-sref="app.user.profile"></button>
+                ui-sref="app.user.profile"
+                ga-track-event="['jobs', 'profile', vm.analyticsEvent]"></button>
 	</ion-nav-buttons>
 
 	<ion-content lazy-scroll ng-class="{ 'has-subheader': vm.hasSubheader }" on-swipe-right="vm.prev()" on-swipe-left="vm.next()">

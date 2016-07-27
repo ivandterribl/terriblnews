@@ -6,7 +6,8 @@
     <ion-nav-title>Education history</ion-nav-title>
     <ion-nav-buttons side="secondary">
         <button class="button button-icon ion-person"
-        ui-sref="app.user.profile"></button>
+        ui-sref="app.user.profile"
+        ga-track-event="['cv', 'education', 'profile']"></button>
     </ion-nav-buttons>
     <ion-content>
         <ion-list ng-if="vm.cv.education.length" can-swipe="true" class="itw-timeline">
@@ -25,7 +26,8 @@
                         </div>
                     </div>
                     <ion-option-button class="button-energized"
-                                       ng-click="vm.remove(education)">
+                                       ng-click="vm.remove(education)"
+                                       ga-track-event="['cv', 'education', 'remove']">
                         Delete
                     </ion-option-button>
                 </ion-item>
@@ -49,7 +51,8 @@
 
             </ng-include>
 
-            <label class="item item-positive item-icon-left" ng-show="!vm.education" ng-click="vm.addItem()">
+            <label class="item item-positive item-icon-left" ng-show="!vm.education" ng-click="vm.addItem()"
+            ga-track-event="['cv', 'education', 'add']">
                 <i class="icon icon-midi ion-plus"></i>
                 I also studied
             </label>
@@ -58,14 +61,16 @@
     </ion-content>
     <ion-footer-bar class="bar-dark" align-title="center">
         <div class="buttons">
-            <button class="button button-clear" ng-click="vm.prev()">
+            <button class="button button-clear" ng-click="vm.prev()"
+            ga-track-event="['cv', 'education', 'prev']">
                 <i class="icon ion-chevron-left"></i>
                 Skills
             </button>
         </div>
         <h3 class="title">&nbsp;</h3>
         <div class="buttons">
-            <button class="button button-clear" ng-click="vm.next()">
+            <button class="button button-clear" ng-click="vm.next()"
+            ga-track-event="['cv', 'education', 'next']">
                 Employment
                 <i class="icon ion-chevron-right"></i>
             </button>

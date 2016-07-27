@@ -5,7 +5,8 @@
         </button>
     </ion-nav-buttons>
     <ion-nav-buttons side="secondary">
-        <button class="button button-icon ion-log-out" ng-click="vm.logout()"></button>
+        <button class="button button-icon ion-log-out" ng-click="vm.logout()"
+        ga-track-event="['user', 'profile', 'logout']"></button>
     </ion-nav-buttons>
     <ion-content style="background-color: #f5f5f5">
         <div class="list card" ng-show="vm.profile">
@@ -23,7 +24,8 @@
                         to you.<br/>
                         Please check your email to activate your account.</p>
                 </div>
-                <label class="item item-icon-left item-icon-right" ng-click="vm.email()">
+                <label class="item item-icon-left item-icon-right" ng-click="vm.email()"
+                ga-track-event="['user', 'profile', 'activation-email']">
                     <i class="icon icon-midi ion-at"></i>
                     <h3 class="itw-section balanced" style="padding: 4px 0 0 0">No email? Resend</h3>
                     <i class="icon icon-midi ion-chevron-right balanced"></i>
@@ -31,7 +33,10 @@
             </section>
 
             <section ng-if="!vm.cv.CVID && vm.profile.activated">
-                <label class="item item-icon-left item-icon-right" ui-sref="app.jobs.profile-1"  style="border-top: 1px solid #ddd;">
+                <label class="item item-icon-left item-icon-right" 
+                    ui-sref="app.jobs.profile-1" 
+                    ga-track-event="['user', 'profile', 'cv']"
+                    style="border-top: 1px solid #ddd;">
                         <i class="icon icon-midi ion-person stable"></i>
                         <h3 class="itw-section balanced" style="padding: 0">Create a CV</h3>
                         <p>Be discovered for career opportunities</p>
@@ -44,7 +49,8 @@
             <div class="item" style="padding-top: 18px">
                 <div class="row">
                     <h2 class="col">My CV</h2>
-                    <h2 class="col text-right" ng-class="{ 'energized': vm.completeness != 100, 'balanced': vm.completeness == 100 }">{{ vm.completeness | number:0 }} %</h2>
+                    <h2 class="col text-right" ng-class="{ 'energized': vm.completeness != 100, 'balanced': vm.completeness == 100 }">
+                    {{ vm.completeness | number:0 }} %</h2>
                 </div>
                 <p class="row">Last updated: {{ vm.cv.LastAccessDate | date:'d MMM yyyy' }}</p>
                 <p class="row" ng-if="vm.cv.SearchableYN === 'N'">Visible only to you</p>
@@ -55,11 +61,13 @@
                     <span style="white-space: normal">
                     <i class="icon ion-alert-circled"></i> Your CV is out of date and hence low priority. If you are still on the job market, let us know below. </span>
                 </div>
-                <label class="item item-icon-left" ng-click="vm.refresh()">
+                <label class="item item-icon-left" ng-click="vm.refresh()"
+                ga-track-event="['user', 'profile', 'cv-refesh']">
                     <i class="icon icon-midi ion-checkmark-round balanced"></i>
                     I'm on the job market
                 </label>
-                <label class="item item-icon-left" ng-click="vm.searchable()">
+                <label class="item item-icon-left" ng-click="vm.searchable()"
+                ga-track-event="['user', 'profile', 'cv-disable']">
                     <i class="icon icon-midi ion-close-round assertive"></i>
                     Not interested in job opportunities
                 </label>
@@ -70,7 +78,8 @@
 
                 
             <label class="item item-icon-left item-icon-right" 
-            ui-sref="app.jobs.profile-1">
+            ui-sref="app.jobs.profile-1"
+            ga-track-event="['user', 'profile', 'cv-main']">
                     <i class="icon icon-midi ion-person"></i>
                     <span>Personal details</span>
                     <i class="icon icon-midi" 
@@ -79,7 +88,8 @@
                         'ion-chevron-right': !vm.cv.AffirmativeActionCode }"></i>
             </label>
             <label class="item item-icon-left item-icon-right" 
-            ui-sref="app.jobs.profile-2">
+            ui-sref="app.jobs.profile-2"
+            ga-track-event="['user', 'profile', 'cv-skills']">
                     <i class="icon icon-midi ion-hammer"></i>
                     <span>Skills</span>
                     <i class="icon icon-midi" 
@@ -88,7 +98,8 @@
                     'ion-chevron-right': !vm.cv.skills.length }"></i>
             </label>
             <label class="item item-icon-left item-icon-right" 
-            ui-sref="app.jobs.profile-3">
+            ui-sref="app.jobs.profile-3"
+            ga-track-event="['user', 'profile', 'cv-education']">
                     <i class="icon icon-midi ion-university"></i>
                     <span>Education</span>
                      <i class="icon icon-midi" 
@@ -96,7 +107,8 @@
                      'ion-checkmark-round': vm.cv.education.length, 'ion-chevron-right': !vm.cv.education.length }"></i>
             </label>
             <label class="item item-icon-left item-icon-right" 
-            ui-sref="app.jobs.profile-4">
+            ui-sref="app.jobs.profile-4"
+            ga-track-event="['user', 'profile', 'cv-employment']">
                     <i class="icon icon-midi ion-briefcase"></i>
                     <span>Work history</span>
                     <i class="icon icon-midi" 
@@ -105,7 +117,8 @@
             </label>
             <label class="item item-icon-left item-icon-right" 
             ng-if="vm.cv.employment.length"
-            ui-sref="app.jobs.profile-5">
+            ui-sref="app.jobs.profile-5"
+            ga-track-event="['user', 'profile', 'cv-wishlist']">
                     <i class="icon icon-midi ion-heart"></i>
                     <span>Wishlist &amp; Settings</span>
                     <i class="icon icon-midi icon-midi" 
@@ -113,7 +126,8 @@
                     'ion-checkmark-round': vm.cv.WishRemAmount, 'ion-chevron-right': !vm.cv.WishRemAmount }"></i>
             </label>
             <label class="item item-icon-left item-icon-right" 
-            ui-sref="app.jobs.profile-6">
+            ui-sref="app.jobs.profile-6"
+            ga-track-event="['user', 'profile', 'cv-documents']">
                     <i class="icon icon-midi ion-document"></i>
                     <span>Documents</span>
                     <i class="icon icon-midi" 
@@ -129,21 +143,24 @@
             </div>
             <div class="item item-icon-right" ng-repeat="(i, item) in vm.profile.careerweb.applications" 
                 ng-if="i < 3"
-                ui-sref="app.jobs.job({ id: item.JobID })">
+                ui-sref="app.jobs.job({ id: item.JobID })"
+                ga-track-event="['user', 'profile', 'application', i]">
                 <h3>{{ item.JobTitle }}</h3>
                 <p>{{ item.CompanyDesc }}</p>
                 <i class="icon icon-midi ion-chevron-right"></i>
             </div>
             <label class="item item-icon-left item-icon-right item-positive" 
                 ng-if="vm.profile.careerweb.applications.length"
-                ui-sref="app.jobs.applications">
+                ui-sref="app.jobs.applications"
+                ga-track-event="['user', 'profile', 'applications']">
                     <i class="icon icon-midi ion-briefcase"></i>
                     <span>View all</span>
                     <i class="icon icon-midi ion-chevron-right"></i>
             </label>
             <label class="item item-icon-left item-icon-right item-positive" 
                 ng-if="!vm.profile.careerweb.applications.length"
-                ui-sref="app.jobs.tabs.feed({ id: 'it,sect_id-1' })">
+                ui-sref="app.jobs.tabs.feed({ id: 'it,sect_id-1' })"
+                ga-track-event="['user', 'profile', 'jobs']">
                 <i class="icon icon-midi ion-briefcase"></i>
                 No applications yet. Find a job.
                 <i class="icon icon-midi ion-chevron-right"></i>
@@ -175,7 +192,8 @@
                     <i class="icon icon-midi ion-checkmark-round balanced"></i>
             </label>
             <ion-toggle class="item-icon-left" ng-if="!vm.profile.google.email" 
-            ng-model="vm.profile.google.activated" ng-change="vm.link('google')">
+            ng-model="vm.profile.google.activated" ng-change="vm.link('google')"
+            ga-track-event="['user', 'profile', 'google']">
                 <i class="icon icon-midi ion-social-googleplus"></i>
                 Google
             </ion-toggle>
@@ -187,7 +205,8 @@
                     <i class="icon icon-midi ion-checkmark-round balanced"></i>
             </label>
             <ion-toggle class="item-icon-left" ng-if="!vm.profile.facebook.email"
-            ng-model="vm.profile.facebook.activated" ng-change="vm.link('facebook')">
+            ng-model="vm.profile.facebook.activated" ng-change="vm.link('facebook')"
+            ga-track-event="['user', 'profile', 'facebook']">
                 <i class="icon icon-midi ion-social-facebook"></i>
                 Facebook
             </ion-toggle>

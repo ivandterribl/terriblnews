@@ -19,7 +19,7 @@
                     });
 
                 meta.set({
-                    title: item ? item.title : void 0,
+                    title: item ? item.title + ' Jobs' : void 0,
                     keywords: item ? item.title + ', IT, Technology, Business, News' : void 0
                 });
                 return item;
@@ -148,6 +148,14 @@
                         templateUrl: 'app/jobs/job-applications.html',
                         controller: 'JobApplicationsController as vm'
                     }
+                },
+                resolve: {
+                    seo: ['meta', function(meta) {
+                        meta.set({
+                            title: 'My job applications'
+                        });
+                        return true;
+                    }]
                 }
             })
             .state('app.jobs.search', {
@@ -159,10 +167,15 @@
                     }
                 },
                 resolve: {
-                    response: ['api2', '$q', '$stateParams', function(api2, $q, $stateParams) {
+                    response: ['api2', '$q', '$stateParams', 'meta', function(api2, $q, $stateParams, meta) {
                         var deferred = $q.defer();
                         api2('jobs/search?q=' + encodeURIComponent($stateParams.q))
                             .then(function(response) {
+                                meta.title('Job search - ' + $stateParams.q);
+                                meta.description('South African job offers relating to ' + $stateParams.q);
+                                meta.keywords($stateParams.q + ', jobs');
+                                meta.ld(false);
+                                meta.canonical(false);
                                 deferred.resolve(response);
                             })
                             .catch(function() {
@@ -185,8 +198,17 @@
                     }
                 },
                 resolve: {
-                    response: ['api2', '$q', '$stateParams', function(api2, $q, $stateParams) {
-                        return api2('jobs/job/' + $stateParams.id);
+                    response: ['api2', '$q', '$stateParams', 'meta', function(api2, $q, $stateParams, meta) {
+                        return api2('jobs/job/' + $stateParams.id)
+                            .then(function(response) {
+                                meta.title(response.JobTitle);
+                                meta.description(response.JobDescBrief);
+                                meta.keywords(response.KeyWords + ', jobs, job posting, job offer, ' + response.Name);
+                                meta.ld(false);
+                                meta.canonical('http://www.careerweb.co.za/Common/ViewJob.asp?JobID=' + response.JobID);
+
+                                return response;
+                            });
                     }]
                 }
             });

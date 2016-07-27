@@ -6,7 +6,8 @@
     <ion-nav-title>Personal details</ion-nav-title>
     <ion-nav-buttons side="secondary">
         <button class="button button-icon ion-person"
-        ui-sref="app.user.profile"></button>
+        ui-sref="app.user.profile"
+        ga-track-event="['cv', 'main', 'profile']"></button>
     </ion-nav-buttons>
     <ion-content>
         <form name="vm.cvForm" ng-submit="false">
@@ -153,7 +154,8 @@
         </div>
         <h3 class="title">&nbsp;</h3>
         <div class="buttons">
-            <button class="button button-clear" ng-click="vm.next()">
+            <button class="button button-clear" ng-click="vm.next()"
+            ga-track-event="['cv', 'main', 'next']">
                 Next
                 <i class="icon ion-chevron-right"></i>
             </button>

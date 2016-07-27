@@ -5,11 +5,10 @@
         .module('itw.user')
         .controller('ProfileController', Controller);
 
-    Controller.$inject = ['$auth', 'api2', 'user', 'ui', '$http', '$ionicHistory', '$timeout', 'moment'];
+    Controller.$inject = ['$auth', 'api2', 'user', 'ui', '$location', '$ionicHistory', '$timeout', 'moment'];
     /* @ngInject */
-    function Controller($auth, api2, user, ui, $http, $ionicHistory, $timeout, moment) {
-        var vm = this,
-            url = 'https://secure.itweb.co.za/api/';
+    function Controller($auth, api2, user, ui, $location, $ionicHistory, $timeout, moment) {
+        var vm = this;
 
         vm.link = linkProfile;
         vm.logout = logout;
@@ -19,9 +18,10 @@
         vm.newsletter = newsletter;
 
         activate();
-        //getProfile();
 
         function activate() {
+            vm.analyticsEvent = $location.url();
+
             vm.profile = user.profile;
             vm.cv = user.profile.careerweb.cv;
             vm.cv.outdated = vm.cv.LastAccessDate && moment().diff(vm.cv.LastAccessDate, 'months') >= 3 ? 1 : 0;
@@ -113,9 +113,9 @@
         }
 
         function emailActivationCode() {
-            return $http.get(url + 'accounts/activation')
+            return api2('accounts/activation')
                 .then(function(response) {
-                    ui.toast.show('info', 'Verification email sent to ' + response.data.username);
+                    ui.toast.show('info', 'Verification email sent to ' + response.username);
                 });
         }
 
@@ -152,7 +152,7 @@
                             ui.loading.hide();
                             ui.toast.show('info', 'You have been logged out');
 
-                            $timeout($ionicHistory.clearCache, 351);
+                            $timeout($ionicHistory.clearCache, 375);
                         });
 
                 });

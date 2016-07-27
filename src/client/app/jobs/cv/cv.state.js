@@ -8,6 +8,16 @@
     Config.$inject = ['$stateProvider', '$urlRouterProvider'];
 
     function Config($stateProvider, $urlRouterProvider) {
+        var loginRequired = ['$q', '$location', '$auth', function($q, $location, $auth) {
+            var deferred = $q.defer();
+            if ($auth.isAuthenticated()) {
+                deferred.resolve();
+            } else {
+                $location.path('/user/login');
+            }
+            return deferred.promise;
+        }];
+
         $stateProvider
             .state('app.jobs.profile-1', {
                 url: '/cv/main',
@@ -18,7 +28,13 @@
                     }
                 },
                 resolve: {
-                    loginRequired: loginRequired
+                    loginRequired: loginRequired,
+                    seo: ['meta', function(meta) {
+                        meta.set({
+                            title: 'CV - Personal details'
+                        });
+                        return true;
+                    }]
                 }
             })
             .state('app.jobs.profile-2', {
@@ -30,7 +46,13 @@
                     }
                 },
                 resolve: {
-                    loginRequired: loginRequired
+                    loginRequired: loginRequired,
+                    seo: ['meta', function(meta) {
+                        meta.set({
+                            title: 'CV - Skills'
+                        });
+                        return true;
+                    }]
                 }
             })
             .state('app.jobs.profile-3', {
@@ -42,7 +64,13 @@
                     }
                 },
                 resolve: {
-                    loginRequired: loginRequired
+                    loginRequired: loginRequired,
+                    seo: ['meta', function(meta) {
+                        meta.set({
+                            title: 'CV - Education'
+                        });
+                        return true;
+                    }]
                 }
             })
             .state('app.jobs.profile-4', {
@@ -54,7 +82,13 @@
                     }
                 },
                 resolve: {
-                    loginRequired: loginRequired
+                    loginRequired: loginRequired,
+                    seo: ['meta', function(meta) {
+                        meta.set({
+                            title: 'CV - Employment'
+                        });
+                        return true;
+                    }]
                 }
             })
             .state('app.jobs.profile-5', {
@@ -66,7 +100,13 @@
                     }
                 },
                 resolve: {
-                    loginRequired: loginRequired
+                    loginRequired: loginRequired,
+                    seo: ['meta', function(meta) {
+                        meta.set({
+                            title: 'CV - Wishlist'
+                        });
+                        return true;
+                    }]
                 }
             })
             .state('app.jobs.profile-6', {
@@ -78,18 +118,15 @@
                     }
                 },
                 resolve: {
-                    loginRequired: loginRequired
+                    loginRequired: loginRequired,
+                    seo: ['meta', function(meta) {
+                        meta.set({
+                            title: 'CV - Documents'
+                        });
+                        return true;
+                    }]
                 }
             });
 
-        function loginRequired($q, $location, $auth) {
-            var deferred = $q.defer();
-            if ($auth.isAuthenticated()) {
-                deferred.resolve();
-            } else {
-                $location.path('/user/login');
-            }
-            return deferred.promise;
-        }
     }
 })();
