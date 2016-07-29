@@ -78,6 +78,7 @@
                                     vm.match.responseDate = new Date(vm.match.ResponseDate);
                                 }
                                 ui.toast.show('success', 'A job application has been sent on your behalf. Good luck!');
+                                vm.job.Stats.JobResponses = vm.job.Stats.JobResponses + 1;
                             })
                             .catch(function() {
                                 ui.toast.show('error', 'Oops, something went wrong');
@@ -92,7 +93,7 @@
                         // The personal details section on your CV contains incomplete information.
                         // A job application cannot be sent.
                         // You have already sent through an application for this job.
-                        ui.toast.show('error', response.data.error_description);
+                        ui.toast.show('error', response.error_description);
                         ui.loading.hide();
                     });
             }

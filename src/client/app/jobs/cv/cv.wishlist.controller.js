@@ -9,7 +9,8 @@
     /* @ngInject */
     function Controller(user, api2, ui, $q, _) {
         var vm = this,
-            careerweb = user.profile.careerweb;
+            careerweb = user.profile.careerweb,
+            isNew = false;
 
         vm.prev = prev;
         vm.next = next;
@@ -20,6 +21,7 @@
             var cv = user.profile.careerweb.cv,
                 employment = _.first(cv.employment);
 
+            isNew = cv.WishRemAmount ? false : true;
             cv = angular.extend(cv, {
                 WishRemAmount: cv.WishRemAmount ? parseFloat(cv.WishRemAmount) : null,
                 WishRemCurrency: cv.WishRemCurrency ? cv.WishRemCurrency : 'South African Rands',
@@ -101,7 +103,9 @@
                     ui.show('app.jobs.profile-4');
                 });
             } else {
-                return ui.toast.show('warning', 'Please fill everything in');
+                return ui.toast.show('warning', 'Please fill everything in', {
+                    timeOut: 5000
+                });
             }
         }
 
@@ -118,7 +122,9 @@
                     ui.show('app.user.profile');
                 });
             } else {
-                return ui.toast.show('warning', 'Please fill everything in');
+                return ui.toast.show('warning', 'Please fill everything in', {
+                    timeOut: 5000
+                });
             }
         }
 
@@ -175,7 +181,10 @@
             return $q.all(promises)
                 .then(function(response) {
                     careerweb.cv.LastAccessDate = new Date();
-                    ui.toast.show('success', 'Your CV is ready');
+                    if (isNew) {
+                        ui.toast.show('info', 'What next? Upload your CV in the documents section or apply for a job');
+                        ui.toast.show('success', 'Your CV is ready');
+                    }
                     return user.get();
                 });
         }

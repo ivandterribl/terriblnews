@@ -30,42 +30,46 @@
                         return response;
                     });
             }],
-            items = [{
-                title: 'IT',
-                id: 'it,sect_id-1',
-                state: {
-                    name: 'app.jobs.tabs.feed',
-                    params: {
-                        id: 'it,sect_id-1'
+            resolveUser = ['user', '$q', function(user, $q) {
+                var deferred = $q.defer();
+                if (user.isAuthenticated()) {
+                    if (!user.profile) {
+                        user.get()
+                            .then(function() {
+                                var cv = user.profile.careerweb.cv;
+                                if (cv.CVID) {
+                                    user.career.applications()
+                                        .then(function() {
+                                            deferred.resolve(user);
+                                        })
+                                        .catch(function() {
+                                            deferred.resolve(user);
+                                        });
+                                }
+                            })
+                            .catch(function() {
+                                deferred.resolve(user);
+                            });
+                    } else if (user.profile.careerweb && !user.profile.careerweb.applications) {
+                        var cv = user.profile.careerweb.cv;
+                        if (cv.CVID) {
+                            user.career.applications()
+                                .then(function() {
+                                    deferred.resolve(user);
+                                })
+                                .catch(function() {
+                                    deferred.resolve(user);
+                                });
+                        } else {
+                            deferred.resolve(user);
+                        }
+                    } else {
+                        deferred.resolve(user);
                     }
+                } else {
+                    deferred.resolve(user);
                 }
-            }, {
-                title: 'Financial',
-                id: 'financial,sect_id-2',
-                state: {
-                    name: 'app.jobs.tabs.feed',
-                    params: {
-                        id: 'financial,sect_id-2'
-                    }
-                }
-            }, {
-                title: 'Engineering',
-                id: 'engineering,sect_id-3',
-                state: {
-                    name: 'app.jobs.tabs.feed',
-                    params: {
-                        id: 'engineering,sect_id-3'
-                    }
-                }
-            }, {
-                title: 'Sales',
-                id: 'sales,sect_id-4',
-                state: {
-                    name: 'app.jobs.tabs.feed',
-                    params: {
-                        id: 'sales,sect_id-4'
-                    }
-                }
+                return deferred.promise;
             }];
 
         $stateProvider
@@ -73,49 +77,30 @@
                 url: '/jobs',
                 abstract: true,
                 resolve: {
-                    profile: ['user', '$q', function(user, $q) {
-                        var deferred = $q.defer();
-                        if (user.isAuthenticated()) {
-                            if (!user.profile) {
-                                user.get()
-                                    .then(function() {
-                                        var cv = user.profile.careerweb.cv;
-                                        if (cv.CVID) {
-                                            user.career.applications()
-                                                .then(function() {
-                                                    deferred.resolve(user);
-                                                })
-                                                .catch(function() {
-                                                    deferred.resolve(user);
-                                                });
-                                        }
-                                    })
-                                    .catch(function() {
-                                        deferred.resolve(user);
-                                    });
-                            } else if (user.profile.careerweb && !user.profile.careerweb.applications) {
-                                user.career.applications()
-                                    .then(function() {
-                                        deferred.resolve(user);
-                                    })
-                                    .catch(function() {
-                                        deferred.resolve(user);
-                                    });
-                            } else {
-                                deferred.resolve(user);
-                            }
-                        } else {
-                            deferred.resolve(user);
-                        }
-                        return deferred.promise;
-                    }]
+                    profile: resolveUser
+                }
+            })
+            .state('app.jobs.redirect', {
+                url: '/',
+                views: {
+                    '@app': {
+                        template: '<ion-view></ion-view>',
+                        controller: ['$ionicHistory', '$state', function($ionicHistory, $state) {
+                            $ionicHistory.nextViewOptions({
+                                disableAnimate: true
+                            });
+                            $state.go('app.jobs.tabs.feed', {
+                                id: 'it,sect_id-1'
+                            });
+                        }]
+                    }
                 }
             })
             .state('app.jobs.tabs', {
                 url: '/section',
                 abstract: true,
                 params: {
-                    items: items
+                    nav: 'Jobs'
                 },
                 views: {
                     '@app': {

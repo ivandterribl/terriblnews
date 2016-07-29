@@ -6,9 +6,13 @@
 		.module('itw.ui')
 		.config(Config);
 
-	Config.$inject = ['$mdThemingProvider', '$mdGestureProvider'];
+	Config.$inject = ['$mdThemingProvider', '$mdGestureProvider', 'toastrConfig'];
 
-	function Config($mdThemingProvider, $mdGestureProvider) {
+	function Config($mdThemingProvider, $mdGestureProvider, toastrConfig) {
+		angular.extend(toastrConfig, {
+			timeOut: 10000,
+			tapToDismiss: true
+		});
 		$mdGestureProvider.skipClickHijack();
 
 		$mdThemingProvider.definePalette('iRed', {

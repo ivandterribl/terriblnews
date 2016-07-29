@@ -16,7 +16,7 @@
 
         function activate() {
             var cv = user.profile.careerweb.cv;
-            //ui.toast.show('info', 'Fill everything in and tap Next once done');
+
             vm.cv = {
                 FirstName: cv.FirstName,
                 Surname: cv.Surname,
@@ -88,15 +88,15 @@
 
             form.$setSubmitted(true);
             if (form.$invalid) {
-                return ui.toast.show('warning', 'Please fill everything in');
+                return ui.toast.show('warning', 'Please fill everything in', {
+                    timeOut: 5000
+                });
             }
 
             ui.loading.show();
             api2('jobs/cv/main', {
                 method: 'POST',
-                data: angular.extend({
-                    LoginID: user.profile.careerweb.identifier
-                }, vm.cv)
+                data: vm.cv
             }).then(function(cv) {
                 if (cv && cv.AffirmativeActionCode) {
                     cv.Gender = cv.AffirmativeActionCode.indexOf('M') === -1 ? 'F' : 'M';

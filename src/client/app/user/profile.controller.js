@@ -147,13 +147,14 @@
                     $ionicHistory.nextViewOptions({
                         historyRoot: true
                     });
-                    ui.show('app.frontpage')
-                        .then(function() {
-                            ui.loading.hide();
-                            ui.toast.show('info', 'You have been logged out');
+                    ui.show('app.jobs.tabs.feed', {
+                        id: 'it,sect_id-1'
+                    }).then(function() {
+                        ui.loading.hide();
+                        ui.toast.show('info', 'You have been logged out');
 
-                            $timeout($ionicHistory.clearCache, 375);
-                        });
+                        $timeout($ionicHistory.clearCache, 375);
+                    });
 
                 });
         }

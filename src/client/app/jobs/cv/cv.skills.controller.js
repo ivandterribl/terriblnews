@@ -96,7 +96,9 @@
 
         function submit(skill) {
             if (!isValid(skill)) {
-                return ui.toast.show('warning', 'Please fill everything in');
+                return ui.toast.show('warning', 'Please fill everything in', {
+                    timeOut: 5000
+                });
             }
 
             save(skill).then(cancel);
@@ -139,7 +141,9 @@
 
             if (skill) {
                 if (!isValid(skill)) {
-                    return ui.toast.show('warning', 'Please fill everything in');
+                    return ui.toast.show('warning', 'Please fill everything in', {
+                        timeOut: 5000
+                    });
                 } else {
                     // save pending
                     save(skill).then(function() {
@@ -157,7 +161,9 @@
 
             if (skill) {
                 if (!isValid(skill)) {
-                    return ui.toast.show('warning', 'Please fill everything in');
+                    return ui.toast.show('warning', 'Please fill everything in', {
+                        timeOut: 5000
+                    });
                 } else {
                     // save pending
                     save(skill).then(function() {

@@ -115,7 +115,9 @@
 
         function submit(employment) {
             if (!isValid(employment)) {
-                return ui.toast.show('warning', 'Please fill everything in');
+                return ui.toast.show('warning', 'Please fill everything in', {
+                    timeOut: 5000
+                });
             }
 
             save(employment).then(cancel);
@@ -160,7 +162,9 @@
 
             if (employment) {
                 if (!isValid(employment)) {
-                    return ui.toast.show('warning', 'Please fill everything in');
+                    return ui.toast.show('warning', 'Please fill everything in', {
+                        timeOut: 5000
+                    });
                 } else {
                     // save pending
                     save(employment).then(function() {
@@ -178,7 +182,9 @@
 
             if (employment) {
                 if (!isValid(employment)) {
-                    return ui.toast.show('warning', 'Please fill everything in');
+                    return ui.toast.show('warning', 'Please fill everything in', {
+                        timeOut: 5000
+                    });
                 } else {
                     // save pending
                     save(employment).then(function() {

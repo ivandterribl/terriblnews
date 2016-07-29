@@ -69,7 +69,9 @@
 
         function submit(education) {
             if (!isValid(education)) {
-                return ui.toast.show('warning', 'Please fill everything in');
+                return ui.toast.show('warning', 'Please fill everything in', {
+                    timeOut: 5000
+                });
             }
 
             save(education).then(cancel);
@@ -114,7 +116,9 @@
 
             if (education) {
                 if (!isValid(education)) {
-                    return ui.toast.show('warning', 'Please fill everything in');
+                    return ui.toast.show('warning', 'Please fill everything in', {
+                        timeOut: 5000
+                    });
                 } else {
                     // save pending
                     save(education).then(function() {
@@ -132,7 +136,9 @@
 
             if (education) {
                 if (!isValid(education)) {
-                    return ui.toast.show('warning', 'Please fill everything in');
+                    return ui.toast.show('warning', 'Please fill everything in', {
+                        timeOut: 5000
+                    });
                 } else {
                     // save pending
                     save(education).then(function() {

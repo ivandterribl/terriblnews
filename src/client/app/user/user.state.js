@@ -74,13 +74,18 @@
                             if (!user.profile) {
                                 user.get()
                                     .then(function() {
-                                        user.career.applications()
-                                            .finally(function() {
-                                                deferred.resolve();
-                                            });
+                                        var cv = user.profile.careerweb.cv;
+                                        if (cv.CVID) {
+                                            user.career.applications()
+                                                .finally(function() {
+                                                    deferred.resolve();
+                                                });
+                                        } else {
+                                            deferred.resolve();
+                                        }
                                     })
                                     .catch(function() {
-                                        deferred.reject();
+                                        $location.path('/user/login');
                                     });
                             } else {
                                 deferred.resolve();

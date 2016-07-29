@@ -52,7 +52,7 @@
                     ui.show(redirect.name, redirect.params);
                 })
                 .catch(function(error) {
-                    ui.toast.show('error', error.data.error_description, error.status);
+                    ui.toast.show('error', error.data.error_description);
                 })
                 .finally(function() {
                     ui.loading.hide();
