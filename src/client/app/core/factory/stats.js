@@ -13,7 +13,7 @@
         };
 
         function logStats(data) {
-            console.log('%c' + angular.toJson(data), 'color:purple');
+            //console.log('%c' + angular.toJson(data), 'color:purple');
             if ($location.host() !== 'localhost') {
                 $http({
                     method: 'GET',

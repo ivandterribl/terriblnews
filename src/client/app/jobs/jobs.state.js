@@ -67,7 +67,10 @@
                         deferred.resolve(user);
                     }
                 } else {
-                    deferred.resolve(user);
+                    user.checkLogin()
+                        .finally(function() {
+                            deferred.resolve(user);
+                        });
                 }
                 return deferred.promise;
             }];

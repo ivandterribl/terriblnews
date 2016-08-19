@@ -46,8 +46,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
           display: 'popup',
           oauthType: '2.0',
           popupOptions: {
-            width: 580,
-            height: 400
+            width: 320,
+            height: 480
           }
         },
         google: {
@@ -618,36 +618,38 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
               }
 
               url = [defaults.authorizationEndpoint, Oauth2.buildQueryString()].join('?');
+              window.location = url;
+              return;
+              // console.warn(url);
+              // if (window.cordova) {
+              //   openPopup = popup
+              //     .open(url, defaults.name, defaults.popupOptions, defaults.redirectUri)
+              //     .eventListener(defaults.redirectUri);
+              // } else {
+              //   openPopup = popup
+              //     .open(url, defaults.name, defaults.popupOptions, defaults.redirectUri)
+              //     .pollPopup(defaults.redirectUri);
+              // }
 
-              if (window.cordova) {
-                openPopup = popup
-                  .open(url, defaults.name, defaults.popupOptions, defaults.redirectUri)
-                  .eventListener(defaults.redirectUri);
-              } else {
-                openPopup = popup
-                  .open(url, defaults.name, defaults.popupOptions, defaults.redirectUri)
-                  .pollPopup(defaults.redirectUri);
-              }
+              // return openPopup
+              //   .then(function(oauthData) {
+              //     // When no server URL provided, return popup params as-is.
+              //     // This is for a scenario when someone wishes to opt out from
+              //     // Satellizer's magic by doing authorization code exchange and
+              //     // saving a token manually.
+              //     if (defaults.responseType === 'token' || !defaults.url) {
+              //       defer.resolve(oauthData);
+              //     }
 
-              return openPopup
-                .then(function(oauthData) {
-                  // When no server URL provided, return popup params as-is.
-                  // This is for a scenario when someone wishes to opt out from
-                  // Satellizer's magic by doing authorization code exchange and
-                  // saving a token manually.
-                  if (defaults.responseType === 'token' || !defaults.url) {
-                    defer.resolve(oauthData);
-                  }
+              //     if (oauthData.state && oauthData.state !== storage.get(stateName)) {
+              //       return defer.reject(
+              //         'The value returned in the state parameter does not match the state value from your original ' +
+              //         'authorization code request.'
+              //       );
+              //     }
 
-                  if (oauthData.state && oauthData.state !== storage.get(stateName)) {
-                    return defer.reject(
-                      'The value returned in the state parameter does not match the state value from your original ' +
-                      'authorization code request.'
-                    );
-                  }
-
-                  defer.resolve(Oauth2.exchangeForToken(oauthData, userData));
-                });
+              //     defer.resolve(Oauth2.exchangeForToken(oauthData, userData));
+              //   });
             });
 
             return defer.promise;
@@ -682,7 +684,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
             data.redirect_uri = defaults.redirectUri;
 
             var exchangeForTokenUrl = config.baseUrl ? utils.joinUrl(config.baseUrl, defaults.url) : defaults.url;
-
+            console.warn(exchangeForTokenUrl, data);
             return $http.post(exchangeForTokenUrl, data, {
               withCredentials: config.withCredentials
             });

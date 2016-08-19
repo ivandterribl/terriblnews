@@ -34,7 +34,7 @@
                 displayName: vm.user.displayName,
                 username: vm.user.email,
                 password: vm.user.password,
-                redirect_uri: 'http://jsx.itrends.co.za/user/activate'
+                redirect_uri: 'http://www.itweb.co.za/mobilesite/user/activate'
             };
             ui.loading.show();
             $auth.signup(payload)

@@ -8,32 +8,58 @@
     User.$inject = ['api2', '$auth', '$q', '_'];
 
     function User(api2, $auth, $q, _) {
-        var user = {
-            $auth: $auth,
-            isAuthenticated: isAuthenticated,
-            login: login,
-            loginWith: loginWith,
-            get: getProfile,
-            career: {
-                applications: applications
-            }
-        };
+        var tokenWasChecked = 0,
+            user = {
+                $auth: $auth,
+                isAuthenticated: isAuthenticated,
+                checkLogin: checkLogin,
+                login: login,
+                loginWith: loginWith,
+                get: getProfile,
+                career: {
+                    applications: applications
+                }
+            };
 
         return user;
+
+        function checkLogin() {
+            var deferred = $q.defer(),
+                opts = {
+                    method: 'POST',
+                    data: {
+                        'grant_type': 'refresh_token',
+                        'client_id': 'itweb/app'
+                    }
+                };
+
+            if (!tokenWasChecked) {
+                api2('accounts/login', opts)
+                    .then(function(response) {
+                        $auth.setToken(response.access_token);
+                        deferred.resolve(user);
+                    })
+                    .catch(function(response) {
+                        deferred.reject();
+                    })
+                    .finally(function() {
+                        tokenWasChecked = 1;
+                    });
+            } else {
+                deferred.reject();
+            }
+            return deferred.promise;
+        }
 
         function isAuthenticated() {
             return user.$auth.isAuthenticated();
         }
 
         function applications(CVID) {
-            // var deferred = $q.defer();
-            // deferred.resolve([]);
-            // return deferred.promise;
 
             return api2('jobs/applications')
                 .then(function(response) {
                     user.profile.careerweb.applications = response;
-                    //user.profile.careerweb.applications = [];
                 });
         }
 

@@ -19,58 +19,69 @@
                 }, options),
                 def = $q.defer();
 
-            $http(opts)
-                .success(function(response) {
-                    def.resolve(response);
-                })
-                .error(function(response) {
-                    response = response || {};
-                    switch (response.error) {
-                        case 'invalid_token':
-                        case 'expired_token':
-                            // try the refresh_token
-                            var opts2 = angular.extend({}, opts, {
-                                'method': 'POST',
-                                'url': 'https://secure.itweb.co.za/api/accounts/login',
-                                'data': {
-                                    'grant_type': 'refresh_token',
-                                    'client_id': 'itweb/app'
-                                }
-                            });
-                            // clear prev token
-                            $auth.removeToken();
+            var resolved = 0;
+            angular.forEach(window.prefetched || [], function(cache) {
+                if (cache.response.length && cache.url.indexOf(url) !== -1) {
+                    def.resolve(cache.response);
+                    cache.response = [];
+                    resolved = 1;
+                }
+            });
 
-                            $http(opts2)
-                                .success(function(response) {
-                                    if (response.access_token) {
-                                        // we good
-                                        $auth.setToken(response.access_token);
-                                        // retry request
-                                        $http(opts)
-                                            .success(function(response) {
-                                                def.resolve(response);
-                                            })
-                                            .error(function(response) {
-                                                def.reject(response);
-                                            });
-                                    } else {
-                                        def.reject(response);
+            if (!resolved) {
+                $http(opts)
+                    .success(function(response) {
+                        def.resolve(response);
+                    })
+                    .error(function(response) {
+                        response = response || {};
+                        switch (response.error) {
+                            case 'invalid_token':
+                            case 'expired_token':
+                                // try the refresh_token
+                                var opts2 = angular.extend({}, opts, {
+                                    'method': 'POST',
+                                    'url': 'https://secure.itweb.co.za/api/accounts/login',
+                                    'data': {
+                                        'grant_type': 'refresh_token',
+                                        'client_id': 'itweb/app'
                                     }
-                                })
-                                .error(function(response) {
-                                    def.reject(response);
                                 });
-                            break;
-                        default:
-                            def.reject(response);
-                    }
-                }).finally(function() {
-                    queue = _.reject(queue, function(d) {
-                        return d === def;
-                    });
-                });
+                                // clear prev token
+                                $auth.removeToken();
 
-            queue.push(def);
+                                $http(opts2)
+                                    .success(function(response) {
+                                        if (response.access_token) {
+                                            // we good
+                                            $auth.setToken(response.access_token);
+                                            // retry request
+                                            $http(opts)
+                                                .success(function(response) {
+                                                    def.resolve(response);
+                                                })
+                                                .error(function(response) {
+                                                    def.reject(response);
+                                                });
+                                        } else {
+                                            def.reject(response);
+                                        }
+                                    })
+                                    .error(function(response) {
+                                        def.reject(response);
+                                    });
+                                break;
+                            default:
+                                def.reject(response);
+                        }
+                    }).finally(function() {
+                        queue = _.reject(queue, function(d) {
+                            return d === def;
+                        });
+                    });
+
+                queue.push(def);
+            }
 
             return def.promise;
         };

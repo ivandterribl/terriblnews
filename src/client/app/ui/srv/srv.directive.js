@@ -62,7 +62,6 @@
                         if (!activated) {
                             offset = $ionicPosition.offset($element);
                             if ((offset.top - scrollOffset.top - scrollOffset.height) < 0) {
-                                //console.log('%c' + scope.what + '\tactivated', 'color:red');
                                 activate();
                             }
                         }
@@ -101,7 +100,7 @@
                             scope.result = $sce.trustAsHtml(result);
                         }
                     }).error(function(response) {
-                        console.log('adsrv:0', response);
+
                     }).finally(function() {
                         scope.loading = 0;
                     });

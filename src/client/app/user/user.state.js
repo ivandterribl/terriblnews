@@ -87,6 +87,16 @@
                                     .catch(function() {
                                         $location.path('/user/login');
                                     });
+                            } else if (user.profile.careerweb) {
+                                var cv = user.profile.careerweb.cv;
+                                if (cv && cv.CVID) {
+                                    user.career.applications()
+                                        .finally(function() {
+                                            deferred.resolve();
+                                        });
+                                } else {
+                                    deferred.resolve();
+                                }
                             } else {
                                 deferred.resolve();
                             }
@@ -114,6 +124,41 @@
                                 params: {
                                     token: $stateParams.token
                                 }
+                            }).then(function(response) {
+                                $auth.setToken(response.data.access_token);
+
+                                toastr.success('Thank you, your account is now active');
+
+                                $state.go('app.user.profile');
+                            }).catch(function(response) {
+                                var data = response.data || {},
+                                    error = data.error || {};
+
+                                toastr.error(error.error_description, response.status);
+
+                                $state.go('app.user.login');
+                            });
+                            return deferred.promise;
+                        }
+                    ]
+                }
+            })
+            .state('app.user.authorize', {
+                url: '/authorize?code',
+                resolve: {
+                    activation: ['$q', '$state', '$stateParams', '$http', '$auth', 'toastr',
+                        function($q, $state, $stateParams, $http, $auth, toastr) {
+                            var deferred = $q.defer(),
+                                data = {
+                                    client_id: 'itweb/app',
+                                    client_secret: 'EpkSFB@2Nz9L',
+                                    grant_type: 'authorization_code',
+                                    redirect_uri: 'http://www.itweb.co.za/mobilesite/user/authorize',
+                                    code: $stateParams.code
+                                };
+
+                            $http.post('https://secure.itweb.co.za/api/accounts/authorize', data, {
+                                withCredentials: true
                             }).then(function(response) {
                                 $auth.setToken(response.data.access_token);
 

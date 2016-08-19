@@ -53,7 +53,7 @@
                             }
                         });
                     });
-                    articles.set(vm.leads);
+                    articles.set([vm.leads[0]]);
                     vm.loading = 0;
                 })
                 .finally(loadItems);
@@ -73,7 +73,7 @@
         function loadItems() {
             api('tag=frontpage')
                 .then(parse)
-                .catch(function(response) {
+                .catch(function() {
                     vm.items = [];
                     vm.complete = 1;
                 })

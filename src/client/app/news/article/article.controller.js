@@ -262,7 +262,9 @@
                     var parts = param.split('='),
                         k = parts[0];
 
-                    result[k] = parts[1].trim ? parts[1].trim() : parts[1];
+                    if (parts[1]) {
+                        result[k] = parts[1].trim ? parts[1].trim() : parts[1];
+                    }
                 });
             }
             return result;
@@ -314,8 +316,15 @@
             api2('jobs/search?q=' + encodeURIComponent(vm.section.title) + '&limit=3&fmt=short')
                 .then(function(response) {
                     vm.jobs = response;
+                    //if (response.length) {
+                    //    vm.jobs = response;
+                    //} else if (vm.topics.length) {
+                    //    api2('jobs/search?q=' + encodeURIComponent(vm.topics[0]) + '&limit=3&fmt=short')
+                    //        .then(function(response) {
+                    //            vm.jobs = response;
+                    //        });
+                    //}
                 });
-
         }
     }
 })();

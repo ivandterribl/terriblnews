@@ -26,7 +26,7 @@
 
             var resolved = 0;
             angular.forEach(window.prefetched || [], function(cache) {
-                if (cache.response.length && url.indexOf(cache.url) !== -1) {
+                if (cache.response.length && cache.url.indexOf(url) !== -1) {
                     def.resolve(cache.response);
                     cache.response = [];
                     resolved = 1;
@@ -37,7 +37,8 @@
                 $http({
                     method: 'GET',
                     //url: config.url + url,
-                    url: 'http://www.itweb.co.za/mobilesite/feed/ivan/?' + url,
+                    //url: 'http://www.itweb.co.za/mobilesite/feed/ivan/?' + url,
+                    url: 'https://secure.itweb.co.za/api/news/?' + url,
                     timeout: opts.timeout || config.timeout
                 }).success(function(response) {
                     //console.log('%c' + url, 'background-color: yellow');

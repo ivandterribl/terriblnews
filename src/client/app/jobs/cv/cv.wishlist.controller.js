@@ -86,7 +86,6 @@
             api2('jobs/lu/currency')
                 .then(function(response) {
                     vm.lu.currencyList = response;
-                    console.log(response);
                 });
         }
 
