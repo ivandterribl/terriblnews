@@ -1,0 +1,45 @@
+<ion-view hide-back-button="true">
+    <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+        </button>
+    </ion-nav-buttons>
+	<ion-nav-title>
+        {{ vm.title }}
+	</ion-nav-title>
+
+	<ion-content lazy-scroll>
+        <ion-refresher
+            on-refresh="vm.refresh()">
+        </ion-refresher>
+
+    	<ion-list ng-show="vm.items.length">
+            <div ng-repeat="(i, item) in vm.items">
+                <ion-item class="item-divider item-block" ng-if="i % 24 === 3">
+                    <div adsrv what="tophome-mobi"></div>
+                </ion-item>
+
+                <ion-item class="item-divider item-block" ng-if="i % 24 === 9">
+                    <div adsrv what="dbl1home-mobi" ></div>
+                </ion-item>
+
+                <ion-item class="item-divider item-block" ng-if="i % 24 === 15">
+                    <div adsrv what="dbl2home-mobi"></div>
+                </ion-item>
+
+                <ion-item class="item-divider item-block" ng-if="i % 24 === 21">
+                    <div adsrv what="rec1home-mobi"></div>
+                </ion-item>
+
+                <ion-item ng-include="'app/news/news.item.html'">
+                </ion-item>
+            </div>
+        </ion-list>
+
+        <ion-infinite-scroll
+            immediate-check="false"
+            ng-if="!vm.complete"
+            on-infinite="vm.next()"
+            distance="1%">
+        </ion-infinite-scroll>
+    </ion-content>
+</ion-view>

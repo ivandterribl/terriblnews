@@ -1,23 +1,21 @@
 <ion-view cache-view="false">
     <ion-nav-title>
-	    <a ui-sref="app.section({ id: vm.section.catid })" ng-show="vm.section"
-	    ga-track-event="['article', 'section', 'header']">
-			{{ vm.section.title }}
+	    <a ui-sref="app.category({ id: vm.catId })">
+			{{ vm.title }}
 			<i class="icon ion-chevron-right"></i>
 		</a>
     </ion-nav-title>
 
     <ion-nav-buttons side="secondary">
-    	<button class="button button-icon ion-chatbubble" ng-click="vm.showDisqus()" ng-show="vm.disqus.ready"></button>
-    	<button md-menu-origin class="button button-icon ion-android-share-alt" ng-click="vm.popover.show($event)">
+    	<button class="button button-icon ion-android-share-alt" ng-click="vm.popover.show($event)">
 	  	</button>
     </ion-nav-buttons>
 
 
-	<ion-content on-swipe-right="vm.prev(1)" on-swipe-left="vm.next(1)" overflow-scroll="true"
+	<ion-content lazy-scroll on-swipe-right="vm.prev(1)" on-swipe-left="vm.next(1)" overflow-scroll="true"
 	>
 		<section ng-show="!vm.loading">
-    		<div class="item item-divider item-block" ng-if="vm.section && !vm.isPR">
+    		<div class="item item-divider item-block">
             	<div adsrv what="top{{ ::vm.section.normalized }}-mobi" class="top"></div>
             </div>
 
@@ -25,47 +23,17 @@
 
 	    		<h1 itemprop="headline">{{::vm.article.title}}</h1>
 
-	    		<h4 ng-if="vm.article.summary" ng-bind-html="::vm.article.summary"></h4>
-				<div ng-if="vm.article.storytype !== 'P' && vm.article.authorImg"
-					style="border-width: 0; position: relative; padding: 0 0 0 48px">
-					<img ng-src="{{ vm.article.authorImg }}" style="position: absolute; top: 0; left: 0; max-width: 40px; max-height: 40px; border-radius: 50%" />
-					<h5 style="line-height: 20px">
-						<span ng-if="vm.article.created_by_alias" itemprop="author">
-							{{ ::vm.article.created_by_alias }}
-						</span><br />
-						<span ng-if="vm.article.issueplace">{{ ::vm.article.issueplace }}, </span>
-						<time datetime="{{ ::vm.article.created }}">{{ ::vm.article.created | date:'d MMM yyyy'}}</time>
-					</h5>
-				</div>
-				<h5 ng-if="vm.article.storytype !== 'P' && !vm.article.authorImg" class="stable">
+	    		<h5 ng-if="vm.article.storytype !== 'P' && !vm.article.authorImg" class="stable">
 					<span ng-if="vm.article.created_by_alias">
 						By&nbsp;<span itemprop="author">{{ ::vm.article.created_by_alias }}</span>
 					</span><br />
 					<span ng-if="vm.article.issueplace">{{ ::vm.article.issueplace }},&nbsp;</span>
 					<time datetime="{{ ::vm.article.created }}">{{ ::vm.article.created | date:'d MMM yyyy'}}</time>
 				</h5>
-				<h5 ng-if="vm.article.storytype === 'P'" class="stable">
-					<span ng-if="vm.article.issuedby_alias">
-						<span itemprop="author">Press release issued by {{ ::vm.article.issuedby_alias }}</span>
-					</span><br />
-					<span ng-if="vm.article.issueplace">{{ ::vm.article.issueplace }}, </span>
-					<time datetime="{{ ::vm.article.created }}">{{ ::vm.article.created | date:'d MMM yyyy'}}</time>
-				</h5>
-				<a ng-if="vm.article.storytype === 'P' && vm.article.copyPath" class="row"
-					ng-href="http://www.itweb.co.za/office/{{ vm.article.copyPath }}"
-					style="border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; margin-bottom: 10px;padding: 5px 0">
-
-					<h5 class="col col-center" style="padding: 5px 0 0; text-transform: uppercase; margin: 0;">
-						<span style="color: #3A72AB; font-size:12px"> Visit our press office</span>
-					</h5>
-					<img ng-src="http://www.itweb.co.za/logos/{{ vm.article.logoPath }}" align="right" />
-				</a>
 
 				<article bind-html-compile="::vm.article.html" itemprop="articleBody"></article>
 
-				<p ng-if="vm.article.created_by_alias == 'Reuters'" style="font-size:11px">Copyright 2016 Reuters Limited. All rights reserved. 
-		Republication and redistribution of Reuters content is expressly prohibited without the prior written consent of Reuters. 
-		Reuters shall not be liable for any errors or delays in the content, or for any actions taken in reliance thereon.</p>
+			
 				
 				<meta itemprop="mainEntityOfPage" content="{{ vm.canonical }}" />
 				<span itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
@@ -79,51 +47,42 @@
 				<meta itemprop="datePublished" content="{{ ::vm.article.created }}"/>
 				<meta itemprop="dateModified" content="{{ ::vm.article.modified }}"/>
 				<meta itemprop="keywords" content="{{ ::vm.article.metakey }}"/>
+
+				<p>
+					<a ng-if="vm.article.category" class="itw-bubble assertive"
+			           ui-sref="app.category({ id: vm.article.category.id })"
+			           style="display: inline-block; font-size: 14px; margin-bottom: 4px; padding: 4px 8px;">
+			             {{ vm.article.category.title }}
+			        </a>
+			        <a ng-if="vm.article.location" class="itw-bubble assertive"
+			           ui-sref="app.location({ id: vm.article.location.alias })"
+			           style="display: inline-block; font-size: 14px; margin-bottom: 4px; padding: 4px 8px;">
+			             {{ vm.article.location.title }}
+			        </a>
+			        <a ng-if="vm.article.company" class="itw-bubble assertive"
+			           ui-sref="app.category({ id: vm.article.company.id })"
+			           style="display: inline-block; font-size: 14px; margin-bottom: 4px; padding: 4px 8px;">
+			             {{ vm.article.company.title }}
+			        </a>
+		        </p>				
 			</main>
-			<div style="width: 100%; height: 1px; clear: both"></div>
-			<div class="boilerplate" ng-if="vm.article.storytype === 'P' && vm.article.editornote">
-				<div class="card padding" ng-bind-html="::vm.article.editornote">
-				</div>
-
-				<div class="card padding" ng-if="vm.article.storytype === 'P' && (vm.article.contactname || vm.article.prcontactname)">
-					<p><strong>Editorial contacts</strong></p>
-					<p ng-if="vm.article.contactname">
-						{{ ::vm.article.meta.Company }}<br />
-						{{ ::vm.article.meta.CompanyContactName }}<br />
-						{{ ::vm.article.meta.CompanyContactPhone }}<br />
-						{{ ::vm.article.meta.CompanyContactEmail }}
-					</p>
-					<p ng-if="vm.article.prcontactname">
-						{{ ::vm.article.meta.IssuedBy }}<br />
-						{{ ::vm.article.meta.PRContactName }}<br />
-						{{ ::vm.article.meta.PRContactPhone }}<br />
-						{{ ::vm.article.meta.PRContactEmail }}
-					</p>
-				</div>
-			</div>
-
+		
+			<div class="item item-divider item-block" ng-if="vm.section && !vm.isPR">
+            	<div adsrv what="recnoop-mobi" class="top"></div>
+            </div>
 			
-
-			<ion-list ng-show="vm.related.length || vm.recommended.length" class="h3-list">
+			<ion-list ng-show="vm.article.urls.length" class="h3-list">
 				<ion-item class="item-divider">
 					<h3 class="itw-section stable">See also</h3>
 				</ion-item>
 				<ion-item class="item-icon-left item-icon-right"
-					ng-repeat="(i, related) in vm.related" ui-sref="app.article-raw({ id: related.id })"
-					ga-track-event="['article', 'article', 'related', i]">
+					ng-repeat="(i, related) in vm.article.urls" ui-sref="app.article({ id: related.id })">
 					<i class="icon icon-mini ion-document"></i>
 					<h3>{{ ::related.title }}</h3>
 					<i class="icon icon-mini ion-chevron-right"></i>
 				</ion-item>
 				<ion-item class="item-icon-left item-icon-right"
-					ng-repeat="(i, recommended) in vm.recommended" ui-sref="app.article-raw({ id: recommended.id })"
-					ga-track-event="['article', 'article', 'recommended', i]">
-					<i class="icon icon-mini ion-star"></i>
-					<h3>{{ ::recommended.title }}</h3>
-					<i class="icon icon-mini ion-chevron-right"></i>
-				</ion-item>
-				<ion-item class="item-icon-left item-icon-right"
-					ng-repeat="(i, topic) in vm.topics track by $index" ui-sref="app.topic({ q: topic })" ng-if="vm.related.length"
+					ng-repeat="(i, topic) in vm.topics track by $index" ui-sref="app.topic({ q: topic })"
 					ga-track-event="['article', 'tag', 'related', i]">
 					<i class="icon icon-mini ion-bookmark"></i>
 					<h3>{{ ::topic }}</h3>
@@ -131,74 +90,12 @@
 				</ion-item>
 			</ion-list>
 
-			<div class="item item-divider item-block" ng-if="vm.section && !vm.isPR">
-            	<div adsrv what="rec{{ ::vm.section.normalized }}-mobi" class="top"></div>
-            </div>
-
-			<ion-list ng-show="vm.appearance.length" class="h3-list">
-				<ion-item class="item-divider">
-					<h3 class="itw-section stable">Related sectors</h3>
-				</ion-item>
-				<ion-item class="item-icon-right"
-					ng-repeat="(i, section) in vm.appearance" ui-sref="app.section({ id: section.catid })"
-					ga-track-event="['article', 'section', 'related', i]">
-
-					<div class="row">
-						<h3 class="col col-center">
-							{{ ::section.title }}
-						</h3>
-						<div class="col col-25 col-center text-right" ng-if="section.attribs.img">
-							<img ng-src="{{ section.attribs.img }}" style="max-height: 24px" align="right" />
-						</div>
-					</div>
-					<i class="icon icon-mini ion-chevron-right"></i>
-				</ion-item>
-			</ion-list>
-
-			<ion-list ng-show="vm.jobs.length" class="h3-list">
-				<ion-item class="item-divider">
-					<h3 class="itw-section stable">Related jobs</h3>
-				</ion-item>
-				<ion-item class="item-icon-right"
-					ng-repeat="(i, job) in vm.jobs"  ui-sref="app.jobs.job({ id: job.JobID })"
-					ga-track-event="['article', 'job', 'related', i]">
-
-						<h3>{{ ::job.JobTitle }}</h3>
-						<p>{{ ::job.CompanyDesc }}</p>
-					
-					<i class="icon icon-mini ion-chevron-right"></i>
-				</ion-item>
-			</ion-list>
-
-			<div ng-if="vm.pagination.prev || vm.pagination.next" class="row">
-				<a class="button button-clear button-assertive icon-left ion-chevron-left"
-					ng-click="vm.prev()"
-					ga-track-event="['article', 'article', 'prev']"
-					ng-if="vm.pagination.prev">
-					Prev
-				</a>
-				<span class="col text-center"><span style="color: #666;font-size: 12px;line-height: 36px;">Swipe across articles</span></span>
-				<a class="button button-clear button-assertive icon-right ion-chevron-right"
-					ng-click="vm.next()"
-					ga-track-event="['article', 'article', 'next']"
-					ng-if="vm.pagination.next">
-					Next
-				</a>
-			</div>
-
 			<ion-list>
 				<ion-item class="item-divider">
 					&nbsp;
 				</ion-item>
 			</ion-list>
 
-			<div class="padding" id="disqusIt">
-				<disqus disqus-shortname="itweb-za"
-			         disqus-identifier="{{ vm.disqus.id }}"
-			         disqus-url="{{ vm.disqus.url }}"
-			         ready-to-bind="{{ vm.disqus.ready }}">
-				</disqus>
-			</div>
         </section>
 	</ion-content>
 </ion-view>

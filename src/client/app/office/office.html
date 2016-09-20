@@ -1,21 +1,25 @@
 <ion-view>
     <ion-nav-title>Companies</ion-nav-title>
-	<ion-content ng-class="{ 'has-subheader': 1 }" on-swipe-right="vm.prev()" on-swipe-left="vm.next()">
-    	<section ng-show="!vm.loading">
-            <ion-list ng-show="vm.items.length">
-                <div ng-repeat="(group, items) in vm.groups" class="post">
-                    <ion-item class="item-divider" id="{{ group }}">
-                    {{ group }}
+	<ion-content>
+    
+    	<section>
+            <ion-list>
+                <div class="post">
+                    <ion-item class="item-divider">
+                    Company zones
                     </ion-item>
-                    <ion-item class="item-light item-icon-right" ng-repeat="(i, item) in items" ng-href="{{ item.url }}"
+                    <ion-item class="item-light item-icon-right" ng-repeat="(i, item) in vm.items.cz" ng-href="{{ item.link }}"
                     ga-track-event="['companies', 'office', vm.eventLabel(), i + 1]">
-                        <div class="row">
-                            <div class="col col-33 col-center text-center">
-                                <img ng-src="{{ item.image }}" ng-if="item.image" style="max-height: 48px" />
-                            </div>
-                            <div class="col col-center col-offset-10">
-                                <h3 class="itw-section stable">{{ item.title }}</h3>
-                            </div>
+                        <h3 class="itw-section stable">{{ item.title }}</h3>
+                        <i class="icon icon-midi ion-chevron-right"></i> 
+                        </div>
+                    </ion-item>
+                    <ion-item class="item-divider">
+                    Virtual press offices
+                    </ion-item>
+                    <ion-item class="item-light item-icon-right" ng-repeat="(i, item) in vm.items.vpo" ng-href="{{ item.link }}"
+                    ga-track-event="['companies', 'office', vm.eventLabel(), i + 1]">
+                        <h3 class="itw-section stable">{{ item.title }}</h3>
                         <i class="icon icon-midi ion-chevron-right"></i> 
                         </div>
                     </ion-item>

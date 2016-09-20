@@ -52,7 +52,7 @@
                 $element.css('max-height', (height + 20) + 'px');
 
                 scope.$on('$destroy', function() {
-                    $scrollElement.off('scroll');
+                    //$scrollElement.off('scroll');
                 });
 
                 var scrollOffset = $ionicPosition.offset($scrollElement),
@@ -61,19 +61,19 @@
 
                         if (!activated) {
                             offset = $ionicPosition.offset($element);
-                            if ((offset.top - scrollOffset.top - scrollOffset.height) < 0) {
+                            if ((offset.top - scrollOffset.top - scrollOffset.height) < 120) {
                                 activate();
                             }
                         }
                     },
                     throttledCalculateScrollLimits = ionic.Utils.throttle(
                         calculateScrollLimits,
-                        100, {
+                        50, {
                             trailing: false
                         }
                     );
 
-                $scrollElement.on('scroll', throttledCalculateScrollLimits);
+                var deregistration = scope.$on('lazyScrollEvent', throttledCalculateScrollLimits);
 
                 $timeout(calculateScrollLimits, 250);
 
@@ -103,6 +103,7 @@
 
                     }).finally(function() {
                         scope.loading = 0;
+                        deregistration();
                     });
                 }
             }

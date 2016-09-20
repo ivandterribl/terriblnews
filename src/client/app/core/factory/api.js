@@ -5,9 +5,9 @@
         .module('app.core')
         .factory('api', API);
 
-    API.$inject = ['$http', 'config', '_', '$q'];
+    API.$inject = ['$http', '_', '$q'];
 
-    function API($http, config, _, $q) {
+    function API($http, _, $q) {
         var queue = [];
 
         return function(url, options) {
@@ -36,26 +36,14 @@
             if (!resolved) {
                 $http({
                     method: 'GET',
-                    //url: config.url + url,
-                    //url: 'http://www.itweb.co.za/mobilesite/feed/ivan/?' + url,
-                    url: 'https://secure.itweb.co.za/api/news/?' + url,
-                    timeout: opts.timeout || config.timeout
+                    //url: 'http://www.itwebafrica.com/api' + url,
+                    url: 'http://localhost:8888/api' + url,
+                    timeout: 20000
                 }).success(function(response) {
-                    //console.log('%c' + url, 'background-color: yellow');
-                    //console.log('%c' + JSON.stringify(response), 'background-color: #aFa');
-                    if (response.length || (response.items && response.items.length)) {
-                        def.resolve(response);
-                    } else {
-                        def.reject(response);
-                    }
+                    def.resolve(response);
                 }).error(function(response) {
                     def.reject(response);
-                }).finally(function() {
-                    queue = _.reject(queue, function(d) {
-                        return d === def;
-                    });
                 });
-                queue.push(def);
             }
 
             return def.promise;

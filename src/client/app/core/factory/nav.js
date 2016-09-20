@@ -9,8 +9,7 @@
 
     function Factory(_, $state) {
         return {
-            get: map,
-            export: routes
+            get: map
         };
 
         function map() {
@@ -35,237 +34,331 @@
                     name: 'app.frontpage'
                 }
             }, {
-                title: 'News',
+                title: 'By category',
                 icon: 'ion-document',
                 items: [{
-                    title: 'Top stories',
-                    id: 'top-news',
+                    title: 'Mobile',
                     state: {
-                        name: 'app.news.category',
+                        name: 'app.category',
                         params: {
-                            id: 'top-news'
+                            id: 'NxnrQedBWaYL'
                         }
                     }
                 }, {
-                    title: 'Industry news',
-                    id: 'industry-news',
+                    title: 'Security',
                     state: {
-                        name: 'app.news.category',
+                        name: 'app.category',
                         params: {
-                            id: 'industry-news'
-                        }
-                    }
-                }, {
-                    title: 'Company news',
-                    id: 'company-news',
-                    state: {
-                        name: 'app.news.category',
-                        params: {
-                            id: 'company-news'
-                        }
-                    }
-                }, {
-                    title: 'Africa',
-                    id: 'africa',
-                    state: {
-                        name: 'app.news.category',
-                        params: {
-                            id: 'africa'
-                        }
-                    }
-                }, {
-                    title: 'World',
-                    id: 'world',
-                    state: {
-                        name: 'app.news.category',
-                        params: {
-                            id: 'world'
-                        }
-                    }
-                }]
-            }, {
-                title: 'Opinion',
-                icon: 'ion-chatbubble',
-                items: [{
-                    title: 'Columnists',
-                    id: 'columnists',
-                    state: {
-                        name: 'app.opinion.category',
-                        params: {
-                            id: 'columnists'
-                        }
-                    }
-                }, {
-                    title: 'Tech forum',
-                    id: 'tech-forum',
-                    state: {
-                        name: 'app.opinion.category',
-                        params: {
-                            id: 'tech-forum'
-                        }
-                    }
-                }, {
-                    title: 'Industry insight',
-                    id: 'industry-insight',
-                    state: {
-                        name: 'app.opinion.category',
-                        params: {
-                            id: 'industry-insight'
-                        }
-                    }
-                }]
-            }, {
-                title: 'Features',
-                icon: 'ion-bookmark',
-                id: 'features',
-                sref: 'app.section({ id: 116 })',
-                state: {
-                    name: 'app.section',
-                    params: {
-                        id: 116
-                    }
-                }
-            }, {
-                title: 'CIO zone',
-                icon: 'ion-trophy',
-                id: 'cio-zone',
-                sref: 'app.section({ id: 869 })',
-                state: {
-                    name: 'app.section',
-                    params: {
-                        id: 869
-                    }
-                }
-            }, {
-                title: 'Reviews',
-                icon: 'ion-iphone',
-                id: 'reviews',
-                sref: 'app.section({ id: 220 })',
-                state: {
-                    name: 'app.section',
-                    params: {
-                        id: 220
-                    }
-                }
-            }, {
-                title: 'Companies',
-                icon: 'ion-cube',
-                items: [{
-                        title: 'Virtual press offices',
-                        id: 'virtual-press-office',
-                        state: {
-                            name: 'app.office.vpo'
-                        }
-                    }, {
-                        title: 'Company zones',
-                        id: 'company-zones',
-                        state: {
-                            name: 'app.office.zones'
-                        }
-                    }
-                    /*, {
-                                        title: 'Microsites',
-                                        id: 'microsites',
-                                        state: {
-                                            name: 'app.office.microsites'
-                                        }
-                                    }*/
-                ]
-            }, {
-                title: 'Jobs',
-                icon: 'ion-briefcase',
-                items: [{
-                    title: 'IT',
-                    id: 'it,sect_id-1',
-                    state: {
-                        name: 'app.jobs.tabs.feed',
-                        params: {
-                            id: 'it,sect_id-1'
+                            id: 'PNeLQOVyWzmJ'
                         }
                     }
                 }, {
                     title: 'Financial',
-                    id: 'financial,sect_id-2',
                     state: {
-                        name: 'app.jobs.tabs.feed',
+                        name: 'app.category',
                         params: {
-                            id: 'financial,sect_id-2'
+                            id: '035X7ALbkRM9'
                         }
                     }
                 }, {
-                    title: 'Engineering',
-                    id: 'engineering,sect_id-3',
+                    title: 'ICT and Governance',
                     state: {
-                        name: 'app.jobs.tabs.feed',
+                        name: 'app.category',
                         params: {
-                            id: 'engineering,sect_id-3'
+                            id: 'nRpAWdb3kJ6d'
                         }
                     }
                 }, {
-                    title: 'Sales',
-                    id: 'sales,sect_id-4',
+                    title: 'Networks',
                     state: {
-                        name: 'app.jobs.tabs.feed',
+                        name: 'app.category',
                         params: {
-                            id: 'sales,sect_id-4'
+                            id: 'pE327p0j7VDZ'
+                        }
+                    }
+                }, {
+                    title: 'Cloud',
+                    state: {
+                        name: 'app.category',
+                        params: {
+                            id: 'l5MoWE20Qvmq'
+                        }
+                    }
+                }, {
+                    title: 'Enterprise Solutions',
+                    state: {
+                        name: 'app.category',
+                        params: {
+                            id: 'NxnrQeO97aYL'
+                        }
+                    }
+                }, {
+                    title: 'Business Intelligence',
+                    state: {
+                        name: 'app.category',
+                        params: {
+                            id: 'drY17Vny7X8o'
+                        }
+                    }
+                }, {
+                    title: 'Business Continuity',
+                    state: {
+                        name: 'app.category',
+                        params: {
+                            id: '035X7AXjkRM9'
+                        }
+                    }
+                }, {
+                    title: 'Channel',
+                    state: {
+                        name: 'app.category',
+                        params: {
+                            id: 'Aqxg7qA47Nwb'
+                        }
+                    }
+                }, {
+                    title: 'Unified Communications',
+                    state: {
+                        name: 'app.category',
+                        params: {
+                            id: '59l27KyBQoBm'
+                        }
+                    }
+                }, {
+                    title: 'e-Commerce',
+                    state: {
+                        name: 'app.category',
+                        params: {
+                            id: 'pA69k9eqknd4'
                         }
                     }
                 }]
             }, {
-                title: 'Events',
-                icon: 'ion-person-stalker',
-                state: {
-                    name: 'app.events'
-                }
-            }, {
-                title: 'About',
-                icon: 'ion-information',
+                title: 'By location',
+                icon: 'ion-location',
                 items: [{
-                    title: 'About us',
-                    state: {
-                        name: 'app.about.us'
+                    'title': 'Africa',
+                    'state': {
+                        'name': 'app.location',
+                        'params': {
+                            'id': 'africa'
+                        }
                     }
                 }, {
-                    title: 'Contact us',
-                    state: {
-                        name: 'app.about.contact'
+                    'title': 'Algeria',
+                    'state': {
+                        'name': 'app.location',
+                        'params': {
+                            'id': 'algeria'
+                        }
                     }
                 }, {
-                    title: 'Privacy policy',
-                    state: {
-                        name: 'app.about.privacy'
+                    'id': '152',
+                    'title': 'Angola',
+                    'state': {
+                        'name': 'app.location',
+                        'params': {
+                            'id': 'angola'
+                        }
                     }
                 }, {
-                    title: 'Competition policy',
-                    state: {
-                        name: 'app.about.competition'
+                    'id': '795',
+                    'title': 'Burkina Faso',
+                    'state': {
+                        'name': 'app.location',
+                        'params': {
+                            'id': 'burkina-faso'
+                        }
                     }
                 }, {
-                    title: 'BEE certificate',
-                    state: {
-                        name: 'app.about.bee'
+                    'id': '329',
+                    'title': 'Congo (DRC)',
+                    'state': {
+                        'name': 'app.location',
+                        'params': {
+                            'id': 'congo-drc'
+                        }
+                    }
+                }, {
+                    'id': '156',
+                    'title': 'Egypt',
+                    'state': {
+                        'name': 'app.location',
+                        'params': {
+                            'id': 'egypt'
+                        }
+                    }
+                }, {
+                    'id': '338',
+                    'title': 'Ghana',
+                    'state': {
+                        'name': 'app.location',
+                        'params': {
+                            'id': 'ghana'
+                        }
+                    }
+                }, {
+                    'id': '788',
+                    'title': 'Ivory Coast',
+                    'state': {
+                        'name': 'app.location',
+                        'params': {
+                            'id': 'ivory-coast'
+                        }
+                    }
+                }, {
+                    'id': '153',
+                    'title': 'Kenya',
+                    'state': {
+                        'name': 'app.location',
+                        'params': {
+                            'id': 'kenya'
+                        }
+                    }
+                }, {
+                    'id': '781',
+                    'title': 'Liberia',
+                    'state': {
+                        'name': 'app.location',
+                        'params': {
+                            'id': 'liberia'
+                        }
+                    }
+                }, {
+                    'id': '328',
+                    'title': 'Malawi',
+                    'state': {
+                        'name': 'app.location',
+                        'params': {
+                            'id': 'malawi'
+                        }
+                    }
+                }, {
+                    'id': '330',
+                    'title': 'Morocco',
+                    'state': {
+                        'name': 'app.location',
+                        'params': {
+                            'id': 'morocco'
+                        }
+                    }
+                }, {
+                    'id': '326',
+                    'title': 'Namibia',
+                    'state': {
+                        'name': 'app.location',
+                        'params': {
+                            'id': 'namibia'
+                        }
+                    }
+                }, {
+                    'id': '324',
+                    'title': 'Nigeria',
+                    'state': {
+                        'name': 'app.location',
+                        'params': {
+                            'id': 'nigeria'
+                        }
+                    }
+                }, {
+                    'id': '337',
+                    'title': 'Rwanda',
+                    'state': {
+                        'name': 'app.location',
+                        'params': {
+                            'id': 'rwanda'
+                        }
+                    }
+                }, {
+                    'id': '531',
+                    'title': 'Senegal',
+                    'state': {
+                        'name': 'app.location',
+                        'params': {
+                            'id': 'senegal'
+                        }
+                    }
+                }, {
+                    'id': '325',
+                    'title': 'South Africa',
+                    'state': {
+                        'name': 'app.location',
+                        'params': {
+                            'id': 'south-africa'
+                        }
+                    }
+                }, {
+                    'id': '789',
+                    'title': 'Sudan',
+                    'state': {
+                        'name': 'app.location',
+                        'params': {
+                            'id': 'sudan'
+                        }
+                    }
+                }, {
+                    'id': '468',
+                    'title': 'Swaziland',
+                    'state': {
+                        'name': 'app.location',
+                        'params': {
+                            'id': 'swaziland'
+                        }
+                    }
+                }, {
+                    'id': '327',
+                    'title': 'Tanzania',
+                    'state': {
+                        'name': 'app.location',
+                        'params': {
+                            'id': 'tanzania'
+                        }
+                    }
+                }, {
+                    'id': '527',
+                    'title': 'Tunisia',
+                    'state': {
+                        'name': 'app.location',
+                        'params': {
+                            'id': 'tunisia'
+                        }
+                    }
+                }, {
+                    'id': '347',
+                    'title': 'Uganda',
+                    'state': {
+                        'name': 'app.location',
+                        'params': {
+                            'id': 'uganda'
+                        }
+                    }
+                }, {
+                    'id': '155',
+                    'title': 'Zambia',
+                    'state': {
+                        'name': 'app.location',
+                        'params': {
+                            'id': 'zambia'
+                        }
+                    }
+                }, {
+                    'id': '154',
+                    'title': 'Zimbabwe',
+                    'state': {
+                        'name': 'app.location',
+                        'params': {
+                            'id': 'zimbabwe'
+                        }
                     }
                 }]
+            }, {
+                title: 'Companies',
+                icon: 'ion-cube',
+                state: {
+                    name: 'app.office'
+                }
             }];
-        }
 
-        function routes() {
-            return [];
-            //var result = _.map(this.get(), transform);
-            //return result;
-            //
-            //function transform(row) {
-            //    var a = row.sref && row.sref.indexOf('(') > -1 ? row.sref.replace(')', '').split('(') : null;
-            //
-            //    return {
-            //        title: row.title,
-            //        icon: row.icon,
-            //        url: a && a[1] ? $state.href(a[0], {
-            //            id: row.id
-            //        }) : $state.href(row.sref),
-            //        items: _.map(row.items || [], transform)
-            //    };
-            //}
         }
     }
 })();

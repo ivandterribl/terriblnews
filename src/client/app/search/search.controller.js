@@ -10,8 +10,6 @@
     function Controller(response, $state, searchBar, searchBarConfig, $ionicConfig, $ionicHistory) {
         var vm = this;
 
-        searchBar.show();
-
         activate();
 
         function activate() {

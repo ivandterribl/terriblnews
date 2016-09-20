@@ -1,29 +1,30 @@
 <div class="item-content">
-    <a ui-sref="app.article({ id: item.itemid, catid: item.section.id })"
-     ga-track-event="['section', 'article', vm.analyticsEvent, i + 1]" ga-track-event-if="vm.analyticsEvent">
-        <div class="news-img" ng-if="item.introtextImg">
-        	<img image-lazy-src="{{ item.introtextImg }}"  />
+    <a ui-sref="app.article({ id: item.id })">
+        <div class="news-img" ng-if="item.images.length">
+            <img image-lazy-src="{{ item.images[0].url }}" width="100"  />
         </div>
-        <h3 class="itw-section stable" ng-if="item.topic">
-    		{{ item.topic }}
-        </h3>
+
         <h2>{{ item.title }}</h2>
     </a>
 
     <p>
-    	<itw-timestamp timestamp="'{{ item.created }}'"></itw-timestamp>
-    	
-    	<a ng-if="item.copyPath" class="assertive" ng-href="http://www.itweb.co.za/office/{{ item.copyPath }}"
-        ga-track-event="['section', 'office', vm.analyticsEvent, i + 1]" ga-track-event-if="vm.analyticsEvent">
-        	<span class="stable">|</span> {{ item.company }}
+        <itw-timestamp timestamp="'{{ item.created }}'" class="" style="font-size: 12px; display: inline-block"></itw-timestamp>
+        <span style="display: inline-block">
+        <a ng-if="item.category" class="itw-bubble assertive"
+           ui-sref="app.category({ id: item.category.id })"
+           style="display: inline-block;  font-size: 12px; margin-bottom: 4px; padding: 2px 4px;">
+             {{ item.category.title }}
         </a>
-        <a ng-if="!item.copyPath && item.section.id && !item.hideSection" class="assertive" 
-        ui-sref="app.section({ id: item.section.id })"
-        ga-track-event="['section', 'section', vm.analyticsEvent, i + 1]" ga-track-event-if="vm.analyticsEvent">
-        	<span class="stable">|</span> {{ item.section.title }}
+        <a ng-if="item.location" class="itw-bubble assertive"
+           ui-sref="app.location({ id: item.location.alias })"
+           style="display: inline-block;  font-size: 12px; margin-bottom: 4px; padding: 2px 4px;">
+             {{ item.location.title }}
         </a>
-        <span class="assertive" ng-if="!item.copyPath && item.topic && item.created_by_alias">
-            <span class="stable">|</span> {{ item.created_by_alias }}
+        <a ng-if="item.company" class="itw-bubble assertive"
+           ui-sref="app.category({ id: item.company.id })"
+           style="display: inline-block;  font-size: 12px; margin-bottom: 4px; padding: 2px 4px;">
+             {{ item.company.title }}
+        </a>
         </span>
     </p>
 </div>

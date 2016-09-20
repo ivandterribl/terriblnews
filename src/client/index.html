@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="app" ng-controller="AppController as vm">
+<html ng-app="app" ng-controller="AppController as vm" manifest="/m.appcache">
 <head>
     <style>
         /* This helps the ng-show/ng-hide animations start at the right place. */
@@ -18,16 +18,10 @@
     <meta name="news_keywords" content="" />
     <meta name="canonical" content="" />
 
-    <script type="application/ld+json" id="structured-data"></script>
-
     <base href="/">
 
     <!-- build:css styles/lib.css -->
     <!-- boower:css -->
-    <link rel="stylesheet" href="/src/client/app/ui/autocomplete/autocomplete/autocomplete.css">
-    <link rel="stylesheet" href="/src/client/app/ui/autocomplete/core/core.css">
-    <link rel="stylesheet" href="/src/client/app/ui/autocomplete/icon/icon.css">
-    <link rel="stylesheet" href="/src/client/app/ui/autocomplete/virtualRepeat/virtualRepeat.css">
     <!-- endboower -->
     <!-- endbuild -->
 
@@ -49,41 +43,26 @@
         document.getElementsByClassName('backdrop')[0].className += ' visible backdrop-loading active';
     })();
 </script>
+<script src="http://code.ionicframework.com/1.3.1/js/ionic.bundle.min.js"></script>
 <!-- build:js js/lib.js -->
-<!-- bower:js -->
-<script src="/bower_components/angular/angular.js"></script>
-<script src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
-<script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-<script src="/bower_components/angular-animate/angular-animate.js"></script>
-<script src="/bower_components/ionic/release/js/ionic.js"></script>
-<script src="/bower_components/ionic/release/js/ionic-angular.js"></script>
+<!-- boower:js -->
 <script src="/bower_components/angular-bind-html-compile/angular-bind-html-compile.js"></script>
 <script src="/bower_components/angular-google-analytics/dist/angular-google-analytics.min.js"></script>
-<script src="/bower_components/moment/moment.js"></script>
 <script src="/bower_components/angular-socialshare/dist/angular-socialshare.min.js"></script>
 <script src="/bower_components/underscore/underscore.js"></script>
 <script src="/bower_components/ionic-image-lazy-load/ionic-image-lazy-load.js"></script>
-<script src="/bower_components/angular-messages/angular-messages.js"></script>
-<script src="/bower_components/ng-file-upload/ng-file-upload.js"></script>
-<!-- endbower -->
+<!-- endboower -->
 <!-- endbuild -->
 
 
 <!-- build:js js/app.js -->
 <!-- inject:js -->
 <script src="/src/client/app/app.module.js"></script>
-<script src="/src/client/app/about/about.module.js"></script>
 <script src="/src/client/app/core/core.module.js"></script>
-<script src="/src/client/app/events/events.module.js"></script>
-<script src="/src/client/app/jobs/jobs.module.js"></script>
 <script src="/src/client/app/news/news.module.js"></script>
 <script src="/src/client/app/office/office.module.js"></script>
 <script src="/src/client/app/search/search.module.js"></script>
-<script src="/src/client/app/ui/tabs/tabs.module.js"></script>
 <script src="/src/client/app/ui/ui.module.js"></script>
-<script src="/src/client/app/user/user.module.js"></script>
-<script src="/src/client/app/about/about.controller.js"></script>
-<script src="/src/client/app/about/about.state.js"></script>
 <script src="/src/client/app/app.controller.js"></script>
 <script src="/src/client/app/core/core.config.js"></script>
 <script src="/src/client/app/core/core.constants.js"></script>
@@ -91,66 +70,22 @@
 <script src="/src/client/app/core/core.run.js"></script>
 <script src="/src/client/app/core/core.state.js"></script>
 <script src="/src/client/app/core/factory/api.js"></script>
-<script src="/src/client/app/core/factory/api2.js"></script>
-<script src="/src/client/app/core/factory/articles.js"></script>
-<script src="/src/client/app/core/factory/config.js"></script>
 <script src="/src/client/app/core/factory/meta.js"></script>
 <script src="/src/client/app/core/factory/nav.js"></script>
 <script src="/src/client/app/core/factory/stats.js"></script>
-<script src="/src/client/app/core/factory/ui.js"></script>
-<script src="/src/client/app/core/tabs/tabs.controller.js"></script>
-<script src="/src/client/app/events/events.controller.js"></script>
-<script src="/src/client/app/events/events.state.js"></script>
-<script src="/src/client/app/jobs/cv/cv.documents.controller.js"></script>
-<script src="/src/client/app/jobs/cv/cv.education.controller.js"></script>
-<script src="/src/client/app/jobs/cv/cv.employment.controller.js"></script>
-<script src="/src/client/app/jobs/cv/cv.js"></script>
-<script src="/src/client/app/jobs/cv/cv.main.controller.js"></script>
-<script src="/src/client/app/jobs/cv/cv.skills.controller.js"></script>
-<script src="/src/client/app/jobs/cv/cv.state.js"></script>
-<script src="/src/client/app/jobs/cv/cv.wishlist.controller.js"></script>
-<script src="/src/client/app/jobs/job-applications.js"></script>
-<script src="/src/client/app/jobs/job-search.controller.js"></script>
-<script src="/src/client/app/jobs/job.controller.js"></script>
-<script src="/src/client/app/jobs/jobs.controller.js"></script>
-<script src="/src/client/app/jobs/jobs.state.js"></script>
 <script src="/src/client/app/news/article/article.controller.js"></script>
+<script src="/src/client/app/news/articles/articles.controller.js"></script>
 <script src="/src/client/app/news/frontpage/frontpage.controller.js"></script>
-<script src="/src/client/app/news/news.controller.js"></script>
 <script src="/src/client/app/news/news.state.js"></script>
-<script src="/src/client/app/news/section/section.controller.js"></script>
 <script src="/src/client/app/office/office.controller.js"></script>
 <script src="/src/client/app/office/office.state.js"></script>
 <script src="/src/client/app/search/search.controller.js"></script>
 <script src="/src/client/app/search/search.state.js"></script>
-<script src="/src/client/app/search/searchtag.controller.js"></script>
-<script src="/src/client/app/ui/angular-toastr.tpls.js"></script>
-<script src="/src/client/app/ui/autocomplete/autocomplete/autocomplete.js"></script>
-<script src="/src/client/app/ui/autocomplete/core/core.js"></script>
-<script src="/src/client/app/ui/autocomplete/core/default-theme.js"></script>
-<script src="/src/client/app/ui/autocomplete/icon/icon.js"></script>
-<script src="/src/client/app/ui/autocomplete/showHide/showHide.js"></script>
-<script src="/src/client/app/ui/autocomplete/virtualRepeat/virtualRepeat.js"></script>
-<script src="/src/client/app/ui/disqus/disqus.directive.js"></script>
-<script src="/src/client/app/ui/imod/imod.directive.js"></script>
-<script src="/src/client/app/ui/satellizer.js"></script>
 <script src="/src/client/app/ui/searchbar/searchbar.config.js"></script>
 <script src="/src/client/app/ui/searchbar/searchbar.directive.js"></script>
 <script src="/src/client/app/ui/searchbar/searchbar.js"></script>
 <script src="/src/client/app/ui/srv/srv.directive.js"></script>
-<script src="/src/client/app/ui/tab-bar/tab-bar.directive.js"></script>
-<script src="/src/client/app/ui/tabs/tabs.dependancies.js"></script>
-<script src="/src/client/app/ui/tabs/tabs.js"></script>
 <script src="/src/client/app/ui/timestamp/timestamp.directive.js"></script>
-<script src="/src/client/app/ui/ui.config.js"></script>
-<script src="/src/client/app/user/directives/passwordMatch.js"></script>
-<script src="/src/client/app/user/directives/passwordStrength.js"></script>
-<script src="/src/client/app/user/login.controller.js"></script>
-<script src="/src/client/app/user/profile.controller.js"></script>
-<script src="/src/client/app/user/signup.controller.js"></script>
-<script src="/src/client/app/user/user.config.js"></script>
-<script src="/src/client/app/user/user.js"></script>
-<script src="/src/client/app/user/user.state.js"></script>
 <!-- endinject -->
 
 <!-- inject:templates:js -->

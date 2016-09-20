@@ -117,14 +117,10 @@
         });
 
         $rootScope.$on('$stateChangeError', function stateChangeError(event, toState, toParams, fromState, fromParams) {
-            console.log('$stateChangeError', arguments);
-            //debugger;
             $ionicLoading.hide();
         });
 
         $rootScope.$on('$stateNotFound', function stateNotFound(event, toState, toParams, fromState, fromParams) {
-            console.log('$stateNotFound', arguments);
-            //debugger;
             $ionicLoading.hide();
         });
     }

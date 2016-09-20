@@ -1,4 +1,4 @@
-(function () {
+(function() {
     'use strict';
 
     angular
@@ -9,21 +9,20 @@
 
     function Meta(_) {
         var description = 'Business Technology News',
-            keywords = 'IT, Technology, Business, News',
-            canonical = 'http://www.itweb.co.za/',
+            keywords = 'ITWeb, africa, ICT, telecoms, mobile, news',
+            canonical = 'http://www.itwebafrica.com/',
             ld;
 
         return {
-            set: function (options) {
+            set: function(options) {
                 var defaults = {
-                        title: 'Business Technology News and Information Site',
+                        title: 'Business Technology News',
                         description: [
-                            'Daily technology news portal, ',
-                            'recognised as the most trusted voice in South African IT publishing, ',
-                            'and is the first port of call for an audience that ranges ',
-                            'from technology professionals to CEOs.'
+                            'ITWeb Africa provides the latest news, analysis, features, market and video reports, ',
+                            'and insights into the continent’s changing telecoms and technology industry ',
+                            'to help those in the continent’s ICT industry stay in the loop.'
                         ].join(''),
-                        keywords: 'IT, Technology, Business, News',
+                        keywords: 'ITWeb, africa, ICT, telecoms, mobile, news',
                         canonical: false,
                         ld: false
                     },
@@ -33,11 +32,10 @@
                 this.description(opts.description);
                 this.keywords(opts.keywords);
                 this.canonical(opts.canonical);
-                this.ld(opts.ld);
 
                 return opts;
             },
-            description: function (value) {
+            description: function(value) {
                 var el = document.querySelector('meta[name="description"]');
                 if (value || value === false) {
                     description = value;
@@ -47,7 +45,7 @@
                 }
                 return description;
             },
-            keywords: function (value) {
+            keywords: function(value) {
                 var el;
                 if (value || value === false) {
                     keywords = value;
@@ -62,7 +60,7 @@
                 }
                 return keywords;
             },
-            canonical: function (value) {
+            canonical: function(value) {
                 var el = document.querySelector('meta[name="canonical"]');
                 if (value || value === false) {
                     canonical = value;
@@ -72,21 +70,7 @@
                 }
                 return canonical;
             },
-            ld: function (value) {
-                var el = document.getElementById('structured-data');
-                if (value) {
-                    ld = value;
-                    if (el) {
-                        el.innerText = JSON.stringify(value);
-                    }
-                } else if (value === false) {
-                    if (el) {
-                        el.innerText = '';
-                    }
-                }
-                return ld;
-            },
-            title: function (value) {
+            title: function(value) {
                 var el = document.getElementsByTagName('title');
                 if (_.isString(value) && el && el.length) {
                     el[0].innerText = [value, 'ITWeb'].join(' | ');

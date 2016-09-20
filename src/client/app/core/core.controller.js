@@ -5,9 +5,9 @@
         .module('app.core')
         .controller('CoreController', Controller);
 
-    Controller.$inject = ['_', 'nav', 'user', 'searchBar', '$state', '$ionicHistory', '$location', 'Analytics'];
+    Controller.$inject = ['_', 'nav', 'searchBar', '$state', '$ionicHistory', '$location', 'Analytics'];
     /* @ngInject */
-    function Controller(_, nav, user, searchBar, $state, $ionicHistory, $location, Analytics) {
+    function Controller(_, nav, searchBar, $state, $ionicHistory, $location, Analytics) {
         var vm = this;
         vm.nav = nav.get();
 
@@ -17,11 +17,7 @@
         vm.eventName = eventName;
         vm.eventLabel = eventLabel;
         vm.back = back;
-        vm.isAuthenticated = isAuthenticated;
-
-        function isAuthenticated() {
-            return user.isAuthenticated();
-        }
+        //vm.shownGroup = vm.nav[3];
 
         function eventLabel() {
             return $location.url();
@@ -43,17 +39,6 @@
                     break;
                 case 'office':
                     result = 'companies';
-                    break;
-                case 'events':
-                case 'event':
-                    result = 'events';
-                    break;
-                case 'videos':
-                case 'video':
-                    result = 'video';
-                    break;
-                case 'about':
-                    result = 'about';
                     break;
                 default:
                     result = 'section';

@@ -14,7 +14,7 @@
 
         function logStats(data) {
             //console.log('%c' + angular.toJson(data), 'color:purple');
-            if ($location.host() !== 'localhost') {
+            if (false && $location.host() !== 'localhost') {
                 $http({
                     method: 'GET',
                     url: 'http://stats.itweb.co.za/mobicount.asp',
