@@ -36,8 +36,8 @@
             if (!resolved) {
                 $http({
                     method: 'GET',
-                    //url: 'http://www.itwebafrica.com/api' + url,
-                    url: 'http://localhost:8888/api' + url,
+                    url: 'http://www.itwebafrica.com/api' + url,
+                    //url: 'http://localhost:8888/api' + url,
                     timeout: 20000
                 }).success(function(response) {
                     def.resolve(response);
