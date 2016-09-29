@@ -32,7 +32,9 @@
 
         function refresh() {
             vm.complete = 1;
-            api('/featured?width=' + $window.innerWidth)
+            api('/featured', {
+                    width: $window.innerWidth
+                })
                 .then(function(featured) {
                     vm.showcase = featured.items;
                     vm.items = [];
@@ -50,11 +52,10 @@
 
         function next(limitstart) {
             limitstart = angular.isUndefined(limitstart) ? vm.showcase.length + vm.items.length : limitstart;
-            if (limitstart) {
-                Analytics.trackEvent('frontpage', 'scroll', vm.analyticsEvent, limitstart);
-            }
 
-            api('/articles?limitstart=' + limitstart)
+            api('/articles', {
+                    limitstart: limitstart
+                })
                 .then(function(response) {
                     var items = _.reject(response.items, function(item) {
                         return _.find(vm.showcase, function(row) {

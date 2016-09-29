@@ -5,22 +5,17 @@
         .module('app.core')
         .factory('stats', Stats);
 
-    Stats.$inject = ['$http', '$location'];
+    Stats.$inject = ['api'];
 
-    function Stats($http, $location) {
+    function Stats(api) {
         return {
-            log: logStats
+            log: log
         };
 
-        function logStats(data) {
-            //console.log('%c' + angular.toJson(data), 'color:purple');
-            if (false && $location.host() !== 'localhost') {
-                $http({
-                    method: 'GET',
-                    url: 'http://stats.itweb.co.za/mobicount.asp',
-                    params: data
-                });
-            }
+        function log(data) {
+            data.ts = Math.random() * 10000000;
+            console.log('%c' + angular.toJson(data), 'color:purple');
+            api('/log', data);
         }
     }
 

@@ -153,7 +153,6 @@
                         }
                     }
                 }, {
-                    'id': '152',
                     'title': 'Angola',
                     'state': {
                         'name': 'app.location',
@@ -162,7 +161,6 @@
                         }
                     }
                 }, {
-                    'id': '795',
                     'title': 'Burkina Faso',
                     'state': {
                         'name': 'app.location',
@@ -171,7 +169,6 @@
                         }
                     }
                 }, {
-                    'id': '329',
                     'title': 'Congo (DRC)',
                     'state': {
                         'name': 'app.location',
@@ -180,7 +177,6 @@
                         }
                     }
                 }, {
-                    'id': '156',
                     'title': 'Egypt',
                     'state': {
                         'name': 'app.location',
@@ -189,7 +185,6 @@
                         }
                     }
                 }, {
-                    'id': '338',
                     'title': 'Ghana',
                     'state': {
                         'name': 'app.location',
@@ -198,7 +193,6 @@
                         }
                     }
                 }, {
-                    'id': '788',
                     'title': 'Ivory Coast',
                     'state': {
                         'name': 'app.location',
@@ -207,7 +201,6 @@
                         }
                     }
                 }, {
-                    'id': '153',
                     'title': 'Kenya',
                     'state': {
                         'name': 'app.location',
@@ -216,7 +209,6 @@
                         }
                     }
                 }, {
-                    'id': '781',
                     'title': 'Liberia',
                     'state': {
                         'name': 'app.location',
@@ -225,7 +217,6 @@
                         }
                     }
                 }, {
-                    'id': '328',
                     'title': 'Malawi',
                     'state': {
                         'name': 'app.location',
@@ -234,7 +225,6 @@
                         }
                     }
                 }, {
-                    'id': '330',
                     'title': 'Morocco',
                     'state': {
                         'name': 'app.location',
@@ -243,7 +233,6 @@
                         }
                     }
                 }, {
-                    'id': '326',
                     'title': 'Namibia',
                     'state': {
                         'name': 'app.location',
@@ -252,7 +241,6 @@
                         }
                     }
                 }, {
-                    'id': '324',
                     'title': 'Nigeria',
                     'state': {
                         'name': 'app.location',
@@ -261,7 +249,6 @@
                         }
                     }
                 }, {
-                    'id': '337',
                     'title': 'Rwanda',
                     'state': {
                         'name': 'app.location',
@@ -270,7 +257,6 @@
                         }
                     }
                 }, {
-                    'id': '531',
                     'title': 'Senegal',
                     'state': {
                         'name': 'app.location',
@@ -279,7 +265,6 @@
                         }
                     }
                 }, {
-                    'id': '325',
                     'title': 'South Africa',
                     'state': {
                         'name': 'app.location',
@@ -288,7 +273,6 @@
                         }
                     }
                 }, {
-                    'id': '789',
                     'title': 'Sudan',
                     'state': {
                         'name': 'app.location',
@@ -297,7 +281,6 @@
                         }
                     }
                 }, {
-                    'id': '468',
                     'title': 'Swaziland',
                     'state': {
                         'name': 'app.location',
@@ -306,7 +289,6 @@
                         }
                     }
                 }, {
-                    'id': '327',
                     'title': 'Tanzania',
                     'state': {
                         'name': 'app.location',
@@ -315,7 +297,6 @@
                         }
                     }
                 }, {
-                    'id': '527',
                     'title': 'Tunisia',
                     'state': {
                         'name': 'app.location',
@@ -324,7 +305,6 @@
                         }
                     }
                 }, {
-                    'id': '347',
                     'title': 'Uganda',
                     'state': {
                         'name': 'app.location',
@@ -333,7 +313,6 @@
                         }
                     }
                 }, {
-                    'id': '155',
                     'title': 'Zambia',
                     'state': {
                         'name': 'app.location',
@@ -342,7 +321,6 @@
                         }
                     }
                 }, {
-                    'id': '154',
                     'title': 'Zimbabwe',
                     'state': {
                         'name': 'app.location',
@@ -358,7 +336,6 @@
                     name: 'app.office'
                 }
             }];
-
         }
     }
 })();

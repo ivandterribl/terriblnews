@@ -34,11 +34,11 @@
                     activated = 0;
 
                 scope.loading = 1;
-                if (scope.what.indexOf('top') === 0 || scope.what.indexOf('bot') === 0) {
+                if (scope.what.indexOf('itwatop') === 0 || scope.what.indexOf('itwabot') === 0) {
                     width = 320;
                     height = 50;
 
-                } else if (scope.what.indexOf('dbl') === 0) {
+                } else if (scope.what.indexOf('itwadbl') === 0) {
                     width = 320;
                     height = 100;
 
@@ -95,7 +95,7 @@
                         }
                         if (!result) {
                             //result = '<img src="http://placehold.it/' + width + 'x' + height + '">';
-                            $element.remove();
+                            $element.parent().remove();
                         } else {
                             scope.result = $sce.trustAsHtml(result);
                         }

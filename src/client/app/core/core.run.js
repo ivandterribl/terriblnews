@@ -34,8 +34,9 @@
         });
 
         $rootScope.$on('$stateChangeSuccess', function stateChangeSuccess(event, toState, toParams, fromState, fromParams) {
-            var url = $state.href(toState.name, toParams),
-                catId;
+            var data = {
+                loc: $state.href(toState.name, toParams)
+            };
 
             if (angular.isDefined(toState.resolve)) {
                 // off the android back button this doesnt close the show()
@@ -46,65 +47,24 @@
 
             // jshint ignore:start
             switch (toState.name) {
-                case 'app.article-raw':
                 case 'app.article':
-                case 'app.section':
-                case 'app.event':
-                    // logged separately
                     break;
-                case 'app.frontpage':
-                    catId = 10000;
-                    break;
-                case 'app.news.category':
-                case 'app.news.africa':
-                    catId = 10001;
-                    break;
-                case 'app.sections':
-                    catId = 10002;
-                    break;
-                case 'app.opinion.category':
-                    switch (toParams.id) {
-                        case 'tech-forum':
-                            catId = 355;
-                            break;
-                        case 'industry-insight':
-                            catId = 143;
-                            break;
-                        default:
-                            catId = 79;
-                    }
-                    break;
-                case 'app.office.news':
-                case 'app.office.vpo':
-                case 'app.office.zones':
-                case 'app.office.microsites':
-                    catId = 10200;
-                    break;
-                case 'app.events':
-                    catId = 10100;
-                    break;
-                case 'app.about.us':
-                case 'app.about.contact':
-                case 'app.about.privacy':
-                case 'app.about.competition':
-                case 'app.about.bee':
-                    catId = 10300;
+                case 'app.location':
+                    data.catid = 11000;
                     break;
                 case 'app.search':
-                    catId = 10500;
+                    data.catid = 10500;
                     break;
                 case 'app.topic':
-                    catId = 10501;
+                    data.catid = 10501;
+                    break;
+                case 'app.office':
+                    data.catid = 10200;
                     break;
                 default:
-                    //debugger;
+                    data.catid = toParams.id || 10000;
             }
-            if (catId) {
-                var data = {
-                    catid: catId,
-                    loc: url,
-                    ts: _.random(1000000000)
-                };
+            if (data.catid) {
                 stats.log(data);
             }
             // jshint ignore:end

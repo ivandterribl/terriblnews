@@ -10,9 +10,8 @@
     function API($http, _, $q) {
         var queue = [];
 
-        return function(url, options) {
-            var opts = _.assign({}, options),
-                prefetched = window.prefetched,
+        return function(url, params) {
+            var prefetched = window.prefetched,
                 def = $q.defer();
 
             def.promise.success = function(fn) {
@@ -26,9 +25,9 @@
 
             var resolved = 0;
             angular.forEach(window.prefetched || [], function(cache) {
-                if (cache.response.length && cache.url.indexOf(url) !== -1) {
+                if (cache.response && cache.url.indexOf(url) !== -1) {
                     def.resolve(cache.response);
-                    cache.response = [];
+                    cache.response = null;
                     resolved = 1;
                 }
             });
@@ -38,7 +37,8 @@
                     method: 'GET',
                     url: 'http://www.itwebafrica.com/api' + url,
                     //url: 'http://localhost:8888/api' + url,
-                    timeout: 20000
+                    timeout: 20000,
+                    params: params
                 }).success(function(response) {
                     def.resolve(response);
                 }).error(function(response) {

@@ -18,11 +18,7 @@
                         meta.title(article.title);
                         meta.description(article.blurb);
                         meta.keywords(article.metakey);
-                        meta.canonical('http://www.itweb.co.za/index.php?' + [
-                            'option=com_content',
-                            'view=article',
-                            'id=' + articleId
-                        ].join('&'));
+                        meta.canonical('http://www.itwebafrica.com' + article.link);
 
                         return response;
                     });
@@ -34,7 +30,10 @@
                     .then(function(response) {
                         var article = response;
 
-                        meta.title(response.title);
+                        meta.set({
+                            title: response.title,
+                            canonical: 'http://www.itwebafrica.com' + response.link
+                        });
 
                         return response;
                     });
@@ -44,7 +43,9 @@
                     .then(function(response) {
                         var article = response;
 
-                        meta.title(response.title);
+                        meta.set({
+                            title: response.title
+                        });
 
                         return response;
                     });
@@ -52,20 +53,24 @@
 
         $stateProvider
             .state('app.frontpage', {
-                url: '/',
+                url: '/news',
                 templateUrl: 'app/news/frontpage/frontpage.html',
                 controller: 'FrontpageController as vm',
                 resolve: {
                     seo: ['meta', function(meta) {
-                        return meta.set();
+                        return meta.set({
+                            canonical: 'http://www.itwebafrica.com'
+                        });
                     }],
                     featured: ['$window', 'api', function($window, api) {
-                        return api('/featured?width=' + $window.innerWidth);
+                        return api('/featured', {
+                            width: $window.innerWidth
+                        });
                     }]
                 }
             })
             .state('app.article', {
-                url: '/content/*id',
+                url: '/news/*id',
                 templateUrl: 'app/news/article/article.html',
                 controller: 'ArticleController as vm',
                 resolve: {
@@ -89,6 +94,6 @@
                 }
             });
 
-        $urlRouterProvider.otherwise('/');
+        $urlRouterProvider.otherwise('/news');
     }
 })();

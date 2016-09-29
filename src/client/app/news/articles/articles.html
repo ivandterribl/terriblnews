@@ -14,20 +14,16 @@
 
     	<ion-list ng-show="vm.items.length">
             <div ng-repeat="(i, item) in vm.items">
-                <ion-item class="item-divider item-block" ng-if="i % 24 === 3">
-                    <div adsrv what="tophome-mobi"></div>
+                <ion-item class="item-divider item-block" ng-if="!vm.pr && i % 12 === 0">
+                    <div adsrv what="itwatop{{ vm.adword }}-mobi"></div>
                 </ion-item>
 
-                <ion-item class="item-divider item-block" ng-if="i % 24 === 9">
-                    <div adsrv what="dbl1home-mobi" ></div>
+                <ion-item class="item-divider item-block" ng-if="!vm.pr && i % 12 === 4">
+                    <div adsrv what="itwaco{{ vm.adword }}-mobi" ></div>
                 </ion-item>
 
-                <ion-item class="item-divider item-block" ng-if="i % 24 === 15">
-                    <div adsrv what="dbl2home-mobi"></div>
-                </ion-item>
-
-                <ion-item class="item-divider item-block" ng-if="i % 24 === 21">
-                    <div adsrv what="rec1home-mobi"></div>
+                <ion-item class="item-divider item-block" ng-if="!vm.pr && i % 12 === 8">
+                    <div adsrv what="itwaco1{{ vm.adword }}-mobi"></div>
                 </ion-item>
 
                 <ion-item ng-include="'app/news/news.item.html'">

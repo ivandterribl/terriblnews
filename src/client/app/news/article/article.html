@@ -11,12 +11,10 @@
 	  	</button>
     </ion-nav-buttons>
 
-
-	<ion-content lazy-scroll on-swipe-right="vm.prev(1)" on-swipe-left="vm.next(1)" overflow-scroll="true"
-	>
+	<ion-content lazy-scroll overflow-scroll="true">
 		<section ng-show="!vm.loading">
-    		<div class="item item-divider item-block">
-            	<div adsrv what="top{{ ::vm.section.normalized }}-mobi" class="top"></div>
+    		<div class="item item-divider item-block" ng-if="vm.adword">
+            	<div adsrv what="itwatop{{ ::vm.adword }}-mobi" class="top"></div>
             </div>
 
     		<main class="padding" itemscope itemtype="http://schema.org/NewsArticle">
@@ -31,9 +29,8 @@
 					<time datetime="{{ ::vm.article.created }}">{{ ::vm.article.created | date:'d MMM yyyy'}}</time>
 				</h5>
 
-				<article bind-html-compile="::vm.article.html" itemprop="articleBody"></article>
-
-			
+				<article bind-html-compile="::vm.article.introtext" itemprop="description"></article>
+				<article bind-html-compile="::vm.article.fulltext" itemprop="articleBody"></article>
 				
 				<meta itemprop="mainEntityOfPage" content="{{ vm.canonical }}" />
 				<span itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
@@ -67,8 +64,8 @@
 		        </p>				
 			</main>
 		
-			<div class="item item-divider item-block" ng-if="vm.section && !vm.isPR">
-            	<div adsrv what="recnoop-mobi" class="top"></div>
+			<div class="item item-divider item-block" ng-if="vm.adword">
+            	<div adsrv what="itwaco{{ ::vm.adword }}-mobi" class="top"></div>
             </div>
 			
 			<ion-list ng-show="vm.article.urls.length" class="h3-list">
@@ -82,8 +79,7 @@
 					<i class="icon icon-mini ion-chevron-right"></i>
 				</ion-item>
 				<ion-item class="item-icon-left item-icon-right"
-					ng-repeat="(i, topic) in vm.topics track by $index" ui-sref="app.topic({ q: topic })"
-					ga-track-event="['article', 'tag', 'related', i]">
+					ng-repeat="(i, topic) in vm.topics track by $index" ui-sref="app.topic({ q: topic })">
 					<i class="icon icon-mini ion-bookmark"></i>
 					<h3>{{ ::topic }}</h3>
 					<i class="icon icon-mini ion-chevron-right"></i>

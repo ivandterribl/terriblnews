@@ -26,6 +26,8 @@
 
             vm.title = response.title;
             vm.items = response.items;
+            vm.adword = response.kind === 'C' ? normalize(response.title) : null;
+            vm.pr = response.kind === 'P' ? true : false;
         }
 
         function refresh() {
@@ -44,7 +46,10 @@
                     break;
             }
             vm.complete = 1;
-            api(endpoint + '?limitstart=' + limitstart)
+
+            api(endpoint, {
+                    'limitstart': limitstart
+                })
                 .then(function(response) {
                     var items = response.items;
 
@@ -58,6 +63,10 @@
                     $scope.$broadcast('scroll.infiniteScrollComplete');
                     $scope.$broadcast('scroll.refreshComplete');
                 });
+        }
+
+        function normalize(title) {
+            return angular.isString(title) ? title.toLowerCase().replace(/[^a-z0-9]/gi, '') : null;
         }
     }
 })();

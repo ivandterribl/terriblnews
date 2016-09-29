@@ -7,14 +7,28 @@
     		<p class="text-center assertive" ng-cloak>No results found</p>
     	</section>
     	
-    	<ion-list ng-show="vm.items.length">
-            <ion-item class="item-light" ng-repeat="item in vm.items" ui-sref="app.article({ id: item.id })">
-                <h2>{{ item.title }}</h2>
-                <p>
-                	<itw-timestamp timestamp="'{{ ::item.created }}'" class="assertive"></itw-timestamp>
-                 	<span ng-bind-html="item.text"></span>
-                </p>
-            </ion-item>
+    	<ion-list lazy-scroll ng-show="vm.items.length">
+            <div ng-repeat="(i, item) in vm.items">
+                <ion-item class="item-divider item-block" ng-if="i % 12 === 0">
+                    <div adsrv what="itwatop-mobi"></div>
+                </ion-item>
+
+                <ion-item class="item-divider item-block" ng-if="i % 12 === 4">
+                    <div adsrv what="itwaco-mobi" ></div>
+                </ion-item>
+
+                <ion-item class="item-divider item-block" ng-if="i % 12 === 8">
+                    <div adsrv what="itwaco1-mobi"></div>
+                </ion-item>
+                
+                <ion-item class="item-light" ui-sref="app.article({ id: item.id })">
+                    <h2>{{ item.title }}</h2>
+                    <p>
+                    	<itw-timestamp timestamp="'{{ ::item.created }}'" class="assertive"></itw-timestamp>
+                     	<span ng-bind-html="item.text"></span>
+                    </p>
+                </ion-item>
+            </div>
         </ion-list>
         
 	</ion-content>
