@@ -45,6 +45,8 @@
                                         .catch(function() {
                                             deferred.resolve(user);
                                         });
+                                } else {
+                                    deferred.resolve(user);
                                 }
                             })
                             .catch(function() {

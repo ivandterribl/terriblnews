@@ -5,9 +5,9 @@
         .module('itw.user')
         .controller('LoginController', Controller);
 
-    Controller.$inject = ['$state', 'user', 'ui', '$ionicHistory', '_'];
+    Controller.$inject = ['api2', '$state', 'user', 'ui', '$ionicHistory', '_'];
     /* @ngInject */
-    function Controller($state, user, ui, $ionicHistory, _) {
+    function Controller(api2, $state, user, ui, $ionicHistory, _) {
         var vm = this;
 
         vm.login = login;
@@ -60,30 +60,33 @@
         }
 
         function authenticate(provider) {
-            user.loginWith(provider)
-                .then(function() {
-                    var redirect = $state.params.redirect;
-                    if (_.isEmpty(redirect)) {
-                        redirect = {
-                            name: 'app.user.profile'
-                        };
-                    }
-                    $ionicHistory.clearCache();
-                    $ionicHistory.nextViewOptions({
-                        historyRoot: true
-                    });
-                    ui.show(redirect.name, redirect.params);
-                })
-                .catch(function(error) {
-                    if (error.error) {
-                        // Popup error - invalid redirect_uri, pressed cancel button, etc.
-                        ui.toast.show('error', error.error);
-                    } else if (error.data) {
-                        // HTTP response error from server
-                        ui.toast.show('error', error.data.error_description, error.status);
-                    } else {
-                        ui.toast.show('error', error);
-                    }
+            api2('accounts/session')
+                .finally(function() {
+                    user.loginWith(provider)
+                        .then(function() {
+                            var redirect = $state.params.redirect;
+                            if (_.isEmpty(redirect)) {
+                                redirect = {
+                                    name: 'app.user.profile'
+                                };
+                            }
+                            $ionicHistory.clearCache();
+                            $ionicHistory.nextViewOptions({
+                                historyRoot: true
+                            });
+                            ui.show(redirect.name, redirect.params);
+                        })
+                        .catch(function(error) {
+                            if (error.error) {
+                                // Popup error - invalid redirect_uri, pressed cancel button, etc.
+                                ui.toast.show('error', error.error);
+                            } else if (error.data) {
+                                // HTTP response error from server
+                                ui.toast.show('error', error.data.error_description, error.status);
+                            } else {
+                                ui.toast.show('error', error);
+                            }
+                        });
                 });
 
         }
