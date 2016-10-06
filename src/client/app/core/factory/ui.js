@@ -22,6 +22,9 @@
             },
             toast: {
                 show: function(method, message, title, optionsOverride) {
+                    if (method === 'error' && !message) {
+                        message = 'General error occurred. Our team has been notified.';
+                    }
                     return toastr[method](message, title, optionsOverride);
                 },
                 hide: function() {

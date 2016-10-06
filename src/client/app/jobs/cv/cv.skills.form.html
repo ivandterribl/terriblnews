@@ -24,7 +24,7 @@
       </md-autocomplete>
     </div>
 
-    <label class="item item-input item-select"
+    <label select-polyfill class="item item-input item-select"
       ng-class="{ 'has-error' : !skill.SkillCompetency && skill.$submitted }">
           <div class="input-label">
               Competency
@@ -34,7 +34,7 @@
             <option value="">- select -</option>
           </select>
       </label>
-      <label class="item item-input item-select"
+      <label  select-polyfill class="item item-input item-select"
       ng-class="{ 'has-error' : !skill.MonthsExperience && skill.$submitted }">
           <div class="input-label">
               Months experience

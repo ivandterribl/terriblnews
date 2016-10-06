@@ -18,7 +18,7 @@
         <input type="text" placeholder="Job title" name="JobTitle" ng-model="employment.JobTitle">
     </label>
 
-    <label class="item item-input item-select" ng-class="{ 'has-error' : !employment.Industry && employment.$submitted }">
+    <label select-polyfill class="item item-input item-select" ng-class="{ 'has-error' : !employment.Industry && employment.$submitted }">
         <div class="input-label">
             Industry
         </div>
@@ -49,7 +49,7 @@
         <span class="input-label">Job description</span>
         <textarea name="Duties" ng-model="employment.Duties" placeholder="30 words minimum"></textarea>
     </label>
-    <label class="item item-input item-select">
+    <label select-polyfill class="item item-input item-select">
         <div class="input-label">
             Job type
         </div>

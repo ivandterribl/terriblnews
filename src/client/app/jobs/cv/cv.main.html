@@ -46,7 +46,7 @@
                     <input type="tel" placeholder="Year of birth (CCYY)" name="YearofBirth" ng-model="vm.cv.YearofBirth" required>
                 </label> -->
 
-                <label class="item item-input item-select"
+                <label select-polyfill class="item item-input item-select"
                  ng-class="{ 'has-error' : vm.cvForm.YearofBirth.$invalid && vm.cvForm.$submitted }">
                     <div class="input-label">
                         Year of birth
@@ -59,7 +59,7 @@
                     </select>
                 </label>
 
-                <label class="item item-input item-select"
+                <label select-polyfill class="item item-input item-select"
                  ng-class="{ 'has-error' : vm.cvForm.YearsExperience.$invalid && vm.cvForm.$submitted }">
                     <div class="input-label">
                         Years of IT experience
@@ -108,7 +108,7 @@
             </div>
 
             <div class="list card">
-                <label class="item item-input item-select"
+                <label select-polyfill class="item item-input item-select"
                  ng-class="{ 'has-error' : vm.cvForm.BirthCountry.$invalid && vm.cvForm.$submitted }">
                     <div class="input-label">
                         Country of birth
@@ -121,7 +121,7 @@
                     </select>
                 </label>
 
-                <label class="item item-input item-select"
+                <label select-polyfill class="item item-input item-select"
                 ng-class="{ 'has-error' : vm.cvForm.ResCountry.$invalid && vm.cvForm.$submitted }">
                     <div class="input-label">
                         Country of residence
@@ -134,7 +134,7 @@
                     </select>
                 </label>
 
-                <label class="item item-input item-select"
+                <label select-polyfill class="item item-input item-select"
                 ng-class="{ 'has-error' : vm.cvForm.ResCity.$invalid && vm.cvForm.$submitted }">
                     <div class="input-label">
                         Work location
