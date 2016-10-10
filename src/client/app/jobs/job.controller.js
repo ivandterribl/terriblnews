@@ -78,7 +78,7 @@
                                     vm.match.responseDate = new Date(vm.match.ResponseDate);
                                 }
                                 ui.toast.show('success', 'A job application has been sent on your behalf. Good luck!');
-                                vm.job.Stats.JobResponses = vm.job.Stats.JobResponses + 1;
+                                vm.job.Stats.JobResponses = parseInt(vm.job.Stats.JobResponses) + 1;
                             })
                             .catch(function() {
                                 ui.toast.show('error', 'Oops, something went wrong');
