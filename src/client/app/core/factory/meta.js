@@ -1,4 +1,4 @@
-(function () {
+(function() {
     'use strict';
 
     angular
@@ -14,7 +14,7 @@
             ld;
 
         return {
-            set: function (options) {
+            set: function(options) {
                 var defaults = {
                         title: 'Business Technology News and Information Site',
                         description: [
@@ -37,7 +37,7 @@
 
                 return opts;
             },
-            description: function (value) {
+            description: function(value) {
                 var el = document.querySelector('meta[name="description"]');
                 if (value || value === false) {
                     description = value;
@@ -47,7 +47,7 @@
                 }
                 return description;
             },
-            keywords: function (value) {
+            keywords: function(value) {
                 var el;
                 if (value || value === false) {
                     keywords = value;
@@ -62,17 +62,17 @@
                 }
                 return keywords;
             },
-            canonical: function (value) {
-                var el = document.querySelector('meta[name="canonical"]');
+            canonical: function(value) {
+                var el = document.querySelector('link[rel="canonical"]');
                 if (value || value === false) {
                     canonical = value;
                     if (el) {
-                        el.setAttribute('content', value ? value : '');
+                        el.setAttribute('href', value ? value : '');
                     }
                 }
                 return canonical;
             },
-            ld: function (value) {
+            ld: function(value) {
                 var el = document.getElementById('structured-data');
                 if (value) {
                     ld = value;
@@ -86,7 +86,7 @@
                 }
                 return ld;
             },
-            title: function (value) {
+            title: function(value) {
                 var el = document.getElementsByTagName('title');
                 if (_.isString(value) && el && el.length) {
                     el[0].innerText = [value, 'ITWeb'].join(' | ');

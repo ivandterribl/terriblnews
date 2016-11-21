@@ -96,7 +96,9 @@
                 controller: 'FrontpageController as vm',
                 resolve: {
                     seo: ['meta', function(meta) {
-                        return meta.set();
+                        return meta.set({
+                            canonical: 'http://www.itweb.co.za'
+                        });
                     }]
                 }
             })
@@ -106,7 +108,9 @@
                 controller: 'FrontpageController as vm',
                 resolve: {
                     seo: ['meta', function(meta) {
-                        return meta.set();
+                        return meta.set({
+                            canonical: 'http://www.itweb.co.za'
+                        });
                     }]
                 }
             })
