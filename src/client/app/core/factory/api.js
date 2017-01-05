@@ -39,7 +39,8 @@
                     //url: config.url + url,
                     //url: 'http://www.itweb.co.za/mobilesite/feed/ivan/?' + url,
                     url: 'https://secure.itweb.co.za/api/news/?' + url,
-                    timeout: opts.timeout || config.timeout
+                    timeout: opts.timeout || config.timeout,
+                    withCredentials: true
                 }).success(function(response) {
                     //console.log('%c' + url, 'background-color: yellow');
                     //console.log('%c' + JSON.stringify(response), 'background-color: #aFa');
