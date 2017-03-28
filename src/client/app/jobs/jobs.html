@@ -4,42 +4,51 @@
         </button>
     </ion-nav-buttons>
     <ion-nav-title>Jobs</ion-nav-title>
-	
-	<ion-nav-buttons side="secondary">
-		<button class="button button-icon ion-android-search" 
+
+    <ion-nav-buttons side="secondary">
+        <button class="button button-icon ion-android-search"
                 ng-click="vm.showSearchbar()"></button>
-      	<button class="button button-icon ion-person" 
+        <button class="button button-icon ion-person"
                 ui-sref="app.user.profile"
                 ga-track-event="['jobs', 'profile', vm.analyticsEvent]"></button>
-	</ion-nav-buttons>
+    </ion-nav-buttons>
 
-	<ion-content lazy-scroll ng-class="{ 'has-subheader': vm.hasSubheader }" on-swipe-right="vm.prev()" on-swipe-left="vm.next()">
-    	<section>
-	    	<ion-list>
-	    		<ion-item ng-repeat="(i, item) in vm.items" ui-sref="app.jobs.job({ id: item.JobID, job: item })"> 
-	    			<span class="badge badge-energized" ng-if="item.Affirmative==='Y'">A</span>
-	    			<h2 ng-class="{ 'stable': item.application }">{{ item.JobTitle }}</h2>
-	    			<div class="row" style="margin-bottom: 10px">
-	    				<span ng-class="{ 'balanced': item.CompanyTypeCode !== 'A' }" class="col">{{ item.CompanyName }}</span>
-	    				<span>{{ item.Area }}</span>
-	    			</div>
-	    			<p class="row">
-	    				<span class="col"><itw-timestamp  timestamp="'{{ item.CreationDate }}'"></itw-timestamp></span> 
-	    				<span><i class="icon ion-clipboard"></i> {{ item.Hits }} <i class="icon ion-briefcase"></i> {{ item.JobResponses }}</span>
-	    			</p>
-		    	</ion-item>
-	        </ion-list>
-        </section>
+    <ion-content lazy-scroll ng-class="{ 'has-subheader': vm.hasSubheader }" on-swipe-right="vm.prev()"
+                 on-swipe-left="vm.next()">
+
+        <ion-list>
+            <div ng-repeat="(i, item) in vm.items">
+                <ion-item class="item-divider item-block" ng-if="i === 3">
+                    <div style="text-align: center">
+                        <div adsrv what="topjobs-mobi"></div>
+                    </div>
+                </ion-item>
+                <ion-item ui-sref="app.jobs.job({ id: item.JobID, job: item })">
+                    <span class="badge badge-energized" ng-if="item.Affirmative==='Y'">A</span>
+                    <h2 ng-class="{ 'stable': item.application }">{{ item.JobTitle }}</h2>
+                    <div class="row" style="margin-bottom: 10px">
+                        <span ng-class="{ 'balanced': item.CompanyTypeCode !== 'A' }"
+                              class="col">{{ item.CompanyName }}</span>
+                        <span>{{ item.Area }}</span>
+                    </div>
+                    <p class="row">
+                            <span class="col"><itw-timestamp
+                                    timestamp="'{{ item.CreationDate }}'"></itw-timestamp></span>
+                        <span><i class="icon ion-clipboard"></i> {{ item.Hits }} <i class="icon ion-briefcase"></i> {{ item.JobResponses }}</span>
+                    </p>
+                </ion-item>
+            </div>
+        </ion-list>
 
         <ion-infinite-scroll
-        	immediate-check="false"
-        	ng-if="!vm.complete"
-		    on-infinite="vm.loadItems()"
-		    distance="5%">
-		</ion-infinite-scroll>
-	</ion-content>
+                immediate-check="false"
+                ng-if="!vm.complete"
+                on-infinite="vm.loadItems()"
+                distance="5%">
+        </ion-infinite-scroll>
+    </ion-content>
 
-	<ion-footer-bar style="padding:0">
+    <ion-footer-bar style="padding:0">
         <itw-tab-bar active="jobs"></itw-tab-bar>
     </ion-footer-bar>
 </ion-view>

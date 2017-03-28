@@ -34,7 +34,11 @@
                     activated = 0;
 
                 scope.loading = 1;
-                if (scope.what.indexOf('top') === 0 || scope.what.indexOf('bot') === 0) {
+                if (scope.what.indexOf('topjobs') === 0) {
+                    width = 320;
+                    height = 133;
+
+                } else if (scope.what.indexOf('top') === 0 || scope.what.indexOf('bot') === 0) {
                     width = 320;
                     height = 50;
 
@@ -61,14 +65,14 @@
 
                         if (!activated) {
                             offset = $ionicPosition.offset($element);
-                            if ((offset.top - scrollOffset.top - scrollOffset.height) < 0) {
+                            if ((offset.top - scrollOffset.top - scrollOffset.height) < 320) {
                                 activate();
                             }
                         }
                     },
                     throttledCalculateScrollLimits = ionic.Utils.throttle(
                         calculateScrollLimits,
-                        100, {
+                        64, {
                             trailing: false
                         }
                     );
@@ -81,7 +85,7 @@
                     activated = 1;
                     $http({
                         method: 'GET',
-                        url: 'http://ad.itweb.co.za/adjson.php?' +
+                        url: 'https://ad.itweb.co.za/adjson.php?' +
                             'n=' + _.random(100000000) + '&what=' + scope.what + '&target=_new'
                     }).success(function(response) {
                         var result = response.html,

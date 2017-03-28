@@ -36,9 +36,10 @@
             if (!resolved) {
                 $http({
                     method: 'GET',
-                    url: 'https://secure.itweb.co.za/api/news/?' + url,
-                    timeout: opts.timeout || config.timeout,
-                    withCredentials: true
+                    //url: 'https://secure.itweb.co.za/api/news/?' + url,
+                    url: 'http://www.itweb.co.za/mobilesite/feed/ivan/?' + url,
+                    timeout: opts.timeout || config.timeout
+                    //withCredentials: true
                 }).success(function(response) {
                     if (response.length || (response.items && response.items.length)) {
                         def.resolve(response);
