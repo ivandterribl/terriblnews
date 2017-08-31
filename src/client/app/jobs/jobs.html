@@ -18,11 +18,6 @@
 
         <ion-list>
             <div ng-repeat="(i, item) in vm.items">
-                <ion-item class="item-divider item-block" ng-if="i === 3">
-                    <div style="text-align: center">
-                        <div adsrv what="topjobs-mobi"></div>
-                    </div>
-                </ion-item>
                 <ion-item ui-sref="app.jobs.job({ id: item.JobID, job: item })">
                     <span class="badge badge-energized" ng-if="item.Affirmative==='Y'">A</span>
                     <h2 ng-class="{ 'stable': item.application }">{{ item.JobTitle }}</h2>

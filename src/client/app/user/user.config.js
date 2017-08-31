@@ -40,25 +40,4 @@
         $authProvider.unlinkUrl = '/accounts/unlink';
     }
 
-    /**
-    TRUNCATE TABLE users;
-    TRUNCATE TABLE user_profile;
-    TRUNCATE TABLE user_activation;
-    TRUNCATE TABLE oauth_users;
-    TRUNCATE TABLE oauth_refresh_tokens;
-    TRUNCATE TABLE oauth_authorization_codes;
-    TRUNCATE TABLE oauth_access_tokens;
-
-    SET @login_id = 148820;
-    SET @cvid = 135596;
-
-    DELETE FROM `cvupload` WHERE CVID = @cvid;
-    DELETE FROM `cv_employment` WHERE LoginID = @login_id;
-    DELETE FROM `cv_education` WHERE LoginID = @login_id;
-    DELETE FROM `cv_skills` WHERE LoginID = @login_id;
-    DELETE FROM `cv_main` WHERE LoginID = @login_id;
-    DELETE FROM `login` WHERE LoginID = @login_id;
-
-    UPDATE cv_main SET LastAccessDate = '2012-11-12 16:48:25' WHERE CVID = 73389
-    */
 })();

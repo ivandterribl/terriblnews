@@ -68,13 +68,13 @@
                     vm.section = {
                         catid: article.catid,
                         title: article.category,
-                        normalized: article.category.toLowerCase().replace(/\s/g, '')
+                        normalized: article.category.toLowerCase().replace(/[\s,]/g, '')
                     };
                 } else {
                     _.each(response.appearance, function(row) {
                         if (catId && parseInt(row.catid) === catId) {
                             vm.section = _.assign(row, {
-                                normalized: row.title.toLowerCase().replace(/\s/g, '')
+                                normalized: row.title.toLowerCase().replace(/[\s,]/g, '')
                             });
                         }
                     });
@@ -87,7 +87,7 @@
             if (!vm.section) {
                 rand = categories[0];
                 vm.section = _.assign(rand, {
-                    normalized: rand.title.toLowerCase().replace(/\s/g, '')
+                    normalized: rand.title.toLowerCase().replace(/[\s,]/g, '')
                 });
             }
 
@@ -316,14 +316,6 @@
             api2('jobs/search?q=' + encodeURIComponent(vm.section.title) + '&limit=3&fmt=short')
                 .then(function(response) {
                     vm.jobs = response;
-                    //if (response.length) {
-                    //    vm.jobs = response;
-                    //} else if (vm.topics.length) {
-                    //    api2('jobs/search?q=' + encodeURIComponent(vm.topics[0]) + '&limit=3&fmt=short')
-                    //        .then(function(response) {
-                    //            vm.jobs = response;
-                    //        });
-                    //}
                 });
         }
     }

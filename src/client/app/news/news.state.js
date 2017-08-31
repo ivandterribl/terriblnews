@@ -72,7 +72,7 @@
                         var category = {
                             title: section.title,
                             id: section.id || section.catid,
-                            normalized: section.title.toLowerCase().replace(/\s/g, '')
+                            normalized: section.title.toLowerCase().replace(/[\s,]/g, '')
                         };
 
                         meta.set({
@@ -128,7 +128,7 @@
                 }
             })
             .state('app.article', {
-                url: '/news/{id:int}/{catid:int}',
+                url: '/news/{id:int}/:catid',
                 params: {
                     id: null,
                     catid: {

@@ -31,7 +31,7 @@
             vm.category = {
                 title: section.title,
                 id: section.id || section.catid,
-                normalized: section.title.toLowerCase().replace(/\s/g, '')
+                normalized: section.title.toLowerCase().replace(/[\s,]/g, '')
             };
 
             items = _.map(response, function(row) {
@@ -84,7 +84,7 @@
                     vm.category = {
                         title: section.title,
                         id: section.id || section.catid,
-                        normalized: section.title.toLowerCase().replace(/\s/g, '')
+                        normalized: section.title.toLowerCase().replace(/[\s,]/g, '')
                     };
 
                     items = _.map(response, function(row) {
