@@ -11,11 +11,11 @@
     	<section ng-show="vm.loading" class="text-center padding">
     		<ion-spinner></ion-spinner>
     	</section>
-    	<section ng-show="!vm.loading && !vm.leads.length && !vm.items.length" class="padding">
+    	<section ng-show="!vm.loading && !vm.items.length" class="padding">
     		<h3 class="text-center assertive" ng-cloak>Oops, something went wrong</h3>
     	</section>
     	<section ng-show="!vm.loading">
-	    	<ion-list ng-if="vm.leads.length">
+	    	<ion-list ng-if="vm.items.length">
 	    		<div ng-repeat="(i, day) in vm.days">
 	    			<ion-item class="item-divider item-dark" ng-if="day.displayDate && i">
 		            	<h2 class="light" style="padding-top: 12px;">{{ day.displayDate | date:'EEE, dd MMM' }}</h2>
@@ -24,7 +24,7 @@
 		    		<ion-item class="item-light" ui-sref="app.article({ id: item.itemid, catid: item.section.id })"
 		    		ng-init="item = vm.leads[i]" ng-if="vm.leads[i]" ga-track-event="['frontpage', 'article', 'lead', i + 1]">
 		                <div class="pic responsive-pic">
-		    				<img image-lazy-src="{{ item.module.img }}">
+		    				<img image-lazy-src="{{ item.introtextImgLarge }}">
 	    				</div>
 		                <h1 style="margin: 10px 0 0 0; font-size: 30px;">{{ item.title }}</h1>
 		            </ion-item>
@@ -158,7 +158,7 @@
                                 <itw-timestamp timestamp="'{{ item.created }}'"></itw-timestamp>
 
                                 <a ng-if="item.copyPath" class="assertive"
-                                   ng-href="http://www.itweb.co.za/office/{{ item.copyPath }}"
+                                   ng-href="http://pressoffice.itweb.co.za/{{ item.copyPath }}"
                                    ga-track-event="['frontpage', 'office', 'company-news', j + 1]">
                                     <span class="stable">|</span> {{ item.company }}
                                 </a>

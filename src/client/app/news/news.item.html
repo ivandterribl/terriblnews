@@ -13,7 +13,7 @@
     <p>
     	<itw-timestamp timestamp="'{{ item.created }}'"></itw-timestamp>
     	
-    	<a ng-if="item.copyPath" class="assertive" ng-href="http://www.itweb.co.za/office/{{ item.copyPath }}"
+    	<a ng-if="item.copyPath" class="assertive" ng-href="http://pressoffice.itweb.co.za/{{ item.copyPath }}"
         ga-track-event="['section', 'office', vm.analyticsEvent, i + 1]" ga-track-event-if="vm.analyticsEvent">
         	<span class="stable">|</span> {{ item.company }}
         </a>

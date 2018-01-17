@@ -32,7 +32,7 @@
                 this.title(opts.title);
                 this.description(opts.description);
                 this.keywords(opts.keywords);
-                this.canonical(opts.canonical);
+                //this.canonical(opts.canonical);
                 this.ld(opts.ld);
 
                 return opts;
@@ -63,14 +63,15 @@
                 return keywords;
             },
             canonical: function(value) {
-                var el = document.querySelector('link[rel="canonical"]');
-                if (value || value === false) {
-                    canonical = value;
-                    if (el) {
-                        el.setAttribute('href', value ? value : '');
-                    }
-                }
-                return canonical;
+                return false;
+                // var el = document.querySelector('link[rel="canonical"]');
+                // if (value || value === false) {
+                //     canonical = value;
+                //     if (el) {
+                //         el.setAttribute('href', value ? value : '');
+                //     }
+                // }
+                // return canonical;
             },
             ld: function(value) {
                 var el = document.getElementById('structured-data');

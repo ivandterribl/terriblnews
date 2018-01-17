@@ -34,7 +34,7 @@
                 displayName: vm.user.displayName,
                 username: vm.user.email,
                 password: vm.user.password,
-                redirect_uri: 'http://www.itweb.co.za/mobilesite/user/activate'
+                redirect_uri: 'http://v2.itweb.co.za/mobilesite/user/activate'
             };
             ui.loading.show();
             $auth.signup(payload)

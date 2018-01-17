@@ -39,24 +39,25 @@
         }
 
         function loadLead() {
-            api('tag=lead-picture&limit=5')
-                .then(function(response) {
-                    var row = response[0];
-
-                    vm.leads = _.map(response, function(row) {
-                        var slug = row.section.split(':');
-                        return _.assign(row, {
-                            itemid: parseInt(row.itemid),
-                            section: {
-                                id: slug[0],
-                                title: slug[1]
-                            }
-                        });
-                    });
-                    articles.set([vm.leads[0]]);
-                    vm.loading = 0;
-                })
-                .finally(loadItems);
+            // api('tag=lead-picture&limit=5')
+            //     .then(function(response) {
+            //         var row = response[0];
+            //
+            //         vm.leads = _.map(response, function(row) {
+            //             var slug = row.section.split(':');
+            //             return _.assign(row, {
+            //                 itemid: parseInt(row.itemid),
+            //                 section: {
+            //                     id: slug[0],
+            //                     title: slug[1]
+            //                 }
+            //             });
+            //         });
+            //         articles.set([vm.leads[0]]);
+            //         vm.loading = 0;
+            //     })
+            //     .finally();
+            loadItems();
 
             api('tag=imod&q=quoteoftheday&limit=5')
                 .then(function(response) {
@@ -84,10 +85,13 @@
         }
 
         function parse(response) {
-            var items = _.map(response, function(row) {
+            var items = vm.items = _.map(response, function(row) {
                     return row;
                 }),
                 groups = {
+                    lead: _.filter(items, function(row) {
+                        return row.importance === 1;
+                    }),
                     top: _.filter(items, function(row) {
                         return row.importance > 1 && row.importance <= 20;
                     }),
@@ -117,6 +121,8 @@
                 startOfDay = moment(minDate).startOf('day').format();
 
             vm.startOfDay = startOfDay;
+
+            vm.leads = groups.lead;
 
             groups.columnists = _.reject(groups.columnists, function(row) {
                 return row.created < startOfDay;

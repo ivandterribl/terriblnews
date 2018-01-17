@@ -53,13 +53,13 @@
 						<time datetime="{{ ::vm.article.created }}">{{ ::vm.article.created | date:'d MMM yyyy'}}</time>
 					</h5>
 					<a ng-if="vm.article.storytype === 'P' && vm.article.copyPath" class="row"
-						ng-href="http://www.itweb.co.za/office/{{ vm.article.copyPath }}"
+						ng-href="http://pressoffice.itweb.co.za/{{ vm.article.copyPath }}"
 						style="border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; margin-bottom: 10px;padding: 5px 0">
 
 						<h5 class="col col-center" style="padding: 5px 0 0; text-transform: uppercase; margin: 0;">
 							<span style="color: #3A72AB; font-size:12px"> Visit our press office</span>
 						</h5>
-						<img ng-src="http://www.itweb.co.za/logos/{{ vm.article.logoPath }}" align="right" />
+						<img ng-src="http://v2.itweb.co.za/logos/{{ vm.article.logoPath }}" align="right" />
 					</a>
 				</div>
 				<div ng-if="vm.article.storytype === 'P' && vm.article.origin === 'Z'">
@@ -71,13 +71,13 @@
 						<time datetime="{{ ::vm.article.created }}">{{ ::vm.article.created | date:'d MMM yyyy'}}</time>
 					</h5>
 					<a ng-if="vm.article.storytype === 'P' && vm.article.copyPath" class="row"
-					   ng-href="http://www.itweb.co.za/company/{{ vm.article.copyPath }}"
+					   ng-href="http://v2.itweb.co.za/company/{{ vm.article.copyPath }}"
 					   style="border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; margin-bottom: 10px;padding: 5px 0">
 
 						<h5 class="col col-center" style="padding: 5px 0 0; text-transform: uppercase; margin: 0;">
 							<span style="color: #3A72AB; font-size:12px"> Visit our company zone</span>
 						</h5>
-						<img ng-src="http://www.itweb.co.za/logos/{{ vm.article.logoPath }}" align="right" />
+						<img ng-src="http://v2.itweb.co.za/logos/{{ vm.article.logoPath }}" align="right" />
 					</a>
 				</div>
 
@@ -90,7 +90,7 @@
 				<meta itemprop="mainEntityOfPage" content="{{ vm.canonical }}" />
 				<span itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
 					<span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
-				      <meta itemprop="url" content="http://www.itweb.co.za/templates/ja_itweb/images/itweb_logo_sml.png"/>
+				      <meta itemprop="url" content="http://v2.itweb.co.za/templates/ja_itweb/images/itweb_logo_sml.png"/>
 				      <meta itemprop="width" content="116"/>
 				      <meta itemprop="height" content="49"/>
 				    </span>

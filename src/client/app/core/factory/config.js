@@ -10,7 +10,7 @@
     function Config(_) {
         var environments = {
             prod: {
-                url: 'http://www.itweb.co.za/',
+                url: 'http://v2.itweb.co.za/',
                 tnirpregnif: [],
                 analyticsId: null
             }
@@ -22,7 +22,7 @@
             var defaults = {
                 timeout: 20000,
                 log: 1,
-                redirect_uri: 'http://www.itweb.co.za/mobilesite/'
+                redirect_uri: 'http://v2.itweb.co.za/mobilesite/'
             };
             return _.assign(defaults, environments[env]);
         }

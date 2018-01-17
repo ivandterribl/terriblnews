@@ -153,7 +153,7 @@
                                     client_id: 'itweb/app',
                                     client_secret: 'EpkSFB@2Nz9L',
                                     grant_type: 'authorization_code',
-                                    redirect_uri: 'http://www.itweb.co.za/mobilesite/user/authorize',
+                                    redirect_uri: 'http://v2.itweb.co.za/mobilesite/user/authorize',
                                     code: $stateParams.code
                                 };
 

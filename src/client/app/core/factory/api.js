@@ -37,7 +37,7 @@
                 $http({
                     method: 'GET',
                     //url: 'https://secure.itweb.co.za/api/news/?' + url,
-                    url: 'http://www.itweb.co.za/mobilesite/feed/ivan/?' + url,
+                    url: 'http://v2.itweb.co.za/mobilesite/feed/ivan/?' + url,
                     timeout: opts.timeout || config.timeout
                     //withCredentials: true
                 }).success(function(response) {

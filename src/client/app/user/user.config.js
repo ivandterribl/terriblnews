@@ -13,7 +13,7 @@
             redirectUri = redirectUri.split('#')[0];
         }
         //redirectUri = 'http://localhost:3000/user/authorize';
-        redirectUri = 'http://www.itweb.co.za/mobilesite/user/authorize';
+        redirectUri = 'http://v2.itweb.co.za/mobilesite/user/authorize';
         //redirectUri = 'http://www.itweb.co.za/mobilesite/news';
 
         $authProvider.facebook({
